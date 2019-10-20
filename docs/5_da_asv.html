@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Part 5: Differentially Abundant ASVs</title>
+
+<script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.8/datatables.js"></script>
+<link href="site_libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/dt-ext-fixedcolumns-1.10.16/css/fixedColumns.dataTables.min.css" rel="stylesheet" />
+<script src="site_libs/dt-ext-fixedcolumns-1.10.16/js/dataTables.fixedColumns.min.js"></script>
+<link href="site_libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">DIGEST</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li>
+  <a href="0_pw_intro.html">
+    <span class="fa fa-info"></span>
+     
+    Intro
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-wrench"></span>
+     
+    Workflow
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="1_field_observations.html">1. Field Observations</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">16S rRNA Processing</li>
+    <li>
+      <a href="2_dada2.html">2. DADA2 Workflow</a>
+    </li>
+    <li>
+      <a href="3_data_prep.html">3. Data Prep</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">16S rRNA Analyses</li>
+    <li>
+      <a href="4_diversity.html">4. Diversity</a>
+    </li>
+    <li>
+      <a href="5_da_asv.html">5. DA ASVs</a>
+    </li>
+    <li>
+      <a href="6_synthesis.html">6. Synthesis</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="7_appendices.html">Appendices</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="data_availability.html">
+    <span class="fa fa-database"></span>
+     
+    Data
+  </a>
+</li>
+<li>
+  <a href="about.html">
+    <span class="fa fa-user-friends"></span>
+     
+    People
+  </a>
+</li>
+<li>
+  <a href="supplemental_material.html">SOM</a>
+</li>
+<li>
+  <a href="contact.html">
+    <span class="fa fa-phone"></span>
+     
+    Contact
+  </a>
+</li>
+<li>
+  <a href="how_to_build_this_site.html">
+    <span class="fa fa-question fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Part 5: Differentially Abundant ASVs</h1>
+
+</div>
+
+
+<p><a href="0_pw_intro.html#workflow_overview">Back to Introduction</a></p>
+<hr />
+<p>We now have a good handle on the diversity of the intestinal microbiomes of these herbivorous reef fish. We know that communities are dominated by the same broad-level taxonomic groups. The beta diversity analysis demonstrates that communities partition along host species.</p>
+<div class="notice">
+<p>Now we want to determine which ASVs are driving these patterns and assess their distribution in nature using publicly available data. To accomplish this task we leave the <code>R</code> environment and employ some additional tools. To summarize, our goals here are to:</p>
+</div>
+<p>
+</p>
+<blockquote>
+<ol style="list-style-type: upper-alpha">
+<li>identify differentially abundant (DA) ASVs across host species,</li>
+<li>find closest database matches to DA ASVs, and</li>
+<li>perform phylogenetic reconstruction on DA ASVs and top hits.</li>
+</ol>
+</blockquote>
+<div id="differential-abundance-da" class="section level2">
+<h2>Differential abundance (DA)</h2>
+<p>We used <a href="https://dx.doi.org/10.1038%2Fnmeth.2658" target="_blank">LDA Effect Size (LEfSe)</a> to identify differentially abundant (DA) ASVs across host species and the <a href="http://www.microbiomeanalyst.ca/" target="_blank">MicrobiomeAnalyst webserver</a> to run the analysis. There are also many other great tools on the MicrobiomeAnalyst webserver by the way. We needed three files for the input—an ‘OTU’ table, a metadata file containing sample information, and a taxonomy table. We generate these tables with the code below.</p>
+<pre class="r"><code>########## OTU table
+OTU1 &lt;-  as(otu_table(ps_slv_work_filt), &quot;matrix&quot;)
+# transpose if necessary
+# Coerce to data.frame
+OTUdf &lt;- as.data.frame(t(OTU1))
+setDT(OTUdf, keep.rownames = TRUE)[]
+write.table(OTUdf, &quot;DATA/PHYLOSEQ/TABLES/OUTPUT/OTHER/seq_tab_for_core.txt&quot;, 
+    sep = &quot;\t&quot;, row.names = FALSE, quote = FALSE)
+colnames(OTUdf)[1] &lt;- &quot;#NAME&quot;
+write.table(OTUdf, &quot;DATA/PHYLOSEQ/TABLES/OUTPUT/LEfSe/LEfSe_INPUT_seq_tab.txt&quot;, 
+            sep = &quot;\t&quot;, row.names = FALSE, quote = FALSE)
+############ TAX Table
+# Remember in the `tax_table` we added the last columns as the actual sequence 
+# of each ASV and the ASV_ID. We do not need those here.
+# So lets only keep the first 6 columns (the taxonomic lineage)
+TAX1 &lt;- as(tax_table(ps_slv_work_filt), &quot;matrix&quot;)
+TAXdf &lt;- as.data.frame(TAX1)
+setDT(TAXdf, keep.rownames = TRUE)[]
+colnames(TAXdf)[1] &lt;- &quot;#TAXONOMY&quot;
+TAXdf &lt;- TAXdf[, 1:6]
+write.table(TAXdf, &quot;DATA/PHYLOSEQ/TABLES/OUTPUT/LEfSe/LEfSe_INPUT_tax_tab.txt&quot;, 
+            sep = &quot;\t&quot;, row.names = FALSE, quote = FALSE)
+############ Metadata file
+meta_file &lt;- data.frame(NAME = sample_name, SampleType = species, Gen = genus)
+rownames(meta_file) &lt;- samples.out
+colnames(meta_file) &lt;-  c(&quot;#NAME&quot;, &quot;Species&quot;, &quot;Genus&quot;)
+# but we still have those three samples that need to be removed
+meta_file &lt;- filter(meta_file, Species != &quot;SpChr&quot; &amp; Species != &quot;ScVet&quot;)
+write.table(meta_file, &quot;DATA/PHYLOSEQ/TABLES/OUTPUT/LEfSe/LEfSe_INPUT_metadata.txt&quot;, 
+            sep = &quot;\t&quot;, row.names = FALSE, quote = FALSE)</code></pre>
+<p>And once we have the three files, we head over to the <a href="http://www.microbiomeanalyst.ca/" target="_blank">MicrobiomeAnalyst webserver</a> and upload the files. Be sure to select <code>Silva taxonomy</code> in the drop-down menu.<br />
+Check the data summary after uploading the files:</p>
+<ul>
+<li>OTU annotation: SILVA</li>
+<li>OTU number: 11144</li>
+<li>OTU with ≥ 2 counts: 4121</li>
+<li>Sample number: 50</li>
+<li>Number of experimental factors: 2</li>
+<li>Total read counts: 2828112</li>
+<li>Average counts per sample: 56562</li>
+<li>Maximum counts per sample: 175116</li>
+<li>Minimum counts per sample: 11568</li>
+</ul>
+<p>Cool, all looks good. Hit <code>Proceed</code>. Here are the settings we used for the different step:</p>
+<ul>
+<li><strong>Filter the data</strong>: <code>Minimum count = 20</code>, <code>Prevalence in samples (%) = 20</code>, and <code>Percentage to remove (%) = 0</code>. This removed <strong>3796</strong> low abundant ASVs.<br />
+</li>
+<li><strong>Data Normalization</strong>: <code>Data rarefying = Do not rarefy my data</code>,<br />
+<code>Data scaling = Total sum scaling (TSS)</code>, and<br />
+<code>Data transformation = Do not transform my data</code>.<br />
+</li>
+<li><strong>LEfSe analysis</strong> <code>Log LDA score = 4</code> &amp; <code>Adjusted p-value cutoff = 0.0001</code>. We specifically chose these values because we found that they eliminated spurious results such as DA ASVs that were really abundant in a few samples but not consistent across an entire group.</li>
+</ul>
+<blockquote>
+<p>The result was <strong>59</strong> differentially abundant (<strong>DA</strong>) ASVs.</p>
+</blockquote>
+<hr />
+</div>
+<div id="results-of-lefse-analysis" class="section level2">
+<h2>Results of LEfSe analysis</h2>
+<p>We can inspect and save the results of the LEfSe analysis. The table shows the Linear discriminant analysis (LDA) scores, P-values adjusted for multiple testing, and False Discovery Rate (FDR) values from the LEfSe analysis. Normalized read abundance values for each host species are also given.</p>
+<div id="table-s5" class="section level4">
+<h4><font color="red">Table S5</font></h4>
+<pre class="r"><code>lefse_tab &lt;- read.table(&quot;DATA/PHYLOSEQ/TABLES/INPUT/lefse_results.txt&quot;, 
+                        header = TRUE, sep = &quot;\t&quot;, check.names = FALSE)
+write.table(lefse_tab, &quot;DATA/PHYLOSEQ/TABLES/OUTPUT/SUPP/Table_S5.txt&quot;, 
+            quote = FALSE, sep = &quot;\t&quot;, row.names = FALSE)
+
+datatable(lefse_tab, rownames = FALSE, width = &quot;100%&quot;, 
+          caption = 
+            htmltools::tags$caption(
+              style = &quot;caption-side: bottom; text-align: left;&quot;, 
+              &quot;Table 4: &quot;, htmltools::em(&quot;Results of LEfSe analysis.&quot;)), 
+          extensions = &quot;FixedColumns&quot;, &quot;Buttons&quot;, 
+          options = list(columnDefs = 
+                           list(list(className = &quot;dt-center&quot;, 
+                                     targets = c(1, 2, 3, 4, 5, 6, 7, 8))), 
+                         dom = &quot;Blfrtip&quot;, pageLength = 5, 
+                         lengthMenu = c(5, 10, 25, 60), 
+                         buttons = c(&quot;csv&quot;, &quot;copy&quot;), 
+                         scrollX = TRUE, scrollCollapse = TRUE))</code></pre>
+<div id="htmlwidget-ab885d2f06a39e9f90a5" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ab885d2f06a39e9f90a5">{"x":{"filter":"none","extensions":["FixedColumns"],"caption":"<caption style=\"caption-side: bottom; text-align: left;\">\n  Table 4: \n  <em>Results of LEfSe analysis.<\/em>\n<\/caption>","data":[["ASV1","ASV2","ASV5","ASV6","ASV7","ASV8","ASV9","ASV12","ASV14","ASV15","ASV17","ASV18","ASV20","ASV21","ASV22","ASV23","ASV25","ASV29","ASV30","ASV32","ASV34","ASV35","ASV39","ASV41","ASV43","ASV44","ASV48","ASV49","ASV54","ASV56","ASV57","ASV60","ASV69","ASV70","ASV75","ASV82","ASV90","ASV91","ASV98","ASV114","ASV127","ASV128","ASV151","ASV159","ASV165","ASV174","ASV224","ASV226","ASV234","ASV250","ASV268","ASV284","ASV298","ASV323","ASV359","ASV374","ASV395","ASV398","ASV450"],[6.32,6.09,5.74,5.56,5.67,5.94,5.9,5.44,5.17,5.46,5.67,5.52,5.4,5.45,5.7,5.33,5.53,5.08,5.1,5.1,5.17,5.35,5.06,5.03,5.34,5.15,5.06,5.3,5.27,4.85,5.1,5.17,4.86,4.89,4.86,4.92,4.69,4.68,4.39,4.91,4.61,4.64,4.63,4.96,4.56,4.92,4.35,4.24,4.43,4.36,4.03,4.26,4.21,4.13,4.17,4.21,4.14,4.12,4.09],[4.08e-06,7.17e-08,2.46e-07,0.000698,2.83e-08,2.3e-05,7.12e-08,8.32e-09,2.08e-08,2.12e-07,2.85e-08,4.8e-08,2.39e-07,9.85e-08,6.31e-09,5.61e-07,6.61e-09,9.54e-09,7.07e-09,2.82e-08,3.73e-09,2.62e-07,1.18e-08,4.84e-05,3.22e-07,6.59e-08,9.37e-10,4.69e-07,2.73e-07,0.000187,1.94e-08,3.38e-06,1.72e-07,3.37e-08,2.18e-07,5.21e-09,4.41e-07,9.82e-05,5.43e-07,1.48e-07,4.03e-06,1.04e-07,1.31e-06,3.49e-06,5.17e-07,9.83e-06,6.08e-07,1.75e-06,2.28e-08,2.64e-07,1.16e-05,1.89e-06,1.36e-08,1.19e-05,3.16e-06,8.07e-06,8.87e-07,2.48e-06,2.63e-05],[2.42e-05,1.04e-06,2.56e-06,0.00233,5.49e-07,0.000121,1.04e-06,3.46e-07,5.04e-07,2.44e-06,9.26e-07,8.21e-07,2.56e-06,1.36e-06,3.43e-07,4.41e-06,3.43e-07,3.47e-07,3.43e-07,5.49e-07,3.43e-07,2.56e-06,3.81e-07,0.000243,2.93e-06,1.04e-06,2.73e-07,4.02e-06,2.56e-06,0.000825,5.04e-07,2.14e-05,2.08e-06,6.13e-07,2.44e-06,3.43e-07,3.89e-06,0.000484,4.39e-06,1.87e-06,2.42e-05,1.38e-06,9.55e-06,2.16e-05,4.29e-06,5.61e-05,4.65e-06,1.24e-05,5.1e-07,2.56e-06,6.36e-05,1.31e-05,3.97e-07,6.39e-05,2.05e-05,4.69e-05,6.62e-06,1.64e-05,0.000134],[23204,29194,1094679,121077,6892,1747509,1596244,1622,0,11106,7430,0,4132,561008,5987,0,675931,0,0,0,0,443306,0,0,440237,279421,0,397982,375637,6043,3262,139761,4023,0,0,5437,35318,7953,0,8888,32791,21602,23021,3776,0,12573,44386,0,18414,31714,371,0,0,554,7238,12274,0,26184,0],[18298,9112,0,584730,0,5536,3802,0,301,8673,0,1103,0,482959,1005789,0,257979,0,0,0,0,1179,0,0,418,271074,0,3042,2357,98930,0,297340,0,0,0,0,7712,98495,0,161152,81982,88063,84597,181635,0,166344,39167,0,54441,45475,2005,366,0,27249,29772,32393,0,16429,0],[10635,2445517,7915,853585,2856,4446,5436,0,0,577073,3700,0,508104,1032,72,0,2040,0,0,0,0,1816,0,0,607,0,0,4757,930,147544,253738,504,143659,0,145404,167737,0,41027,0,2036,0,152,0,222,3106,0,0,0,0,0,21942,2671,32359,9639,0,1010,2416,1026,2206],[4231009,832447,460456,142358,847753,2048,0,207423,292915,232842,841226,0,99896,139,0,15073,0,135183,128014,61221,4316,134,0,73551,597,0,0,0,479,14805,2081,0,36418,155165,28103,0,9180,3831,42446,0,0,0,0,0,1351,0,0,267,0,0,2852,494,3122,14558,0,0,264,0,745],[396250,5226,444272,569007,927517,3601,0,546867,273011,4653,930856,666143,0,0,0,425503,0,242924,249291,254273,292474,0,231311,216475,0,0,230663,253,0,25253,0,0,0,1492,0,0,98322,10014,49249,0,0,0,0,0,72328,0,437,34625,0,0,12680,36461,0,0,0,0,27385,0,24618]],"container":"<table class=\"Buttons\">\n  <thead>\n    <tr>\n      <th>ASV<\/th>\n      <th>LDAscore<\/th>\n      <th>Pvalues<\/th>\n      <th>FDR<\/th>\n      <th>AcCoe<\/th>\n      <th>AcTra<\/th>\n      <th>ScTae<\/th>\n      <th>SpAur<\/th>\n      <th>SpVir<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-center","targets":[1,2,3,4,5,6,7,8]}],"dom":"Blfrtip","pageLength":5,"lengthMenu":[5,10,25,60],"buttons":["csv","copy"],"scrollX":true,"scrollCollapse":true,"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<hr />
+</div>
+</div>
+<div id="core-microbiome" class="section level2">
+<h2>Core microbiome</h2>
+<p>Before getting knee deep in the DA ASV analysis lets see if we can’t identify some core elements, or ASVs, to these fish. First we need a mothur-formatted <code>.shared</code> file. This is the code …</p>
+<pre class="r"><code>cm &lt;- read.table(&quot;DATA/PHYLOSEQ/TABLES/OUTPUT/OTHER/seq_tab_for_core.txt&quot;, 
+                 sep = &quot;\t&quot;, header = TRUE, row.names = 1)
+cm_t &lt;- t(cm) 
+cm_df &lt;- as.data.frame(cm_t)
+numcols &lt;- ncol(cm_df)
+cm_df &lt;- cm_df %&gt;% tibble::rownames_to_column(&quot;Group&quot;)
+cm_df &lt;- cm_df %&gt;% 
+  mutate(label = 0.03, numOtus = numcols) %&gt;% 
+  select(label, Group, numOtus, everything())
+
+write.table(cm_df, &quot;DATA/PHYLOSEQ/TABLES/OUTPUT/OTHER/ps_slv_work_filt.txt&quot;, 
+            quote = FALSE, sep = &quot;\t&quot;, row.names = FALSE)
+
+####COMBINE by fish species
+
+cm_Merge &lt;- cm %&gt;% tibble::rownames_to_column(&quot;ASV&quot;)
+
+cm_Merge &lt;- cm_Merge %&gt;% mutate(AcCoe = 
+                                  AcCoe01 + AcCoe02 + AcCoe03 + AcCoe04 + 
+                                  AcCoe05 + AcCoe06 + AcCoe07 + AcCoe08)
+cm_Merge &lt;- cm_Merge %&gt;% mutate(AcTra = 
+                                  AcTra01 + AcTra02 + AcTra03 + AcTra04 + 
+                                  AcTra05 + AcTra06 + AcTra07 + AcTra08 + 
+                                  AcTra09)
+cm_Merge &lt;- cm_Merge %&gt;% mutate(ScTra = 
+                                  ScTae01 + ScTae02 + ScTae03 + ScTae04 + 
+                                  ScTae05 + ScTae06 + ScTae07 + ScTae08 + 
+                                  ScTae09)
+cm_Merge &lt;- cm_Merge %&gt;% mutate(SpAur = 
+                                  SpAur01 + SpAur02 + SpAur03 + SpAur04 + 
+                                  SpAur05 + SpAur06 + SpAur07 + SpAur08 + 
+                                  SpAur09 + SpAur10 + SpAur11 + SpAur12 + 
+                                  SpAur13)
+cm_Merge &lt;- cm_Merge %&gt;% mutate(SpVir = 
+                                  SpVir01 + SpVir02 + SpVir03 + SpVir04 + 
+                                  SpVir05 + SpVir06 + SpVir07 + SpVir08 + 
+                                  SpVir09 + SpVir10 + SpVir11)
+
+cm_Merge &lt;- cm_Merge %&gt;% select(ASV, AcCoe, AcTra, ScTra, SpAur, SpVir)
+cm_Merge_2 &lt;- cm_Merge[, -1]
+rownames(cm_Merge_2) &lt;- cm_Merge[, 1]
+
+cm_Merge_2_t &lt;- t(cm_Merge_2)
+cm_Merge_2_df &lt;- as.data.frame(cm_Merge_2_t)
+
+cm_Merge_2_df &lt;- cm_Merge_2_df %&gt;% 
+  tibble::rownames_to_column(&quot;Group&quot;)
+cm_Merge_2_df &lt;- cm_Merge_2_df %&gt;% 
+  mutate(label = 0.03, numOtus = numcols) %&gt;% 
+  select(label, Group, numOtus, everything())
+write.table(cm_Merge_2_df, &quot;DATA/PHYLOSEQ/TABLES/OUTPUT/OTHER/ps_slv_work_filt_combine.txt&quot;, 
+            quote = FALSE, sep = &quot;\t&quot;, row.names = FALSE)</code></pre>
+<p>Next we use the output to run <code>get.coremicrobiome</code> in mothur.</p>
+</div>
+<div id="searching-public-databases" class="section level2">
+<h2>Searching public databases</h2>
+<p>Next we wanted to know where else these ASVs had been detected in nature. There is a huge wealth of publicly available sequence information from many studies and habitats. We can use this information to get a better idea of the distribution and habitat specificity of the DA ASVs. To accomplish this we performed the following steps:</p>
+<ol style="list-style-type: decimal">
+<li><p>First we needed a phyloseq object that only contained the DA ASVs. To do this, we passed an object consisting of just these 59 ASVs (from the LEfSe analysis) to the phyloseq function <code>prune_taxa</code>. We needed two different <code>ps</code> objects, one from the unmerged object (<code>ps_slv_work_filt</code>) and the other from the merged-by-genus object (<code>mergedGP</code>).</p></li>
+<li><p>Next we needed a fasta file of our DA ASVs. We could not find an easy way to export a fasta file from the new <code>ps</code> objects. So we tried this using the <code>tax_table</code>. This approach works but, well, it is not very elegant. If you want a fasta file from any other <code>ps</code> objects just swipe out the name of the <code>ps</code> object in the code below. Anyway, we will generate and save a fasta file.</p></li>
+</ol>
+<div class="warning">
+<p>On the mac we used to analyze the data, for some reason, saves the fasta file with <code>Line Break Type</code> as <code>Legacy Mac(CR)</code>. This may be incompatible with other programs and needs to be changed to <code>UNIX (LS)</code>. I know, don’t quit my day job, except this is my day job :/</p>
+</div>
+<p>
+</p>
+<pre class="r"><code># Object of DA ASVs
+lefse_asvs &lt;- c(&quot;ASV21&quot;, &quot;ASV25&quot;, &quot;ASV35&quot;, &quot;ASV44&quot;, &quot;ASV159&quot;, 
+                &quot;ASV17&quot;, &quot;ASV174&quot;, &quot;ASV22&quot;, &quot;ASV234&quot;, &quot;ASV60&quot;, 
+                &quot;ASV114&quot;, &quot;ASV268&quot;, &quot;ASV14&quot;, &quot;ASV226&quot;, &quot;ASV23&quot;, 
+                &quot;ASV29&quot;, &quot;ASV30&quot;, &quot;ASV48&quot;, &quot;ASV90&quot;, &quot;ASV98&quot;, &quot;ASV18&quot;, 
+                &quot;ASV41&quot;, &quot;ASV7&quot;, &quot;ASV43&quot;, &quot;ASV5&quot;, &quot;ASV54&quot;, &quot;ASV8&quot;, 
+                &quot;ASV9&quot;, &quot;ASV250&quot;, &quot;ASV12&quot;, &quot;ASV32&quot;, &quot;ASV34&quot;, &quot;ASV39&quot;, 
+                &quot;ASV224&quot;, &quot;ASV398&quot;, &quot;ASV127&quot;, &quot;ASV128&quot;, &quot;ASV151&quot;, 
+                &quot;ASV323&quot;, &quot;ASV359&quot;, &quot;ASV374&quot;, &quot;ASV91&quot;, &quot;ASV56&quot;, &quot;ASV6&quot;, 
+                &quot;ASV165&quot;, &quot;ASV284&quot;, &quot;ASV395&quot;, &quot;ASV450&quot;, &quot;ASV15&quot;, &quot;ASV2&quot;, 
+                &quot;ASV20&quot;, &quot;ASV298&quot;, &quot;ASV57&quot;, &quot;ASV69&quot;, &quot;ASV75&quot;, &quot;ASV82&quot;, 
+                &quot;ASV1&quot;, &quot;ASV70&quot;, &quot;ASV49&quot;)
+
+# Create ps objects
+da_asvs &lt;- prune_taxa(lefse_asvs, mergedGP)
+da_asvs_full &lt;- prune_taxa(lefse_asvs, ps_slv_work_filt)
+# Create fasta file from tax_table
+table2format &lt;- tax_table(da_asvs)
+#retain only the column with the sequences
+table2format_trim &lt;- table2format[, 7]  
+table2format_trim_df &lt;- data.frame(row.names(table2format_trim), 
+                                   table2format_trim)
+colnames(table2format_trim_df) &lt;- c(&quot;ASV_ID&quot;, &quot;ASV_SEQ&quot;)
+#format fasta
+table2format_trim_df$ASV_ID &lt;- sub(&quot;ASV&quot;, &quot;&gt;ASV&quot;, table2format_trim_df$ASV_ID)
+
+write.table(table2format_trim_df, &quot;DATA/PHYLOSEQ/TABLES/OUTPUT/ASV_FOR_BLAST.fasta&quot;, 
+            sep = &quot;\r&quot;, col.names = FALSE, row.names = FALSE, 
+            quote = FALSE, fileEncoding = &quot;UTF-8&quot;)</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>With our newly created DA ASV fasta file we can move on to database searching. We used <a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&amp;PAGE_TYPE=BlastSearch&amp;LINK_LOC=blasthome" target="_blank">BLASTn</a> against the <em>nr</em> database to search publicly available sequence data. We used these settings:
+<ul>
+<li>optimized for highly similar sequences (megablast)</li>
+<li>Expect threshold = 10</li>
+<li>Word size = 28</li>
+<li>Match/Mismatch Scores = 1, -2</li>
+<li>Gap Costs = linear.</li>
+<li>retain top 10 hits</li>
+</ul></li>
+</ol>
+<p>Here are the top BLAST hits for each DA ASV. The table displays a lot of information about each BLAST search (it scrolls along the x-axis by the way). Most importantly are the accession numbers of top BLAST hits (subject acc.var), number of 100% identical matches (num perfect hits), the percent identity, and some info on where/when the hit sequence was originally found. Where applicable, there is also PubMedIDs so you can find the paper that reported the sequence. Looking at this table will give you a preliminary sense of the ecology of these ASVs. For example, most hits come from intestinal communities, many of which are marine herbivorous fish. But the low percent identity of several ASVs indicates that these sequences have been poorly sampled. This is not surprising given the geographic skew of sampling.</p>
+<hr />
+<div id="top-hits-from-blastn-analysis" class="section level4">
+<h4>Top hits from BLASTn analysis</h4>
+<pre class="r"><code>blast_tab &lt;- read.table(&quot;DATA/PHYLOSEQ/TABLES/INPUT/BLAST_results.txt&quot;, 
+                        header = TRUE, sep = &quot;\t&quot;, check.names = FALSE)
+write.table(blast_tab, &quot;DATA/PHYLOSEQ/TABLES/OUTPUT/BLAST_RESULTS.txt&quot;, 
+            row.names = FALSE, sep = &quot;\t&quot;, quote = FALSE)
+
+datatable(blast_tab, rownames = FALSE, 
+          caption = 
+            htmltools::tags$caption(
+              style = &quot;caption-side: bottom; text-align: left;&quot;, 
+              &quot;Supplementary Table 6: &quot;, 
+              htmltools::em(&quot;Results of BLASTn analysis.&quot;)), 
+          extensions = &quot;FixedColumns&quot;, &quot;Buttons&quot;, 
+          options = list(columnDefs = 
+                           list(list(className = &quot;dt-center&quot;, 
+                                     targets = c(1, 2, 3, 4, 5, 6, 7, 8))), 
+                         dom = &quot;Blfrtip&quot;, pageLength = 5, 
+                         lengthMenu = c(5, 10, 25, 65), 
+                         buttons = c(&quot;csv&quot;, &quot;copy&quot;), 
+                         scrollX = TRUE, scrollCollapse = TRUE))</code></pre>
+<div id="htmlwidget-52fb08681f04f930ed9b" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-52fb08681f04f930ed9b">{"x":{"filter":"none","extensions":["FixedColumns"],"caption":"<caption style=\"caption-side: bottom; text-align: left;\">\n  Supplementary Table 6: \n  <em>Results of BLASTn analysis.<\/em>\n<\/caption>","data":[["ASV1","ASV2","ASV5","ASV6","ASV7","ASV8","ASV9","ASV12","ASV14","ASV15","ASV17","ASV18","ASV20","ASV21","ASV22","ASV23","ASV25","ASV25","ASV29","ASV30","ASV32","ASV32","ASV34","ASV35","ASV39","ASV41","ASV43","ASV44","ASV48","ASV49","ASV54","ASV54","ASV56","ASV57","ASV60","ASV69","ASV70","ASV75","ASV82","ASV90","ASV91","ASV98","ASV114","ASV114","ASV127","ASV128","ASV151","ASV159","ASV165","ASV174","ASV174","ASV174","ASV224","ASV226","ASV234","ASV250","ASV268","ASV284","ASV298","ASV323","ASV359","ASV374","ASV395","ASV398","ASV450"],["FJ653974.1","KU243216.1","HM630195.1","NR","FJ653974.1","KT952838.1","HM630195.1","NR","KT952747.1","KU243216.1","KT952714.1","FJ653974.1","KU243216.1","KT952562.1","HM630215.1","KT952747.1","KT952551.1","KT952552.1","KT952726.1","KT952714.1","HM630239.1","KJ007903.1","HM630195.1","KT952865.1","HM630195.1","FJ653974.1","JQ072780.1","HM630156.1","HG971013.1","HG971001.1","FJ798923.1","KF318247.1","HM630158.1","KU243216.1","HM630156.1","KU243216.1","FJ653974.1","KU243216.1","KU243216.1","KT952726.1","FJ425653.1","KT952868.1","FJ653947.1","FJ654008.1","GU451391.1","FJ930872.1","KC668971.1","KT952728.1","FJ652514.1","AB054173.1","GQ359998.1","KC669122.1","NR","HG971013.1","KT952869.1","JX457189.1","EU764889.1","HM630171.1","KU243216.1","GU118005.1","HQ393416.1","KC878383.1","KU578573.1","NR","FJ203509.1"],[0,0,0,50,0,0,0,50,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,4,0,2,0,0,0,30,0,0,0,0,0,0,2,0,4,0,7,0],["98.4","99.47","99.19","NR","98.94","98.39","98.93","NR","98.64","98.94","95.46","98.67","100","96.27","98.38","98.91","96.81","96.81","99.73","96.79","99.19","99.19","99.19","98.93","99.46","99.2","97.34","99.73","92.78","99.2","97.87","97.87","100","98.94","99.2","99.47","98.14","99.2","98.94","100","100","97.55","99.47","99.47","96.82","97.08","100","99.46","100","94.68","94.68","94.68","NR","93.33","98.15","99.47","95.49","99.47","98.94","100","97.61","100","100","NR","99.47"],["intestinal tract","surface mucus","intestinal tract","NR","intestinal tract","intestinal tract","intestinal tract","NR","intestinal tract","surface mucus","intestinal tract","intestinal tract","surface mucus","intestinal tract","intestinal tract","intestinal tract","intestinal tract","intestinal tract","intestinal tract","intestinal tract","intestinal tract","reef water","intestinal tract","intestinal tract","intestinal tract","intestinal tract","brewery wastewater","intestinal tract","intestinal tract","intestinal tract","intestinal tract","intestinal tract","intestinal tract","surface mucus","intestinal tract","surface mucus","intestinal tract","surface mucus","surface mucus","intestinal tract","ND","intestinal tract","intestinal tract","intestinal tract","macroalgal surface","mucus","ND","intestinal tract","ND","sponge","intestinal tract","ND","NR","intestinal tract","intestinal tract","intestinal tract","fecal sample","intestinal tract","surface mucus","ND","intestinal tract","coral reef water","ocean water","NR","healthy tissue"],["Acanthurus nigricans","scleractinian coral","Naso tonganus","NR","Acanthurus nigricans","Naso unicornis","Naso tonganus","NR","Acanthurus sohal","scleractinian coral","Acanthurus nigrofuscus","Acanthurus nigricans","scleractinian coral","Zebrasoma desjardinii","Naso tonganus","Acanthurus sohal","Zebrasoma xanthurum","Zebrasoma desjardinii","Acanthurus nigrofuscus","Acanthurus nigrofuscus","Naso tonganus","ND","Naso tonganus","Zebrasoma desjardinii","Naso tonganus","Acanthurus nigricans","","Naso tonganus","Siganus canaliculatus","Siganus canaliculatus","Cylindroiulus fulviceps","Hemideina thoracica","Naso tonganus","scleractinian coral","Naso tonganus","scleractinian coral","Acanthurus nigricans","scleractinian coral","scleractinian coral","Acanthurus nigrofuscus","Montastraea faveolata","Zebrasoma desjardinii","Acanthurus nigricans","Chlorurus sordidus","ND","Porites compressa","Stylophora pistillata","Acanthurus sohal","Mycale laxissima","Halichondria okadai","Pelteobagrus fulvidraco","Stylophora pistillata","NR","Siganus canaliculatus","Zebrasoma xanthurum","Periplaneta americana","Homo sapiens","Naso tonganus","scleractinian coral","Acropora cervicornis","Haliotis diversicolor","ND","","NR","Montastraea faveolata"],["Whitecheek surgeonfish","coral","bulbnose unicornfish","NR","Whitecheek surgeonfish","bulbnose unicornfish","bulbnose unicornfish","NR","Sohal surgeonfish","stony coral","spot-cheeked surgeonfish","Whitecheek surgeonfish","stony coral","Desjardin sailfin tang","bulbnose unicornfish","Sohal surgeonfish","yellowtail tang","Desjardins sailfin tang","spot-cheeked surgeonfish","spot-cheeked surgeonfish","bulbnose unicornfish","","bulbnose unicornfish","Desjardins sailfin tang","bulbnose unicornfish","Whitecheek surgeonfish","","bulbnose unicornfish","White-spotted spinefoot","White-spotted spinefoot","millipede","tree weta","bulbnose unicornfish","stony coral","bulbnose unicornfish","stony coral","Whitecheek surgeonfish","stony coral","stony coral","spot-cheeked surgeonfish","star coral","Desjardins sailfin tang","Whitecheek surgeonfish","daisy parrotfish","","finger coral","coral","Sohal surgeonfish","sponge","demosponge","yellowhead catfish","coral","NR","White-spotted spinefoot","yellowtail tang","american cockroach","human","bulbnose unicornfish","stony coral","Staghorn coral","coloured abalone","","","NR","star coral"],["376","376","372","NR","376","373","372","NR","368","376","374","376","376","375","371","368","376","376","371","374","372","372","372","374","372","376","376","375","374","374","376","376","375","376","375","376","376","376","376","371","377","368","376","376","377","377","373","373","377","376","376","376","NR","375","378","374","377","375","376","376","377","373","375","NR","377"],["6","2","3","NR","4","6","4","NR","4","4","13","5","0","14","6","3","10","10","1","11","3","3","3","3","2","3","10","1","24","3","8","8","0","4","3","2","7","3","4","0","0","9","2","2","12","11","0","2","0","18","18","18","NR","20","6","2","16","2","4","0","9","0","0","NR","1"],["0","0","0","NR","0","0","0","NR","1","0","2","0","0","0","0","1","2","2","0","1","0","0","0","1","0","0","0","0","3","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","2","2","2","NR","5","1","0","1","0","0","0","0","0","0","NR","1"],["1","1","1","NR","1","1","1","NR","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","NR","1","1","1","1","1","1","1","1","1","1","NR","1"],["376","376","372","NR","376","373","372","NR","368","376","370","376","376","375","371","368","375","375","371","373","372","372","372","373","372","376","376","375","373","374","376","376","375","376","375","376","376","376","376","371","377","368","376","376","377","377","373","373","377","375","375","375","NR","373","377","374","377","375","376","376","377","373","375","NR","377"],["478","433","478","NR","478","526","478","NR","523","433","531","478","433","472","498","523","471","471","518","531","499","476","478","529","478","478","441","471","528","512","527","468","448","433","471","433","478","433","433","518","519","495","475","484","383","467","523","516","477","483","504","503","NR","528","506","488","497","447","433","458","499","488","481","NR","501"],["853","808","849","NR","853","898","849","NR","889","808","904","853","808","846","868","889","845","845","888","904","870","847","849","902","849","853","816","845","899","885","902","843","822","808","845","808","853","808","808","888","895","862","850","859","759","843","895","888","853","857","878","877","NR","899","883","861","872","821","808","833","875","860","855","NR","876"],["0","0","0","NR","0","0","0","NR","0","0","1.06E-165","0","0","2.27E-172","0","0","1.05E-175","1.05E-175","0","1.36E-174","0","0","0","0","0","0","1.33E-179","0","4.99E-149","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","8E-177","1.72E-178","0","0","0","2.29E-162","2.29E-162","2.29E-162","NR","2.33E-152","0","0","6.33E-168","0","0","0","0","0","0","NR","0"],["662","684","671","NR","673","656","665","NR","651","673","593","667","695","616","652","656","627","627","680","623","671","671","671","669","676","678","640","688","538","675","651","651","693","673","676","684","656","678","673","686","697","632","684","684","630","636","689","678","697","582","582","582","NR","549","658","680","601","682","673","695","647","689","693","NR","684"],["2006","2011","ND","NR","2006","2013","ND","NR","2013","2011","2013","2006","2011","2013","ND","2013","2013","2013","2013","2013","ND","ND","ND","2013","ND","2006","2009","ND","ND","ND","ND","ND","ND","2011","ND","2011","2006","2011","2011","2013","2006","2013","2006","2006","ND","ND","ND","2013","2005","ND","ND","ND","NR","ND","2013","ND","2005","ND","2011","2008","ND","ND","ND","NR","2006"],["USA: Palmyra Atoll","Curacao","ND","NR","USA: Palmyra Atoll","Saudi Arabia","ND","NR","Saudi Arabia","Curacao","Saudi Arabia","USA: Palmyra Atoll","Curacao","Saudi Arabia","ND","Saudi Arabia","Saudi Arabia","Saudi Arabia","Saudi Arabia","Saudi Arabia","ND","China","ND","Saudi Arabia","ND","USA: Palmyra Atoll","USA: Colorado","ND","ND","ND","ND","New Zealand","ND","Curacao","ND","Curacao","USA: Palmyra Atoll","Curacao","Curacao","Saudi Arabia","ND","Saudi Arabia","USA: Palmyra Atoll","USA: Palmyra Atoll","ND","USA: West Maui","Red Sea","Saudi Arabia","USA: Florida","ND","China: Niushan Lake","ND","NR","ND","Saudi Arabia","ND","ND","ND","Curacao","ND","ND","Gulf of Mannar","Gulf of Mexico","NR","ND"],["20455942","26788724","Unpublished","NR","20455942","27014209","Unpublished","NR","27014209","26788724","27014209","20455942","26788724","27014209","Unpublished","27014209","27014209","27014209","27014209","27014209","Unpublished","Unpublished","Unpublished","27014209","Unpublished","20455942","Unpublished","Unpublished","Unpublished","Unpublished","Unpublished","25701133","Unpublished","26788724","Unpublished","26788724","20455942","26788724","26788724","27014209","Unpublished","27014209","20455942","20455942","21078035","Unpublished","23709513","27014209","19617876","Unpublished","ND","23709513","NR","Unpublished","27014209","Unpublished","19018661","Unpublished","26788724","20221265","Unpublished","25938436","Unpublished","NR","19129866"],[22,13,139,1984,13,96,139,376,0,13,0,13,13,0,0,0,0,0,2,0,224,224,230,7,239,12,124,0,0,16,180,180,1284,9,8,3,9,20,18,4,4,4,15,15,60,171,185,118,285,0,0,0,2187,4,23,8171,64,75,27,95,189,232,107,2460,71]],"container":"<table class=\"Buttons\">\n  <thead>\n    <tr>\n      <th>ASV<\/th>\n      <th>subject acc.ver<\/th>\n      <th>num perfect hits<\/th>\n      <th>% identity<\/th>\n      <th>isolation source<\/th>\n      <th>nat host<\/th>\n      <th>common name<\/th>\n      <th>alignment length<\/th>\n      <th>mis matches<\/th>\n      <th>gap opens<\/th>\n      <th>q. start<\/th>\n      <th>q. end<\/th>\n      <th>s. start<\/th>\n      <th>s. end<\/th>\n      <th>evalue<\/th>\n      <th>bit score<\/th>\n      <th>collection year<\/th>\n      <th>country<\/th>\n      <th>PubMedID<\/th>\n      <th>num IMNGS hits<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-center","targets":[1,2,3,4,5,6,7,8]},{"className":"dt-right","targets":19}],"dom":"Blfrtip","pageLength":5,"lengthMenu":[5,10,25,65],"buttons":["csv","copy"],"scrollX":true,"scrollCollapse":true,"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="warning">
+<p>This table also scrolls horizontally.</p>
+</div>
+<hr />
+<p>Several ASVs returned more than one match at 100%. For some ASVs, the 100% matches were from the same study/study organism, so we just selected one as the representative. ASVs 6, 12, 224, and 398 returned numerous 100% matches (out of 50 total). These data were impractical to summarize and not very informative anyway. So we elected to leave these data out. If you want to see what these hits are, just grab the ASV sequence and BLAST away.</p>
+<p>Also, some ASVs shared the same to hit. Since the table is ‘by ASV’ we retained all duplicate hits.</p>
+<ol start="4" style="list-style-type: decimal">
+<li>For phylogenetic inference we used the <a href="https://www.arb-silva.de/aligner/" target="_blank">Silva Alignment, Classification and Tree Service</a> to obtain neighbors of DA ASVs. We used these settings:
+<ul>
+<li>Search and classify: min identity = 0.95; Number of neighbors = 5.</li>
+<li>Default parameters for the remainder of the workflow.</li>
+</ul></li>
+<li>We then combined the results of the BLASTn and Silva ACT analyses and omitted duplicate hits, resulting in <strong>297</strong> top hit sequences for phylogenetic analysis.</li>
+</ol>
+</div>
+</div>
+<div id="phylogenetic-inference" class="section level2">
+<h2>Phylogenetic inference</h2>
+<p>Short read sequences are not ideal for phylogenetic analysis, but given the data we have, we felt this was a good place to start. This analysis required several steps.</p>
+<ol style="list-style-type: decimal">
+<li>We used <a href="https://www.mothur.org/wiki/" target="_blank">mothur</a> (v.1.42.1, Last updated: 5/13/19) and the <a href="https://www.mothur.org/wiki/Silva_reference_files" target="_blank">Silva full length sequences and taxonomy references (release 132)</a> to align the DA ASVs and our new reference db, and also classify the sequences. We used a <a href="https://www.mothur.org/wiki/Filter.seqs#hard" target="_blank">hard mask</a> to trim all long reads to the same length (~373bp) and 16S region as the ASVs.</li>
+</ol>
+<pre><code>mothur &quot;#align.seqs(candidate=sequence_tree.fasta, template=silva.nr_v132.align, processors=20, flip=t)&quot;  
+mothur &quot;#filter.seqs(fasta=sequence_tree.fasta, vertical = =F, hard=mask.txt)&quot;  
+mothur &quot;#classify.seqs(fasta=sequence_tree.filter.fasta, template=silva.nr_v132.align, taxonomy=silva.nr_v132.tax, processors=10)&quot;  </code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Now that we had our 59 DA ASVs and the top database hits, its was time for phylogenetic inference. We used <a href="https://sco.h-its.org/exelixis/web/software/raxml/index.html" target="_blank">RAxML-HPC</a> to generate a phylogenetic tree (with <em>Aquifex</em> as the outgroup)</li>
+</ol>
+<pre><code>raxmlHPC-PTHREADS-SSE3 -T 24 -f a -p 2345 -x 3456 -m GTRGAMMA  -N 1000 -s sequence_tree.filter.fasta -n fish_arb_align_1000BS_B.tre</code></pre>
+<div id="go-to-part-6-synthesis" class="section level4">
+<h4><a href="6_synthesis.html">Go to Part 6, Synthesis</a></h4>
+</div>
+</div>
+
+<footer role="contentinfo" id="site-footer">
+
+<hr>
+
+<!-- /.bottom-menu -->
+	<p class="copyright">&#169; 2019 metacrobe,
+		powered by <a href="http://www.r-project.org">R</a> + <a href="http://rmarkdown.rstudio.com">RMarkdown</a> + <a href="http://github.com">Github</a>.</p>
+</footer>
+
+<!--this prevents a white space at bottom of page -->
+<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;"></div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

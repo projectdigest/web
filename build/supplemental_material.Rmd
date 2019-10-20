@@ -1,0 +1,481 @@
+---
+title: "Supplemental Material for Paper"
+---
+
+```{r setup, include=FALSE}
+remove(list = ls())
+library("plyr"); packageVersion("plyr")
+library(scales)
+library(rstudioapi)
+library(knitr)
+library(kableExtra)
+library(data.table)
+library(DT)
+library(rmarkdown)
+library(formatR)
+library(tidyverse)
+library(RCurl)
+library(gapminder)
+sessionInfo()
+set.seed(0199)
+```
+
+```{r set_wd, include=FALSE}
+knitr::opts_knit$set(root.dir = getwd())
+## This will setwd to wherever the .Rmd file is opened.
+## Uncomment to LINT
+#library(lintr)
+#lintr::lint(
+#  filename = "Supplementary.Rmd",
+#  linters = lintr::with_defaults(
+#    trailing_whitespace_linter = NULL, 
+#    snake_case_linter = NULL
+#  )
+#)
+```
+
+***
+
+<div class = "notice">
+
+This document contains all seven  supplementary tables and the supplementary figure for the paper. Tables are horizontally scrollable. You can sort tables and download (or copy) the data. Some tables contain external hyperlinks.
+
+</div>
+<p></p>
+
+## Contents
+
+[Data Availability](#Data Availability): DOI and accession numbers for study related data.  <br>
+[Sample Naming](#Sample Naming): Naming scheme for samples.    
+[Supplementary Methods](#Supplementary Methods): Details on DNA extraction, sequencing, and read processing.  
+[Table S1](#Table S1): Summary of field-based feeding observations.  
+[Table S2](#Table S2): Number of bites observed for each herbivore species at each site.  
+[Table S3](#Table S3): Metadata and microbiome diversity estimates for each sample.  
+[Table S4](#Table S4): Total taxonomic diversity (by Class) of herbivore microbiomes.  
+[Figure S1](#Figure S1): Class-level relative abundance of microbial communities from each sample.  
+[Table S5](#Table S5): Results of LEfSe analysis.  
+[Table S6](#Table S6): Results of BLAST analysis for DA ASVs.  
+[Table S7](#Table S7): Accession numbers and unique codes for sequence data in Figure 3.  
+
+***
+
+<a id="Data Availability"></a>
+
+## Data Availability
+
+We  made additional data products and processing scripts available through online repositories.  
+
+* [10.6084/m9.figshare.6875522](https://doi.org/10.6084/m9.figshare.6875522){target="_blank"}: Raw data for each sample (before removing primers).  
+* [PRJEB28397](https://www.ebi.ac.uk/ena/data/view/PRJEB28397){target="_blank"}: Study accession number for trimmed data (primers removed)  deposited at the European Nucleotide Archive.  
+* [10.6084/m9.figshare.6997253](https://doi.org/10.6084/m9.figshare.6997253){target="_blank"}: DADA2 workflow for processing 16S rRNA reads.  
+* [10.6084/m9.figshare.7357178](https://doi.org/10.6084/m9.figshare.7357178){target="_blank"}: Reproducible phyloseq workflow. This includes the output from the DADA2 workflow, the phyloseq script, and other necessary input files.  
+* [10.6084/m9.figshare.7379930](https://doi.org/10.6084/m9.figshare.7379930){target="_blank"}: Data products from the workflows including otu_table, tax_table, sample_data table and ASV fasta files.   
+* [10.6084/m9.figshare.7379936](https://doi.org/10.6084/m9.figshare.7379936){target="_blank"}: Fasta file for the 59 DA ASVs, BLAST results, and alignment file including top BLAST hits.   
+* [10.6084/m9.figshare.7379597](https://doi.org/10.6084/m9.figshare.7379597){target="_blank"}: This file.  
+
+***
+
+<a id="Sample Naming"></a>
+
+## Sample Naming
+
+<div class="notice">
+Raw fastq data files were named using the root format *RunQ_GnSpe000_G* where:  
+* Q was the run number (1, 2, or 3),   
+* GnSpe was the host genus and species,   
+* 000 was a unique host ID number, and   
+* G was the gut segment (F = foregut; M = midgut; H = hind).   
+</div>
+
+For example, the file name  *Run1_SpVir11_M_S147_L001_R2_001.fastq* corresponded to: the reverse read; midgut sample; *Sparisoma viride*; individual 11; Run01. All raw data are publicly available. The 53 individual fish encompassed seven species and three genera. Two species---*Sparisoma chrysopterum* and *Scarus vetula*---were only represented by 1 and 2 individuals, respectively. Though we omitted these samples from the analysis due to low sample size, they were sequenced and processed along with the rest of the samples. The data are publicly available.
+
+***
+
+<a id="Supplementary Methods"></a>
+
+## Supplementary Methods
+
+#### DNA extraction, sequencing, & read processing
+
+<div class="warning">
+Reference numbers in brackets refer to the bibliography in the main paper.
+</div>
+
+For all samples, we homogenized material from each gut segment (fore, mid, hind) in separate 50 mL conical tubes for 10 minutes on a Vortex Genie 2. We collected 200 mg (wet weight) of homogenate for DNA extraction following the Human Microbiome Project Core Microbiome Sampling Protocol A (v12.0, HMP Protocol # 07-001) for stool samples. We heat treated each sample, first at 65°C for 10 minutes, followed by 95°C for 10 minutes. We then used the PowerSoil® DNA Isolation Kit (formerly MoBio, Carlsbad CA, USA) following the manufacturer's protocol to extract community DNA from each sample. Extracted DNA was sequenced on an Illumina MiSeq by Integrated Microbiome Resource (Dalhousie University). We targeted the V4–V5 hypervariable region using 515F and 926R primers [49]. We generated sequence data for 159 samples—three gut segments (fore, mid, and hind) from 53 individuals. Sequencing was conducted across three runs. In Run01, 144 samples were sequenced and, due to lower than average yield, were re-sequenced (Run02). The remaining 15 samples were sequenced on a separate run (Run03). 
+
+Cutadapt [50] was used to remove adapter sequences (max error rate = 0.12) and then mothur [51] was used to merge fastq files for each gut segment by individual and run (i.e., to pool the sequencing data produced among the three gut segments within an individual). We used DADA2 [52] following the Bioconductor workflow (v2) proposed by Callahan and colleagues [53] to filter and trim based on the quality profiles (maxN = 0; maxEE = 2, 5; truncQ = 2; and truncLen = 270, 200), error correct, dereplicate, and infer amplicon sequence variants (ASVs). ASVs are analogous to OTUs, but have higher (single nucleotide) resolution [54]. We merged pair-end reads, constructed sequence tables for each run, and removed amplicons > 380 or < 368 base pairs. We combined sequence tables from replicate runs (Run01 & Run02) and merged this table with the sequence table from Run03. Finally, we removed chimeras (method = "consensus") and assigned taxonomy against the Silva_nr_v132_train_set. See the electronic supplementary materials for details about obtaining the DADA2 workflow and associated data products. 
+
+In addition to the host species listed in the main text, we also collected two individuals from *Scarus  vetula*, and one individual from *Sparisoma  chrysopterum* in July 2016 at Pickles Reef, Upper Florida Keys, USA. Though these samples were sequenced and the data is publically available, the samples were removed from the study due to a low sample size of collected fish.
+
+See the [Data Availability] section above for accession numbers and more details on obtaining raw sequencing data, workflows, data products, etc.
+
+***
+
+<a id="Table S1"></a>
+
+## Table S1
+
+<div class = "notice">
+
+Summary data from observations of individual bites by five species of herbivorous fishes in the Florida Keys.  Data include the mean sediment depth and turf height of algal assemblages fed on by each species at each of three sites, as well as the proportion of bites that resulted in a grazing scar on the substrate where reef calcium carbonate had been removed (Prop. grazing scar). The table summarizes the proportion of bites on vertical (> 45 degrees), concave, and convex substrates as well as the relative proportion of bites targeting each of the 10 food types most commonly bitten during the observations.  Most macroalgae were aggregated to genus while other food types are summarized by functional group. 
+</div>
+<p> </p>
+
+```{r suppl_table_1, echo=FALSE, cache = TRUE}
+table_s1 <- read.table("DATA/SUPPLEMENTARY_FILE/table_S1.txt", 
+                      sep = "\t", header = TRUE)
+
+datatable(table_s1, rownames = FALSE, width = "100%", colnames = c(
+        "Host species", "Site", "Sediment depth (mm)", "Turf height(mm)", 
+        "Prop. grazing scar", "Prop. vertical", "Prop. concave", 
+        "Prop. convex", "Articulated red coralline", "CCA/Turf on CCA", 
+        "Dictyota", "Epiphytes", "Gorgonian", "Halimeda", "Laurencia", 
+        "Sponge", "Stypopodium", "Turf"), 
+    caption = htmltools::tags$caption(
+      style = "caption-side: bottom; text-align: left;", 
+            "Supplementary Table 1: ", 
+    htmltools::em("Summary of field-based feeding observations.")), 
+    extensions = "Buttons", 
+    options = list(columnDefs = list(list(className = "dt-left", targets = 0)), 
+        dom = "Blrtip", pageLength = 5, 
+        lengthMenu = list(c(5, 10, -1), c("5", "10", "All")), 
+        buttons = c("csv", "copy"), scrollX = TRUE, scrollCollapse = TRUE))
+
+```
+
+
+<div class="warning">
+Table scrolls horizontally.
+</div>
+
+
+***
+
+<a id="Table S2"></a>
+
+## Table S2
+
+<div class = "notice">
+This table summarizes the number of individual bites observed by each of the five species of herbivorous fishes at each of three sites in the Florida Keys.
+</div>
+<p></p>
+
+```{r suppl_table_2, echo=FALSE, cache = TRUE}
+table_s2 <- read.table("DATA/SUPPLEMENTARY_FILE/table_S2_links.txt", 
+                      sep = "\t", header = TRUE)
+
+datatable(table_s2, escape = 2, rownames = FALSE, width = "100%", colnames = c(
+        "Host species", "Conch", "French", "Molasses", "Total"), 
+    caption = htmltools::tags$caption(
+      style = "caption-side: bottom; text-align: left;", 
+            "Supplementary Table 2: ", 
+    htmltools::em("Number of bites observed for 
+                  each herbivore species at each site.")), 
+    extensions = "Buttons", 
+    options = list(columnDefs = list(list(className = "dt-left", targets = 0)), 
+        dom = "Brti", pageLength = 5, buttons = c("csv", 
+            "copy"), scrollX = TRUE, scrollCollapse = TRUE))
+```
+
+***
+
+<a id="Table S3"></a>
+
+## Table S3
+
+<div class = "notice">
+This table summarizes metadata for each host species and sample (**sample_ID**) used in this study. Includes various details about the host (e.g., weight, length, gut length, etc.) and the associated microbiome (e.g., number of reads, diversity stats, etc). 
+</div>
+<p></p>
+
+
+```{r suppl_table_3, echo=FALSE, cache = TRUE}
+table_s3 <- read.table("DATA/SUPPLEMENTARY_FILE/table_S3_links.txt", 
+                      sep = "\t", header = TRUE)
+
+datatable(table_s3, escape = 4, rownames = FALSE, width = "100%", colnames = c(
+        "Sample ID", "Host genus", "Host species", "Common name", 
+        "NCBI tAxID", "Collection date", "Life phase", "Weight (g)", 
+        "Total length (cm)", "Foregut length (cm)", "Midgut length (cm)", 
+        "Hindgut length (cm)", "Total gut length (cm)", "Total reads", 
+        "Total ASVs", "Chao1", "Chao1 (se)", "ACE", "ACE (se)", 
+        "Shannon", "Simpson", "InvSimpson", "Fisher"), 
+    caption = htmltools::tags$caption(
+      style = "caption-side: bottom; text-align: left;", 
+            "Supplementary Table 3: ", 
+    htmltools::em("Metadata and microbiome diversity 
+                  estimates for each sample.")), 
+    extensions = "Buttons", 
+    options = list(columnDefs = list(list(className = "dt-left", targets = 0)), 
+        dom = "Blrtip", pageLength = 5, 
+        lengthMenu = list(c(5, 10, -1), c("5", "10", "All")), 
+        buttons = c("csv", "copy"), scrollX = TRUE, scrollCollapse = TRUE))
+
+```
+
+<div class="warning">
+Table is horizontally scrollable. 
+</div>
+
+<center><font size="4" color="red">Column descriptions</font></center>
+
+#### Host details
+
+* **SampleID** 
+* **Host genus** 
+* **Host species**
+* **Common name**
+* **NCBI tAxID** [NCBI Taxonomic ID](https://www.ncbi.nlm.nih.gov/taxonomy){target="_blank"} of host species. 
+* **Collection date** 
+
+#### Host physiological characteristics 
+
+* **Life phase** 
+* **Weight (g)**
+* **Total length (cm)**
+* **Foregut length (cm)**
+* **Midgut length (cm)**
+* **Hindgut length (cm)**
+* **Total gut length (cm)**
+
+#### Microbial diversity 
+
+* **Total reads** Total reads for each sample.
+* **Total ASVs** Number of ASVs detected in each sample.
+* **Chao1** The Chao1 richness estimator.
+* **Chao1 (se)** Standard error of Chao1 index
+* **ACE** The ACE richness estimator.
+* **ACE (se)** Standard error of ACE index
+* **Shannon** The Shannon diversity index
+* **Simpson** The Simpson diversity index.
+* **InvSimpson** Inverse Simpson's Index
+* **Fisher** Fisher diversity Index.
+
+***
+
+<a id="Table S4"></a>
+
+## Table S4
+
+<div class = "notice">
+
+This table shows the Class-level taxonomic diversity of the total microbiome dataset. Data shows the total number of reads and total number of ASVs for each Class plus the relative percent of each in the dataset. 
+</div>
+<p></p>
+
+
+```{r suppl_table_4, echo=FALSE, cache = TRUE}
+table_s4 <- read.table("DATA/SUPPLEMENTARY_FILE/table_S4.txt", 
+                      sep = "\t", header = TRUE)
+
+datatable(table_s4, rownames = FALSE, width = "100%", colnames = c(
+        "Class", "Total reads", "% of total reads", 
+        "Total ASVs", "% of total ASVs", "Kingdom", "Phylum"), 
+    caption = htmltools::tags$caption(
+      style = "caption-side: bottom; text-align: left;", 
+            "Supplementary Table 4: ", 
+    htmltools::em("Total taxonomic diversity (by Class) 
+                  of herbivore microbiomes.")), 
+    extensions = "Buttons", 
+    options = list(columnDefs = list(list(className = "dt-left", targets = 0)), 
+        dom = "Blfrtip", pageLength = 10, 
+        lengthMenu = list(c(10, 25, -1), c("10", "25", "All")), 
+        buttons = c("csv", "copy"), scrollX = TRUE, scrollCollapse = TRUE))
+```
+
+
+***
+
+<a id="Figure S1"></a>
+
+## Figure S1
+
+<div class = "notice">
+
+In [Figure 2A](4_diversity.html#abundance_by_host_species){target="blank"} of the main paper, Class-level abundance was displayed by host species. Here the same data is presented for each individual samples.  
+
+</div>
+<p></p>
+
+```{r insert_itol, out.width = "100%", fig.cap = "Supplementary Figure 1: *Class-level relative abundance of microbial communities from each sample. Taxa representing less than 2.5% total relative abundance were conglomerated into **Other**.*", echo = FALSE, cache = TRUE}
+# This is to include a static image
+supp_fig1 <- knitr::include_graphics("DATA/SUPPLEMENTARY_FILE/Figure_S1.svg")
+supp_fig1
+invisible(dev.off())
+```
+
+***
+
+<a id="Table S5"></a>
+
+## Table S5
+
+<div class = "notice">
+Table showing the results from the LEfSe analysis including Linear discriminant analysis (LDA) scores, P-values adjusted for multiple testing, and False Discovery Rate (FDR) values. Normalized read abundance values (the input for the analysis) for each host species are also given.
+</div>
+<p></p>
+
+```{r suppl_table_5, echo=FALSE, cache = TRUE}
+table_s5 <- read.table("DATA/SUPPLEMENTARY_FILE/table_S5.txt", 
+                      sep = "\t", header = TRUE)
+
+datatable(table_s5, rownames = FALSE, width = "100%", 
+          colnames = c("ASV", "LDA score", "P value", "FDR", 
+                       "AcCoe", "AcTra", "ScTae", "SpAur", "SpVir"), 
+    caption = htmltools::tags$caption(
+      style = "caption-side: bottom; text-align: left;", 
+            "Supplementary Table 5: ", 
+    htmltools::em("Results of LEfSe analysis.")), 
+    extensions = "Buttons", 
+    options = list(columnDefs = list(list(className = "dt-left", targets = 0)), 
+        dom = "Blrtip", pageLength = 10, 
+        lengthMenu = list(c(10, 25, -1), c("10", "25", "All")), 
+        buttons = c("csv", "copy"), scrollX = TRUE, scrollCollapse = TRUE))
+```
+
+#### Host abbreviations
+
+* AcCoe: *Acanthurus coeruleus*
+* AcTra: *Acanthurus tractus*
+* ScTae: *Scarus	taeniopterus*
+* SpAur: *Sparisoma	aurofrenatum*
+* SpVir: *Sparisoma	viride*
+
+***
+
+<a id="Table S6"></a>
+
+## Table S6
+
+<div class = "notice">
+
+Full summary table of BLAST analysis for each of the 59 differentially abundant (DA) ASV. The table includes some details about each ASV (e.g., total reads), details of top BLAST hit(s), and alignment results. The table also includes results from queries to the IMNGS database. 
+
+</div>
+<p></p>
+
+```{r suppl_table_6, echo=FALSE, cache = TRUE}
+table_s6 <- read.table("DATA/SUPPLEMENTARY_FILE/table_S6_links.txt", 
+                      sep = "\t", header = TRUE)#, 
+                      #colClasses=c("X..identity" = "numeric"))
+
+datatable(table_s6, escape = 7, rownames = FALSE, width = "100%", 
+          colnames = c("ASV", "Putative habitat", "Enriched", "Total reads", 
+                       "Taxon", "Num IMNGS hits", "Num perfect hits", 
+                       "Top hit acc", "% identity", "Isolation source", 
+                       "Nat host", "Common name", "Collection year", 
+                       "Country", "PubMed ID", "Sullam lifestyle", 
+                       "Alignment length", "Mismatches", "Gap opens", 
+                       "Q. start", "Q. end", "S. start", "S. end", 
+                       "Evalue", "Bit score"), 
+    caption = htmltools::tags$caption(
+      style = "caption-side: bottom; text-align: left;", 
+            "Supplementary Table 6: ", 
+    htmltools::em("Results of BLAST analysis for DA ASVs.")), 
+    extensions = "Buttons", 
+    options = list(columnDefs = list(list(className = "dt-center", 
+                                          targets = "_all")), 
+                   dom = "Blfrtip", pageLength = 10, 
+                   lengthMenu = list(c(10, 25, -1), c("10", "25", "All")), 
+                   buttons = c("csv", "copy"), 
+                   scrollX = TRUE, scrollCollapse = TRUE))
+```
+
+<div class="warning">
+Table scrolls horizontally.
+</div>
+
+<br>
+
+##### Abbreviations
+
+**ND** Indicates *No Data* was provided for given attribute of top BLAST hit.  
+**NR** In *Top hit acc* column indicates *Not Recorded*. Four ASVs (ASV6, ASV12, ASV224, ASV398) had numerous hits at 100% identity. We did not include *top hit* data for these ASVs.  
+**NLC** No Lifestyle Category from  Sullam classification. 
+
+***
+
+<center><font size="4" color="red">Column descriptions</font></center>
+
+#### ASV details
+
+* **ASV** Query ASV.
+* **Putative habitat** Proposed habitat preference based on data synthesis.
+* **Enriched** Host species where ASV was differentially abundant.
+* **Total reads** Total reads for query ASV in full dataset.
+* **Taxon** Class-level taxonomic affiliation of query ASV.
+* **Num IMNGS hits**. Number of hits to the [IMNGS](https://www.imngs.org/){target="_blank"} database. Value indicates the number of samples that scored a hit to an ASV based on 97% cutoff identity and representing greater than or equal to 0.1% of total reads in a sample from the database. 
+
+#### Details for top BLAST hits
+
+* **Num perfect hits** Number of identical matches of query ASV to *nr* database (out of 50).
+* **Top hit acc** Accession number of top BLAST hit. In cases of identical percent identity, all top hits are provided.
+* **% identity** Percent identity of query ASV to top BLAST hit.
+* **Isolation source** Tissue type of host (where applicable) where top BLAST hit was isolated from. 
+* **Nat host** Scientific name of host (where applicable) where top BLAST hit was isolated from.
+* **Common name** Common name of host (where applicable) where top BLAST hit was isolated from.
+* **Collection year** Year sample was collected (where provided) containing top BLAST hit.
+* **Country** Country and location origin of sample (where provided) containing top BLAST hit.
+* **PubMed ID** PubMed publication ID (where provided) containing top BLAST hit.  
+* **Sullam Lifestyle** Lifestyle classification of BLAST hit (where applicable) from the [Sullam et. al.](https://doi.org/10.1111/j.1365-294X.2012.05552.x){target="_blank"} paper, specifically **Table S1**.
+
+#### Alignment details between query ASV and top BLAST hit
+
+* **Alignment length** Alignment length between query and subject.
+* **Mismatches** Number of base pair mismatches in alignment between query and subject.
+* **Gap opens** Number of open gaps in alignment between query and subject.
+* **Q. start** Starting base pair position of query sequence in alignment. 
+* **Q. end** Ending base pair position of query sequence in alignment.
+* **S. start** Starting base pair position of subject sequence in alignment.
+* **S. end** Ending base pair position of subject sequence in alignment.
+* **Evalue** The Expect (E) value of alignment. 
+* **Bit score** The bit score of alignment.
+
+***
+
+<a id="Table S7"></a>
+
+## Table S7
+
+<div class = "notice">
+
+This table provides lookup details for all neighbor sequences from BLAST and SILVA-ACT comparisons used in the tree from Figure 3  (main paper). In the tree, sequences are named after the isolation source (e.g., *Naso unicornis*) plus a unique abbreviated  code. This table gives the full accession numbers for each leaf. 
+
+</div>
+<p></p>
+
+```{r suppl_table_7, echo=FALSE, cache = TRUE}
+table_s7 <- read.table("DATA/SUPPLEMENTARY_FILE/table_S7_links.txt",
+                      sep = "\t", header = TRUE)
+
+datatable(table_s7, escape = 5, rownames = FALSE, width = "100%", 
+          colnames = c("Accession_number", "Tree code", "Host", 
+                       "Isolation source", "Location", "Link",
+                       "Sullam lifestyle"),
+    caption = htmltools::tags$caption(
+      style = "caption-side: bottom; text-align: left;",
+            "Supplementary Table 7: ",
+    htmltools::em("Assession numbers and unique codes for
+                  sequence data in Figure 3.")),
+    extensions = "Buttons",
+    options = list(columnDefs = list(list(className = "dt-center",
+                                          targets = "_all")),
+                   dom = "Blfrtip", pageLength = 10,
+                   lengthMenu = list(c(10, 50, -1), c("10", "50", "All")),
+                   buttons = c("csv", "copy"),
+                   scrollX = TRUE, scrollCollapse = TRUE))
+```
+
+<div class="warning">
+Table scrolls horizontally.
+</div>
+
+<br>
+
+
+* **Accession number** Full accession numbers for each leaf.
+* **Tree code** Parenthetical code used in the tree.
+* **Host, Isolation source, Location** Details about source of sequence. 
+* **Link** Hyperlink to sequence page from NCBI Nucleotide database.
+* **Sullam lifestyle** In our analysis, we found the following categories: **1**  *Vertebrate gut generalists*, **2** *Animal and vertebrate gut generalists*, **3** *Fish gut generalists*, **5** *Fish gut specialists*, **6** *Animal generalists*, **9** *Marine environmental microbes*, **12** *Microbes from artificial habitats*, **13** *Undefined, basal clade members*.
+

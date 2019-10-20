@@ -1,0 +1,107 @@
+/* Whole document: */
+@import url('https://fonts.googleapis.com/css?family=PT+Sans|PT+Sans+Narrow|PT+Serif');
+
+body{
+  font-family: PT Serif, serif;
+  color: #333332;
+  line-height: 1.7;
+  font-size: 1.7em;
+}
+/* Headers */
+h1,h2,h3,h4,h5,h6{
+  margin-top: 64px;
+  font-family: PT Sans Narrow, PT Sans, sans-serif;
+}
+
+h1 {
+font-size: 30pt;
+}
+
+h2 {
+font-size: 28pt;
+}
+
+h3 {
+font-size: 24pt;
+}
+
+h4 {
+font-size: 20pt;
+}
+
+h5 {
+font-size: 18pt;
+}
+
+h6 {
+font-size: 16pt;
+}
+
+code, kbd, pre, samp, .sourceLine, .sourceCode {
+  font-family: 'Monaco', 'PT Mono', monospace;
+  font-size: 0.8em;
+}
+
+.tocify {
+    width: 20%;
+    max-height: 90%;
+    overflow: auto;
+    margin-left: 2%;
+    position: fixed;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: PT Sans;
+}
+
+.footer {
+   width: 100%;
+   overflow: hidden;
+   box-sizing: border-box;
+   z-index: 3;
+   margin-top: 30px;
+   padding-top: 30px;
+   padding-bottom: 30px;
+   text-align: center;
+
+/* for two column text + the escape */
+ }
+.column-left{
+   float: left;
+   padding: 2px;
+   text-align: left;
+}
+.column-right{
+   float: right;
+   padding: 2px;
+   text-align: left;
+}
+.clear-fix{
+  clear:both;
+  width:100%;
+}
+
+/* for boxes */
+
+.warning{
+  background-color:#F1AFAE;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 18px 0;
+  font-size: 4
+}
+
+.notice{
+  background-color:#FBDFB4;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 18px 0;
+  font-size: 4
+}
+
+.steel{
+  background-color:#C8CFD6;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 18px 0;
+  font-size: 4
+}

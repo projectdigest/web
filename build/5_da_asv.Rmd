@@ -1,0 +1,309 @@
+---
+title: "Part 5: Differentially Abundant ASVs "
+---
+ 
+```{r load_2, include=FALSE, cache=TRUE, eval=FALSE}
+# This is for initial processing only. After caching eval not needed
+load("DATA/RDS/pw_div_3.rds")
+```
+
+<a href="0_pw_intro.html#workflow_overview">Back to Introduction</a>
+
+***
+
+We now have a good handle on the diversity of the intestinal microbiomes of these herbivorous reef fish. We know that communities are dominated by the same broad-level taxonomic groups. The beta diversity analysis demonstrates that communities partition along host species. 
+
+<div class = "notice">
+Now we want to determine which ASVs are driving these patterns and assess their distribution in nature using publicly available data. To accomplish this task we leave the `R` environment and employ some additional tools. To summarize, our goals here are to:
+</div>
+<p></p>
+
+
+> A) identify differentially abundant (DA) ASVs across host species, 
+> B) find closest database matches to DA ASVs, and 
+> C) perform phylogenetic reconstruction on DA ASVs and top hits.
+
+
+## Differential abundance (DA)
+
+We used [LDA Effect Size (LEfSe)](https://dx.doi.org/10.1038%2Fnmeth.2658){target="_blank"} to identify differentially abundant (DA) ASVs across host species and the [MicrobiomeAnalyst webserver](http://www.microbiomeanalyst.ca/){target="_blank"} to run the analysis. There are also many other great tools on the MicrobiomeAnalyst webserver by the way. We needed three files for the input---an 'OTU' table, a metadata file containing sample information, and a taxonomy table. We generate these tables with the code below.
+
+
+```{r gen_lefse_input_files, results='hide', cache=TRUE}
+########## OTU table
+OTU1 <-  as(otu_table(ps_slv_work_filt), "matrix")
+# transpose if necessary
+# Coerce to data.frame
+OTUdf <- as.data.frame(t(OTU1))
+setDT(OTUdf, keep.rownames = TRUE)[]
+write.table(OTUdf, "DATA/PHYLOSEQ/TABLES/OUTPUT/OTHER/seq_tab_for_core.txt", 
+    sep = "\t", row.names = FALSE, quote = FALSE)
+colnames(OTUdf)[1] <- "#NAME"
+write.table(OTUdf, "DATA/PHYLOSEQ/TABLES/OUTPUT/LEfSe/LEfSe_INPUT_seq_tab.txt", 
+            sep = "\t", row.names = FALSE, quote = FALSE)
+############ TAX Table
+# Remember in the `tax_table` we added the last columns as the actual sequence 
+# of each ASV and the ASV_ID. We do not need those here.
+# So lets only keep the first 6 columns (the taxonomic lineage)
+TAX1 <- as(tax_table(ps_slv_work_filt), "matrix")
+TAXdf <- as.data.frame(TAX1)
+setDT(TAXdf, keep.rownames = TRUE)[]
+colnames(TAXdf)[1] <- "#TAXONOMY"
+TAXdf <- TAXdf[, 1:6]
+write.table(TAXdf, "DATA/PHYLOSEQ/TABLES/OUTPUT/LEfSe/LEfSe_INPUT_tax_tab.txt", 
+            sep = "\t", row.names = FALSE, quote = FALSE)
+############ Metadata file
+meta_file <- data.frame(NAME = sample_name, SampleType = species, Gen = genus)
+rownames(meta_file) <- samples.out
+colnames(meta_file) <-  c("#NAME", "Species", "Genus")
+# but we still have those three samples that need to be removed
+meta_file <- filter(meta_file, Species != "SpChr" & Species != "ScVet")
+write.table(meta_file, "DATA/PHYLOSEQ/TABLES/OUTPUT/LEfSe/LEfSe_INPUT_metadata.txt", 
+            sep = "\t", row.names = FALSE, quote = FALSE)
+```
+
+
+And once we have the three files, we head over to the [MicrobiomeAnalyst webserver](http://www.microbiomeanalyst.ca/){target="_blank"} and upload the files. Be sure to select `Silva taxonomy` in the drop-down menu.  
+Check the data summary after uploading the files: 
+
+* OTU annotation:	SILVA
+* OTU number:	11144
+* OTU with ≥ 2 counts:	4121
+* Sample number:	50
+* Number of experimental factors:	2
+* Total read counts:	2828112
+* Average counts per sample:	56562
+* Maximum counts per sample:	175116
+* Minimum counts per sample:	11568
+
+Cool, all looks good. Hit `Proceed`. Here are the settings we used for the different step:
+
+* **Filter the data**: `Minimum count = 20`, `Prevalence in samples (%) = 20`, and `Percentage to remove (%) = 0`. This removed **3796** low abundant ASVs.   
+* **Data Normalization**: 
+`Data rarefying = Do not rarefy my data`,   
+`Data scaling = Total sum scaling (TSS)`, and   
+`Data transformation = Do not transform my data`.   
+* **LEfSe analysis**  `Log LDA score = 4` & `Adjusted p-value cutoff = 0.0001`. We specifically chose these values because we found that they eliminated spurious results such as DA ASVs that were really abundant in a few samples but not consistent across an entire group.
+
+> The result was **59** differentially abundant (**DA**) ASVs.  
+
+***
+
+## Results of LEfSe analysis
+
+We can inspect and save the results of the LEfSe analysis. The table shows the Linear discriminant analysis (LDA) scores, P-values adjusted for multiple testing, and False Discovery Rate (FDR) values from the LEfSe analysis. Normalized read abundance values for each host species are also given.
+
+#### <font color="red">Table S5</font>
+
+```{r lefse_table, cache=TRUE}
+lefse_tab <- read.table("DATA/PHYLOSEQ/TABLES/INPUT/lefse_results.txt", 
+                        header = TRUE, sep = "\t", check.names = FALSE)
+write.table(lefse_tab, "DATA/PHYLOSEQ/TABLES/OUTPUT/SUPP/Table_S5.txt", 
+            quote = FALSE, sep = "\t", row.names = FALSE)
+
+datatable(lefse_tab, rownames = FALSE, width = "100%", 
+          caption = 
+            htmltools::tags$caption(
+              style = "caption-side: bottom; text-align: left;", 
+              "Table 4: ", htmltools::em("Results of LEfSe analysis.")), 
+          extensions = "FixedColumns", "Buttons", 
+          options = list(columnDefs = 
+                           list(list(className = "dt-center", 
+                                     targets = c(1, 2, 3, 4, 5, 6, 7, 8))), 
+                         dom = "Blfrtip", pageLength = 5, 
+                         lengthMenu = c(5, 10, 25, 60), 
+                         buttons = c("csv", "copy"), 
+                         scrollX = TRUE, scrollCollapse = TRUE))
+```
+
+***
+
+## Core microbiome
+
+Before getting knee deep in the DA ASV analysis lets see if we can't identify some core elements, or ASVs, to these fish. First we need a mothur-formatted `.shared` file. This is the code ...
+
+```{r get_core_shared_file, cache=TRUE}
+cm <- read.table("DATA/PHYLOSEQ/TABLES/OUTPUT/OTHER/seq_tab_for_core.txt", 
+                 sep = "\t", header = TRUE, row.names = 1)
+cm_t <- t(cm) 
+cm_df <- as.data.frame(cm_t)
+numcols <- ncol(cm_df)
+cm_df <- cm_df %>% tibble::rownames_to_column("Group")
+cm_df <- cm_df %>% 
+  mutate(label = 0.03, numOtus = numcols) %>% 
+  select(label, Group, numOtus, everything())
+
+write.table(cm_df, "DATA/PHYLOSEQ/TABLES/OUTPUT/OTHER/ps_slv_work_filt.txt", 
+            quote = FALSE, sep = "\t", row.names = FALSE)
+
+####COMBINE by fish species
+
+cm_Merge <- cm %>% tibble::rownames_to_column("ASV")
+
+cm_Merge <- cm_Merge %>% mutate(AcCoe = 
+                                  AcCoe01 + AcCoe02 + AcCoe03 + AcCoe04 + 
+                                  AcCoe05 + AcCoe06 + AcCoe07 + AcCoe08)
+cm_Merge <- cm_Merge %>% mutate(AcTra = 
+                                  AcTra01 + AcTra02 + AcTra03 + AcTra04 + 
+                                  AcTra05 + AcTra06 + AcTra07 + AcTra08 + 
+                                  AcTra09)
+cm_Merge <- cm_Merge %>% mutate(ScTra = 
+                                  ScTae01 + ScTae02 + ScTae03 + ScTae04 + 
+                                  ScTae05 + ScTae06 + ScTae07 + ScTae08 + 
+                                  ScTae09)
+cm_Merge <- cm_Merge %>% mutate(SpAur = 
+                                  SpAur01 + SpAur02 + SpAur03 + SpAur04 + 
+                                  SpAur05 + SpAur06 + SpAur07 + SpAur08 + 
+                                  SpAur09 + SpAur10 + SpAur11 + SpAur12 + 
+                                  SpAur13)
+cm_Merge <- cm_Merge %>% mutate(SpVir = 
+                                  SpVir01 + SpVir02 + SpVir03 + SpVir04 + 
+                                  SpVir05 + SpVir06 + SpVir07 + SpVir08 + 
+                                  SpVir09 + SpVir10 + SpVir11)
+
+cm_Merge <- cm_Merge %>% select(ASV, AcCoe, AcTra, ScTra, SpAur, SpVir)
+cm_Merge_2 <- cm_Merge[, -1]
+rownames(cm_Merge_2) <- cm_Merge[, 1]
+
+cm_Merge_2_t <- t(cm_Merge_2)
+cm_Merge_2_df <- as.data.frame(cm_Merge_2_t)
+
+cm_Merge_2_df <- cm_Merge_2_df %>% 
+  tibble::rownames_to_column("Group")
+cm_Merge_2_df <- cm_Merge_2_df %>% 
+  mutate(label = 0.03, numOtus = numcols) %>% 
+  select(label, Group, numOtus, everything())
+write.table(cm_Merge_2_df, "DATA/PHYLOSEQ/TABLES/OUTPUT/OTHER/ps_slv_work_filt_combine.txt", 
+            quote = FALSE, sep = "\t", row.names = FALSE)
+```
+
+Next we use the output to run `get.coremicrobiome` in mothur.
+
+
+## Searching public databases
+
+Next we wanted to know where else these ASVs had been detected in nature. There is a huge wealth of publicly available sequence information from many studies and habitats. We can use this information to get a better idea of the distribution and habitat specificity of the DA ASVs. To accomplish this we performed the following steps:
+
+1. First we needed a phyloseq object that only contained the DA ASVs. To do this, we passed an object consisting of just these 59 ASVs (from the LEfSe analysis) to the phyloseq function `prune_taxa`.  We needed two different `ps` objects, one from the unmerged object (`ps_slv_work_filt`) and the other from the merged-by-genus object (`mergedGP`). 
+
+2. Next we needed a fasta file of our DA ASVs. We could not find an easy way to export a fasta file from the new `ps` objects. So we tried this using the `tax_table`. This approach works but, well, it is not very elegant. If you want a fasta file from any other `ps` objects just swipe out the name of the `ps` object in the code below. Anyway, we will generate and save a fasta file.
+
+
+<div class = "warning">
+On the mac we used to analyze the data, for some reason, saves the fasta file with `Line Break Type` as `Legacy Mac(CR)`. This may be incompatible with other programs and needs to be changed to `UNIX (LS)`. I know, don't quit my day job, except this is my day job :/
+</div>
+<p></p>
+
+
+```{r files_for_public_search, cache=TRUE}
+# Object of DA ASVs
+lefse_asvs <- c("ASV21", "ASV25", "ASV35", "ASV44", "ASV159", 
+                "ASV17", "ASV174", "ASV22", "ASV234", "ASV60", 
+                "ASV114", "ASV268", "ASV14", "ASV226", "ASV23", 
+                "ASV29", "ASV30", "ASV48", "ASV90", "ASV98", "ASV18", 
+                "ASV41", "ASV7", "ASV43", "ASV5", "ASV54", "ASV8", 
+                "ASV9", "ASV250", "ASV12", "ASV32", "ASV34", "ASV39", 
+                "ASV224", "ASV398", "ASV127", "ASV128", "ASV151", 
+                "ASV323", "ASV359", "ASV374", "ASV91", "ASV56", "ASV6", 
+                "ASV165", "ASV284", "ASV395", "ASV450", "ASV15", "ASV2", 
+                "ASV20", "ASV298", "ASV57", "ASV69", "ASV75", "ASV82", 
+                "ASV1", "ASV70", "ASV49")
+
+# Create ps objects
+da_asvs <- prune_taxa(lefse_asvs, mergedGP)
+da_asvs_full <- prune_taxa(lefse_asvs, ps_slv_work_filt)
+# Create fasta file from tax_table
+table2format <- tax_table(da_asvs)
+#retain only the column with the sequences
+table2format_trim <- table2format[, 7]  
+table2format_trim_df <- data.frame(row.names(table2format_trim), 
+                                   table2format_trim)
+colnames(table2format_trim_df) <- c("ASV_ID", "ASV_SEQ")
+#format fasta
+table2format_trim_df$ASV_ID <- sub("ASV", ">ASV", table2format_trim_df$ASV_ID)
+
+write.table(table2format_trim_df, "DATA/PHYLOSEQ/TABLES/OUTPUT/ASV_FOR_BLAST.fasta", 
+            sep = "\r", col.names = FALSE, row.names = FALSE, 
+            quote = FALSE, fileEncoding = "UTF-8")
+```
+
+3. With our newly created DA ASV fasta file we can move on to database searching. We used  [BLASTn](https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome){target="_blank"} against the *nr* database to search publicly available sequence data. We used these settings: 
+    + optimized for highly similar sequences (megablast) 
+    + Expect threshold = 10
+    + Word size = 28
+    + Match/Mismatch Scores = 1, -2
+    + Gap Costs = linear.
+    + retain top 10 hits
+    
+Here are the top BLAST hits for each DA ASV. The table displays a lot of information about each BLAST search (it scrolls along the x-axis by the way). Most importantly are the accession numbers of top BLAST hits (subject acc.var), number of 100% identical matches (num perfect hits), the percent identity, and some info on where/when the hit sequence was originally found. Where applicable, there is also PubMedIDs so you can find the paper that reported the sequence. Looking at this table will give you a preliminary sense of the ecology of these ASVs. For example, most hits come from intestinal communities, many of which are marine herbivorous fish. But the low percent identity of several ASVs indicates that these sequences have been poorly sampled. This is not surprising given the geographic skew of sampling.
+
+***
+
+#### Top hits from  BLASTn analysis
+
+
+```{r blast_table, cache=TRUE}
+blast_tab <- read.table("DATA/PHYLOSEQ/TABLES/INPUT/BLAST_results.txt", 
+                        header = TRUE, sep = "\t", check.names = FALSE)
+write.table(blast_tab, "DATA/PHYLOSEQ/TABLES/OUTPUT/BLAST_RESULTS.txt", 
+            row.names = FALSE, sep = "\t", quote = FALSE)
+
+datatable(blast_tab, rownames = FALSE, 
+          caption = 
+            htmltools::tags$caption(
+              style = "caption-side: bottom; text-align: left;", 
+              "Supplementary Table 6: ", 
+              htmltools::em("Results of BLASTn analysis.")), 
+          extensions = "FixedColumns", "Buttons", 
+          options = list(columnDefs = 
+                           list(list(className = "dt-center", 
+                                     targets = c(1, 2, 3, 4, 5, 6, 7, 8))), 
+                         dom = "Blfrtip", pageLength = 5, 
+                         lengthMenu = c(5, 10, 25, 65), 
+                         buttons = c("csv", "copy"), 
+                         scrollX = TRUE, scrollCollapse = TRUE))
+```
+
+<div class="warning">
+This table also scrolls horizontally.  
+</div>
+
+***
+
+Several ASVs returned more than one match at 100%. For some ASVs, the 100% matches were from the same study/study organism, so we just selected one as the representative. ASVs 6, 12, 224, and 398 returned numerous 100% matches (out of 50 total). These data were impractical  to summarize and not very informative anyway. So we elected to leave these data out. If you want to see what these hits are, just grab the ASV sequence and BLAST away. 
+
+Also, some ASVs shared the same to hit. Since the table is 'by ASV' we retained all duplicate hits.
+
+4. For phylogenetic inference we used the [Silva Alignment, Classification and Tree Service](https://www.arb-silva.de/aligner/){target="_blank"} to obtain neighbors of DA ASVs. We used these settings: 
+    + Search and classify: min identity = 0.95; Number of neighbors = 5. 
+    + Default parameters for the remainder of the workflow.
+
+5. We then combined the results of the BLASTn and Silva ACT analyses and omitted duplicate hits, resulting in **297** top hit sequences for phylogenetic analysis.
+
+
+## Phylogenetic inference
+
+Short read sequences are not ideal for phylogenetic analysis, but given the data we have, we felt this was a good place to start. This analysis required several steps.
+
+1. We used [mothur](https://www.mothur.org/wiki/){target="_blank"} (v.1.42.1, Last updated: 5/13/19) and the [Silva full length sequences and taxonomy references (release 132)](https://www.mothur.org/wiki/Silva_reference_files){target="_blank"} to align the DA ASVs and our new reference db, and also classify the sequences. We used a [hard mask](https://www.mothur.org/wiki/Filter.seqs#hard){target="_blank"} to trim all long reads to the same length (~373bp) and 16S region as the ASVs. 
+
+```
+mothur "#align.seqs(candidate=sequence_tree.fasta, template=silva.nr_v132.align, processors=20, flip=t)"  
+mothur "#filter.seqs(fasta=sequence_tree.fasta, vertical = =F, hard=mask.txt)"  
+mothur "#classify.seqs(fasta=sequence_tree.filter.fasta, template=silva.nr_v132.align, taxonomy=silva.nr_v132.tax, processors=10)"  
+```
+2. Now that we had our 59 DA ASVs and the top database hits, its was time for phylogenetic inference. We used [RAxML-HPC](https://sco.h-its.org/exelixis/web/software/raxml/index.html){target="_blank"} to generate a phylogenetic tree (with *Aquifex* as the outgroup)
+
+```
+raxmlHPC-PTHREADS-SSE3 -T 24 -f a -p 2345 -x 3456 -m GTRGAMMA  -N 1000 -s sequence_tree.filter.fasta -n fish_arb_align_1000BS_B.tre
+```
+
+```{r save_2, include = FALSE, cache=TRUE, eval=FALSE}
+# This is for initial processing only. After caching eval not needed}
+save.image(file = "DATA/RDS/pw_da_asv_4.rds")
+```
+
+
+#### <a href="6_synthesis.html">Go to Part 6, Synthesis</a>
+
+

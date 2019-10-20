@@ -1,0 +1,358 @@
+---
+title: "Part 3: Data Preparation"
+---
+ 
+```{r load_2, include=FALSE, cache=TRUE, eval=FALSE}
+# This is for initial processing only. After caching eval not needed
+load("DATA/RDS/pw_bite_1.rds")
+```
+
+<a href="0_pw_intro.html#workflow_overview">Back to Introduction</a>
+
+***
+
+## Define groups
+
+<div class = "notice">
+Now then, on to the microbial data. First, we load the data packet produced by the final step of the DADA2 workflow (Combine_Runs.Rmd), format sample names, and define groupings. We will use the sample names to define the different groups.
+</div>
+<p></p>
+
+```{r deliniate_sample_types, cache=TRUE}
+load("DATA/PHYLOSEQ/combo_pipeline.rdata")
+samples.out <- rownames(seqtab)
+subject <- sapply(strsplit(samples.out, "[[:digit:]]"), `[`, 1)
+# this splits the string at first instance of a digit
+# use the whole string for individuals
+# use the first two letters for genus
+# use the next three letters for species
+sample_name <- substr(samples.out, 1, 999)
+genus <- substr(samples.out, 1, 2)
+species <- substr(samples.out, 1, 5)
+```
+
+> Groups
+
+* `r length(sample_name)` individuals
+* `r length(unique(genus))` genera
+* `r length(unique(species))` species
+
+And finally we define a sample data frame that holds the different groups we extracted from the sample names. On the right are a few samples and their different groups names. 
+
+```{r define_variables, cache=TRUE}
+#define a sample data frame
+samdf <- data.frame(SamName = sample_name, Gen = genus, Sp = species)
+rownames(samdf) <- samples.out
+kable(samdf[c(1, 13, 20, 30, 44), 1:3], row.names = FALSE) %>%
+  kable_styling(bootstrap_options = "striped",
+                full_width = FALSE, position = "float_right")  %>%
+  column_spec(1:3, width = "3.5cm")
+```
+
+
+> Abbreviations: 
+
+* AcCoe = *Acanthurus coeuleus*
+* AcTra = *Acanthurus tractus*
+* ScTae = *Scarus taeniopterus*
+* SpAur = *Sparisoma aurofrenatum*
+* SpVir = *Sparisoma viride*
+* ScVet = *Scarus vetula*
+* SpChr = *Sparisoma chrysopterum*
+
+## Phyloseq objects
+
+Next we create a phyloseq (ps) object with the Silva (slv) taxonomy. There is also a Greengenes (gg) annotation in the output file from DADA2 which can be used instead of  the Silva annotation. Just change `tax_silva` to `tax_gg`. At this point we rename the amplicon sequence variants (ASVs) so the designations are a bit more user friendly. By default, DADA2 names each ASV by its unique sequence so that data can be directly compared across studies (which is great). But this convention can  get cumbersome downstream, so we rename the ASVs using a simpler convention---ASV1, ASV2, ASV3, and so on, while retaining the exact sequences. 
+
+
+The phyloseq object looks like this:
+
+```{r create_ps_object, cache=TRUE}
+# this create the phyloseq object
+ps_slv <- phyloseq(otu_table(seqtab, taxa_are_rows = FALSE),
+                   sample_data(samdf), tax_table(tax_silva))
+tax_table(ps_slv) <- cbind(tax_table(ps_slv), rownames(tax_table(ps_slv)))
+# adding unique ASV names
+taxa_names(ps_slv) <- paste0("ASV", seq(ntaxa(ps_slv)))
+tax_table(ps_slv) <- cbind(tax_table(ps_slv), rownames(tax_table(ps_slv)))
+ps_slv
+```
+
+While the ASV names look like this: `r head(taxa_names(ps_slv))` and so on...
+
+At this point we have a completely unadulterated phyloseq object because it contains all  ASVs and all samples. We add two final columns with the actual ASV sequences and ASV IDs. This will be useful later when trying to export a fasta file. Finally, we export the sequence and taxonomy tables, for posterity sake. 
+
+```{r export_seq_tax_tables, cache=TRUE}
+colnames(tax_table(ps_slv)) <- c("Kingdom", "Phylum", "Class", "Order",
+                                 "Family", "Genus", "ASV_SEQ", "ASV_ID")
+write.table(tax_table(ps_slv), "DATA/PHYLOSEQ/TABLES/OUTPUT/PS/full_tax_table.txt",
+            sep = "\t", quote = FALSE, col.names = NA)
+write.table(t(otu_table(ps_slv)), "DATA/PHYLOSEQ/TABLES/OUTPUT/PS/full_seq_table.txt",
+            sep = "\t", quote = FALSE, col.names = NA)
+write.table(sample_data(ps_slv), "DATA/PHYLOSEQ/TABLES/OUTPUT/PS/full_sample_data.txt",
+            sep = "\t", quote = FALSE, row.names =  FALSE)
+```
+
+Remember three of these samples were omitted because we did not have replicates for the host species. Lets remove those samples. The only way we could figure out how to do this was by selecting the samples we *wanted to keep*. If you want to change the group of samples, modify the script accordingly.
+
+```{r select_samples, cache=TRUE}
+ps_slv_base <- prune_samples(c("SpAur01", "SpAur02", "SpAur03", "SpAur04",
+                               "SpAur10", "SpAur11", "SpAur12", "SpAur13",
+                               "SpVir01", "SpVir02", "SpVir03", "SpVir04",
+                               "SpVir05", "SpVir06", "SpVir07", "SpVir08",
+                               "SpVir09", "SpVir10", "SpVir11", "AcCoe01",
+                               "AcCoe02", "AcCoe03", "AcCoe04", "AcCoe05",
+                               "AcCoe06", "AcCoe07", "AcCoe08", "AcTra01",
+                               "AcTra02", "AcTra03", "AcTra04", "AcTra05",
+                               "AcTra06", "AcTra07", "AcTra08", "AcTra09",
+                               "ScTae01", "ScTae02", "ScTae03", "ScTae04",
+                               "ScTae05", "ScTae06", "ScTae07", "ScTae08",
+                               "ScTae09", "SpAur05", "SpAur06", "SpAur07",
+                               "SpAur08", "SpAur09"), ps_slv)
+ps_slv_base
+```
+
+0K, three samples gone. But we probably lost some ASVs when use we removed samples. So we need to get rid of any ASVs that have now a total of **0 reads**. This will be our working phyloseq object. 
+
+```{r remove_ASV_with_zeros_reads, cache=TRUE}
+ps_slv_work <- prune_taxa(taxa_sums(ps_slv_base) > 0, ps_slv_base)
+ps_slv_work
+```
+
+Great, there were  **`r ntaxa(ps_slv_base) - ntaxa(ps_slv_work)` ASVs** found only in those three samples. 
+
+We can also export seq and tax tables for our trimmed dataset and get a quick summary of the trimmed dataset before removing unwanted reads. .
+
+```{r gen_stats_raw, eval = TRUE, include = TRUE, cache=TRUE}
+write.table(tax_table(ps_slv_work), "DATA/PHYLOSEQ/TABLES/OUTPUT/PS/trim_tax_table.txt", 
+            sep = "\t", quote = FALSE, col.names = NA)
+write.table(t(otu_table(ps_slv_work)), "DATA/PHYLOSEQ/TABLES/OUTPUT/PS/trim_seq_table.txt", 
+            sep = "\t", quote = FALSE, col.names = NA)
+write.table(sample_data(ps_slv_work), "DATA/PHYLOSEQ/TABLES/OUTPUT/PS/trim_sample_data.txt", 
+            sep = "\t", quote = FALSE, row.names =  FALSE)
+
+# general stats for the dataset.
+
+sample_sum_df_raw <- data.frame(sum = sample_sums(ps_slv_work))
+total_reads_raw <- sum(otu_table(ps_slv_work))
+smin_raw <- as.integer(min(sample_sums(ps_slv_work)))
+smean_raw <- as.integer(mean(sample_sums(ps_slv_work)))
+smax_raw <- as.integer(max(sample_sums(ps_slv_work)))
+```
+
+Looks like the total number of reads in the dataset (after removing unwanted samples) is **`r total_reads_raw`**; range of `r smin_raw` to `r smax_raw` reads per sample and an average of `r smean_raw` reads per sample.
+
+## Remove contaminants
+
+These samples are intestinal communities and we assume that Chloroplast are not contributing to metabolism. These data could be useful later but for now lets create a phyloseq object without Chloroplast.
+
+<font size="3" color="red">WARNING</font>: the `subset_taxa` command  removes anything that is `NA` for the specified taxonomic level or above. **For example**, lets say you run  the  `subset_taxa` command using `Order != "Chloroplast"`. Seems like you should get a phyloseq object with everything except  Chloroplast. But actually the command not only gets rid Chloroplast but everything  else that has `NA` for Order and above. In our experience this is not well documented and we had to  dig through the files to figure out what was happening.
+
+Our dataset has 590 Chloroplast ASVs and running the  command as is removed an additional 1244 ASVs.  So lets see if we can get rid of just Chloroplast ASVs without removing everything that is unclassified at Order and above. To do this, we subset the taxa to generate a ps object of just Chloroplast, selected the ASV column only, turned it into a factor, and used this to remove Chloroplast from the ps object. 
+
+```{r remove_cyano, cache=TRUE}
+# generate a file with Chloroplast ASVs
+chloro_p_ps <- subset_taxa(ps_slv_work, Order == "Chloroplast")
+chloro_p_tab <-  as(tax_table(chloro_p_ps), "matrix")
+chloro_p_tab <- chloro_p_tab[, 8]
+chloro_p_df <- as.factor(chloro_p_tab)
+goodTaxaCH <- setdiff(taxa_names(ps_slv_work), chloro_p_df)
+ps_slv_work_no_cyano <- prune_taxa(goodTaxaCH, ps_slv_work)
+ps_slv_work_no_cyano
+###### Summarize data
+total_asv_chloro_p <- length(chloro_p_df)
+
+sample_sum_chloro_p_ps <- data.frame(sum = sample_sums(chloro_p_ps))
+total_reads_chloro_p_ps <- sum(otu_table(chloro_p_ps))
+smin_chloro_p_ps <- min(sample_sums(chloro_p_ps))
+smean_chloro_p_ps <- mean(sample_sums(chloro_p_ps))
+smax_chloro_p_ps <- max(sample_sums(chloro_p_ps))
+
+write.table(tax_table(chloro_p_ps), 
+            "DATA/PHYLOSEQ/TABLES/OUTPUT/PS/chloroplast_tax_table.txt", 
+            sep = "\t", quote = FALSE, col.names = NA)
+write.table(t(otu_table(chloro_p_ps)), 
+            "DATA/PHYLOSEQ/TABLES/OUTPUT/PS/chloroplast_seq_table.txt", 
+            sep = "\t", quote = FALSE, col.names = NA)
+write.table(sample_data(chloro_p_ps), 
+            "DATA/PHYLOSEQ/TABLES/OUTPUT/PS/chloroplast_sample_data.txt", 
+            sep = "\t", quote = FALSE, row.names =  FALSE)
+
+```
+
+This step removed **`r total_asv_chloro_p` Chloroplast ASVs** encompassing **`r total_reads_chloro_p_ps` total reads**. Perfect.
+
+And now we use the same approach to remove Mitochondria. 
+
+```{r remove_specific_taxa, cache=TRUE}
+# generate a file with mitochondria ASVs
+MT1_ps <- subset_taxa(ps_slv_work_no_cyano, Family == "Mitochondria")
+MT1 <-  as(tax_table(MT1_ps), "matrix")
+MT1 <- MT1[, 8]
+MT1df <- as.factor(MT1)
+goodTaxa <- setdiff(taxa_names(ps_slv_work_no_cyano), MT1df)
+ps_slv_work_filt <- prune_taxa(goodTaxa, ps_slv_work_no_cyano)
+ps_slv_work_filt
+###### Summarize data
+total_asv_MT1 <- length(MT1df)
+# colnames(tax_table(MT1_ps))
+sample_sum_MT1_ps <- data.frame(sum = sample_sums(MT1_ps))
+total_reads_MT1_ps <- sum(otu_table(MT1_ps))
+smin_MT1_ps <- min(sample_sums(MT1_ps))
+smean_MT1_ps <- mean(sample_sums(MT1_ps))
+smax_MT1_ps <- max(sample_sums(MT1_ps))
+```
+
+Sweet, looks like this removed **`r total_asv_MT1` Mitochondria ASVs** encompassing **`r total_reads_MT1_ps` total reads**. 
+
+```{r gen_stats, eval = TRUE, include = TRUE, cache=TRUE}
+# general stats for the dataset.
+#colnames(tax_table(ps_slv_work_filt))
+sample_sum_df <- data.frame(sum = sample_sums(ps_slv_work_filt))
+total_reads <- sum(otu_table(ps_slv_work_filt))
+smin <- as.integer(min(sample_sums(ps_slv_work_filt)))
+smean <- as.integer(mean(sample_sums(ps_slv_work_filt)))
+smax <- as.integer(max(sample_sums(ps_slv_work_filt)))
+```
+
+After removing contaminants here is what the final dataset looks like:
+
+* Total number of reads in the dataset is **`r total_reads`**.
+* Range of **`r smin`** to **`r smax`** reads per sample.
+* Average of **`r smean`** reads per sample.
+
+## Merged phyloseq object
+
+One last thing to do is to create a merged phyloseq object where samples are grouped by host species. This will come in handy later for some analyses.  
+
+```{r merge, cache=TRUE}
+mergedGP <- merge_samples(ps_slv_work_filt, "Sp")
+SD <- merge_samples(sample_data(ps_slv_work_filt), "Sp")
+mergedGP
+```
+
+Great, still the same number of ASVs and now only 5 "samples" corresponding to the 5 species: `r sample_names(mergedGP)`. 
+
+There are now the several phyloseq objects to chose from and, using the above methods, additional objects can easily be created. 
+
+* `ps_slv` --> phyloseq dataset with all `r nsamples(ps_slv)` samples, all ASVs.
+* `ps_slv_base` --> phyloseq dataset with `r nsamples(ps_slv_base)` samples, all ASVs (this is not very useful).
+* `ps_slv_work` --> phyloseq dataset with `r nsamples(ps_slv_work)` samples, zero-read ASVs removed.
+* `ps_slv_work_filt` --> phyloseq dataset with `r nsamples(ps_slv_work_filt)` samples, ASVs and reads from Mitochondria and Chloroplast removed.
+* `mergedGP` --> `ps_slv_work_filt` phyloseq dataset collapsed by host species.
+
+Here we can save some phyloseq objects so we can make some Shiny Apps at some point.
+
+```{r save_ps_objects, cache=TRUE}
+save(ps_slv_work_filt, mergedGP, file = "DATA/PHYLOSEQ/PS_OBJECTS/ps.RData")
+saveRDS(ps_slv_work_filt, "DATA/PHYLOSEQ/PS_OBJECTS/ps_slv_work_filt.rds")
+saveRDS(mergedGP, "DATA/PHYLOSEQ/PS_OBJECTS/mergedGP.rds")
+```
+
+## Host Information
+
+Before we do anything else, lets generate summary data for each host. We can generate a  summary report for any  ps object but we will use the object with mitochondria and chlorplasts removed, as well as the low replicate host species removed. We will also add details about each host. The table is displayed below. We can use these data when we upload the original fastq files to sequence read archives. Later on we will also add alpha diversity stats and save the table.
+
+***
+
+#### Host details
+
+```{r sample_summary_table, warning = FALSE, fig.align = "center", cache=TRUE}
+total_reads <- sample_sums(ps_slv_work_filt)
+total_reads <- as.data.frame(total_reads, make.names = TRUE)
+total_reads <- total_reads %>% rownames_to_column("host_ID")
+
+total_asvs <- estimate_richness(ps_slv_work_filt, measures = "Observed")
+total_asvs <- total_asvs %>% rownames_to_column("host_ID")
+
+sam_details <- sample_data(ps_slv)
+sam_details <- sam_details %>% mutate(genus = case_when(
+    Gen == "Ac" ~ "Acanthurus", 
+    Gen == "Sc" ~ "Scarus",
+    Gen == "Sp" ~ "Sparisoma"))
+
+sam_details <- sam_details %>% mutate(species = case_when(
+    Sp == "AcCoe"~ "coeruleus",
+    Sp == "AcTra"~ "tractus",
+    Sp == "ScTae"~ "taeniopterus",
+    Sp == "SpAur"~ "aurofrenatum",
+    Sp == "SpVir"~ "viride"))
+#Sp == "SpChr"~ "chrysopterum",
+#Sp == "ScVet"~ "vetula"
+sam_details <- sam_details %>% mutate(common_name = case_when(
+    Sp == "AcCoe" ~ "blue tang surgeonfish",
+    Sp == "AcTra" ~ "fiveband surgeonfish",
+    Sp == "ScTae" ~ "princess parrotfish",
+    Sp == "SpAur" ~ "redband parrotfish", 
+    Sp == "SpVir" ~ "stoplight parrotfish"))
+
+#Sp == "SpChr" ~ "redtail parrotfish",
+#Sp == "ScVet" ~ "queen parrotfish"))
+
+sam_details <- sam_details %>% mutate(NCBI_txid = case_when(
+    Sp == "AcCoe" ~ "157585",
+    Sp == "AcTra" ~ "1316013",
+    Sp == "ScTae" ~ "544418",
+    Sp == "SpAur" ~ "59663",
+    Sp == "SpVir" ~ "59666"))
+#Sp == "SpChr" ~ "51766",
+#Sp == "ScVet" ~ "84543"))
+
+sam_details <- sam_details[-c(2, 3)]
+colnames(sam_details) <- c("host_ID", "host_genus",
+                           "host_species", "full_name",
+                           "NCBI_txid")
+
+merge_tab <- merge(sam_details, total_reads, by = "host_ID")
+merge_tab2 <- merge(merge_tab, total_asvs, by = "host_ID")
+colnames(merge_tab2) <- c("host_ID", "host_genus",
+                          "host_species", "common_name",
+                          "NCBI_txid",  "total_reads",
+                          "total_ASVs")
+
+# We also have a datatable containing metrics for each host. Lets bring this in 
+# and merge with  the summary table
+metrics <- read.table("DATA/PHYLOSEQ/TABLES/INPUT/host_metrics.txt", 
+                      sep = "\t", header = TRUE)
+host_details <- merge(merge_tab2, metrics, by = "host_ID")
+colnames(host_details) <- c("host_ID", "host_genus", "host_species",
+                            "common_name", "NCBI_txid",  "total_reads",
+                            "total_ASVs", "collection_date", "phase",
+                            "weight", "total_length", "foregut_length",
+                            "midgut_length", "hindgut_length",
+                            "total_gut_length")
+
+datatable(host_details, rownames = FALSE, width = "100%",
+          colnames = c("host_ID", "host_genus", "host_species",
+                       "common_name", "NCBI_txid",  "total_reads",
+                       "total_ASVs", "Collection_date", "Phase", 
+                       "Weight (g)", "Total length (cm)", 
+                       "Fore gut length (cm)", "Mid gut length (cm)", 
+                       "Hind gut length (cm)", "Total gut length (cm)"), 
+          caption = htmltools::tags$caption(style = "caption-side: 
+                                            bottom; text-align: left;", 
+                                            "Table: ", 
+                                            htmltools::em("Sample summary.")), 
+          extensions = "Buttons", 
+          options = list(columnDefs = 
+                           list(list(className = "dt-left", targets = 0)), 
+                         dom = "Blfrtip", pageLength = 5, 
+                         lengthMenu = c(5, 10, 25, 50), 
+                         buttons = c("csv", "copy"), 
+                         scrollX = TRUE, scrollCollapse = TRUE))
+```
+
+<div class="warning">
+This table also scrolls horizontally.
+</div>
+
+Now we have a nice little summary table about each sample---genus/species, common name, number of reads, number of ASVs, etc. All of this info can be used when submitting samples to sequence read archives. Once we conduct alpha diversity estimates below, we will add that data to the table above and export as **Supplementary Table 3**.
+
+```{r save_2, include = FALSE, cache=TRUE, eval=FALSE}
+# This is for initial processing only. After caching eval not needed}
+save.image(file = "DATA/RDS/pw_prep_2.rds")
+```
+
+
+#### <a href="4_diversity.html">Go to Part 4, Community Composition & Diversity</a>
+

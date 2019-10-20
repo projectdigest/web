@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Part 1: Field Observations</title>
+
+<script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.8/datatables.js"></script>
+<link href="site_libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/dt-ext-buttons-1.10.16/css/buttons.dataTables.min.css" rel="stylesheet" />
+<script src="site_libs/dt-ext-buttons-1.10.16/js/dataTables.buttons.min.js"></script>
+<script src="site_libs/dt-ext-buttons-1.10.16/js/buttons.flash.min.js"></script>
+<script src="site_libs/dt-ext-buttons-1.10.16/js/buttons.html5.min.js"></script>
+<script src="site_libs/dt-ext-buttons-1.10.16/js/buttons.colVis.min.js"></script>
+<script src="site_libs/dt-ext-buttons-1.10.16/js/buttons.print.min.js"></script>
+<link href="site_libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">DIGEST</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li>
+  <a href="0_pw_intro.html">
+    <span class="fa fa-info"></span>
+     
+    Intro
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-wrench"></span>
+     
+    Workflow
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="1_field_observations.html">1. Field Observations</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">16S rRNA Processing</li>
+    <li>
+      <a href="2_dada2.html">2. DADA2 Workflow</a>
+    </li>
+    <li>
+      <a href="3_data_prep.html">3. Data Prep</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">16S rRNA Analyses</li>
+    <li>
+      <a href="4_diversity.html">4. Diversity</a>
+    </li>
+    <li>
+      <a href="5_da_asv.html">5. DA ASVs</a>
+    </li>
+    <li>
+      <a href="6_synthesis.html">6. Synthesis</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="7_appendices.html">Appendices</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="data_availability.html">
+    <span class="fa fa-database"></span>
+     
+    Data
+  </a>
+</li>
+<li>
+  <a href="about.html">
+    <span class="fa fa-user-friends"></span>
+     
+    People
+  </a>
+</li>
+<li>
+  <a href="supplemental_material.html">SOM</a>
+</li>
+<li>
+  <a href="contact.html">
+    <span class="fa fa-phone"></span>
+     
+    Contact
+  </a>
+</li>
+<li>
+  <a href="how_to_build_this_site.html">
+    <span class="fa fa-question fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Part 1: Field Observations</h1>
+
+</div>
+
+
+<p><a href="0_pw_intro.html#workflow_overview">Back to Introduction</a></p>
+<hr />
+<div class="notice">
+<p>To characterize the foraging ecology of the different species of herbivorous fishes, we characterized in detail individual bites by each species at three sites in the Florida Keys (Conch, French, Molasses reefs) during the Boreal summers of 2014 and 2016.</p>
+</div>
+<p>
+</p>
+<p>At each site, we haphazardly selected focal fish over a wide range of sizes and then randomly selected a single bite by each individual to describe (see Supplementary Table 2 for sample sizes). For each bite, we identified the food item(s) targeted as well as characteristics of the substrate (e.g., hard bottom vs. other common substrates such as sponges, gorgonians, etc.) at the precise location of the bite. For hard substrates, we recorded whether a bite was on a convex, concave, or flat surface, and whether that surface was oriented horizontally (&lt; 45 degrees) or vertically (&gt; 45 degrees). In addition, we framed each bite within a 5 x 5 cm micro-quadrat and measured the depth of the sediment and height of the algae at several points to determine the average sediment depth and algal height within the vicinity of the bite. We then manually removed sediments and determined whether the fish left a distinct grazing scar (i.e., where calcium carbonate had been removed from the reef framework in addition to epilithic algae).</p>
+<p>To visualize the multivariate patterns of herbivory we used non-metric multidimensional scaling (NMDS) as implemented via the metaMDS function in the vegan package. For each species of herbivorous fish at each site we calculated the proportion of bites focused on each prey item (‘prey variables’) as well as the proportion of bites targeting substrates with different characteristics (e.g., convex vs. concave vs. flat). We also calculated the proportion of bites resulting in a grazing scar. For bites on turf assemblages, we calculated the mean turf height and sediment depth directly adjacent to each bite. Prior to analysis, quantitative variables (e.g., sediment depth and turf height) were rescaled to the range of 0 to 1. In addition, quantitative and categorical variables were rescaled such that they would have similar influence to the ‘prey variables’ by dividing each variable by the number of prey categories. Rescaled data were then analysed via NMDS using a Bray-Curtis dissimilarity matrix.</p>
+<div id="observational-data" class="section level2">
+<h2>Observational data</h2>
+<p>First, we read in and display the table describing the foraging ecology of these fish.</p>
+<div id="table-s1" class="section level4">
+<h4><font color="red">Table S1</font></h4>
+<pre class="r"><code>library(ggthemes)
+all_traits &lt;- read.csv(&quot;DATA/PHYLOSEQ/TABLES/INPUT/Mean_bite_characteristics.txt&quot;,
+  header = TRUE, sep = &quot;\t&quot;)
+ids &lt;- all_traits[, 1:2]
+
+write.table(all_traits, &quot;DATA/PHYLOSEQ/TABLES/OUTPUT/SUPP/Table_S1.txt&quot;,
+            sep = &quot;\t&quot;, row.names = FALSE, quote = FALSE,
+            col.names = c(&quot;Host species&quot;, &quot;Site&quot;, &quot;Sediment depth (mm)&quot;,
+                          &quot;Turf height(mm)&quot;, &quot;Prop. mark on substrate&quot;,
+                          &quot;Prop. vertical&quot;, &quot;Prop. concave&quot;, &quot;Prop. convex&quot;,
+                          &quot;Articulated red coralline&quot;, &quot;CCA/Turf on CCA&quot;,
+                          &quot;Dictyota&quot;, &quot;Epiphytes&quot;, &quot;Gorgonian&quot;, &quot;Halimeda&quot;,
+                          &quot;Laurencia&quot;, &quot;Sponge&quot;, &quot;Stypopodium&quot;, &quot;Turf&quot;))
+
+datatable(all_traits, rownames = FALSE, width = &quot;100%&quot;,
+          colnames = c(&quot;Host species&quot;, &quot;Site&quot;, &quot;Sediment depth (mm)&quot;,
+                       &quot;Turf height(mm)&quot;, &quot;Prop. mark on substrate&quot;,
+                       &quot;Prop. vertical&quot;, &quot;Prop. concave&quot;, &quot;Prop. convex&quot;,
+                       &quot;Articulated red coralline&quot;, &quot;CCA/Turf on CCA&quot;,
+                       &quot;Dictyota&quot;, &quot;Epiphytes&quot;, &quot;Gorgonian&quot;, &quot;Halimeda&quot;,
+                       &quot;Laurencia&quot;, &quot;Sponge&quot;, &quot;Stypopodium&quot;, &quot;turf&quot;),
+          caption = htmltools::tags$caption(
+            style = &quot;caption-side: bottom; text-align: left;&quot;,
+            &quot;Supplementary Table 1: &quot;,
+            htmltools::em(&quot;INSERT DESCRIPTION.&quot;)),
+          extensions = &quot;Buttons&quot;,
+          options = list(columnDefs = list(list(
+            className = &quot;dt-left&quot;, targets = 0)), dom = &quot;Blrtip&quot;,
+            pageLength = 5, lengthMenu = c(5, 10, 15),
+            buttons = c(&quot;csv&quot;, &quot;copy&quot;), scrollX = TRUE,
+            scrollCollapse = TRUE))</code></pre>
+<div id="htmlwidget-32e1ea2669427cdee0e8" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-32e1ea2669427cdee0e8">{"x":{"filter":"none","extensions":["Buttons"],"caption":"<caption style=\"caption-side: bottom; text-align: left;\">\n  Supplementary Table 1: \n  <em>INSERT DESCRIPTION.<\/em>\n<\/caption>","data":[["Acanthurus coeruleus","Acanthurus coeruleus","Acanthurus coeruleus","Acanthurus tractus","Acanthurus tractus","Acanthurus tractus","Scarus taeniopterus","Scarus taeniopterus","Scarus taeniopterus","Sparisoma aurofrenatum","Sparisoma aurofrenatum","Sparisoma aurofrenatum","Sparisoma viride","Sparisoma viride","Sparisoma viride"],["Conch","French","Molasses","Conch","French","Molasses","Conch","French","Molasses","Conch","French","Molasses","Conch","French","Molasses"],[4.867924528,0.64516129,1.476470588,5.68,1.208333333,0.817307692,0.818181818,1.689655172,1.118421053,2.822916667,1.659090909,1.434210526,0.942307692,0.533333333,0.463636364],[5.923076923,2.333333333,2.851190476,6.375,2.7,2.740384615,1.25,3.568965517,2.769230769,5.010416667,4.692307692,4.666666667,3.45890411,2.255555556,1.857142857],[0,0,0,0,0,0,0.25,0.294117647,0.365853659,0.039215686,0.084745763,0.219178082,0.722891566,0.802816901,0.753846154],[0.195121951,0.564102564,0.323809524,0.302631579,0.357142857,0.300884956,0.2,0.5,0.414634146,0.294117647,0.456140351,0.611940299,0.5625,0.549295775,0.603174603],[0.117647059,0.289473684,0.133333333,0.084507042,0.261904762,0.132743363,0.266666667,0.060606061,0.048780488,0.118811881,0.224137931,0.181818182,0.192771084,0.154929577,0.047619048],[0.047058824,0,0.047619048,0,0.023809524,0.044247788,0.133333333,0.090909091,0.146341463,0.059405941,0.034482759,0.272727273,0.421686747,0.352112676,0.507936508],[0.017094017,0,0.009009009,0.008264463,0,0,0,0,0.024390244,0.14,0.084745763,0.075757576,0.024096386,0,0.015625],[0,0.340425532,0.198198198,0,0.130434783,0.049180328,0.0625,0.117647059,0.243902439,0,0.016949153,0.03030303,0.614457831,0.411764706,0.375],[0.230769231,0.191489362,0.162162162,0.404958678,0.369565217,0.508196721,0.125,0.147058824,0.024390244,0.34,0.457627119,0.287878788,0.024096386,0.088235294,0.09375],[0.222222222,0.127659574,0.054054054,0.32231405,0.086956522,0.06557377,0,0,0,0,0,0,0,0,0],[0.008547009,0.021276596,0.009009009,0,0,0,0,0,0,0,0,0.015151515,0,0,0],[0,0,0,0,0.02173913,0,0,0,0,0,0.084745763,0.015151515,0,0.029411765,0],[0.068376068,0,0,0.049586777,0,0,0,0,0,0.02,0,0,0,0,0],[0,0,0,0,0,0,0.0625,0,0,0,0,0.03030303,0,0,0.015625],[0,0,0,0.008264463,0,0,0.125,0,0,0.02,0,0,0,0,0],[0.452991453,0.319148936,0.567567568,0.20661157,0.391304348,0.37704918,0.625,0.735294118,0.707317073,0.48,0.355932203,0.545454545,0.337349398,0.470588235,0.5]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Host species<\/th>\n      <th>Site<\/th>\n      <th>Sediment depth (mm)<\/th>\n      <th>Turf height(mm)<\/th>\n      <th>Prop. mark on substrate<\/th>\n      <th>Prop. vertical<\/th>\n      <th>Prop. concave<\/th>\n      <th>Prop. convex<\/th>\n      <th>Articulated red coralline<\/th>\n      <th>CCA/Turf on CCA<\/th>\n      <th>Dictyota<\/th>\n      <th>Epiphytes<\/th>\n      <th>Gorgonian<\/th>\n      <th>Halimeda<\/th>\n      <th>Laurencia<\/th>\n      <th>Sponge<\/th>\n      <th>Stypopodium<\/th>\n      <th>turf<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-left","targets":0},{"className":"dt-right","targets":[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]}],"dom":"Blrtip","pageLength":5,"lengthMenu":[5,10,15],"buttons":["csv","copy"],"scrollX":true,"scrollCollapse":true,"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="warning">
+<p>This table also scrolls horizontally.</p>
+</div>
+</div>
+</div>
+<div id="data-scaling" class="section level2">
+<h2>Data scaling</h2>
+<p>Next we conduct the <strong>NMDS analysis</strong> of the feeding data using <strong>standardize the variables</strong> so that they have similar weights. Our process is as follows: <strong>a</strong>) rescale quantitative traits to be in the range 0 to 1 and divide by the number of diet categories to have similar influence as the diet variables; <strong>b</strong>) rescale all ‘non diet’ traits to have similar influence to the diet traits by dividing by the number of diet categories divided by the number of categories for each substrate characteristic; <strong>c</strong>) combine these data into a single data frame for NMDS analysis; <strong>d</strong>) run <strong>NMDS analysis</strong></p>
+<pre class="r"><code># First
+quant_traits_std &lt;- decostand(all_traits[, 3:4], &quot;range&quot;) / 10
+# Second
+Mean_prop_mark_on_substrate_std &lt;- all_traits[, 5] / (10 / 2)
+prop_vertical_std &lt;- all_traits[, 6] / (10 / 2)
+prop_concave_std &lt;- all_traits[, 7] / (10 / 3)
+prop_convex_std &lt;- all_traits[, 8] / (10 / 3)
+
+all_traits_std &lt;- cbind(quant_traits_std,
+                        Mean_prop_mark_on_substrate_std,
+                        prop_vertical_std, prop_concave_std,
+                        prop_convex_std, all_traits[, 9:18])
+nmds &lt;- metaMDS(all_traits_std, distance = &quot;bray&quot;, k = 3, trymax = 40)</code></pre>
+<p>Then we convert the NMDS data into a dataframe and <strong>inspect the Sheppard plot</strong>.</p>
+<pre class="r"><code>NMDS &lt;- data.frame(NMDS1 = nmds$points[, 1],
+                   NMDS2 = nmds$points[, 2],
+                   MDS3 = nmds$points[, 3])
+stressplot(nmds)</code></pre>
+<p><img src="1_field_observations_files/figure-html/diet_NMDS_mods-1.png" width="672" /></p>
+<p>Finally, we <strong>generate the environmental vectors</strong> (correlations of variables with ordination axes).</p>
+<pre class="r"><code>set.seed(1)
+vec_sp &lt;- envfit(nmds$points, all_traits[, 3:18],
+                 perm = 1000, choices = c(1, 2, 3))
+spp_scrs &lt;- as.data.frame(scores(vec_sp, display = &quot;vectors&quot;))
+spp_scrs$species &lt;- rownames(spp_scrs)
+colnames(spp_scrs) &lt;- c(&quot;S_MDS1&quot;, &quot;S_MDS2&quot;, &quot;SMDS3&quot;, &quot;species&quot;)</code></pre>
+</div>
+<div id="nmds-analysis" class="section level2">
+<h2>NMDS analysis</h2>
+<p>Now we can plot the results and generate <strong>Figure 1</strong> from the manuscript. For all figures generated in this workflow, we coded as much formatting as we could with R and then made minor stylistic changes in <a href="https://inkscape.org" target="blank">Inkscape</a>. Thus, what you see here and throughout, are the raw figures.</p>
+<pre class="r"><code>#Plot results using ggplot2
+#Merge with data that we want to use in plotting
+NMDS &lt;- cbind(ids, NMDS)
+stuff &lt;- ggplot(NMDS) +
+  geom_point(mapping = aes(x = NMDS1, y = NMDS2,
+                           shape = Site, colour = Species), size = 4) +
+  geom_segment(aes(x = 0, y = 0, xend = S_MDS1, yend = S_MDS2),
+               data = spp_scrs, arrow = arrow(length = unit(0.5, &quot;cm&quot;)),
+               colour = &quot;black&quot;, inherit.aes = FALSE) +
+  geom_text(data = spp_scrs, aes(x = S_MDS1, y = S_MDS2,
+                              label = species), size = 3) +
+  labs(title = &quot;bray distance on all traits (standardized)&quot;,
+       subtitle = &quot;Stress = 0.04&quot;)
+
+#####Now subset just the spp. scrs with the highest correlations
+spp_scrs_sub &lt;- spp_scrs[-c(5, 11, 12), ]
+#Categorize species scores into different variable types for plotting
+variable_type &lt;- as.factor(c(rep(&quot;substrate&quot;, 5), rep(&quot;algae&quot;, 8)))
+spp_scrs_sub &lt;- cbind(variable_type, spp_scrs_sub)
+spp_scrs_substrate &lt;- subset(spp_scrs_sub,
+                             spp_scrs_sub$variable_type == &quot;substrate&quot;)
+spp_scrs_algae &lt;- subset(spp_scrs_sub,
+                         spp_scrs_sub$variable_type == &quot;algae&quot;)</code></pre>
+<div id="figure-1" class="section level4">
+<h4><font color="red">Figure 1</font></h4>
+<pre class="r"><code>fig_1 &lt;- ggplot(NMDS) +
+  geom_point(mapping = aes(x = NMDS1, y = NMDS2, shape = Site,
+                           colour = Species), size = 4) +
+  scale_colour_manual(values = samp_pal) +
+  geom_segment(aes(x = 0, y = 0, xend = S_MDS1, yend = S_MDS2),
+               data = spp_scrs_substrate,
+               arrow = arrow(length = unit(0.5, &quot;cm&quot;)), color = &quot;red&quot;) +
+  geom_text(data = spp_scrs_substrate, aes(x = S_MDS1, y = S_MDS2,
+                                           label = species),
+            nudge_y = c(-0.025, -0.025, -0.05, 0.05, 0.05)) +
+  geom_segment(aes(x = 0, y = 0, xend = S_MDS1, yend = S_MDS2),
+               data = spp_scrs_algae,
+               arrow = arrow(length = unit(0.5, &quot;cm&quot;)), color = &quot;black&quot;) +
+  geom_text(data = spp_scrs_algae, aes(x = S_MDS1, y = S_MDS2,
+                                       label = species),
+            nudge_y = c(-0.025, 0.025, 0.025, 0.025,
+                        0.025, -0.025, -0.05, -0.025)) +
+  theme_classic(base_size = 15)
+fig_1 &lt;- fig_1 + coord_fixed()
+fig_1</code></pre>
+<div class="figure" style="text-align: center">
+<img src="1_field_observations_files/figure-html/mean_bite_figure-1.png" alt="Figure 1: Bray curtis distance on all traits; stress = 0.04" width="90%" />
+<p class="caption">
+Figure 1: Bray curtis distance on all traits; stress = 0.04
+</p>
+</div>
+<pre class="r"><code>pdf(&quot;DATA/PHYLOSEQ/FIGURES/OUTPUT/Figure_1.pdf&quot;)
+fig_1
+invisible(dev.off())</code></pre>
+</div>
+<div id="go-to-part-2-dada2-workflow" class="section level4">
+<h4><a href="2_dada2.html">Go to Part 2, DADA2 Workflow</a></h4>
+</div>
+</div>
+
+<footer role="contentinfo" id="site-footer">
+
+<hr>
+
+<!-- /.bottom-menu -->
+	<p class="copyright">&#169; 2019 metacrobe,
+		powered by <a href="http://www.r-project.org">R</a> + <a href="http://rmarkdown.rstudio.com">RMarkdown</a> + <a href="http://github.com">Github</a>.</p>
+</footer>
+
+<!--this prevents a white space at bottom of page -->
+<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;"></div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

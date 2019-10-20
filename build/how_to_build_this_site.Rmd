@@ -1,0 +1,95 @@
+---
+title: "How I made this site"
+---
+
+***
+
+ADD CONTENT HERE
+
+
+create `.gitignore` file
+if you type `git status` and its a mess do this first
+
+
+### Git
+
+clone the repo `git clone https://github.com/istmobiome/istmobiome.github.io`.
+check the status `git status` and make sure it is clear.
+build site 
+
+make a gitignore file (see below) to avoid uploading all the useless crap `nano .gitignore`
+
+run `git status` to see whats what. 
+run `git pull` to make sure everything is up-to-date.
+then run `git add . --dry-run` to see what will be added. DO NOT EVER run `git add --all` before checking that you are happy with this...
+
+`git add --all` to stage
+`git commit -a  -m "initial DIGEST website commit"`
+`git push`
+
+
+to remove remotely but keep locally
+`git rm --cache DIGEST/web/*.Rmd`
+`git commit -a  -m "remove .Rmd files"`
+`git push`
+
+
+
+
+in Rstudio
+
+`rmarkdown::render_site()`
+
+
+```
+## General files to ignore ##
+#############################
+# History files
+.Rhistory
+.Rapp.history
+.DS_Store
+
+# Session Data files
+.RData
+
+# User-specific files
+.Ruserdata
+.Rproj.user
+
+# Example code in package build process
+*-Ex.R
+
+# Output files from R CMD build or archives
+*.tar.gz
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Output files from R CMD check
+/*.Rcheck/
+
+# Temporary files created by R markdown
+*.utf8.md
+*.knit.md
+
+# Data from processing scripts
+*_read_changes.txt
+DATA/
+
+# DIGEST web files
+web.Rproj
+
+# knitr and R markdown default cache directories
+*_cache/
+/cache/
+*_files/
+
+# Files from Website rendering in _site/
+site_libs/
+```
+

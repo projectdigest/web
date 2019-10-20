@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Introduction</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">DIGEST</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li>
+  <a href="0_pw_intro.html">
+    <span class="fa fa-info"></span>
+     
+    Intro
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-wrench"></span>
+     
+    Workflow
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="1_field_observations.html">1. Field Observations</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">16S rRNA Processing</li>
+    <li>
+      <a href="2_dada2.html">2. DADA2 Workflow</a>
+    </li>
+    <li>
+      <a href="3_data_prep.html">3. Data Prep</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">16S rRNA Analyses</li>
+    <li>
+      <a href="4_diversity.html">4. Diversity</a>
+    </li>
+    <li>
+      <a href="5_da_asv.html">5. DA ASVs</a>
+    </li>
+    <li>
+      <a href="6_synthesis.html">6. Synthesis</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="7_appendices.html">Appendices</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="data_availability.html">
+    <span class="fa fa-database"></span>
+     
+    Data
+  </a>
+</li>
+<li>
+  <a href="about.html">
+    <span class="fa fa-user-friends"></span>
+     
+    People
+  </a>
+</li>
+<li>
+  <a href="supplemental_material.html">SOM</a>
+</li>
+<li>
+  <a href="contact.html">
+    <span class="fa fa-phone"></span>
+     
+    Contact
+  </a>
+</li>
+<li>
+  <a href="how_to_build_this_site.html">
+    <span class="fa fa-question fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Introduction</h1>
+
+</div>
+
+
+<hr />
+<p>With this workflow and the raw data, anyone should be able to reproduce the results of this study. Here we will go through the steps of processing raw 16S rRNA marker gene data and then generating phyloseq objects and analyzing data. We will recreate figures and tables from the paper as well as many additional data products. Here we report both methods and results in plain text and R code. You can choose to show all code or hide the code using the button in the upper right hand corner of the fron page (default is mostly hide). The document represents a <strong>completely reproducible workflow</strong> of our study. Please see the <a href="data_availability.html">Data section</a> for details about obtaining all data and data products from this study.</p>
+<div class="notice">
+<p>This document is <strong>interactive</strong>. You can <strong>sort and scroll</strong> through most of the tables and the <strong>phylogenetic tree is zoomable</strong>. In the upper right hand corner of the front page is a <code>Code</code> button. Use this to show or hide all the code in the document (default is hide) as well as download the <code>.Rmd</code> file which you can use to extract the code. Data products from the final paper are highlighted in <font size="3" color="red">Red</font>.</p>
+</div>
+<p>
+</p>
+<div id="definitions-abbreviations" class="section level2">
+<h2>Definitions &amp; Abbreviations</h2>
+<ul>
+<li><a href="https://www.nature.com/articles/ismej2017119" target="_blank">Amplicon Sequence Variant</a> (<strong>ASV</strong>): Exact sequence variant—analogous to an OTU—but with single nucleotide resolution.<br />
+</li>
+<li>Differentially abundant (<strong>DA</strong>) feature: Taxa, ASV, etc. that is disproportionately abundant in a group of samples and statistically different than other groups.</li>
+</ul>
+</div>
+<div id="goals-of-the-study" class="section level2">
+<h2>Goals of the Study</h2>
+<ol style="list-style-type: decimal">
+<li>Assess the taxonomic composition of intestinal communities from herbivorous reef fish.<br />
+</li>
+<li>Determine the diversity of these communities and their similarity/dissimilarity.<br />
+</li>
+<li>Identify differentially abundant ASVs across the host species.<br />
+</li>
+<li>Predict the specificity of differentially abundant ASVs.</li>
+</ol>
+<hr />
+</div>
+<div id="workflow-overview" class="section level2">
+<h2>Workflow overview</h2>
+<div id="part-1-field-observations" class="section level4">
+<h4><a href="1_field_observations.html">Part 1: Field Observations</a></h4>
+<p>Before we proceed with microbial community analysis, we will run some analyses on field-based behavioral assays of the different herbivorous reef fish species.</p>
+</div>
+<div id="part-2-dada2-workflow" class="section level4">
+<h4><a href="2_dada2.html">Part 2: DADA2 Workflow</a></h4>
+<p>In this first part we go through the process of …raw reads, error, blah</p>
+</div>
+<div id="part-3-data-preparation" class="section level4">
+<h4><a href="3_data_prep.html">Part 3: Data Preparation</a></h4>
+<p>Next we go through the steps of defining sample groups, creating phyloseq objects, removing unwanted samples, and removing contaminant ASVs. Various parts of this section can easily be modified to perform different analyses. For example, if you were only interested in a specific taxa or group of samples, you could change the code here to create new phyloseq objects.</p>
+</div>
+<div id="part-4-community-composition-diversity" class="section level4">
+<h4><a href="4_diversity.html">Part 4: Community Composition &amp; Diversity</a></h4>
+<p>In the second part, we assess taxonomic composition as well as alpha and beta diversity. Phyloseq offers many options for assessing diversity, including several alpha diversity metrics, additional ordination and distance methods, and so on. You can play around with these settings to how it affects the results.</p>
+</div>
+<div id="part-5-differentially-abundant-asvs" class="section level4">
+<h4><a href="5_da_asv.html">Part 5: Differentially Abundant ASVs</a></h4>
+<p>We wanted to understand how ASVs partitioned across host species. We also wanted to assess the specificity of each ASV to determine habitat preference. To our knowledge there is no quantitative way to do this. The only attempt we are aware of was <a href="http://mmdb.aori.u-tokyo.ac.jp/" target="_blank">MetaMetaDB</a> but it is based on a 454 database and no longer seems to be in active development. So we used an approach based on the work of <a href="https://doi.org/10.1111/j.1365-294X.2012.05552.x" target="_blank">Sullam <em>et. al.</em></a>, first identifying differentially abundant ASVs, then searching for closest database hits, and finally using phylogenetic analysis and top hit metadata (isolation source, natural host) to infer habitat preference.</p>
+</div>
+<div id="part-6-synthesis" class="section level4">
+<h4><a href="6_synthesis.html">Part 6: Synthesis</a></h4>
+<p>In this section we pull together the results from <strong>Part III</strong> and try to make sense of the microbiomes from these herbivorous reef fish. How are ASVs partitioning across host? How similar are these ASVs to sequences from other studies? What can these patterns tell us about host specificity?</p>
+<blockquote>
+<p>All tables and figures presented below are named as they appeared in the original publication. We also include many additional data productes that were not part of the original publication.</p>
+</blockquote>
+</div>
+<div id="appendices" class="section level4">
+<h4><a href="7_appendices.html">Appendices</a></h4>
+<p>Here we provide information on a) other analyses &amp; visualizations, b) tools &amp; resources used in this workflow, c) submitting sequencing data to public archives, and d) specific R package &amp; versions use in this workflow.</p>
+<hr />
+</div>
+</div>
+<div id="color-graphics" class="section level2">
+<h2>Color &amp; graphics</h2>
+<p>Throughout this workflow we are going to rely on color to help us tell a story. We will use color to delineate host fish species and to delineate microbial taxa. Microbial diversity is pretty vast and it can be difficult to display all of this diversity in a single, static figure.</p>
+<div class="warning">
+<p>Many of us perceive color and/or differences in color, well, differently. So when designing figures it is important to use <b>a</b>) a relatively few colors and <b>b</b>) a palette that is friendly to a variety of people. For our figures, we generated a palette based on Bang Wong’s scheme described in this <a href="http://dx.doi.org/10.1038/nmeth.1618" target="_blank">paper</a>. Wong’s color scheme uses contrasting colors that can be distinguished by folks with color vision deficiency—roughly 8% of people (mostly males) are color blind. So what do you think? Do you want Keanu Reeves to understand your figures or not?</p>
+</div>
+<p>This scheme is conservative—there are only 7 colors. We added black grey, and a blueish white to give us a little wiggle room (so we cheated a little). Others have developed <a href="http://mkweb.bcgsc.ca/colorblind/" target="_blank">12 and 15 color palette schemes</a>, but be careful—figures with too many colors can inhibit our ability to discern patterns. This conservative palette forces us to choose carefully when deciding which taxa to target or how many groups to display. To keep things simple we create two palettes—one for microbial taxa (<code>friend_pal</code>) with all the colors and another for the five host fish species (<code>samp_pal</code>). The fish palette is just a subset of the full palette. Here is the code:</p>
+<pre class="r"><code>#Full palette
+friend_pal &lt;- c(&quot;#009E73&quot;, &quot;#D55E00&quot;, &quot;#F0E442&quot;, &quot;#CC79A7&quot;, &quot;#56B4E9&quot;,
+    &quot;#E69F00&quot;, &quot;#0072B2&quot;, &quot;#7F7F7F&quot;, &quot;#B6DBFF&quot;, &quot;#000000&quot;)
+#Fish palette
+samp_pal &lt;- c(&quot;#CC79A7&quot;, &quot;#0072B2&quot;, &quot;#009E73&quot;, &quot;#56B4E9&quot;, &quot;#E69F00&quot;)
+
+cols &lt;- function(a) image(1:10, 1, as.matrix(1:10), col=a, axes=FALSE , xlab=&quot;&quot;, ylab=&quot;&quot;)
+cols(friend_pal)</code></pre>
+<p><img src="0_pw_intro_files/figure-html/define_color_blind_scheme-1.png" width="672" /></p>
+<p>There is a great article on <a href="https://davidmathlogic.com/colorblind/#%23000000-%23E69F00-%2356B4E9-%23009E73-%23F0E442-%230072B2-%23D55E00-%23CC79A7" target="blank">Coloring for Colorblindness</a> by David Nichols that has an interactive color picker and recommendations for accessible palettes. Highly recommended…</p>
+</div>
+<div id="figures-tables" class="section level2">
+<h2>Figures &amp; Tables</h2>
+<p>Use these links if you want to jump directly to the code used to produce the <strong>figures and tables</strong> from the original publication. The full Supplementary files for the paper can be found <a href="supplemental_material.html" target="blank">here</a> but there is no R code on this page. If you want to see the code that produced this material you can click on the links below. There is no code for Tables S2 and S7.</p>
+<div id="main-paper" class="section level4">
+<h4>Main Paper</h4>
+<p><a href="1_field_observations.html#nmds_analysis" target="blank">Figure 1</a>: NMDS analysis of host feeding behavior.<br />
+<a href="4_diversity.html#abundance_by_host_species" target="blank">Figure 2A</a>: Taxa abundance by host species.<br />
+<a href="4_diversity.html#diversity_plots" target="blank">Figure 2B</a>: Alpha diversity.<br />
+<a href="4_diversity.html#diversity_plots10" target="blank">Figure 2C</a>: Beta diversity.<br />
+<a href="6_synthesis.html#putting_the_pieces_together" target="blank">Figure 3</a>: DA ASV tree.<br />
+<a href="6_synthesis.html#heatmap" target="blank">Figure 4</a>: DA ASV heatmap.<br />
+<a href="6_synthesis.html#summary_of_habitat_preference" target="blank">Table 1</a>: Summary of habitat preference.</p>
+</div>
+<div id="supplemental-material" class="section level4">
+<h4>Supplemental Material</h4>
+<p><a href="1_field_observations.html#observational_data" target="blank">Table S1</a>: Summary of field-based feeding observations.<br />
+<a href="supplemental_material.html#table_s2" target="blank">Table S2</a>: Number of bites observed for each herbivore species at each site.<br />
+<a href="4_diversity.html#statistical_tests" target="blank">Table S3</a>: Metadata and microbiome diversity estimates for each sample.<br />
+<a href="4_diversity.html#taxonomic_composition" target="blank">Table S4</a>: Total taxonomic diversity (by Class) of herbivore microbiomes.<br />
+<a href="5_da_asv.html#results_of_lefse_analysis" target="blank">Table S5</a>: Results of LEfSe analysis.<br />
+<a href="6_synthesis.html#assessing_habitat_specificity" target="blank">Table S6</a>: Results of BLAST analysis for DA ASVs.<br />
+<a href="supplemental_material.html#table_s7" target="blank">Table S7</a>: Accession numbers and unique codes for sequence data in Figure 3.<br />
+<a href="7_appendices.html#appendix_a:_other_analyses__visualizations" target="blank">Figure S1</a>: Class-level relative abundance of microbial communities from each sample.</p>
+</div>
+<div id="continue-to-part-1-field-observations" class="section level4">
+<h4><a href="1_field_observations.html">Continue to Part 1, Field Observations</a></h4>
+</div>
+</div>
+
+<footer role="contentinfo" id="site-footer">
+
+<hr>
+
+<!-- /.bottom-menu -->
+	<p class="copyright">&#169; 2019 metacrobe,
+		powered by <a href="http://www.r-project.org">R</a> + <a href="http://rmarkdown.rstudio.com">RMarkdown</a> + <a href="http://github.com">Github</a>.</p>
+</footer>
+
+<!--this prevents a white space at bottom of page -->
+<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;"></div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
