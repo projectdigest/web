@@ -16,6 +16,17 @@ To characterize the foraging ecology of the different species of herbivorous fis
 </div>
 <p></p>
 
+```{r pickel_map, cache=TRUE, fig.cap="Florida Keys & Pickles Reef"}
+leaflet() %>%
+  setView(lat = 25.2, lng = -81.676177, zoom = 8) %>%
+  addTiles() %>%
+  addMarkers(lat = 25.00138889, lng = -80.41527778, label = "Pickles Reef")
+
+```
+
+
+***
+
 At each site, we haphazardly selected focal fish over a wide range of sizes and then randomly selected a single bite by each individual to describe (see Supplementary Table 2 for sample sizes). For each bite, we identified the food item(s) targeted as well as characteristics of the substrate (e.g., hard bottom vs. other common substrates such as sponges, gorgonians, etc.) at the precise location of the bite. For hard substrates, we recorded whether a bite was on a convex, concave, or flat surface, and whether that surface was oriented horizontally (< 45 degrees) or vertically (> 45 degrees). In addition, we framed each bite within a 5 x 5 cm micro-quadrat and measured the depth of the sediment and height of the algae at several points to determine the average sediment depth and algal height within the vicinity of the bite. We then manually removed sediments and determined whether the fish left a distinct grazing scar (i.e., where calcium carbonate had been removed from the reef framework in addition to epilithic algae). 
 
 To visualize the multivariate patterns of herbivory we used non-metric multidimensional scaling (NMDS) as implemented via the metaMDS function in the vegan package. For each species of herbivorous fish at each site we calculated the proportion of bites focused on each prey item (‘prey variables’) as well as the proportion of bites targeting substrates with different characteristics (e.g., convex vs. concave vs. flat). We also calculated the proportion of bites resulting in a grazing scar. For bites on turf assemblages, we calculated the mean turf height and sediment depth directly adjacent to each bite. Prior to analysis, quantitative variables (e.g., sediment depth and turf height) were rescaled to the range of 0 to 1. In addition, quantitative and categorical variables were rescaled such that they would have similar influence to the ‘prey variables’ by dividing each variable by the number of prey categories. Rescaled data were then analysed via NMDS using a Bray-Curtis dissimilarity matrix. 

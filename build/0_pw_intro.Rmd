@@ -29,6 +29,8 @@ library(svgPanZoom)
 library(RCurl)
 library(plotly)
 library(pairwiseAdonis)
+library(dplyr)
+library(leaflet)
 sessionInfo()
 set.seed(0199)
 ```
