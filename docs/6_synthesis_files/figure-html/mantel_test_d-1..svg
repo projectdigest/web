@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 504.00 360.00'>
+<defs>
+  <style type='text/css'><![CDATA[
+    line, polyline, polygon, path, rect, circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: #FFFFFF;'/>
+<text transform='translate(76.98,269.02) rotate(-90)' style='font-size: 12.00px; font-family: Arial;' textLength='86.72px' lengthAdjust='spacingAndGlyphs'>Sc. taeniopterus</text>
+<text transform='translate(172.98,232.33) rotate(-90)' style='font-size: 12.00px; font-family: Arial;' textLength='50.02px' lengthAdjust='spacingAndGlyphs'>Sp. viride</text>
+<polyline points='74.40,172.31 74.40,159.61 170.40,159.61 170.40,172.31 ' style='stroke-width: 0.75;' />
+<text transform='translate(268.98,257.06) rotate(-90)' style='font-size: 12.00px; font-family: Arial;' textLength='92.72px' lengthAdjust='spacingAndGlyphs'>Sp. aurofrenatum</text>
+<text transform='translate(364.98,283.81) rotate(-90)' style='font-size: 12.00px; font-family: Arial;' textLength='66.70px' lengthAdjust='spacingAndGlyphs'>A. coeruleus</text>
+<text transform='translate(460.98,267.80) rotate(-90)' style='font-size: 12.00px; font-family: Arial;' textLength='50.68px' lengthAdjust='spacingAndGlyphs'>A. tractus</text>
+<polyline points='362.40,207.12 362.40,194.42 458.40,194.42 458.40,207.12 ' style='stroke-width: 0.75;' />
+<polyline points='266.40,154.34 266.40,141.65 410.40,141.65 410.40,194.42 ' style='stroke-width: 0.75;' />
+<polyline points='122.40,159.61 122.40,67.47 338.40,67.47 338.40,141.65 ' style='stroke-width: 0.75;' />
+<line x1='59.04' y1='204.40' x2='59.04' y2='59.04' style='stroke-width: 0.75;' />
+<line x1='59.04' y1='204.40' x2='51.84' y2='204.40' style='stroke-width: 0.75;' />
+<line x1='59.04' y1='182.42' x2='51.84' y2='182.42' style='stroke-width: 0.75;' />
+<line x1='59.04' y1='160.44' x2='51.84' y2='160.44' style='stroke-width: 0.75;' />
+<line x1='59.04' y1='138.47' x2='51.84' y2='138.47' style='stroke-width: 0.75;' />
+<line x1='59.04' y1='116.49' x2='51.84' y2='116.49' style='stroke-width: 0.75;' />
+<line x1='59.04' y1='94.51' x2='51.84' y2='94.51' style='stroke-width: 0.75;' />
+<line x1='59.04' y1='72.54' x2='51.84' y2='72.54' style='stroke-width: 0.75;' />
+<text transform='translate(41.76,216.08) rotate(-90)' style='font-size: 12.00px; font-family: Arial;' textLength='23.36px' lengthAdjust='spacingAndGlyphs'>0.05</text>
+<text transform='translate(41.76,172.12) rotate(-90)' style='font-size: 12.00px; font-family: Arial;' textLength='23.36px' lengthAdjust='spacingAndGlyphs'>0.15</text>
+<text transform='translate(41.76,128.17) rotate(-90)' style='font-size: 12.00px; font-family: Arial;' textLength='23.36px' lengthAdjust='spacingAndGlyphs'>0.25</text>
+<text transform='translate(41.76,84.21) rotate(-90)' style='font-size: 12.00px; font-family: Arial;' textLength='23.36px' lengthAdjust='spacingAndGlyphs'>0.35</text>
+<text x='212.33' y='34.53' style='font-size: 14.40px; font-weight: bold; font-family: Arial;' textLength='108.14px' lengthAdjust='spacingAndGlyphs'>Ecological traits</text>
+<text x='199.37' y='355.68' style='font-size: 12.00px; font-family: Arial;' textLength='134.05px' lengthAdjust='spacingAndGlyphs'>hellinger/bray-curtis/ward</text>
+<text x='232.05' y='341.28' style='font-size: 12.00px; font-family: Arial;' textLength='68.70px' lengthAdjust='spacingAndGlyphs'>Host species</text>
+<text transform='translate(12.96,196.14) rotate(-90)' style='font-size: 12.00px; font-family: Arial;' textLength='46.69px' lengthAdjust='spacingAndGlyphs'>Distance</text>
+</svg>

@@ -3,7 +3,7 @@ title: "Part 6: Synthesis"
 ---
  
 ```{r load_2, include=FALSE, cache=TRUE, eval=FALSE}
-# This is for initial processing only. After caching evalnot needed
+# This is for initial processing only. After caching eval not needed
 load("DATA/RDS/pw_da_asv_4.rds")
 ```
 
@@ -53,7 +53,7 @@ To view a full, interactive version of the tree go this [iTOL page](https://itol
 #### <font color="red">Figure 3</font>
 
 <div class="warning">
-You can pan around and zoom in on this tree.
+You can pan around and zoom in on this tree. Double-clicking will zoom in on an area. 
 </div>
 
 ```{r insert_itol, out.width = "100%", fig.cap = "Figure 3", eval = FALSE, echo = FALSE, cache=TRUE}
@@ -72,20 +72,22 @@ itol_tree
 # 2. resize to drawing, 
 # 3. Save a copy,  
 # 4. save as Optimized SVG
-itol_tree <- svgPanZoom("DATA/PHYLOSEQ/FIGURES/INPUT/Figure_3_TreeA_2.svg", 
+itol_tree <- svgPanZoom("SVG_INPUT/Figure_3_TreeA_2.svg", 
                         controlIconsEnabled = TRUE, viewBox = TRUE, 
                         width = "100%")
 itol_tree
 ```
 
 *** 
+
 <p></p>
 
-```{r tree_legend, echo = FALSE, message = FALSE, fig.align = "center", cache=TRUE}
-itol_legend <- knitr::include_graphics("DATA/PHYLOSEQ/FIGURES/INPUT/Figure_3_Legend_A.svg")
-itol_legend
+```{r tree_legend, echo = FALSE, message = FALSE, fig.align = "left", cache=TRUE}
+itol_tree_legend <- knitr::include_graphics("SVG_INPUT/Figure_3_Legend_A.svg")
+itol_tree_legend
 ```
 
+<p></p>
 
 ## Inferring lifestyle category
 
@@ -545,7 +547,7 @@ To test whether intestinal microbes were associated with **a**) phylogenetic his
 
 The phylogenetic dissimilarity matrix was based on a phylogenetic tree of the five fish species used in this study. We constructed the tree using cytochrome oxidase subunit 1 (COI) genes retrieved from NCBI’s Nucleotide Database. Clustal Omega was used to align sequences (default settings for DNA). We then used Jalview to manually curate and trim the final alignment to 593 bp. This alignment contained COI genes from n = 5 *Scarus taeniopterus*, 22 *Sparisoma aurofrenatum*, 21 *Sparisoma viride*, 28 *Acanthurus coeruleus*, and 23 *Acanthurus tractus*. We used members of the Gerridae (2 *Eucinostomus* and 4 *Gerres*) as the outgroup. We used RAxML and the GTR model for tree computation and the GAMMA rate model for likelihoods. The tree was then transformed into a distance matrix using the cophenetic function in R.   
 
-```{r mantel_test_a, warning=FALSE, message = FALSE, fig.align = "center", cache=TRUE}
+```{r mantel_test_a, warning=FALSE, message = FALSE, fig.align = "center", cache=TRUE, cache.vars = "host_tree"}
 detach("package:phyloseq", unload=TRUE)
 library(ape)
 library(picante)
@@ -557,7 +559,7 @@ library(treeio)
 tree <- read.tree("DATA/PHYLOSEQ/TABLES/INPUT/MANTEL_TEST/item_orders.txt")
 #ggtree(tree) + geom_tiplab(color = "blue")
 
-host_tree <- knitr::include_graphics("DATA/PHYLOSEQ/FIGURES/INPUT/collapse_tree.svg", 
+host_tree <- knitr::include_graphics("SVG_INPUT/collapse_tree.svg", 
                                      dpi = 300)
 host_tree
 ```

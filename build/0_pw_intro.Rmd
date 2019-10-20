@@ -123,12 +123,17 @@ This scheme is conservative---there are only 7 colors. We added black grey, and 
 
 ```{r define_color_blind_scheme, cache=TRUE, fig.height=3}
 #Full palette
-friend_pal <- c("#009E73", "#D55E00", "#F0E442", "#CC79A7", "#56B4E9",
-    "#E69F00", "#0072B2", "#7F7F7F", "#B6DBFF", "#000000")
-#Fish palette
-samp_pal <- c("#CC79A7", "#0072B2", "#009E73", "#56B4E9", "#E69F00")
+friend_pal <- c("#009E73", "#D55E00", "#F0E442", 
+                "#CC79A7", "#56B4E9", "#E69F00", 
+                "#0072B2", "#7F7F7F", "#B6DBFF", 
+                "#000000")
 
-cols <- function(a) image(1:10, 1, as.matrix(1:10), col=a, axes=FALSE , xlab="", ylab="")
+#Fish palette
+samp_pal <- c("#CC79A7", "#0072B2", "#009E73", 
+              "#56B4E9", "#E69F00")
+
+cols <- function(a) image(1:10, 1, as.matrix(1:10), 
+                          col=a, axes=FALSE , xlab="", ylab="")
 cols(friend_pal)
 ```
 

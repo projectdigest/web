@@ -41,6 +41,9 @@ in Rstudio
 `rmarkdown::render_site()`
 
 
+
+### .gitignore
+
 ```
 ## General files to ignore ##
 #############################

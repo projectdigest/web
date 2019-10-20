@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 504.00 360.00'>
+<defs>
+  <style type='text/css'><![CDATA[
+    line, polyline, polygon, path, rect, circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: #FFFFFF;'/>
+<text transform='translate(76.98,250.73) rotate(-90)' style='font-size: 12.00px; font-family: Arial;' textLength='36.02px' lengthAdjust='spacingAndGlyphs'>AcCoe</text>
+<text transform='translate(172.98,246.72) rotate(-90)' style='font-size: 12.00px; font-family: Arial;' textLength='32.00px' lengthAdjust='spacingAndGlyphs'>AcTra</text>
+<polyline points='74.40,204.72 74.40,189.22 170.40,189.22 170.40,204.72 ' style='stroke-width: 0.75;' />
+<text transform='translate(268.98,182.07) rotate(-90)' style='font-size: 12.00px; font-family: Arial;' textLength='34.68px' lengthAdjust='spacingAndGlyphs'>ScTae</text>
+<text transform='translate(364.98,281.34) rotate(-90)' style='font-size: 12.00px; font-family: Arial;' textLength='33.35px' lengthAdjust='spacingAndGlyphs'>SpAur</text>
+<text transform='translate(460.98,277.34) rotate(-90)' style='font-size: 12.00px; font-family: Arial;' textLength='29.34px' lengthAdjust='spacingAndGlyphs'>SpVir</text>
+<polyline points='362.40,238.00 362.40,222.49 458.40,222.49 458.40,238.00 ' style='stroke-width: 0.75;' />
+<polyline points='266.40,137.40 266.40,121.89 410.40,121.89 410.40,222.49 ' style='stroke-width: 0.75;' />
+<polyline points='122.40,189.22 122.40,67.47 338.40,67.47 338.40,121.89 ' style='stroke-width: 0.75;' />
+<line x1='59.04' y1='238.87' x2='59.04' y2='61.70' style='stroke-width: 0.75;' />
+<line x1='59.04' y1='238.87' x2='51.84' y2='238.87' style='stroke-width: 0.75;' />
+<line x1='59.04' y1='194.58' x2='51.84' y2='194.58' style='stroke-width: 0.75;' />
+<line x1='59.04' y1='150.29' x2='51.84' y2='150.29' style='stroke-width: 0.75;' />
+<line x1='59.04' y1='106.00' x2='51.84' y2='106.00' style='stroke-width: 0.75;' />
+<line x1='59.04' y1='61.70' x2='51.84' y2='61.70' style='stroke-width: 0.75;' />
+<text transform='translate(41.76,247.21) rotate(-90)' style='font-size: 12.00px; font-family: Arial;' textLength='16.68px' lengthAdjust='spacingAndGlyphs'>0.4</text>
+<text transform='translate(41.76,202.92) rotate(-90)' style='font-size: 12.00px; font-family: Arial;' textLength='16.68px' lengthAdjust='spacingAndGlyphs'>0.6</text>
+<text transform='translate(41.76,158.63) rotate(-90)' style='font-size: 12.00px; font-family: Arial;' textLength='16.68px' lengthAdjust='spacingAndGlyphs'>0.8</text>
+<text transform='translate(41.76,114.34) rotate(-90)' style='font-size: 12.00px; font-family: Arial;' textLength='16.68px' lengthAdjust='spacingAndGlyphs'>1.0</text>
+<text transform='translate(41.76,70.05) rotate(-90)' style='font-size: 12.00px; font-family: Arial;' textLength='16.68px' lengthAdjust='spacingAndGlyphs'>1.2</text>
+<text x='192.10' y='34.53' style='font-size: 14.40px; font-weight: bold; font-family: Arial;' textLength='148.61px' lengthAdjust='spacingAndGlyphs'>Host-associated ASVs</text>
+<text x='199.37' y='355.68' style='font-size: 12.00px; font-family: Arial;' textLength='134.05px' lengthAdjust='spacingAndGlyphs'>hellinger/bray-curtis/ward</text>
+<text x='232.05' y='341.28' style='font-size: 12.00px; font-family: Arial;' textLength='68.70px' lengthAdjust='spacingAndGlyphs'>Host species</text>
+<text transform='translate(12.96,196.14) rotate(-90)' style='font-size: 12.00px; font-family: Arial;' textLength='46.69px' lengthAdjust='spacingAndGlyphs'>Distance</text>
+</svg>

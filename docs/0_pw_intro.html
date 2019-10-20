@@ -524,12 +524,17 @@ div.tocify {
 </div>
 <p>This scheme is conservative—there are only 7 colors. We added black grey, and a blueish white to give us a little wiggle room (so we cheated a little). Others have developed <a href="http://mkweb.bcgsc.ca/colorblind/" target="_blank">12 and 15 color palette schemes</a>, but be careful—figures with too many colors can inhibit our ability to discern patterns. This conservative palette forces us to choose carefully when deciding which taxa to target or how many groups to display. To keep things simple we create two palettes—one for microbial taxa (<code>friend_pal</code>) with all the colors and another for the five host fish species (<code>samp_pal</code>). The fish palette is just a subset of the full palette. Here is the code:</p>
 <pre class="r"><code>#Full palette
-friend_pal &lt;- c(&quot;#009E73&quot;, &quot;#D55E00&quot;, &quot;#F0E442&quot;, &quot;#CC79A7&quot;, &quot;#56B4E9&quot;,
-    &quot;#E69F00&quot;, &quot;#0072B2&quot;, &quot;#7F7F7F&quot;, &quot;#B6DBFF&quot;, &quot;#000000&quot;)
-#Fish palette
-samp_pal &lt;- c(&quot;#CC79A7&quot;, &quot;#0072B2&quot;, &quot;#009E73&quot;, &quot;#56B4E9&quot;, &quot;#E69F00&quot;)
+friend_pal &lt;- c(&quot;#009E73&quot;, &quot;#D55E00&quot;, &quot;#F0E442&quot;, 
+                &quot;#CC79A7&quot;, &quot;#56B4E9&quot;, &quot;#E69F00&quot;, 
+                &quot;#0072B2&quot;, &quot;#7F7F7F&quot;, &quot;#B6DBFF&quot;, 
+                &quot;#000000&quot;)
 
-cols &lt;- function(a) image(1:10, 1, as.matrix(1:10), col=a, axes=FALSE , xlab=&quot;&quot;, ylab=&quot;&quot;)
+#Fish palette
+samp_pal &lt;- c(&quot;#CC79A7&quot;, &quot;#0072B2&quot;, &quot;#009E73&quot;, 
+              &quot;#56B4E9&quot;, &quot;#E69F00&quot;)
+
+cols &lt;- function(a) image(1:10, 1, as.matrix(1:10), 
+                          col=a, axes=FALSE , xlab=&quot;&quot;, ylab=&quot;&quot;)
 cols(friend_pal)</code></pre>
 <p><img src="0_pw_intro_files/figure-html/define_color_blind_scheme-1.png" width="672" /></p>
 <p>There is a great article on <a href="https://davidmathlogic.com/colorblind/#%23000000-%23E69F00-%2356B4E9-%23009E73-%23F0E442-%230072B2-%23D55E00-%23CC79A7" target="blank">Coloring for Colorblindness</a> by David Nichols that has an interactive color picker and recommendations for accessible palettes. Highly recommended…</p>

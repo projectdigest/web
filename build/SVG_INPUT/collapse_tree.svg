@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:xhtml="http://www.w3.org/1999/xhtml"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg"
+   version="1.1"
+   viewBox="320.73282 -612.20551 638.159 875.65051"
+   sodipodi:docname="collapse_tree.svg"
+   width="638.159"
+   height="875.65051"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+  <metadata
+     id="metadata2249">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs2247" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1440"
+     inkscape:window-height="855"
+     id="namedview2245"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="1.0304984"
+     inkscape:cx="189.78368"
+     inkscape:cy="933.79895"
+     inkscape:window-x="0"
+     inkscape:window-y="1"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="tree" />
+  <xhtml:defs>
+    <xhtml:style
+       type="text/css" />
+  </xhtml:defs>
+  <g
+     id="viewport"
+     transform="matrix(0.64367133,0,0,0.64367133,1090.2123,-506.35625)">
+    <g
+       id="tree_bin"
+       transform="rotate(90)">
+      <g
+         id="tree"
+         transform="rotate(-90,494.45898,700.99497)">
+        <path
+           id="line0"
+           style="vector-effect:non-scaling-stroke;stroke:#888888;stroke-width:1"
+           d="M 77.8,1023.6335 H 0"
+           inkscape:connector-curvature="0" />
+        <path
+           id="line4"
+           style="vector-effect:non-scaling-stroke;stroke:#888888;stroke-width:1"
+           d="m 537.30322,126.35593 h -60.3991"
+           inkscape:connector-curvature="0" />
+        <path
+           id="line45"
+           style="vector-effect:non-scaling-stroke;stroke:#888888;stroke-width:1"
+           d="M 560.52493,379.0678 H 476.90412"
+           inkscape:connector-curvature="0" />
+        <path
+           id="line3"
+           style="vector-effect:non-scaling-stroke;stroke:#888888;stroke-width:1"
+           d="M 476.90412,252.71186 H 288.15039"
+           inkscape:connector-curvature="0" />
+        <path
+           id="path1641"
+           style="vector-effect:non-scaling-stroke;stroke-width:16"
+           d="M 476.90412,252.71186 H 288.15039"
+           inkscape:connector-curvature="0" />
+        <path
+           id="arc3"
+           style="vector-effect:non-scaling-stroke;stroke:#888888;stroke-width:1"
+           d="M 476.90412,126.35593 V 379.0678"
+           inkscape:connector-curvature="0" />
+        <path
+           id="path1644"
+           style="vector-effect:non-scaling-stroke;stroke-width:16"
+           d="M 476.90412,126.35593 V 379.0678"
+           inkscape:connector-curvature="0" />
+        <path
+           id="line86"
+           style="vector-effect:non-scaling-stroke;stroke:#888888;stroke-width:1"
+           d="M 547.17268,535.50847 H 288.15039"
+           inkscape:connector-curvature="0" />
+        <path
+           id="line2"
+           style="vector-effect:non-scaling-stroke;stroke:#888888;stroke-width:1"
+           d="M 288.15039,394.11017 H 172.39005"
+           inkscape:connector-curvature="0" />
+        <path
+           id="path1648"
+           style="vector-effect:non-scaling-stroke;stroke-width:16"
+           d="M 288.15039,394.11017 H 172.39005"
+           inkscape:connector-curvature="0" />
+        <path
+           id="arc2"
+           style="vector-effect:non-scaling-stroke;stroke:#888888;stroke-width:1"
+           d="M 288.15039,252.71186 V 535.50847"
+           inkscape:connector-curvature="0" />
+        <path
+           id="path1651"
+           style="vector-effect:non-scaling-stroke;stroke-width:16"
+           d="M 288.15039,252.71186 V 535.50847"
+           inkscape:connector-curvature="0" />
+        <path
+           id="line96"
+           style="vector-effect:non-scaling-stroke;stroke:#888888;stroke-width:1"
+           d="M 751.49883,782.20339 H 594.52245"
+           inkscape:connector-curvature="0" />
+        <path
+           id="line167"
+           style="vector-effect:non-scaling-stroke;stroke:#888888;stroke-width:1"
+           d="M 641.69049,1155.2542 H 594.52245"
+           inkscape:connector-curvature="0" />
+        <path
+           id="line95"
+           style="vector-effect:non-scaling-stroke;stroke:#888888;stroke-width:1"
+           d="M 594.52245,968.72881 H 172.39005"
+           inkscape:connector-curvature="0" />
+        <path
+           id="path1656"
+           style="vector-effect:non-scaling-stroke;stroke-width:16"
+           d="M 594.52245,968.72881 H 172.39005"
+           inkscape:connector-curvature="0" />
+        <path
+           id="arc95"
+           style="vector-effect:non-scaling-stroke;stroke:#888888;stroke-width:1"
+           d="M 594.52245,782.20339 V 1155.2542"
+           inkscape:connector-curvature="0" />
+        <path
+           id="path1659"
+           style="vector-effect:non-scaling-stroke;stroke-width:16"
+           d="M 594.52245,782.20339 V 1155.2542"
+           inkscape:connector-curvature="0" />
+        <path
+           id="line1"
+           style="vector-effect:non-scaling-stroke;stroke:#888888;stroke-width:1"
+           d="M 172.39005,681.41949 H 77.8"
+           inkscape:connector-curvature="0" />
+        <path
+           id="path1662"
+           style="vector-effect:non-scaling-stroke;stroke-width:16"
+           d="M 172.39005,681.41949 H 77.8"
+           inkscape:connector-curvature="0" />
+        <path
+           id="arc1"
+           style="vector-effect:non-scaling-stroke;stroke:#888888;stroke-width:1"
+           d="M 172.39005,394.11017 V 968.72881"
+           inkscape:connector-curvature="0" />
+        <path
+           id="path1665"
+           style="vector-effect:non-scaling-stroke;stroke-width:16"
+           d="M 172.39005,394.11017 V 968.72881"
+           inkscape:connector-curvature="0" />
+        <path
+           id="line218"
+           style="vector-effect:non-scaling-stroke;stroke:#888888;stroke-width:1"
+           d="M 172.39005,1365.8475 H 77.8"
+           inkscape:connector-curvature="0" />
+        <path
+           id="arc0"
+           style="vector-effect:non-scaling-stroke;stroke:#888888;stroke-width:1"
+           d="M 77.8,681.41949 V 1365.8475"
+           inkscape:connector-curvature="0" />
+        <path
+           id="path1669"
+           style="vector-effect:non-scaling-stroke;stroke-width:16"
+           d="M 77.8,681.41949 V 1365.8475"
+           inkscape:connector-curvature="0" />
+        <polygon
+           id="polygon1671"
+           style="vector-effect:non-scaling-stroke;fill:#888888;stroke:#888888;stroke-width:1"
+           points="172.39005,1365.8475 632.78086,1329.7458 632.78086,1401.9492 " />
+        <polygon
+           id="polygon1673"
+           style="vector-effect:non-scaling-stroke;fill:#0072b2;stroke:#888888;stroke-width:1"
+           points="751.49883,782.20339 778,637.79661 778,926.61017 " />
+        <polygon
+           id="polygon1675"
+           style="vector-effect:non-scaling-stroke;fill:#cc79a7;stroke:#888888;stroke-width:1"
+           points="641.69049,1155.2542 658.01048,1050.9605 658.01048,1259.548 " />
+        <polygon
+           id="polygon1677"
+           style="vector-effect:non-scaling-stroke;fill:#56b4e9;stroke:#888888;stroke-width:1"
+           points="543.27886,42.118644 543.27886,210.59322 537.30322,126.35593 "
+           transform="matrix(1.4442939,0,0,0.99992181,-240.04784,0.0098816)" />
+        <polygon
+           id="polygon1679"
+           style="vector-effect:non-scaling-stroke;fill:#e69f00;stroke:#888888;stroke-width:1"
+           points="566.8416,463.30508 560.52493,379.0678 566.8416,294.83051 "
+           transform="matrix(1.5199086,0,0,0.99990592,-293.06358,0.03567364)" />
+        <polygon
+           id="polygon1681"
+           style="vector-effect:non-scaling-stroke;fill:#009e73;stroke:#888888;stroke-width:1"
+           points="551.20128,555.56497 547.17268,535.50847 551.20128,515.45198 "
+           transform="matrix(2.1471869,0,0,1.550077,-630.01595,-294.57093)" />
+      </g>
+      <g
+         id="guide_lines"
+         transform="rotate(-90,494.45898,700.99497)" />
+      <g
+         id="layer_background_1"
+         transform="rotate(-90,494.45898,700.99497)" />
+      <g
+         id="layer_1"
+         transform="rotate(-90,494.45898,700.99497)" />
+      <g
+         id="event_catcher_1"
+         transform="rotate(-90,494.45898,700.99497)">
+        <rect
+           id="path_event"
+           class="path_event"
+           x="778"
+           y="0"
+           width="0"
+           height="1420"
+           style="fill:#ffffff;fill-opacity:0;stroke-width:0" />
+      </g>
+      <g
+         id="layer_labels"
+         transform="rotate(-90,494.45898,700.99497)" />
+      <text
+         style="font-size:40px;font-family:sans-serif;text-anchor:start;fill:#888888"
+         x="-542.6731"
+         y="1174.8473"
+         pointer-events="none"
+         font-size="40px"
+         id="text1696"
+         transform="rotate(-90)">Gerreidae</text>
+      <text
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:39.99971008px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#0072b2"
+         x="-397.45395"
+         y="575.66736"
+         pointer-events="none"
+         font-size="40px"
+         id="text1698"
+         transform="rotate(-90)">A. tractus</text>
+      <text
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:39.99971008px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#cc79a7"
+         x="-517.44348"
+         y="948.71826"
+         pointer-events="none"
+         font-size="40px"
+         id="text1700"
+         transform="rotate(-90)">A. coeruleus</text>
+      <text
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:39.99971008px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#56b4e9"
+         x="-632.17511"
+         y="-80.180061"
+         pointer-events="none"
+         font-size="40px"
+         id="text1702"
+         transform="rotate(-90)">Sp. aurofrenatum</text>
+      <text
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:39.99971008px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#e69f00"
+         x="-608.61237"
+         y="172.53183"
+         pointer-events="none"
+         font-size="40px"
+         id="text1704"
+         transform="rotate(-90)">Sp. viride</text>
+      <text
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:39.99971008px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#009e73"
+         x="-630.66003"
+         y="341.03336"
+         pointer-events="none"
+         font-size="40px"
+         id="text1706"
+         transform="rotate(-90)">Sc. taeniopterus</text>
+      <g
+         id="bin"
+         transform="rotate(-90,494.45898,700.99497)" />
+    </g>
+  </g>
+</svg>
