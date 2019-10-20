@@ -1,6 +1,5 @@
 name: "DIGEST"
 output_dir: "../docs/"
-baseurl: ""
 include: [_site.yml]
 navbar:
   title: "DIGEST"
