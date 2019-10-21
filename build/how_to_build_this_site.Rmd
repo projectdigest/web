@@ -4,22 +4,77 @@ title: "How I made this site"
 
 ***
 
-ADD CONTENT HERE
+I am a novice (this is my first site) but I will nonetheless describe how I made this website. I used [R](https://www.r-project.org) to run the code, [Rmarkdown from RStudio](https://rmarkdown.rstudio.com/) to construct the site, [GitHub](https://github.com/) for version control, and [GitHub Pages](https://pages.github.com/) for hosting. I also scoured the internet for solutions and inspiration. I will try to reference valuable resources below. My design  is based on [A. Murat Eren's (Meren)](http://merenlab.org/) website, itself a derivation of [MM](http://mademistakes.com/minimal-mistakes/). I like the use of whitespace (large margins), clean font (PT Sans & PT Serif), ample spacing between lines and words, and the use of colored boxes to call out important stuff. Meren also puts the floating Table of Contents on the right. A little touch I appreciate but didn't feel right copying :)
 
+https://github.com/merenlab/web#how-to-run-a-copy-of-this-website-locally
+
+### Simple site in RStudio
+
+After searching for the "perfect"  template, I decided to take a simpler approach by using the default website builder package in RStudio. It is bare bones---which is nice because it allowed me to understand things as they developed rather than trying to back engineer my understanding from a pre-built site. It helped me appreciate just how little fanciness you need to make a site as well as how to jazz it up a bit. Built from the ground up...
+
+### Setup
+
+Fire up RStudio and go to `File > New Project`. A popup window will appear and give you three options (at least on my setup) for Creating a New Project; New Directory, Existing Directory, or Version Control. The New and Existing Directory choices are pretty much the same---use the later if you already have some `.Rmd` files. The Version Control choice is recommended by a lot of tutorials because it facilitates Git integration. But since I am a beginner I thought it would be best to learn Git through the CLI.  So all version control here is done through the CLI rather than RStudio.
+
+Anyway, now do `New Directory > Simple R Markdown Website`, give it a name and figure out where you want it to live. Let's call it `mock_site`. Then hit `Create Project`.
+
+Now we have a new directory called `mock_site/` with the following files:  
+`_site.yml`  
+`about.Rmd`  
+`index.Rmd`  
+`mock_site.Rproj`  
+
+And thats it. At this point you can render the site by running:
+
+```
+rmarkdown::render_site()
+```
+
+The site generator makes a new directory called `_site/`, which is the actual website.  The directory contains `.html` versions of all the `.Rmd` files (in this case two)  as well as a directory called `site_libs/`. This directory has a bunch of `.js` and `.css` files that dictate the look and action of the site.  Later we will change the name of the `_site/` directory, but suffice it to say, every time you render the site this directory and its contents are rebuilt. As far as I know there is no reason you should ever need to mess with this directory.
+
+If you go into the `_site/` and open `index.html` you can see the site in a browser. Super simple---a couple of tabs, a header, a few links, nada mas.
+
+### Content
+
+The minimum content you need for an R Markdown website are the `_site.yaml` and `index.Rmd` files. We will get to the `.yaml` file in a minute. First we will write all our code and text in rmarkdown files (`.Rmd`)---basically markdown (an easy-to-write plain text format) with R code functionality added in. When we render the site, RStudio will run all the R code and spit out a `.html` file with tables, graphs, code, whatever you put in the `.Rmd` file. Later we will `cache` all the commands so we don't need to runn all the code everytime we render the site.
+
+<div class="warning">
+The main drawback to making a website using the Simple R Markdown Website approach is that  the site generator assumes all the `.Rmd` documents are under a flat directory (i.e., no pages under subdirectories). This means it is difficult to organize websites with a lot of content. There are additional shortcomings that are worth investigating.  
+</div>
+
+The basic structure of the `.Rmd` file is super simple. Have a look at the `about.Rmd` file.
+
+```
+---
+title: "About This Website"
+---
+
+More about this website.
+```
+
+While this file is open add some of the content, change the title, whatever. Then save the file, rerun  `rmarkdown::render_site()`, and open the `_site/index.html` file. Boom. Updated website. Pretty slick.
+
+So the base of your website will be different pages written in rmarkdown and saved as `.Rmd` files. The `.Rmd` files will likely be a mixture of text and R code but yu can also make a site without R code at all. Anyway, I will leave the rest of this part up to you...
+
+### Adding style & structure
+
+
+
+
+### Git
 
 create `.gitignore` file
 if you type `git status` and its a mess do this first
 
 
-### Git
 
 clone the repo `git clone https://github.com/istmobiome/istmobiome.github.io`.
 check the status `git status` and make sure it is clear.
-build site 
+build site
 
 make a gitignore file (see below) to avoid uploading all the useless crap `nano .gitignore`
 
-run `git status` to see whats what. 
+run `git status` to see whats what.
 run `git pull` to make sure everything is up-to-date.
 then run `git add . --dry-run` to see what will be added. DO NOT EVER run `git add --all` before checking that you are happy with this...
 
@@ -95,4 +150,3 @@ web.Rproj
 # Files from Website rendering in _site/
 site_libs/
 ```
-

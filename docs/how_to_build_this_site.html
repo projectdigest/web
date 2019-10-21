@@ -25,7 +25,7 @@
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
-<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
@@ -454,10 +454,47 @@ div.tocify {
 
 
 <hr />
-<p>ADD CONTENT HERE</p>
-<p>create <code>.gitignore</code> file if you type <code>git status</code> and its a mess do this first</p>
+<p>I am a novice (this is my first site) but I will nonetheless describe how I made this website. I used <a href="https://www.r-project.org">R</a> to run the code, <a href="https://rmarkdown.rstudio.com/">Rmarkdown from RStudio</a> to construct the site, <a href="https://github.com/">GitHub</a> for version control, and <a href="https://pages.github.com/">GitHub Pages</a> for hosting. I also scoured the internet for solutions and inspiration. I will try to reference valuable resources below. My design is based on <a href="http://merenlab.org/">A. Murat Eren’s (Meren)</a> website, itself a derivation of <a href="http://mademistakes.com/minimal-mistakes/">MM</a>. I like the use of whitespace (large margins), clean font (PT Sans &amp; PT Serif), ample spacing between lines and words, and the use of colored boxes to call out important stuff. Meren also puts the floating Table of Contents on the right. A little touch I appreciate but didn’t feel right copying :)</p>
+<p><a href="https://github.com/merenlab/web#how-to-run-a-copy-of-this-website-locally" class="uri">https://github.com/merenlab/web#how-to-run-a-copy-of-this-website-locally</a></p>
+<div id="simple-site-in-rstudio" class="section level3">
+<h3>Simple site in RStudio</h3>
+<p>After searching for the “perfect” template, I decided to take a simpler approach by using the default website builder package in RStudio. It is bare bones—which is nice because it allowed me to understand things as they developed rather than trying to back engineer my understanding from a pre-built site. It helped me appreciate just how little fanciness you need to make a site as well as how to jazz it up a bit. Built from the ground up…</p>
+</div>
+<div id="setup" class="section level3">
+<h3>Setup</h3>
+<p>Fire up RStudio and go to <code>File &gt; New Project</code>. A popup window will appear and give you three options (at least on my setup) for Creating a New Project; New Directory, Existing Directory, or Version Control. The New and Existing Directory choices are pretty much the same—use the later if you already have some <code>.Rmd</code> files. The Version Control choice is recommended by a lot of tutorials because it facilitates Git integration. But since I am a beginner I thought it would be best to learn Git through the CLI. So all version control here is done through the CLI rather than RStudio.</p>
+<p>Anyway, now do <code>New Directory &gt; Simple R Markdown Website</code>, give it a name and figure out where you want it to live. Let’s call it <code>mock_site</code>. Then hit <code>Create Project</code>.</p>
+<p>Now we have a new directory called <code>mock_site/</code> with the following files:<br />
+<code>_site.yml</code><br />
+<code>about.Rmd</code><br />
+<code>index.Rmd</code><br />
+<code>mock_site.Rproj</code></p>
+<p>And thats it. At this point you can render the site by running:</p>
+<pre><code>rmarkdown::render_site()</code></pre>
+<p>The site generator makes a new directory called <code>_site/</code>, which is the actual website. The directory contains <code>.html</code> versions of all the <code>.Rmd</code> files (in this case two) as well as a directory called <code>site_libs/</code>. This directory has a bunch of <code>.js</code> and <code>.css</code> files that dictate the look and action of the site. Later we will change the name of the <code>_site/</code> directory, but suffice it to say, every time you render the site this directory and its contents are rebuilt. As far as I know there is no reason you should ever need to mess with this directory.</p>
+<p>If you go into the <code>_site/</code> and open <code>index.html</code> you can see the site in a browser. Super simple—a couple of tabs, a header, a few links, nada mas.</p>
+</div>
+<div id="content" class="section level3">
+<h3>Content</h3>
+<p>The minimum content you need for an R Markdown website are the <code>_site.yaml</code> and <code>index.Rmd</code> files. We will get to the <code>.yaml</code> file in a minute. First we will write all our code and text in rmarkdown files (<code>.Rmd</code>)—basically markdown (an easy-to-write plain text format) with R code functionality added in. When we render the site, RStudio will run all the R code and spit out a <code>.html</code> file with tables, graphs, code, whatever you put in the <code>.Rmd</code> file. Later we will <code>cache</code> all the commands so we don’t need to runn all the code everytime we render the site.</p>
+<div class="warning">
+<p>The main drawback to making a website using the Simple R Markdown Website approach is that the site generator assumes all the <code>.Rmd</code> documents are under a flat directory (i.e., no pages under subdirectories). This means it is difficult to organize websites with a lot of content. There are additional shortcomings that are worth investigating.</p>
+</div>
+<p>The basic structure of the <code>.Rmd</code> file is super simple. Have a look at the <code>about.Rmd</code> file.</p>
+<pre><code>---
+title: &quot;About This Website&quot;
+---
+
+More about this website.</code></pre>
+<p>While this file is open add some of the content, change the title, whatever. Then save the file, rerun <code>rmarkdown::render_site()</code>, and open the <code>_site/index.html</code> file. Boom. Updated website. Pretty slick.</p>
+<p>So the base of your website will be different pages written in rmarkdown and saved as <code>.Rmd</code> files. The <code>.Rmd</code> files will likely be a mixture of text and R code but yu can also make a site without R code at all. Anyway, I will leave the rest of this part up to you…</p>
+</div>
+<div id="adding-style-structure" class="section level3">
+<h3>Adding style &amp; structure</h3>
+</div>
 <div id="git" class="section level3">
 <h3>Git</h3>
+<p>create <code>.gitignore</code> file if you type <code>git status</code> and its a mess do this first</p>
 <p>clone the repo <code>git clone https://github.com/istmobiome/istmobiome.github.io</code>. check the status <code>git status</code> and make sure it is clear. build site</p>
 <p>make a gitignore file (see below) to avoid uploading all the useless crap <code>nano .gitignore</code></p>
 <p>run <code>git status</code> to see whats what. run <code>git pull</code> to make sure everything is up-to-date. then run <code>git add . --dry-run</code> to see what will be added. DO NOT EVER run <code>git add --all</code> before checking that you are happy with this…</p>
