@@ -441,6 +441,18 @@ div.tocify {
      
   </a>
 </li>
+<li>
+  <a href="https://github.com/projectdigest/web/">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="raw_code.txt">
+    <span class="fa fa-code"></span>
+     
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -542,8 +554,9 @@ Check the data summary after uploading the files:</p>
 <div id="results-of-lefse-analysis" class="section level2">
 <h2>Results of LEfSe analysis</h2>
 <p>We can inspect and save the results of the LEfSe analysis. The table shows the Linear discriminant analysis (LDA) scores, P-values adjusted for multiple testing, and False Discovery Rate (FDR) values from the LEfSe analysis. Normalized read abundance values for each host species are also given.</p>
-<div id="table-s5" class="section level4">
-<h4><font color="red">Table S5</font></h4>
+<div class="paper">
+Table S5
+</div>
 <pre class="r"><code>lefse_tab &lt;- read.table(&quot;DATA/PHYLOSEQ/TABLES/INPUT/lefse_results.txt&quot;, 
                         header = TRUE, sep = &quot;\t&quot;, check.names = FALSE)
 write.table(lefse_tab, &quot;DATA/PHYLOSEQ/TABLES/OUTPUT/SUPP/Table_S5.txt&quot;, 
@@ -565,7 +578,6 @@ datatable(lefse_tab, rownames = FALSE, width = &quot;100%&quot;,
 <div id="htmlwidget-ab885d2f06a39e9f90a5" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-ab885d2f06a39e9f90a5">{"x":{"filter":"none","extensions":["FixedColumns"],"caption":"<caption style=\"caption-side: bottom; text-align: left;\">\n  Table 4: \n  <em>Results of LEfSe analysis.<\/em>\n<\/caption>","data":[["ASV1","ASV2","ASV5","ASV6","ASV7","ASV8","ASV9","ASV12","ASV14","ASV15","ASV17","ASV18","ASV20","ASV21","ASV22","ASV23","ASV25","ASV29","ASV30","ASV32","ASV34","ASV35","ASV39","ASV41","ASV43","ASV44","ASV48","ASV49","ASV54","ASV56","ASV57","ASV60","ASV69","ASV70","ASV75","ASV82","ASV90","ASV91","ASV98","ASV114","ASV127","ASV128","ASV151","ASV159","ASV165","ASV174","ASV224","ASV226","ASV234","ASV250","ASV268","ASV284","ASV298","ASV323","ASV359","ASV374","ASV395","ASV398","ASV450"],[6.32,6.09,5.74,5.56,5.67,5.94,5.9,5.44,5.17,5.46,5.67,5.52,5.4,5.45,5.7,5.33,5.53,5.08,5.1,5.1,5.17,5.35,5.06,5.03,5.34,5.15,5.06,5.3,5.27,4.85,5.1,5.17,4.86,4.89,4.86,4.92,4.69,4.68,4.39,4.91,4.61,4.64,4.63,4.96,4.56,4.92,4.35,4.24,4.43,4.36,4.03,4.26,4.21,4.13,4.17,4.21,4.14,4.12,4.09],[4.08e-06,7.17e-08,2.46e-07,0.000698,2.83e-08,2.3e-05,7.12e-08,8.32e-09,2.08e-08,2.12e-07,2.85e-08,4.8e-08,2.39e-07,9.85e-08,6.31e-09,5.61e-07,6.61e-09,9.54e-09,7.07e-09,2.82e-08,3.73e-09,2.62e-07,1.18e-08,4.84e-05,3.22e-07,6.59e-08,9.37e-10,4.69e-07,2.73e-07,0.000187,1.94e-08,3.38e-06,1.72e-07,3.37e-08,2.18e-07,5.21e-09,4.41e-07,9.82e-05,5.43e-07,1.48e-07,4.03e-06,1.04e-07,1.31e-06,3.49e-06,5.17e-07,9.83e-06,6.08e-07,1.75e-06,2.28e-08,2.64e-07,1.16e-05,1.89e-06,1.36e-08,1.19e-05,3.16e-06,8.07e-06,8.87e-07,2.48e-06,2.63e-05],[2.42e-05,1.04e-06,2.56e-06,0.00233,5.49e-07,0.000121,1.04e-06,3.46e-07,5.04e-07,2.44e-06,9.26e-07,8.21e-07,2.56e-06,1.36e-06,3.43e-07,4.41e-06,3.43e-07,3.47e-07,3.43e-07,5.49e-07,3.43e-07,2.56e-06,3.81e-07,0.000243,2.93e-06,1.04e-06,2.73e-07,4.02e-06,2.56e-06,0.000825,5.04e-07,2.14e-05,2.08e-06,6.13e-07,2.44e-06,3.43e-07,3.89e-06,0.000484,4.39e-06,1.87e-06,2.42e-05,1.38e-06,9.55e-06,2.16e-05,4.29e-06,5.61e-05,4.65e-06,1.24e-05,5.1e-07,2.56e-06,6.36e-05,1.31e-05,3.97e-07,6.39e-05,2.05e-05,4.69e-05,6.62e-06,1.64e-05,0.000134],[23204,29194,1094679,121077,6892,1747509,1596244,1622,0,11106,7430,0,4132,561008,5987,0,675931,0,0,0,0,443306,0,0,440237,279421,0,397982,375637,6043,3262,139761,4023,0,0,5437,35318,7953,0,8888,32791,21602,23021,3776,0,12573,44386,0,18414,31714,371,0,0,554,7238,12274,0,26184,0],[18298,9112,0,584730,0,5536,3802,0,301,8673,0,1103,0,482959,1005789,0,257979,0,0,0,0,1179,0,0,418,271074,0,3042,2357,98930,0,297340,0,0,0,0,7712,98495,0,161152,81982,88063,84597,181635,0,166344,39167,0,54441,45475,2005,366,0,27249,29772,32393,0,16429,0],[10635,2445517,7915,853585,2856,4446,5436,0,0,577073,3700,0,508104,1032,72,0,2040,0,0,0,0,1816,0,0,607,0,0,4757,930,147544,253738,504,143659,0,145404,167737,0,41027,0,2036,0,152,0,222,3106,0,0,0,0,0,21942,2671,32359,9639,0,1010,2416,1026,2206],[4231009,832447,460456,142358,847753,2048,0,207423,292915,232842,841226,0,99896,139,0,15073,0,135183,128014,61221,4316,134,0,73551,597,0,0,0,479,14805,2081,0,36418,155165,28103,0,9180,3831,42446,0,0,0,0,0,1351,0,0,267,0,0,2852,494,3122,14558,0,0,264,0,745],[396250,5226,444272,569007,927517,3601,0,546867,273011,4653,930856,666143,0,0,0,425503,0,242924,249291,254273,292474,0,231311,216475,0,0,230663,253,0,25253,0,0,0,1492,0,0,98322,10014,49249,0,0,0,0,0,72328,0,437,34625,0,0,12680,36461,0,0,0,0,27385,0,24618]],"container":"<table class=\"Buttons\">\n  <thead>\n    <tr>\n      <th>ASV<\/th>\n      <th>LDAscore<\/th>\n      <th>Pvalues<\/th>\n      <th>FDR<\/th>\n      <th>AcCoe<\/th>\n      <th>AcTra<\/th>\n      <th>ScTae<\/th>\n      <th>SpAur<\/th>\n      <th>SpVir<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-center","targets":[1,2,3,4,5,6,7,8]}],"dom":"Blfrtip","pageLength":5,"lengthMenu":[5,10,25,60],"buttons":["csv","copy"],"scrollX":true,"scrollCollapse":true,"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <hr />
-</div>
 </div>
 <div id="core-microbiome" class="section level2">
 <h2>Core microbiome</h2>

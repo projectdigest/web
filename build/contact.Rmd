@@ -1,5 +1,8 @@
 ---
 title: "Contact"
+output:
+  html_document:
+    code_folding: none
 ---
 
 ***

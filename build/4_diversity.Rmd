@@ -76,7 +76,7 @@ taxa_read_asv_tab2$prop_of_ASVs <- round(taxa_read_asv_tab2$prop_of_ASVs,
 
 For your information, the dataset has a total of **`r format(sum(tax_reads$reads), scientific = FALSE)`** reads across **`r sum(tax_asv$Freq)`** ASVs. 
 
-#### <font color="red">Table S4</font>
+<div class="paper">Table S4</div>
 
 ```{r cache=TRUE}
 #kills sci notation     
@@ -195,7 +195,7 @@ meltd$Class <- factor(meltd$Class,
 
 ### Abundance by host species  
 
-#### <font color="red">Figure 2A</font>
+<div class="paper">Figure 2A</div>
 
 ```{r plot_bar_fig2A, fig.align = "center", fig.cap = "Figure 2A", fig.height = 3, cache=TRUE}
 fig2A <- ggplot(meltd, 
@@ -253,7 +253,9 @@ Here we want to know if diversity is significantly different across host species
 
 First we run the diversity estimates, add these data to our summary table, and save a copy of this table. 
 
-#### <font color="red">Table S3</font>
+
+<div class="paper">Table S3</div>
+
 
 ```{r gen_summary_table, warning = FALSE, cache=TRUE}
 diversity <- estimate_richness(ps_slv_work_filt, 
@@ -426,7 +428,9 @@ Again we see that only *Sp. aurofrenatum* is significantly different from the ot
 
 Here we plot the results of Shannon diversity index. We will save a copy of the figure for later tweaking. We use the color palette described above to delineate host species.
 
-#### <font color="red">Figure 2B</font>
+
+<div class="paper">Figure 2B</div>
+
 
 ```{r alpha_div_fig_2B, fig.align = "center", fig.cap = "Figure 2B", warning = FALSE, cache=TRUE}
 fig2B <- plot_richness(ps_slv_work_filt, x = "Sp", 
@@ -549,7 +553,7 @@ We see that a convergent solution was reached around 20 iterations and our stres
 
 ### Diversity plots
 
-#### <font color="red">Figure 2C</font>
+<div class="paper">Figure 2C</div>
 
 ```{r beta_div_fig_2C, fig.align = "center", fig.cap = "Figure 2C", cache=TRUE}
 fig2C <- plot_ordination(ps_slv_work_filt, ord.nmds.jsd_slv, 

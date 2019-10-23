@@ -1,0 +1,2126 @@
+# Please note this is all the raw R code pulled from all the `.Rmd` files. 
+# Use at your own risk as this has not been tested independent of the Rmarkdown 
+# workflows. In other words, the code works in the Rmarkdown format but the 
+# complete pipeline has not been tested using just this code. I used `knitr::purl()` 
+# to pull out the R code from the Rmarkdown file. I did this for you in case you 
+# wanted the code and not hear me drone on about colors or zoomable figures. The 
+# first part is the DADA2 workflow and the second part is the phyloseq workflow. 
+# Commands that are commented out are things I tried that I could never get to work. 
+# Any line that starts like this: `## ----` is the code chuck name and details. 
+
+
+########################
+# BEGIN DADA2 WORKFLOW #
+########################
+
+## ----setup, include=FALSE------------------------------------------------
+remove(list = ls())
+library(dada2); packageVersion("dada2")
+library(ShortRead); packageVersion("ShortRead")
+library(ggplot2); packageVersion("ggplot2")
+library(TeachingDemos)
+library(ips)
+library(seqinr)
+library(ape)
+library(rstudioapi)
+library(knitr)
+library(rmarkdown)
+
+
+## ----set_wd, include=FALSE-----------------------------------------------
+knitr::opts_knit$set(root.dir = getwd())
+ptm <- proc.time()
+
+
+## ----list_fastq_files----------------------------------------------------
+path_X1 <- "02_MERGED/RUN01/INPUT_FILES/"
+head(list.files(path_X1))
+path_Y2 <- "02_MERGED/RUN02/INPUT_FILES/"
+head(list.files(path_Y2))
+path_Z3 <- "02_MERGED/RUN03/INPUT_FILES/"
+head(list.files(path_Z3))
+
+
+## ----sort_files----------------------------------------------------------
+fnFs_X1 <- sort(list.files(path_X1, pattern = "_R1.merged.fastq"))
+fnRs_X1 <- sort(list.files(path_X1, pattern = "_R2.merged.fastq"))
+
+fnFs_Y2 <- sort(list.files(path_Y2, pattern = "_R1.merged.fastq"))
+fnRs_Y2 <- sort(list.files(path_Y2, pattern = "_R2.merged.fastq"))
+
+fnFs_Z3 <- sort(list.files(path_Z3, pattern = "_R1.merged.fastq"))
+fnRs_Z3 <- sort(list.files(path_Z3, pattern = "_R2.merged.fastq"))
+
+
+## ----split_name----------------------------------------------------------
+sample.names_X1 <- sapply(strsplit(fnFs_X1, "_"), `[`, 1)
+fnFs_X1 <-file.path(path_X1, fnFs_X1)
+fnRs_X1 <-file.path(path_X1, fnRs_X1)
+
+sample.names_Y2 <- sapply(strsplit(fnFs_Y2, "_"), `[`, 1)
+fnFs_Y2 <-file.path(path_Y2, fnFs_Y2)
+fnRs_Y2 <-file.path(path_Y2, fnRs_Y2)
+
+sample.names_Z3 <- sapply(strsplit(fnFs_Z3, "_"), `[`, 1)
+fnFs_Z3 <-file.path(path_Z3, fnFs_Z3)
+fnRs_Z3 <-file.path(path_Z3, fnRs_Z3)
+
+
+## ----plot_quality_scores_forward, warning=FALSE--------------------------
+plotQualityProfile(fnFs_X1[9:11])
+plotQualityProfile(fnFs_Y2[9:11])
+plotQualityProfile(fnFs_Z3[2:4])
+
+
+## ----plot_quality_scores_reverse, warning=FALSE--------------------------
+plotQualityProfile(fnRs_X1[9:11])
+plotQualityProfile(fnRs_Y2[9:11])
+plotQualityProfile(fnRs_Z3[2:4])
+
+
+## ----move_files----------------------------------------------------------
+#Place filtered files in filtered/ subdirectory
+filt_path_X1 <- file.path(path_X1, "filtered")
+filtFs_X1 <- file.path(filt_path_X1, paste0(sample.names_X1, "_F_filt.fastq.gz"))
+filtRs_X1 <- file.path(filt_path_X1, paste0(sample.names_X1, "_R_filt.fastq.gz"))
+
+filt_path_Y2 <- file.path(path_Y2, "filtered")
+filtFs_Y2 <- file.path(filt_path_Y2, paste0(sample.names_Y2, "_F_filt.fastq.gz"))
+filtRs_Y2 <- file.path(filt_path_Y2, paste0(sample.names_Y2, "_R_filt.fastq.gz"))
+
+filt_path_Z3 <- file.path(path_Z3, "filtered")
+filtFs_Z3 <- file.path(filt_path_Z3, paste0(sample.names_Z3, "_F_filt.fastq.gz"))
+filtRs_Z3 <- file.path(filt_path_Z3, paste0(sample.names_Z3, "_R_filt.fastq.gz"))
+
+
+## ----filter--------------------------------------------------------------
+out_X1 <- filterAndTrim(fnFs_X1, filtFs_X1, fnRs_X1, filtRs_X1,
+                        truncLen=c(260,160), maxN=0, maxEE=c(2,5),
+                        truncQ=2, rm.phix=TRUE, compress=TRUE,
+                        multithread=TRUE)
+head(out_X1)
+
+out_Y2 <- filterAndTrim(fnFs_Y2, filtFs_Y2, fnRs_Y2, filtRs_Y2,
+                        truncLen=c(260,160), maxN=0, maxEE=c(2,5),
+                        truncQ=2, rm.phix=TRUE, compress=TRUE,
+                        multithread=TRUE)
+head(out_Y2)
+
+out_Z3 <- filterAndTrim(fnFs_Z3, filtFs_Z3, fnRs_Z3, filtRs_Z3,
+                        truncLen=c(260,140), maxN=0, maxEE=c(2,5),
+                        truncQ=2, rm.phix=TRUE, compress=TRUE,
+                        multithread=TRUE)
+head(out_Z3)
+
+
+## ----learn_errors_forward------------------------------------------------
+errF_X1 <- learnErrors(filtFs_X1, multithread = TRUE)
+errF_Y2 <- learnErrors(filtFs_Y2, multithread = TRUE)
+errF_Z3 <- learnErrors(filtFs_Z3, multithread = TRUE)
+
+
+## ----learn_errors_reverse------------------------------------------------
+errR_X1 <- learnErrors(filtRs_X1, multithread = TRUE)
+errR_Y2 <- learnErrors(filtRs_Y2, multithread = TRUE)
+errR_Z3 <- learnErrors(filtRs_Z3, multithread = TRUE)
+
+
+## ----plot_error, warning=FALSE-------------------------------------------
+plotErrors(errR_X1, nominalQ=TRUE)
+plotErrors(errR_Y2, nominalQ=TRUE)
+plotErrors(errR_Z3, nominalQ=TRUE)
+
+
+## ----dereplicate_reads_F-------------------------------------------------
+derepFs_X1 <- derepFastq(filtFs_X1)
+names(derepFs_X1) <- sample.names_X1
+
+derepFs_Y2 <- derepFastq(filtFs_Y2)
+names(derepFs_Y2) <- sample.names_Y2
+
+derepFs_Z3 <- derepFastq(filtFs_Z3)
+names(derepFs_Z3) <- sample.names_Z3
+
+
+## ----dereplicate_reads_R-------------------------------------------------
+derepRs_X1 <- derepFastq(filtRs_X1)
+names(derepRs_X1) <- sample.names_X1
+
+derepRs_Y2 <- derepFastq(filtRs_Y2)
+names(derepRs_Y2) <- sample.names_Y2
+
+derepRs_Z3 <- derepFastq(filtRs_Z3)
+names(derepRs_Z3) <- sample.names_Z3
+
+
+## ----run_dada2_forward---------------------------------------------------
+#Run01
+dadaFs_X1 <- dada(derepFs_X1, err = errF_X1, multithread = TRUE)
+dadaFs_X1[[1]]
+#Run02
+dadaFs_Y2 <- dada(derepFs_Y2, err = errF_Y2, multithread = TRUE)
+dadaFs_Y2[[1]]
+#Run03
+dadaFs_Z3 <- dada(derepFs_Z3, err = errF_Z3, multithread = TRUE)
+dadaFs_Z3[[1]]
+
+
+## ----run_dada2_reverse---------------------------------------------------
+#Run01
+dadaRs_X1 <- dada(derepRs_X1, err = errR_X1, multithread = TRUE)
+dadaRs_X1[[1]]
+#Run02
+dadaRs_Y2 <- dada(derepRs_Y2, err = errR_Y2, multithread = TRUE)
+dadaRs_Y2[[1]]
+#Run03
+dadaRs_Z3 <- dada(derepRs_Z3, err = errR_Z3, multithread = TRUE)
+dadaRs_Z3[[1]]
+
+
+## ----merge_paired_reads--------------------------------------------------
+mergers_X1 <- mergePairs(dadaFs_X1, derepFs_X1, dadaRs_X1, derepRs_X1)
+mergers_Y2 <- mergePairs(dadaFs_Y2, derepFs_Y2, dadaRs_Y2, derepRs_Y2)
+mergers_Z3 <- mergePairs(dadaFs_Z3, derepFs_Z3, dadaRs_Z3, derepRs_Z3)
+
+
+## ----head_file, eval = FALSE, echo = FALSE-------------------------------
+## head(mergers_X1[[1]])
+## head(mergers_Y2[[1]])
+## head(mergers_Z3[[1]])
+
+
+## ----seq_table-----------------------------------------------------------
+#Run01
+seqtab_X1 <- makeSequenceTable(mergers_X1)
+dim(seqtab_X1)
+table(nchar(getSequences(seqtab_X1)))
+#Run02
+seqtab_Y2 <- makeSequenceTable(mergers_Y2)
+dim(seqtab_Y2)
+table(nchar(getSequences(seqtab_Y2)))
+#Run03
+seqtab_Z3 <- makeSequenceTable(mergers_Z3)
+dim(seqtab_Z3)
+table(nchar(getSequences(seqtab_Z3)))
+
+
+## ----trim_length_length--------------------------------------------------
+#Run01
+seqtab_X1.2 <- seqtab_X1[,nchar(colnames(seqtab_X1)) %in% seq(368,380)]
+dim(seqtab_X1.2)
+table(nchar(getSequences(seqtab_X1.2)))
+#Run02
+seqtab_Y2.2 <- seqtab_Y2[,nchar(colnames(seqtab_Y2)) %in% seq(368,380)]
+dim(seqtab_Y2.2)
+table(nchar(getSequences(seqtab_Y2.2)))
+#Run03
+seqtab_Z3.2 <- seqtab_Z3[,nchar(colnames(seqtab_Z3)) %in% seq(368,380)]
+dim(seqtab_Z3.2)
+table(nchar(getSequences(seqtab_Z3.2)))
+
+
+## ----save_RDS------------------------------------------------------------
+saveRDS(seqtab_X1.2, "02_MERGED/RUN01/seqtab_X1.2.rds")
+saveRDS(seqtab_Y2.2, "02_MERGED/RUN02/seqtab_Y2.2.rds")
+saveRDS(seqtab_Z3.2, "02_MERGED/RUN03/seqtab_Z3.2.rds")
+
+
+## ----proc_time_1---------------------------------------------------------
+proc.time() - ptm
+
+
+## ----chimera_on_ind_runs-------------------------------------------------
+#Run01
+seqtab_X1.2.nochim <- removeBimeraDenovo(seqtab_X1.2,
+                                         method="consensus", multithread=TRUE)
+dim(seqtab_X1.2.nochim)
+sum(seqtab_X1.2.nochim)/sum(seqtab_X1.2)
+#Run02
+seqtab_Y2.2.nochim <- removeBimeraDenovo(seqtab_Y2.2,
+                                         method="consensus", multithread=TRUE)
+dim(seqtab_Y2.2.nochim)
+sum(seqtab_Y2.2.nochim)/sum(seqtab_Y2.2)
+#Run03
+seqtab_Z3.2.nochim <- removeBimeraDenovo(seqtab_Z3.2,
+                                         method="consensus", multithread=TRUE)
+dim(seqtab_Z3.2.nochim)
+sum(seqtab_Z3.2.nochim)/sum(seqtab_Z3.2)
+
+
+## ----build_table_to_track_reads------------------------------------------
+#Run01
+getN_X1 <- function(x) sum(getUniques(x))
+track_X1 <- cbind(out_X1, sapply(dadaFs_X1, getN_X1),
+                  sapply(dadaRs_X1, getN_X1), sapply(mergers_X1, getN_X1),
+                  rowSums(seqtab_X1.2.nochim))
+colnames(track_X1) <- c("input", "filtered", "denoisedF",
+                        "denoisedR", "merged", "nonchim")
+rownames(track_X1) <- sample.names_X1
+#Run02
+getN_Y2 <- function(x) sum(getUniques(x))
+track_Y2 <- cbind(out_Y2, sapply(dadaFs_Y2, getN_Y2),
+                  sapply(dadaRs_Y2, getN_Y2), sapply(mergers_Y2, getN_Y2),
+                  rowSums(seqtab_Y2.2.nochim))
+colnames(track_Y2) <- c("input", "filtered", "denoisedF",
+                        "denoisedR", "merged", "nonchim")
+rownames(track_Y2) <- sample.names_Y2
+#Run03
+getN_Z3 <- function(x) sum(getUniques(x))
+track_Z3 <- cbind(out_Z3, sapply(dadaFs_Z3, getN_Z3),
+                  sapply(dadaRs_Z3, getN_Z3), sapply(mergers_Z3, getN_Z3),
+                  rowSums(seqtab_Z3.2.nochim))
+colnames(track_Z3) <- c("input", "filtered", "denoisedF",
+                        "denoisedR", "merged", "nonchim")
+rownames(track_Z3) <- sample.names_Z3
+
+
+## ----track_changes-------------------------------------------------------
+#Run01
+track_X1
+write.table(track_X1, "RUN01_read_changes.txt",
+            sep = "\t", quote = FALSE, col.names=NA)
+#Run02
+track_Y2
+write.table(track_Y2, "RUN02_read_changes.txt",
+            sep = "\t", quote = FALSE, col.names=NA)
+#Run03
+track_Z3
+write.table(track_Z3, "RUN03_read_changes.txt",
+            sep = "\t", quote = FALSE, col.names=NA)
+
+
+## ----save_rds2-----------------------------------------------------------
+saveRDS(seqtab_X1.2.nochim, "02_MERGED/RUN01/seqtab_X1.2.nochim.rds")
+saveRDS(seqtab_Y2.2.nochim, "02_MERGED/RUN02/seqtab_Y2.2.nochim.rds")
+saveRDS(seqtab_Z3.2.nochim, "02_MERGED/RUN03/seqtab_Z3.2.nochim.rds")
+
+
+## ----proc_time_2---------------------------------------------------------
+proc.time() - ptm
+
+
+## ----clear_data----------------------------------------------------------
+remove(list = ls())
+
+
+## ----set_wd_2, include=FALSE---------------------------------------------
+knitr::opts_knit$set(root.dir = getwd())
+ptm <- proc.time()
+
+
+## ----read_RDS_files_combo------------------------------------------------
+seqtab.1 <- readRDS("02_MERGED/RUN01/seqtab_X1.2.rds")
+seqtab.2 <- readRDS("02_MERGED/RUN02/seqtab_Y2.2.rds")
+seqtab.3 <- readRDS("02_MERGED/RUN03/seqtab_Z3.2.rds")
+
+
+## ----order_files_combo---------------------------------------------------
+rownames(seqtab.1) <- sapply(strsplit(rownames(seqtab.1), "_"), `[`, 1)
+rownames(seqtab.2) <- sapply(strsplit(rownames(seqtab.2), "_"), `[`, 1)
+identical(sort(rownames(seqtab.1)), sort(rownames(seqtab.2))) # Should be TRUE
+seqtab.2 <- seqtab.2[rownames(seqtab.1),]
+
+
+## ----matrix_sum_combo----------------------------------------------------
+samples <- rownames(seqtab.1)
+seqs <- unique(c(colnames(seqtab.1), colnames(seqtab.2)))
+st.sum <- matrix(0L, nrow=length(samples), ncol=length(seqs))
+rownames(st.sum) <- samples
+colnames(st.sum) <- seqs
+st.sum[,colnames(seqtab.1)] <- st.sum[,colnames(seqtab.1)] + seqtab.1
+st.sum[,colnames(seqtab.2)] <- st.sum[,colnames(seqtab.2)] + seqtab.2
+
+
+## ----save_combo----------------------------------------------------------
+saveRDS(st.sum, "02_MERGED/combo_run1_run2.rds")
+
+
+## ----merge_combo---------------------------------------------------------
+combo <- readRDS("02_MERGED/combo_run1_run2.rds")
+seqtab.3 <- readRDS("02_MERGED/RUN03/seqtab_Z3.2.rds")
+
+st.all <- mergeSequenceTables(combo, seqtab.3)
+
+
+## ----chimera_on_combined_runs--------------------------------------------
+seqtab <- removeBimeraDenovo(st.all, method="consensus", multithread=TRUE)
+
+
+## ----assign_tax----------------------------------------------------------
+set.seed(119)#for reproducability
+tax_gg <- assignTaxonomy(seqtab, "gg_13_8_train_set_97.fa.gz",
+                         multithread=TRUE)
+set.seed(911)#for reproducability
+tax_silva <- assignTaxonomy(seqtab, "silva_nr_v132_train_set.fa.gz",
+                            multithread = TRUE)
+
+
+## ----save_image_combo----------------------------------------------------
+save.image("combo_pipeline.rdata")
+
+
+## ----proc_time_3---------------------------------------------------------
+proc.time() - ptm
+
+
+## ----sessionInfo, include=TRUE, echo=TRUE, results='markup'--------------
+sessionInfo()
+devtools::session_info()
+
+########################
+# END DADA2 WORKFLOW   #
+########################
+
+
+
+#############################
+# BEGIN PHYLOSEQ WORKFLOW   #
+#############################
+
+## ----setup, include=FALSE------------------------------------------------
+remove(list = ls())
+library(dada2); packageVersion("dada2")
+library(ShortRead); packageVersion("ShortRead")
+library(phyloseq); packageVersion("phyloseq")
+library(ggplot2); packageVersion("ggplot2")
+library("plyr"); packageVersion("plyr")
+library(vegan)
+library(scales)
+library(grid)
+library(reshape2)
+library(rstudioapi)
+library(knitr)
+library(kableExtra)
+library(data.table)
+library(DT)
+library(rmarkdown)
+library(pander)
+library(formatR)
+library(tidyverse)
+library(gridExtra)
+library(grid)
+library(grDevices)
+library(svgPanZoom)
+library(RCurl)
+library(plotly)
+library(pairwiseAdonis)
+sessionInfo()
+set.seed(0199)
+
+
+## ----set_wd, include=FALSE-----------------------------------------------
+knitr::opts_knit$set(root.dir = getwd())
+# This will setwd to wherever the .Rmd file is opened.
+ptm <- proc.time()
+start_time <- Sys.time()
+#opts_chunk$set(cache=TRUE)
+#formatR::tidy_app() run this in R to tidy code. How to do it here?
+
+## UNCOMMENT TO RUN lintr
+#rm(list=ls())
+#library(lintr)
+#names(lintr::default_linters)
+#lintr::lint(
+#  filename = "Phyloseq_workflow.Rmd",
+#  linters = lintr::with_defaults(
+#    trailing_whitespace_linter = NULL,
+#    commented_code_linter = NULL
+#  )
+#)
+
+
+## ----mkdirs, include=FALSE-----------------------------------------------
+dir.create("TABLES/OUTPUT/PS/", recursive = TRUE)
+dir.create("TABLES/OUTPUT/OTHER/", recursive = TRUE)
+dir.create("TABLES/OUTPUT/LEfSe/", recursive = TRUE)
+dir.create("TABLES/OUTPUT/SUPP/", recursive = TRUE)
+dir.create("FIGURES/OUTPUT/", recursive = TRUE)
+dir.create("PS_OBJECTS/", recursive = TRUE)
+
+
+## ----define_color_blind_scheme-------------------------------------------
+#Full palette
+friend_pal <- c("#009E73", "#D55E00", "#F0E442", "#CC79A7", "#56B4E9",
+    "#E69F00", "#0072B2", "#7F7F7F", "#B6DBFF", "#000000")
+#Fish palette
+samp_pal <- c("#CC79A7", "#0072B2", "#009E73", "#56B4E9", "#E69F00")
+
+
+## ----mean_bite_analysis--------------------------------------------------
+library(ggthemes)
+all_traits <- read.csv("TABLES/INPUT/Mean_bite_characteristics.txt",
+  header = TRUE, sep = "\t")
+ids <- all_traits[, 1:2]
+
+write.table(all_traits, "TABLES/OUTPUT/SUPP/Table_S1.txt",
+            sep = "\t", row.names = FALSE, quote = FALSE,
+            col.names = c("Host species", "Site", "Sediment depth (mm)",
+                          "Turf height(mm)", "Prop. mark on substrate",
+                          "Prop. vertical", "Prop. concave", "Prop. convex",
+                          "Articulated red coralline", "CCA/Turf on CCA",
+                          "Dictyota", "Epiphytes", "Gorgonian", "Halimeda",
+                          "Laurencia", "Sponge", "Stypopodium", "Turf"))
+
+datatable(all_traits, rownames = FALSE, width = "100%",
+          colnames = c("Host species", "Site", "Sediment depth (mm)",
+                       "Turf height(mm)", "Prop. mark on substrate",
+                       "Prop. vertical", "Prop. concave", "Prop. convex",
+                       "Articulated red coralline", "CCA/Turf on CCA",
+                       "Dictyota", "Epiphytes", "Gorgonian", "Halimeda",
+                       "Laurencia", "Sponge", "Stypopodium", "turf"),
+          caption = htmltools::tags$caption(
+            style = "caption-side: bottom; text-align: left;",
+            "Supplementary Table 1: ",
+            htmltools::em("INSERT DESCRIPTION.")),
+          extensions = "Buttons",
+          options = list(columnDefs = list(list(
+            className = "dt-left", targets = 0)), dom = "Blrtip",
+            pageLength = 5, lengthMenu = c(5, 10, 15),
+            buttons = c("csv", "copy"), scrollX = TRUE,
+            scrollCollapse = TRUE))
+
+
+## ----standardize_diet_variables, results = 'hide'------------------------
+# First
+quant_traits_std <- decostand(all_traits[, 3:4], "range") / 10
+# Second
+Mean_prop_mark_on_substrate_std <- all_traits[, 5] / (10 / 2)
+prop_vertical_std <- all_traits[, 6] / (10 / 2)
+prop_concave_std <- all_traits[, 7] / (10 / 3)
+prop_convex_std <- all_traits[, 8] / (10 / 3)
+
+all_traits_std <- cbind(quant_traits_std,
+                        Mean_prop_mark_on_substrate_std,
+                        prop_vertical_std, prop_concave_std,
+                        prop_convex_std, all_traits[, 9:18])
+nmds <- metaMDS(all_traits_std, distance = "bray", k = 3, trymax = 40)
+
+
+## ----diet_NMDS_mods------------------------------------------------------
+NMDS <- data.frame(NMDS1 = nmds$points[, 1],
+                   NMDS2 = nmds$points[, 2],
+                   MDS3 = nmds$points[, 3])
+stressplot(nmds)
+
+
+## ----get_env_vectors-----------------------------------------------------
+set.seed(1)
+vec_sp <- envfit(nmds$points, all_traits[, 3:18],
+                 perm = 1000, choices = c(1, 2, 3))
+spp_scrs <- as.data.frame(scores(vec_sp, display = "vectors"))
+spp_scrs$species <- rownames(spp_scrs)
+colnames(spp_scrs) <- c("S_MDS1", "S_MDS2", "SMDS3", "species")
+
+
+## ----mean_bite_initial_plot----------------------------------------------
+#Plot results using ggplot2
+#Merge with data that we want to use in plotting
+NMDS <- cbind(ids, NMDS)
+stuff <- ggplot(NMDS) +
+  geom_point(mapping = aes(x = NMDS1, y = NMDS2,
+                           shape = Site, colour = Species), size = 4) +
+  geom_segment(aes(x = 0, y = 0, xend = S_MDS1, yend = S_MDS2),
+               data = spp_scrs, arrow = arrow(length = unit(0.5, "cm")),
+               colour = "black", inherit.aes = FALSE) +
+  geom_text(data = spp_scrs, aes(x = S_MDS1, y = S_MDS2,
+                              label = species), size = 3) +
+  labs(title = "bray distance on all traits (standardized)",
+       subtitle = "Stress = 0.04")
+
+#####Now subset just the spp. scrs with the highest correlations
+spp_scrs_sub <- spp_scrs[-c(5, 11, 12), ]
+#Categorize species scores into different variable types for plotting
+variable_type <- as.factor(c(rep("substrate", 5), rep("algae", 8)))
+spp_scrs_sub <- cbind(variable_type, spp_scrs_sub)
+spp_scrs_substrate <- subset(spp_scrs_sub,
+                             spp_scrs_sub$variable_type == "substrate")
+spp_scrs_algae <- subset(spp_scrs_sub,
+                         spp_scrs_sub$variable_type == "algae")
+
+
+## ----mean_bite_figure, fig.align = "center", fig.cap = "Figure 1: Bray curtis distance on all traits; stress = 0.04", out.width = "90%"----
+fig_1 <- ggplot(NMDS) +
+  geom_point(mapping = aes(x = NMDS1, y = NMDS2, shape = Site,
+                           colour = Species), size = 4) +
+  scale_colour_manual(values = samp_pal) +
+  geom_segment(aes(x = 0, y = 0, xend = S_MDS1, yend = S_MDS2),
+               data = spp_scrs_substrate,
+               arrow = arrow(length = unit(0.5, "cm")), color = "red") +
+  geom_text(data = spp_scrs_substrate, aes(x = S_MDS1, y = S_MDS2,
+                                           label = species),
+            nudge_y = c(-0.025, -0.025, -0.05, 0.05, 0.05)) +
+  geom_segment(aes(x = 0, y = 0, xend = S_MDS1, yend = S_MDS2),
+               data = spp_scrs_algae,
+               arrow = arrow(length = unit(0.5, "cm")), color = "black") +
+  geom_text(data = spp_scrs_algae, aes(x = S_MDS1, y = S_MDS2,
+                                       label = species),
+            nudge_y = c(-0.025, 0.025, 0.025, 0.025,
+                        0.025, -0.025, -0.05, -0.025)) +
+  theme_classic(base_size = 15)
+fig_1 <- fig_1 + coord_fixed()
+fig_1
+pdf("FIGURES/OUTPUT/Figure_1.pdf")
+fig_1
+invisible(dev.off())
+
+
+## ----deliniate_sample_types----------------------------------------------
+load("combo_pipeline.rdata")
+samples.out <- rownames(seqtab)
+subject <- sapply(strsplit(samples.out, "[[:digit:]]"), `[`, 1)
+# this splits the string at first instance of a digit
+# use the whole string for individuals
+# use the first two letters for genus
+# use the next three letters for species
+sample_name <- substr(samples.out, 1, 999)
+genus <- substr(samples.out, 1, 2)
+species <- substr(samples.out, 1, 5)
+
+
+## ----define_variables----------------------------------------------------
+#define a sample data frame
+samdf <- data.frame(SamName = sample_name, Gen = genus, Sp = species)
+rownames(samdf) <- samples.out
+kable(samdf[c(1, 13, 20, 30, 44), 1:3], row.names = FALSE) %>%
+  kable_styling(bootstrap_options = "striped",
+                full_width = FALSE, position = "float_right")  %>%
+  column_spec(1:3, width = "3.5cm")
+
+
+## ----create_ps_object----------------------------------------------------
+# this create the phyloseq object
+ps_slv <- phyloseq(otu_table(seqtab, taxa_are_rows = FALSE),
+                   sample_data(samdf), tax_table(tax_silva))
+tax_table(ps_slv) <- cbind(tax_table(ps_slv), rownames(tax_table(ps_slv)))
+# adding unique ASV names
+taxa_names(ps_slv) <- paste0("ASV", seq(ntaxa(ps_slv)))
+tax_table(ps_slv) <- cbind(tax_table(ps_slv), rownames(tax_table(ps_slv)))
+ps_slv
+
+
+## ----export_seq_tax_tables-----------------------------------------------
+colnames(tax_table(ps_slv)) <- c("Kingdom", "Phylum", "Class", "Order",
+                                 "Family", "Genus", "ASV_SEQ", "ASV_ID")
+write.table(tax_table(ps_slv), "TABLES/OUTPUT/PS/full_tax_table.txt",
+            sep = "\t", quote = FALSE, col.names = NA)
+write.table(t(otu_table(ps_slv)), "TABLES/OUTPUT/PS/full_seq_table.txt",
+            sep = "\t", quote = FALSE, col.names = NA)
+write.table(sample_data(ps_slv), "TABLES/OUTPUT/PS/full_sample_data.txt",
+            sep = "\t", quote = FALSE, row.names =  FALSE)
+
+
+## ----select_samples------------------------------------------------------
+ps_slv_base <- prune_samples(c("SpAur01", "SpAur02", "SpAur03", "SpAur04",
+                               "SpAur10", "SpAur11", "SpAur12", "SpAur13",
+                               "SpVir01", "SpVir02", "SpVir03", "SpVir04",
+                               "SpVir05", "SpVir06", "SpVir07", "SpVir08",
+                               "SpVir09", "SpVir10", "SpVir11", "AcCoe01",
+                               "AcCoe02", "AcCoe03", "AcCoe04", "AcCoe05",
+                               "AcCoe06", "AcCoe07", "AcCoe08", "AcTra01",
+                               "AcTra02", "AcTra03", "AcTra04", "AcTra05",
+                               "AcTra06", "AcTra07", "AcTra08", "AcTra09",
+                               "ScTae01", "ScTae02", "ScTae03", "ScTae04",
+                               "ScTae05", "ScTae06", "ScTae07", "ScTae08",
+                               "ScTae09", "SpAur05", "SpAur06", "SpAur07",
+                               "SpAur08", "SpAur09"), ps_slv)
+ps_slv_base
+
+
+## ----remove_ASV_with_zeros_reads-----------------------------------------
+ps_slv_work <- prune_taxa(taxa_sums(ps_slv_base) > 0, ps_slv_base)
+ps_slv_work
+
+
+## ----gen_stats_raw, eval = TRUE, include = TRUE--------------------------
+write.table(tax_table(ps_slv_work), "TABLES/OUTPUT/PS/trim_tax_table.txt",
+            sep = "\t", quote = FALSE, col.names = NA)
+write.table(t(otu_table(ps_slv_work)), "TABLES/OUTPUT/PS/trim_seq_table.txt",
+            sep = "\t", quote = FALSE, col.names = NA)
+write.table(sample_data(ps_slv_work), "TABLES/OUTPUT/PS/trim_sample_data.txt",
+            sep = "\t", quote = FALSE, row.names =  FALSE)
+
+# general stats for the dataset.
+
+sample_sum_df_raw <- data.frame(sum = sample_sums(ps_slv_work))
+total_reads_raw <- sum(otu_table(ps_slv_work))
+smin_raw <- as.integer(min(sample_sums(ps_slv_work)))
+smean_raw <- as.integer(mean(sample_sums(ps_slv_work)))
+smax_raw <- as.integer(max(sample_sums(ps_slv_work)))
+
+
+## ----remove_cyano--------------------------------------------------------
+# generate a file with Chloroplast ASVs
+chloro_p_ps <- subset_taxa(ps_slv_work, Order == "Chloroplast")
+chloro_p_tab <-  as(tax_table(chloro_p_ps), "matrix")
+chloro_p_tab <- chloro_p_tab[, 8]
+chloro_p_df <- as.factor(chloro_p_tab)
+goodTaxaCH <- setdiff(taxa_names(ps_slv_work), chloro_p_df)
+ps_slv_work_no_cyano <- prune_taxa(goodTaxaCH, ps_slv_work)
+ps_slv_work_no_cyano
+###### Summarize data
+total_asv_chloro_p <- length(chloro_p_df)
+
+sample_sum_chloro_p_ps <- data.frame(sum = sample_sums(chloro_p_ps))
+total_reads_chloro_p_ps <- sum(otu_table(chloro_p_ps))
+smin_chloro_p_ps <- min(sample_sums(chloro_p_ps))
+smean_chloro_p_ps <- mean(sample_sums(chloro_p_ps))
+smax_chloro_p_ps <- max(sample_sums(chloro_p_ps))
+
+write.table(tax_table(chloro_p_ps),
+            "TABLES/OUTPUT/PS/chloroplast_tax_table.txt",
+            sep = "\t", quote = FALSE, col.names = NA)
+write.table(t(otu_table(chloro_p_ps)),
+            "TABLES/OUTPUT/PS/chloroplast_seq_table.txt",
+            sep = "\t", quote = FALSE, col.names = NA)
+write.table(sample_data(chloro_p_ps),
+            "TABLES/OUTPUT/PS/chloroplast_sample_data.txt",
+            sep = "\t", quote = FALSE, row.names =  FALSE)
+
+
+
+## ----remove_specific_taxa------------------------------------------------
+# generate a file with mitochondria ASVs
+MT1_ps <- subset_taxa(ps_slv_work_no_cyano, Family == "Mitochondria")
+MT1 <-  as(tax_table(MT1_ps), "matrix")
+MT1 <- MT1[, 8]
+MT1df <- as.factor(MT1)
+goodTaxa <- setdiff(taxa_names(ps_slv_work_no_cyano), MT1df)
+ps_slv_work_filt <- prune_taxa(goodTaxa, ps_slv_work_no_cyano)
+ps_slv_work_filt
+###### Summarize data
+total_asv_MT1 <- length(MT1df)
+# colnames(tax_table(MT1_ps))
+sample_sum_MT1_ps <- data.frame(sum = sample_sums(MT1_ps))
+total_reads_MT1_ps <- sum(otu_table(MT1_ps))
+smin_MT1_ps <- min(sample_sums(MT1_ps))
+smean_MT1_ps <- mean(sample_sums(MT1_ps))
+smax_MT1_ps <- max(sample_sums(MT1_ps))
+
+
+## ----gen_stats, eval = TRUE, include = TRUE------------------------------
+# general stats for the dataset.
+#colnames(tax_table(ps_slv_work_filt))
+sample_sum_df <- data.frame(sum = sample_sums(ps_slv_work_filt))
+total_reads <- sum(otu_table(ps_slv_work_filt))
+smin <- as.integer(min(sample_sums(ps_slv_work_filt)))
+smean <- as.integer(mean(sample_sums(ps_slv_work_filt)))
+smax <- as.integer(max(sample_sums(ps_slv_work_filt)))
+
+
+## ----merge---------------------------------------------------------------
+mergedGP <- merge_samples(ps_slv_work_filt, "Sp")
+SD <- merge_samples(sample_data(ps_slv_work_filt), "Sp")
+mergedGP
+
+
+## ----save_ps_objects-----------------------------------------------------
+save(ps_slv_work_filt, mergedGP, file = "PS_OBJECTS/ps.RData")
+saveRDS(ps_slv_work_filt, "PS_OBJECTS/ps_slv_work_filt.rds")
+saveRDS(mergedGP, "PS_OBJECTS/mergedGP.rds")
+
+
+## ----sample_summary_table, warning = FALSE, fig.align = "center"---------
+total_reads <- sample_sums(ps_slv_work_filt)
+total_reads <- as.data.frame(total_reads, make.names = TRUE)
+total_reads <- total_reads %>% rownames_to_column("host_ID")
+
+total_asvs <- estimate_richness(ps_slv_work_filt, measures = "Observed")
+total_asvs <- total_asvs %>% rownames_to_column("host_ID")
+
+sam_details <- sample_data(ps_slv)
+sam_details <- sam_details %>% mutate(genus = case_when(
+    Gen == "Ac" ~ "Acanthurus",
+    Gen == "Sc" ~ "Scarus",
+    Gen == "Sp" ~ "Sparisoma"))
+
+sam_details <- sam_details %>% mutate(species = case_when(
+    Sp == "AcCoe"~ "coeruleus",
+    Sp == "AcTra"~ "tractus",
+    Sp == "ScTae"~ "taeniopterus",
+    Sp == "SpAur"~ "aurofrenatum",
+    Sp == "SpVir"~ "viride"))
+#Sp == "SpChr"~ "chrysopterum",
+#Sp == "ScVet"~ "vetula"
+sam_details <- sam_details %>% mutate(common_name = case_when(
+    Sp == "AcCoe" ~ "blue tang surgeonfish",
+    Sp == "AcTra" ~ "fiveband surgeonfish",
+    Sp == "ScTae" ~ "princess parrotfish",
+    Sp == "SpAur" ~ "redband parrotfish",
+    Sp == "SpVir" ~ "stoplight parrotfish"))
+
+#Sp == "SpChr" ~ "redtail parrotfish",
+#Sp == "ScVet" ~ "queen parrotfish"))
+
+sam_details <- sam_details %>% mutate(NCBI_txid = case_when(
+    Sp == "AcCoe" ~ "157585",
+    Sp == "AcTra" ~ "1316013",
+    Sp == "ScTae" ~ "544418",
+    Sp == "SpAur" ~ "59663",
+    Sp == "SpVir" ~ "59666"))
+#Sp == "SpChr" ~ "51766",
+#Sp == "ScVet" ~ "84543"))
+
+sam_details <- sam_details[-c(2, 3)]
+colnames(sam_details) <- c("host_ID", "host_genus",
+                           "host_species", "full_name",
+                           "NCBI_txid")
+
+merge_tab <- merge(sam_details, total_reads, by = "host_ID")
+merge_tab2 <- merge(merge_tab, total_asvs, by = "host_ID")
+colnames(merge_tab2) <- c("host_ID", "host_genus",
+                          "host_species", "common_name",
+                          "NCBI_txid",  "total_reads",
+                          "total_ASVs")
+
+# We also have a datatable containing metrics for each host. Lets bring this in
+# and merge with  the summary table
+metrics <- read.table("TABLES/INPUT/host_metrics.txt",
+                      sep = "\t", header = TRUE)
+host_details <- merge(merge_tab2, metrics, by = "host_ID")
+colnames(host_details) <- c("host_ID", "host_genus", "host_species",
+                            "common_name", "NCBI_txid",  "total_reads",
+                            "total_ASVs", "collection_date", "phase",
+                            "weight", "total_length", "foregut_length",
+                            "midgut_length", "hindgut_length",
+                            "total_gut_length")
+
+datatable(host_details, rownames = FALSE, width = "100%",
+          colnames = c("host_ID", "host_genus", "host_species",
+                       "common_name", "NCBI_txid",  "total_reads",
+                       "total_ASVs", "Collection_date", "Phase",
+                       "Weight (g)", "Total length (cm)",
+                       "Fore gut length (cm)", "Mid gut length (cm)",
+                       "Hind gut length (cm)", "Total gut length (cm)"),
+          caption = htmltools::tags$caption(style = "caption-side:
+                                            bottom; text-align: left;",
+                                            "Table: ",
+                                            htmltools::em("Sample summary.")),
+          extensions = "Buttons",
+          options = list(columnDefs =
+                           list(list(className = "dt-left", targets = 0)),
+                         dom = "Blfrtip", pageLength = 5,
+                         lengthMenu = c(5, 10, 25, 50),
+                         buttons = c("csv", "copy"),
+                         scrollX = TRUE, scrollCollapse = TRUE))
+
+
+## ----diversity_table, fig.align = "center"-------------------------------
+# generate the ASV table
+tax_asv <- table(tax_table(ps_slv_work_filt)[, "Class"],
+                 exclude = NULL, dnn = "Taxa")
+tax_asv <- as.data.frame(tax_asv, make.names = TRUE)
+
+#### change <NA> to Unclassified
+# Get levels and add "None"
+levels <- levels(tax_asv$Taxa)
+levels[length(levels) + 1] <- "Unclassified"
+# refactor Taxa to include "Unclassified" as a factor level
+# and replace NA with "Unclassified"
+tax_asv$Taxa <- factor(tax_asv$Taxa, levels = levels)
+tax_asv$Taxa[is.na(tax_asv$Taxa)] <- "Unclassified"
+
+# generate the reads table
+tax_reads <- factor(tax_table(ps_slv_work_filt)[, "Class"], exclude = NULL)
+tax_reads <- apply(otu_table(ps_slv_work_filt), MARGIN = 1,
+                   function(x) {
+                     tapply(x, INDEX = tax_reads,
+                                       FUN = sum, na.rm = FALSE,
+                                       simplify = TRUE)})
+
+#RENAME NA --> Unclassified
+rownames(tax_reads)[72] <- "Unclassified"
+
+tax_reads <- as.data.frame(tax_reads, make.names = TRUE)
+tax_reads <- cbind(tax_reads, reads = rowSums(tax_reads))
+#DELETE all but last column
+tax_reads <- tax_reads[51]
+tax_reads <- setDT(tax_reads, keep.rownames = TRUE)[]
+# merge the two tables and make everything look pretty
+# in an interactive table
+
+taxa_read_asv_tab <- merge(tax_reads, tax_asv, by.x = "rn", by.y = "Taxa")
+taxa_read_asv_tab <- mutate(taxa_read_asv_tab,
+                            prop_of_ASVs = Freq / sum(Freq),
+                            prop_of_reads = reads / sum(reads))
+taxa_read_asv_tab <- taxa_read_asv_tab[c(1, 2, 5, 3, 4)]
+
+names(taxa_read_asv_tab) <- c("Class", "total_reads", "prop_of_reads",
+                              "total_ASVs", "prop_of_ASVs")
+
+taxa_read_asv_tab2 <- taxa_read_asv_tab
+taxa_read_asv_tab2$prop_of_reads <- round(taxa_read_asv_tab2$prop_of_reads,
+                                          digits = 6)
+taxa_read_asv_tab2$prop_of_ASVs <- round(taxa_read_asv_tab2$prop_of_ASVs,
+                                         digits = 6)
+
+
+## ------------------------------------------------------------------------
+#kills sci notation
+options(scipen = 999)
+write.table(taxa_read_asv_tab2, "TABLES/OUTPUT/SUPP/Table_S4.txt",
+            sep = "\t", row.names = FALSE, quote = FALSE)
+
+datatable(taxa_read_asv_tab2, rownames = FALSE, width = "100%",
+          colnames = c("Class", "total_reads", "prop_of_reads",
+                       "total_ASVs", "prop_of_ASVs"),
+          caption =
+            htmltools::tags$caption(
+              style = "caption-side: bottom; text-align: left;",
+              "Table: ",
+              htmltools::em("Total reads & ASVs by Class")),
+          extensions = "Buttons",
+          options = list(columnDefs =
+                           list(list(className = "dt-left", targets = 0)),
+                         dom = "Blfrtip", pageLength = 5,
+                         lengthMenu = c(5, 10, 35, 70),
+                         buttons = c("csv", "copy")))
+
+
+## ----calc_rel_abund_and_merge--------------------------------------------
+# calculate the averages and merge by species
+ps_slv_filt_AVG <- transform_sample_counts(ps_slv_work_filt,
+                                           function(x) x / sum(x))
+mergedGP_BAR <- merge_samples(ps_slv_filt_AVG, "Sp")
+SD_BAR <- merge_samples(sample_data(ps_slv_filt_AVG), "Sp")
+
+# merge taxa by rank. If you choose a different rank be sure to change
+# the rank throughout this code chunk
+mdata_phy <- tax_glom(mergedGP_BAR, taxrank = "Class", NArm = FALSE)
+mdata_phyrel <- transform_sample_counts(mdata_phy, function(x) x / sum(x))
+meltd <- psmelt(mdata_phyrel)
+meltd$Class <- as.character(meltd$Class)
+
+# calculate the total relative abundance for all taxa
+means <- ddply(meltd, ~Class, function(x) c(mean = mean(x$Abundance)))
+means$mean <- round(means$mean, digits = 8)
+# this order in decending fashion
+taxa_means <- means[order(-means$mean), ]
+# ditch the sci notation
+taxa_means <- format(taxa_means, scientific = FALSE)
+#RENAME NA to UNCLASSIFIED
+taxa_means$Class <- gsub("NA", "Unclassified", taxa_means$Class)
+
+
+## ----rel_abund_table, fig.align = 'center'-------------------------------
+
+datatable(taxa_means, rownames = FALSE, width = "65%",
+          colnames = c("Class", "mean"), caption =
+            htmltools::tags$caption(style = "caption-side: bottom;
+                                    text-align: left;", "Table: ",
+                                    htmltools::em("Class-level
+                                                  relative abundance.")),
+          extensions = "Buttons",
+          options = list(columnDefs = list(list(className = "dt-center",
+                                                targets = "_all")),
+                         dom = "Blfrtip", pageLength = 10,
+                         lengthMenu = c(5, 10, 50, 70),
+                         buttons = c("csv", "copy")))
+
+
+## ----define_other--------------------------------------------------------
+Other <- means[means$mean <= 0.02, ]$Class
+# or you can chose specifc taxa like this
+# Other_manual <- c("list", "taxa", "in", "this", "format")
+
+
+## ----metld_bar-----------------------------------------------------------
+meltd[meltd$Class %in% Other, ]$Class <- "Other"
+samp_names <- aggregate(meltd$Abundance,
+                        by = list(meltd$Sample), FUN = sum)[, 1]
+.e <- environment()
+meltd[, "Class"] <- factor(meltd[, "Class"], sort(unique(meltd[, "Class"])))
+meltd <- meltd[order(meltd[, "Class"]), ]
+# Here we order Classes by the Phylum they belong to.
+meltd$Class <- factor(meltd$Class,
+                      levels = c("Bacteroidia", "Clostridia",
+                                 "Erysipelotrichia", "Fusobacteriia",
+                                 "Alphaproteobacteria", "Deltaproteobacteria",
+                                 "Gammaproteobacteria", "Planctomycetacia",
+                                 "Oxyphotobacteria", "Other"))
+
+
+## ----plot_bar_fig2A, fig.align = "center", fig.cap = "Figure 2A", fig.height = 3----
+fig2A <- ggplot(meltd,
+                aes_string(x = "Sample", y = "Abundance", fill = "Class"),
+                environment = .e,
+                ordered = TRUE,
+                xlab = "x-axis label", ylab = "y-axis label")
+
+
+fig2A <- fig2A + geom_bar(stat =
+                            "identity",
+                          position = position_stack(reverse = TRUE),
+                          width = 0.95) +
+  coord_flip() +
+  theme(aspect.ratio = 1 / 2)
+
+fig2A <- fig2A + scale_fill_manual(values = friend_pal)
+
+fig2A <- fig2A + theme(axis.text.x = element_text(angle = 0,
+                                                  hjust = 0.45,
+                                                  vjust = 1))
+
+fig2A <- fig2A + guides(fill = guide_legend(override.aes = list(colour = NULL),
+                                            reverse = FALSE)) +
+  theme(legend.key = element_rect(colour = "black"))
+
+fig2A <- fig2A + labs(x = "Host species",
+                      y = "Relative abundance (% total reads)",
+                      title = "Abundance of bacterial taxa across host species")
+
+fig2A <- fig2A + theme(axis.line = element_line(colour = "black"),
+                       panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(),
+                       panel.border = element_rect(colour = "black",
+                                                   fill = NA, size = 1))
+
+fig2A
+pdf("FIGURES/OUTPUT/Figure_2A.pdf")
+fig2A
+invisible(dev.off())
+
+
+## ----gen_summary_table, warning = FALSE----------------------------------
+diversity <- estimate_richness(ps_slv_work_filt,
+                               measures = c("Observed", "Chao1", "ACE",
+                                          "Shannon", "Simpson", "InvSimpson",
+                                          "Fisher"))
+
+diversity_calc <- diversity %>% rownames_to_column("host_ID")
+# round values
+diversity_calc[c(3, 5, 10)] <- round(diversity_calc[c(3, 5, 10)], 1)
+diversity_calc[c(4, 6, 7, 9)] <- round(diversity_calc[c(4, 6, 7, 9)], 2)
+diversity_calc[8] <- round(diversity_calc[8], 3)
+
+host_summary <- merge(host_details, diversity_calc)
+host_summary$Observed <- NULL
+host_summary <- host_summary[c(1, 2, 3, 4, 5, 8, 9, 10, 11, 12, 13,
+                               14, 15, 6, 7, 16, 17, 18, 19, 20, 21, 22, 23)]
+
+write.table(host_summary, "TABLES/OUTPUT/SUPP/Table_S3.txt",
+            sep = "\t", row.names = FALSE, quote = FALSE,
+            col.names = c("Sample ID", "Host genus", "Host species",
+                          "Common name", "NCBI tAxID", "Collection date",
+                          "Life phase", "Weight (g)", "Total length (cm)",
+                          "Foregut length (cm)", "Midgut length (cm)",
+                          "Hindgut length (cm)", "Total gut length (cm)",
+                          "Total reads", "Total ASVs", "Chao1", "Chao1 (se)",
+                          "ACE", "ACE (se)", "Shannon", "Simpson",
+                          "InvSimpson", "Fisher"))
+
+datatable(host_summary, rownames = FALSE, width = "100%",
+          colnames = c("Sample ID", "Host genus", "Host species",
+                       "Common name", "NCBI tAxID", "Collection date",
+                       "Life phase", "Weight (g)", "Total length (cm)",
+                       "Foregut length (cm)", "Midgut length (cm)",
+                       "Hindgut length (cm)", "Total gut length (cm)",
+                       "Total reads", "Total ASVs", "Chao1", "Chao1 (se)",
+                       "ACE", "ACE (se)", "Shannon", "Simpson", "InvSimpson",
+                       "Fisher"),
+            caption =
+            htmltools::tags$caption(style =
+                                      "caption-side: bottom; text-align:
+                                    left;", "Table: ",
+                                    htmltools::em("Host-associated metadata &
+                                                  microbial diversity")),
+          extensions = "Buttons", options =
+            list(columnDefs = list(list(className = "dt-left", targets = 0)),
+                 dom = "Blfrtip", pageLength = 5, lengthMenu = c(5, 10, 50),
+                 buttons = c("csv", "copy"), scrollX = TRUE,
+                 scrollCollapse = TRUE))
+
+
+## ----alpha_div_test_norm, warning = FALSE--------------------------------
+# Convert to ps object
+sample_div <- sample_data(diversity)
+# Create new ps object with diversity estimates added to sample_data
+ps_slv_work_filt_div <- merge_phyloseq(ps_slv_work_filt, sample_div)
+# Run Shapiro test
+shapiro_test_Shan <- shapiro.test(sample_data(ps_slv_work_filt_div)$Shannon)
+shapiro_test_invSimp <- shapiro.test(sample_data(ps_slv_work_filt_div)$InvSimpson)
+shapiro_test_Chao1 <- shapiro.test(sample_data(ps_slv_work_filt_div)$Chao1)
+shapiro_test_Observed <- shapiro.test(sample_data(ps_slv_work_filt_div)$Observed)
+
+
+## ----shap_Shan, echo = FALSE---------------------------------------------
+shapiro_test_Shan
+
+
+## ----shap_invS, echo = FALSE---------------------------------------------
+shapiro_test_invSimp
+
+
+## ----shap_Choa1, echo = FALSE--------------------------------------------
+shapiro_test_Chao1
+
+
+## ----shap_Observed, echo = FALSE-----------------------------------------
+shapiro_test_Observed
+
+
+## ----normal--------------------------------------------------------------
+sampledataDF <- data.frame(sample_data(ps_slv_work_filt_div))
+aov.shannon <- aov(Shannon ~ Sp, data = sampledataDF)
+#Call for the summary of that ANOVA, which will include P-values
+summary(aov.shannon)
+
+
+## ----tukey---------------------------------------------------------------
+TukeyHSD(aov.shannon)
+
+
+## ----krusk_invsimp-------------------------------------------------------
+#library(FSA)
+#dunnTest(InvSimpson ~ Sp, data = sampledataDF, method="bh")
+kruskal.test(InvSimpson ~ Sp, data = sampledataDF)
+
+
+## ----krusk_chao----------------------------------------------------------
+#dunnTest(Chao1 ~ Sp, data = sampledataDF, method="bh")
+kruskal.test(Chao1 ~ Sp, data = sampledataDF)
+
+
+## ----krusk_observed------------------------------------------------------
+#library(FSA)
+#dunnTest(Observed ~ Sp, data = sampledataDF, method="bh")
+kruskal.test(Observed ~ Sp, data = sampledataDF)
+
+
+## ----wilcox_invsimp------------------------------------------------------
+pairwise.wilcox.test(sampledataDF$InvSimpson, sampledataDF$Sp,
+                     p.adjust.method = "fdr")
+
+
+## ----wilcox_chao---------------------------------------------------------
+pairwise.wilcox.test(sampledataDF$Chao1, sampledataDF$Sp,
+                     p.adjust.method = "fdr")
+
+
+## ----wilcox_observed, warning = FALSE------------------------------------
+pairwise.wilcox.test(sampledataDF$Observed, sampledataDF$Sp,
+                     p.adjust.method = "fdr")
+
+
+## ----alpha_div_fig_2B, fig.align = "center", fig.cap = "Figure 2B", warning = FALSE----
+fig2B <- plot_richness(ps_slv_work_filt, x = "Sp",
+                       measures = c("Observed",
+                                    "Shannon",
+                                    "InvSimpson",
+                                    "Chao1"),
+                       color = "Sp", nrow = 1)
+fig2B <- fig2B + geom_boxplot() + geom_jitter(width = 0.05)
+fig2B <- fig2B + scale_colour_manual(values = samp_pal) +
+         labs(x = "Host species",
+         y = "Diversity",
+         title = "Alpha diversity of bacterial
+         communities in herbivorous reef fish")
+#fig2B + geom_boxplot(aes(colour = black))
+#fig2B <- fig2B + theme_bw() + geom_point(size = 2.5, aes(color = Sp)) +
+fig2B
+pdf("FIGURES/OUTPUT/Figure_2B.pdf")
+fig2B
+invisible(invisible(dev.off()))
+
+
+## ----run_correlations, warning = FALSE, message = FALSE------------------
+dt <- read.table("TABLES/OUTPUT/SUPP/Table_S3.txt",
+                 sep = "\t", header = TRUE)
+library(ggpubr)
+scarus <- host_summary[host_summary$host_genus %in% "Scarus", ]
+sparisoma <- host_summary[host_summary$host_genus %in% "Sparisoma", ]
+acanthurus <- host_summary[host_summary$host_genus %in% "Acanthurus", ]
+alphametric <- c("total_ASVs", "Chao1", "ACE", "Shannon",
+                "Simpson",  "InvSimpson", "Fisher")
+physical_char <- c("weight", "total_length", "foregut_length",
+                   "midgut_length", "hindgut_length", "total_gut_length")
+
+# Full set: not significant -> "weight", "total_length"
+            #"foregut_length", R = 0.32
+            #"midgut_length", R = 0.50
+            #"hindgut_length", R = 0.17-0.34
+            #"total_gut_length" R = 0.50
+
+#By genus and midgut_length :
+          # scarus NS
+          # sparisoma R = 0.8
+          # acanthurus NS
+
+# acanthurus not significant for any parameters
+# scarus not significant for any parameters
+# sparisoma  significant for all parameters except hindgut_length was a bit weak
+# "weight", "total_length" "foregut_length" "midgut_length"
+# "hindgut_length" "total_gut_length"
+
+# To do all diversity metric  change "y = " to y = alphametric and
+# ylab = alphametric
+
+par(mfrow = c(2, 3))
+shan_by_length <- ggscatter(host_summary, x = "total_gut_length",
+                            y = "Shannon", add = "reg.line",
+                            conf.int = FALSE,cor.coef = TRUE,
+                            cor.method = "spearman",
+                            xlab = "total_length (cm)", ylab = "Shannon",
+                            color = "host_genus", palette = samp_pal,
+                            legend = "bottom")
+
+shan_by_weight <- ggscatter(host_summary, x = "weight", y = "Shannon",
+          add = "reg.line", conf.int = FALSE,
+          cor.coef = TRUE, cor.method = "spearman",
+          xlab = "weight (g)", ylab = "Shannon",
+          color = "host_genus", palette = samp_pal, legend = "top")
+
+grid.arrange(shan_by_length, shan_by_weight, ncol = 2)
+
+#ggscatter(host_summary, x = "total_gut_length", y = alphametric,
+#          add = "reg.line", conf.int = FALSE,
+#          cor.coef = TRUE, cor.method = "spearman",
+#          xlab = "mid-gut length (cm)", ylab = alphametric,
+#          color = "host_genus", palette = samp_pal)
+
+
+#, facet.by = "host_species")
+######################################################
+#shapiro.test(host_summary$Shannon) # => p = 0.1229
+## Shapiro-Wilk normality test for wt
+#shapiro.test(host_summary$midgut_length) # => p = 0.09
+#ggqqplot(host_summary$Shannon) # => p = 0.1229
+## Shapiro-Wilk normality test for wt
+#ggqqplot(host_summary$midgut_length) # => p = 0.09
+######################################################
+
+
+## ----run_nmds, results = 'hide'------------------------------------------
+set.seed(3131)
+ord.nmds.jsd_slv <- ordinate(ps_slv_work_filt, method = "NMDS",
+                             distance = "jsd")
+stressplot(ord.nmds.jsd_slv)
+
+
+## ----ord_results, echo = FALSE-------------------------------------------
+ord.nmds.jsd_slv
+
+
+## ----beta_div_fig_2C, fig.align = "center", fig.cap = "Figure 2C"--------
+fig2C <- plot_ordination(ps_slv_work_filt, ord.nmds.jsd_slv,
+                         color = "Sp", label = "SamName",
+                         title = "Jensen-Shannon divergence")
+
+fig2C <- fig2C + geom_point(size = 4) +
+  geom_point(shape = 1, size = 3.6, colour = "black", stroke = 0.75)
+# +  xlim(-0.4, 0.4) + ylim(-0.4, 0.4)
+
+fig2C <- fig2C + scale_colour_manual(values = samp_pal)
+
+fig2C <- fig2C + theme(axis.line = element_line(colour = "black"),
+                       panel.background = element_blank(),
+                       panel.grid.major = element_line("grey"),
+                       panel.grid.minor = element_line("grey"),
+                       panel.border =
+                         element_rect(colour = "black", fill = NA, size = 1)) +
+  theme(legend.key = element_rect(colour = "black"))
+
+fig2C <- fig2C + coord_fixed()
+fig2C <- fig2C  + stat_ellipse(type = "t") + theme_bw()
+fig2C
+pdf("FIGURES/OUTPUT/Figure_2C.pdf")
+fig2C
+invisible(dev.off())
+
+
+## ----ordination_stats_adonis---------------------------------------------
+set.seed(1911)
+fish.jsd <- phyloseq::distance(ps_slv_work_filt, method = "jsd")
+sampledf <- data.frame(sample_data(ps_slv_work_filt))
+fish_adonis <- adonis(fish.jsd ~ Sp, data = sampledf, permutations = 1000)
+fish_adonis
+
+
+## ----pairwise_adonis-----------------------------------------------------
+pairwise.adonis(fish.jsd, factors = sampledf$Sp, p.adjust.m = "bonferroni")
+
+
+## ----betadisper----------------------------------------------------------
+beta_adonis <- betadisper(fish.jsd, sampledf$Sp, bias.adjust = TRUE)
+beta_adonis
+
+
+## ----permutest-----------------------------------------------------------
+permutest(beta_adonis, pairwise = TRUE, permutations = 1000)
+
+
+## ----ordination_stats_anosim---------------------------------------------
+spgroup <- get_variable(ps_slv_work_filt, "Sp")
+fish_anosim <- anosim(distance(ps_slv_work_filt, "jsd"), grouping = spgroup)
+summary(fish_anosim)
+
+
+## ----simper, eval = FALSE, echo = FALSE, include = FALSE-----------------
+## source("HELPER_SCRIPTS/simper_pretty.R")
+## #Using the function
+## otutab <- as.table(otu_table(ps_slv_work_filt))
+## stuff <- simper.pretty(otu_table(ps_slv_work_filt),
+##                        sample_data(ps_slv_work_filt), "Sp",
+##                        perc_cutoff = 0.5, low_cutoff = "y",
+##                        low_val = 0.01, "name")
+
+
+## ----gen_lefse_input_files, results='hide'-------------------------------
+########## OTU table
+OTU1 <-  as(otu_table(ps_slv_work_filt), "matrix")
+# transpose if necessary
+# Coerce to data.frame
+OTUdf <- as.data.frame(t(OTU1))
+setDT(OTUdf, keep.rownames = TRUE)[]
+write.table(OTUdf, "TABLES/OUTPUT/OTHER/seq_tab_for_core.txt",
+    sep = "\t", row.names = FALSE, quote = FALSE)
+colnames(OTUdf)[1] <- "#NAME"
+write.table(OTUdf, "TABLES/OUTPUT/LEfSe/LEfSe_INPUT_seq_tab.txt",
+            sep = "\t", row.names = FALSE, quote = FALSE)
+############ TAX Table
+# Remember in the `tax_table` we added the last columns as the actual sequence
+# of each ASV and the ASV_ID. We do not need those here.
+# So lets only keep the first 6 columns (the taxonomic lineage)
+TAX1 <- as(tax_table(ps_slv_work_filt), "matrix")
+TAXdf <- as.data.frame(TAX1)
+setDT(TAXdf, keep.rownames = TRUE)[]
+colnames(TAXdf)[1] <- "#TAXONOMY"
+TAXdf <- TAXdf[, 1:6]
+write.table(TAXdf, "TABLES/OUTPUT/LEfSe/LEfSe_INPUT_tax_tab.txt",
+            sep = "\t", row.names = FALSE, quote = FALSE)
+############ Metadata file
+meta_file <- data.frame(NAME = sample_name, SampleType = species, Gen = genus)
+rownames(meta_file) <- samples.out
+colnames(meta_file) <-  c("#NAME", "Species", "Genus")
+# but we still have those three samples that need to be removed
+meta_file <- filter(meta_file, Species != "SpChr" & Species != "ScVet")
+write.table(meta_file, "TABLES/OUTPUT/LEfSe/LEfSe_INPUT_metadata.txt",
+            sep = "\t", row.names = FALSE, quote = FALSE)
+
+
+## ----lefse_table---------------------------------------------------------
+lefse_tab <- read.table("TABLES/INPUT/lefse_results.txt",
+                        header = TRUE, sep = "\t", check.names = FALSE)
+write.table(lefse_tab, "TABLES/OUTPUT/SUPP/Table_S5.txt",
+            quote = FALSE, sep = "\t", row.names = FALSE)
+
+datatable(lefse_tab, rownames = FALSE, width = "100%",
+          caption =
+            htmltools::tags$caption(
+              style = "caption-side: bottom; text-align: left;",
+              "Table 4: ", htmltools::em("Results of LEfSe analysis.")),
+          extensions = "FixedColumns", "Buttons",
+          options = list(columnDefs =
+                           list(list(className = "dt-center",
+                                     targets = c(1, 2, 3, 4, 5, 6, 7, 8))),
+                         dom = "Blfrtip", pageLength = 5,
+                         lengthMenu = c(5, 10, 25, 60),
+                         buttons = c("csv", "copy"),
+                         scrollX = TRUE, scrollCollapse = TRUE))
+
+
+## ----get_core_shared_file------------------------------------------------
+cm <- read.table("TABLES/OUTPUT/OTHER/seq_tab_for_core.txt",
+                 sep = "\t", header = TRUE, row.names = 1)
+cm_t <- t(cm)
+cm_df <- as.data.frame(cm_t)
+numcols <- ncol(cm_df)
+cm_df <- cm_df %>% tibble::rownames_to_column("Group")
+cm_df <- cm_df %>%
+  mutate(label = 0.03, numOtus = numcols) %>%
+  select(label, Group, numOtus, everything())
+
+write.table(cm_df, "TABLES/OUTPUT/OTHER/ps_slv_work_filt.txt",
+            quote = FALSE, sep = "\t", row.names = FALSE)
+
+####COMBINE by fish species
+
+cm_Merge <- cm %>% tibble::rownames_to_column("ASV")
+
+cm_Merge <- cm_Merge %>% mutate(AcCoe =
+                                  AcCoe01 + AcCoe02 + AcCoe03 + AcCoe04 +
+                                  AcCoe05 + AcCoe06 + AcCoe07 + AcCoe08)
+cm_Merge <- cm_Merge %>% mutate(AcTra =
+                                  AcTra01 + AcTra02 + AcTra03 + AcTra04 +
+                                  AcTra05 + AcTra06 + AcTra07 + AcTra08 +
+                                  AcTra09)
+cm_Merge <- cm_Merge %>% mutate(ScTra =
+                                  ScTae01 + ScTae02 + ScTae03 + ScTae04 +
+                                  ScTae05 + ScTae06 + ScTae07 + ScTae08 +
+                                  ScTae09)
+cm_Merge <- cm_Merge %>% mutate(SpAur =
+                                  SpAur01 + SpAur02 + SpAur03 + SpAur04 +
+                                  SpAur05 + SpAur06 + SpAur07 + SpAur08 +
+                                  SpAur09 + SpAur10 + SpAur11 + SpAur12 +
+                                  SpAur13)
+cm_Merge <- cm_Merge %>% mutate(SpVir =
+                                  SpVir01 + SpVir02 + SpVir03 + SpVir04 +
+                                  SpVir05 + SpVir06 + SpVir07 + SpVir08 +
+                                  SpVir09 + SpVir10 + SpVir11)
+
+cm_Merge <- cm_Merge %>% select(ASV, AcCoe, AcTra, ScTra, SpAur, SpVir)
+cm_Merge_2 <- cm_Merge[, -1]
+rownames(cm_Merge_2) <- cm_Merge[, 1]
+
+cm_Merge_2_t <- t(cm_Merge_2)
+cm_Merge_2_df <- as.data.frame(cm_Merge_2_t)
+
+cm_Merge_2_df <- cm_Merge_2_df %>%
+  tibble::rownames_to_column("Group")
+cm_Merge_2_df <- cm_Merge_2_df %>%
+  mutate(label = 0.03, numOtus = numcols) %>%
+  select(label, Group, numOtus, everything())
+write.table(cm_Merge_2_df, "TABLES/OUTPUT/OTHER/ps_slv_work_filt_combine.txt",
+            quote = FALSE, sep = "\t", row.names = FALSE)
+
+
+## ----files_for_public_search---------------------------------------------
+# Object of DA ASVs
+lefse_asvs <- c("ASV21", "ASV25", "ASV35", "ASV44", "ASV159",
+                "ASV17", "ASV174", "ASV22", "ASV234", "ASV60",
+                "ASV114", "ASV268", "ASV14", "ASV226", "ASV23",
+                "ASV29", "ASV30", "ASV48", "ASV90", "ASV98", "ASV18",
+                "ASV41", "ASV7", "ASV43", "ASV5", "ASV54", "ASV8",
+                "ASV9", "ASV250", "ASV12", "ASV32", "ASV34", "ASV39",
+                "ASV224", "ASV398", "ASV127", "ASV128", "ASV151",
+                "ASV323", "ASV359", "ASV374", "ASV91", "ASV56", "ASV6",
+                "ASV165", "ASV284", "ASV395", "ASV450", "ASV15", "ASV2",
+                "ASV20", "ASV298", "ASV57", "ASV69", "ASV75", "ASV82",
+                "ASV1", "ASV70", "ASV49")
+
+# Create ps objects
+da_asvs <- prune_taxa(lefse_asvs, mergedGP)
+da_asvs_full <- prune_taxa(lefse_asvs, ps_slv_work_filt)
+# Create fasta file from tax_table
+table2format <- tax_table(da_asvs)
+#retain only the column with the sequences
+table2format_trim <- table2format[, 7]
+table2format_trim_df <- data.frame(row.names(table2format_trim),
+                                   table2format_trim)
+colnames(table2format_trim_df) <- c("ASV_ID", "ASV_SEQ")
+#format fasta
+table2format_trim_df$ASV_ID <- sub("ASV", ">ASV", table2format_trim_df$ASV_ID)
+
+write.table(table2format_trim_df, "TABLES/OUTPUT/ASV_FOR_BLAST.fasta",
+            sep = "\r", col.names = FALSE, row.names = FALSE,
+            quote = FALSE, fileEncoding = "UTF-8")
+
+
+## ----blast_table---------------------------------------------------------
+blast_tab <- read.table("TABLES/INPUT/BLAST_results.txt",
+                        header = TRUE, sep = "\t", check.names = FALSE)
+write.table(blast_tab, "TABLES/OUTPUT/BLAST_RESULTS.txt",
+            row.names = FALSE, sep = "\t", quote = FALSE)
+
+datatable(blast_tab, rownames = FALSE,
+          caption =
+            htmltools::tags$caption(
+              style = "caption-side: bottom; text-align: left;",
+              "Supplementary Table 6: ",
+              htmltools::em("Results of BLASTn analysis.")),
+          extensions = "FixedColumns", "Buttons",
+          options = list(columnDefs =
+                           list(list(className = "dt-center",
+                                     targets = c(1, 2, 3, 4, 5, 6, 7, 8))),
+                         dom = "Blfrtip", pageLength = 5,
+                         lengthMenu = c(5, 10, 25, 65),
+                         buttons = c("csv", "copy"),
+                         scrollX = TRUE, scrollCollapse = TRUE))
+
+
+## ----insert_itol, out.width = "100%", fig.cap = "Figure 3", eval = FALSE, echo = FALSE----
+## # This is to include a static image
+## itol_tree <- knitr::include_graphics("FIGURES/INPUT/Figure_3A.svg")
+## itol_tree
+
+
+## ----zoom, echo = FALSE, message = FALSE, fig.align = "center", out.width = "100%"----
+# Note: in order for this to work, especially if the SVG fie
+# has been manipulated in Inkscape,
+# it is wise to do the following:
+# 1. do whatever you need do,
+# 2. resize to drawing,
+# 3. Save a copy,
+# 4. save as Optimized SVG
+itol_tree <- svgPanZoom("FIGURES/INPUT/Figure_3_TreeA_2.svg",
+                        controlIconsEnabled = TRUE, viewBox = FALSE,
+                        width = "100%")
+itol_tree
+
+
+## ----tree_legend, echo = FALSE, message = FALSE, fig.align = "center"----
+itol_legend <- knitr::include_graphics("FIGURES/INPUT/Figure_3_Legend_A.svg")
+itol_legend
+
+
+## ----habitat_table-------------------------------------------------------
+habi_tab <- read.table("TABLES/INPUT/habitat_specificity.txt",
+                       header = TRUE, sep = "\t", check.names = FALSE)
+# order by habitat and host enriched
+habi_tab2 <- habi_tab[order(habi_tab$habitat_code, habi_tab$Enriched), ]
+#habi_tab <- habi_tab[, -2] #delete code column
+da_asvs_counts <- as.data.frame(taxa_sums(da_asvs))
+colnames(da_asvs_counts) <- c("total_reads")
+# make rownames a column
+da_asvs_counts <- cbind(ASV = rownames(da_asvs_counts), da_asvs_counts)
+temp_table <- merge(da_asvs_counts, blast_tab, by = "ASV",
+                    all = TRUE, sort = FALSE)
+
+summ_table <- merge(temp_table, habi_tab2, by = "ASV",
+                    all = TRUE, sort = FALSE, no.dups = TRUE)
+
+summ_table <- summ_table[-c(22, 26, 27, 28, 29, 31)]
+summ_table <- summ_table[c(1, 22, 23, 2, 24, 4, 3, 5, 6, 7, 8, 18, 19, 20,
+                           9, 10, 11, 12, 13, 14, 15, 16, 17, 21, 25)]
+
+datatable(summ_table, rownames = FALSE,
+          colnames = c(
+            "ASV", "Putative habitat", "Enriched", "Total reads",
+            "Taxon", "Num perfect hits", "Top hit acc", "% identity",
+            "Isolation source", "Nat host", "Common name", "Collection year",
+            "Country", "PubMed ID", "Alignment length", "Mismatches",
+            "Gap opens", "Q. start", "Q. end", "S. start", "S. end",
+            "Evalue", "Bit score", "Num IMNGS hits", "Sullam lifestyle"),
+          editable = TRUE, caption =
+            htmltools::tags$caption(
+              style = "caption-side: bottom; text-align: left;",
+              "Supplementary Table 6: ",
+              htmltools::em("Assessing habitat specificity.")),
+          extensions = "Buttons",
+          options = list(columnDefs =
+                           list(list(className = "dt-center",
+                                     targets = c(1, 2, 3, 4, 5,
+                                                 6, 7, 8, 9, 10))),
+                         dom = "Blfrtip", pageLength = 5,
+                         lengthMenu = c(5, 10, 25, 60),
+                         buttons = c("csv", "copy"),
+                         scrollX = TRUE, scrollCollapse = TRUE))
+
+write.table(summ_table, "TABLES/OUTPUT/SUPP/Table_S6.txt",
+            sep = "\t", col.names = c(
+              "ASV", "Putative habitat", "Enriched", "Total reads",
+              "Taxon", "Num perfect hits", "Top hit acc", "% identity",
+              "Isolation source", "Nat host", "Common name",
+              "Collection year", "Country", "PubMed ID", "Alignment length",
+              "Mismatches", "Gap opens", "Q. start", "Q. end", "S. start",
+              "S. end", "Evalue", "Bit score", "Num IMNGS hits",
+              "Sullam lifestyle"),
+            row.names = FALSE, quote = FALSE, fileEncoding = "UTF-8")
+
+
+## ----habitat_table_summary-----------------------------------------------
+habi_summary <- read.table("TABLES/INPUT/Table_1.txt",
+                           header = TRUE, sep = "\t", check.names = FALSE)
+
+datatable(habi_summary,
+          rownames = FALSE, editable = TRUE,
+          caption = htmltools::tags$caption(
+            style = "caption-side: bottom; text-align: left;",
+            "Table 1: ", htmltools::em("Summary of habitat specificity.")),
+          extensions = "Buttons",
+          options = list(columnDefs = list(list(className = "dt-center",
+                                                targets = c(1, 2, 3, 4, 5))),
+                         dom = "Brti", buttons = c("csv", "copy"),
+                         scrollX = TRUE, scrollCollapse = TRUE))
+
+
+## ----proportion_of_taxa--------------------------------------------------
+# Change this to select different taxa
+calc_tax_prop <- subset_taxa(mergedGP, Family == "Desulfovibrionaceae")
+calc_tax_prop
+sample_sums_by_taxa <- sample_sums(calc_tax_prop)
+
+total_taxa_reads <- sum(sample_sums_by_taxa)
+sample_sums_by_taxa <- as.data.frame(sample_sums_by_taxa)
+
+sample_sums_by_taxa$proportion <-
+                              (sample_sums_by_taxa$sample_sums_by_taxa /
+                                 total_taxa_reads) * 100
+colnames(sample_sums_by_taxa) <- c("total taxa reads", "Proportion")
+sample_sums_by_taxa$Proportion <- round(sample_sums_by_taxa$Proportion,
+                                        digits = 2)
+total_taxa_reads_int <- as.integer(total_taxa_reads)
+sample_sums_by_taxa
+
+
+
+## ----proportion_of_taxa_cyano--------------------------------------------
+# Change this to select different taxa
+calc_tax_prop_Cyan <- subset_taxa(mergedGP, Phylum == "Cyanobacteria")
+calc_tax_prop_Cyan
+sample_sums_by_taxa_Cyan <- sample_sums(calc_tax_prop_Cyan)
+
+total_taxa_reads_Cyan <- sum(sample_sums_by_taxa_Cyan)
+sample_sums_by_taxa_Cyan <- as.data.frame(sample_sums_by_taxa_Cyan)
+
+sample_sums_by_taxa_Cyan$proportion <-
+  (sample_sums_by_taxa_Cyan$sample_sums_by_taxa_Cyan / total_taxa_reads_Cyan) * 100
+
+colnames(sample_sums_by_taxa_Cyan) <- c("total taxa reads", "Proportion")
+sample_sums_by_taxa_Cyan$Proportion <- round(sample_sums_by_taxa_Cyan$Proportion,
+                                             digits = 2)
+total_taxa_reads_Cyan_int <- as.integer(total_taxa_reads_Cyan)
+sample_sums_by_taxa_Cyan
+
+
+## ----da_asv_bar_setup, message = FALSE-----------------------------------
+# calculate the averages and merge by species
+# grab the da_asv ps object & merge by samples
+daASV_mergedGP_BAR <- merge_samples(da_asvs_full, "Sp")
+#daASV_SD_BAR <- merge_samples(sample_data(da_asvs_full), "Sp")
+# calculate percent proportion
+daASV_AVG <- apply(t(otu_table(daASV_mergedGP_BAR)), 1, function(x) x / sum(x))
+# transpose
+daASV_t_AVG <- t(daASV_AVG)
+daASV_t_AVG_df <- as.data.frame(daASV_t_AVG)
+
+######################
+# choose columns of interest
+da_ASV_tax <- habi_tab[c("ASV", "Taxon", "Putative_habitat")]
+da_ASV_tax2 <- da_ASV_tax[, -1]
+rownames(da_ASV_tax2) <- da_ASV_tax[, 1]
+
+######################
+# combine based on ASV column
+daASV_work <- merge(daASV_t_AVG_df, da_ASV_tax2, by = 0, sort = FALSE)
+
+rownames(daASV_work) <- daASV_work[, 1]
+daASV_work[, 1] <- NULL
+#daASV_work
+
+# then make column row.names
+daASV_work2 <- cbind(ASV = rownames(daASV_work), daASV_work)
+# melt the df
+# wide to long format?
+daASV_work3 <- melt(daASV_work2, value.name = "ASV")
+colnames(daASV_work3) <- c("ASV", "Taxon", "Putative_habitat",
+                           "Sample", "Proportion")
+daASV_work3$Proportion <- round(daASV_work3$Proportion, digits = 4)
+
+datatable(daASV_work3,
+          rownames = TRUE, editable = FALSE,
+          caption =
+            htmltools::tags$caption(
+              style = "caption-side: bottom; text-align: left;", "Table 8: ",
+              htmltools::em("DA ASV sample proportion.")),
+          extensions = "Buttons",
+          options = list(columnDefs = list(list(className = "dt-center",
+                                                targets = c(1, 2, 3, 4, 5))),
+                         dom = "Blfrtip", pageLength = 5,
+                         lengthMenu = c(5, 10, 50, 100, 300),
+                         buttons = c("csv", "copy"), scrollX = TRUE,
+                         scrollCollapse = TRUE))
+
+write.table(daASV_work3, "TABLES/OUTPUT/prop_ASV_reads_by_host.txt",
+            sep = "\t", row.names = FALSE, quote = FALSE)
+
+
+## ----set_lefse_order_asvs------------------------------------------------
+asv_order <- c("ASV450", "ASV165", "ASV395", "ASV284", "ASV56",
+               "ASV6", "ASV359", "ASV128", "ASV127", "ASV91",
+               "ASV374", "ASV151", "ASV323", "ASV398", "ASV224",
+               "ASV39", "ASV34", "ASV12", "ASV32", "ASV250",
+               "ASV43", "ASV54", "ASV9", "ASV5", "ASV49", "ASV8",
+               "ASV41", "ASV18", "ASV7", "ASV90", "ASV29", "ASV98",
+               "ASV23", "ASV30", "ASV226", "ASV48", "ASV70", "ASV1",
+               "ASV14", "ASV298", "ASV82", "ASV75", "ASV69", "ASV57",
+               "ASV20", "ASV15", "ASV2", "ASV268", "ASV114", "ASV234",
+               "ASV174", "ASV60", "ASV17", "ASV22", "ASV159", "ASV44",
+               "ASV25", "ASV21", "ASV35")
+asv_order_rev <- rev(asv_order)
+
+
+## ----order_asvs----------------------------------------------------------
+daASV_work3$ASV <- as.character(daASV_work3$ASV)
+daASV_work3$ASV <- factor(daASV_work3$ASV, levels = unique(daASV_work3$ASV))
+daASV_work3$ASV <- factor(daASV_work3$ASV, levels = asv_order)
+
+
+## ----da_asv_bar_chart, message = FALSE-----------------------------------
+#Bar charts
+ASV_bar <- ggplot(daASV_work3, aes_string(x = "ASV", y = "Proportion",
+                                          fill = "Sample"),
+                  environment = .e, ordered = TRUE,
+                  xlab = "x-axis label", ylab = "y-axis label")
+
+ASV_bar <- ASV_bar +
+  geom_bar(stat = "identity", position = position_stack(reverse = TRUE),
+           width = 0.95) +
+  coord_flip() +
+  theme(aspect.ratio = 2 / 1)
+
+ASV_bar <- ASV_bar +
+  scale_fill_manual(values = samp_pal)
+
+ASV_bar <- ASV_bar +
+  theme(axis.text.x = element_text(angle = 0, hjust = 0.95, vjust = 1))
+
+ASV_bar <- ASV_bar +
+  guides(fill = guide_legend(override.aes = list(colour = NULL),
+                             reverse = FALSE)) +
+  theme(legend.key = element_rect(colour = "black"))
+
+ASV_bar <- ASV_bar +
+  labs(x = "Host species", y = "Proportion (% total reads)",
+       title = "ASV Proportion by host species")
+
+ASV_bar <- ASV_bar +
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_rect(colour = "black", fill = NA, size = 1))
+ASV_bar
+
+
+## ----message = FALSE, include = FALSE, warning = FALSE-------------------
+pdf("FIGURES/OUTPUT/Figure_4A.pdf")
+ASV_bar
+invisible(dev.off())
+
+
+## ----heatmap_alt_setup, warning=FALSE,  message = FALSE------------------
+# Heatmap
+library(ComplexHeatmap)
+library(circlize)
+library(heatmap3)
+library(gdata)
+fig4_heat <- as.data.frame(t(otu_table(da_asvs)))
+# Convert habi_table to df and store in new variable
+fig4_tax <- as.data.frame(habi_tab2)
+# eliminate 1st column so can combine based on row names
+fig4_tax_tab <- fig4_tax[, -1]
+# Make new row.names from original table
+rownames(fig4_tax_tab) <- fig4_tax[, 1]
+# Reorder
+fig4_tax_tab <- fig4_tax_tab[c(4, 2, 3, 1, 5, 6, 7, 8)]
+# Select columns
+fig4_tax_tab <- fig4_tax_tab[c(1:4)]
+
+# Combine the two df by rowname If the matching involved row names,
+# an extra character column called Row.names
+# is added at the left, and in all cases the result has ‘automatic’ row names.
+fig4_heatmap2 <- merge(fig4_tax_tab, fig4_heat, by = 0, all = TRUE)
+
+fig4_heatmap <- subset(fig4_heatmap2, select = -c(Row.names))
+rownames(fig4_heatmap) <- fig4_heatmap2[, "Row.names"]
+# make rownames a column
+fig4_heatmap <- cbind(ASV = rownames(fig4_heatmap), fig4_heatmap)
+
+fig4_heatmap$ASV <- factor(fig4_heatmap$ASV, levels = rev(asv_order))
+fig4_heatmap <- fig4_heatmap[order(fig4_heatmap$ASV), ]
+# combine the columns to make one name
+fig4_heatmap$ID <- paste(fig4_heatmap$ASV, fig4_heatmap$Taxon,
+                         fig4_heatmap$Putative_habitat,
+                         fig4_heatmap$Enriched, sep = "_")
+# delete the original columns
+fig4_heatmap2 <- fig4_heatmap[-c(1:5)]
+# reorder
+fig4_heatmap2 <- fig4_heatmap2[c(6, 1, 2, 3, 4, 5)]
+rownames(fig4_heatmap2) <- fig4_heatmap2[, 1]
+fig4_heatmap2 <- fig4_heatmap2[-1]
+
+####Define Colors
+taxa_colors <- unlist(lapply(row.names(fig4_heatmap2), function(x) {
+  if (grepl
+
+     # generalists
+               ("Alphaproteobacteria", x)) "#000000"
+  else if (grepl("Pirellulaceae", x)) "#000000"
+  else if (grepl("Rubritaleaceae", x)) "#000000"
+  else if (grepl("Flavobacteriaceae", x)) "#000000"
+
+   # fish/animal
+  else if (grepl("Desulfovibrionaceae", x)) "#0072b2"
+  else if (grepl("Lachnospiraceae", x)) "#f0e442"
+  else if (grepl("Erysipelotrichaceae", x)) "#009e73"
+  else if (grepl("Ruminococcaceae", x)) "#e69f00"
+  else if (grepl("Bacteroidales", x)) "#d55e00"
+  else if (grepl("Fusobacteriaceae", x)) "#56b4e9"
+  else if (grepl("Vibrionaceae", x)) "#cc79a7"
+
+  # other
+  else if (grepl("Family_XIII", x)) "#808080"
+  else if (grepl("Mollicutes", x)) "#808080"
+  else if (grepl("Brevinemataceae", x)) "#808080"
+  else if (grepl("Peptostreptococcaceae", x)) "#808080"
+}))
+
+habitat_colors <- unlist(lapply(row.names(fig4_heatmap2), function(x) {
+  if (grepl
+               ("fish", x)) "#808080"
+  else if (grepl("animal", x)) "#000000"
+  else if (grepl("generalist", x)) "#808080"
+  #else if (grepl("undetermined", x)) "#000000"
+}))
+heatColors <- cbind(taxa_colors, habitat_colors)
+colnames(heatColors)[1] <- "Taxa"
+colnames(heatColors)[2] <- "Habitat"
+### SAVE/display heatmap
+col <- colorRampPalette(bias = 1, c("#000033", "#66CCFF"))(16)
+pdf(file = "FIGURES/OUTPUT/Figure_4B.pdf")
+heatmap3(fig4_heatmap2, cexRow = 0.5, cexCol = 1,
+         margins = c(3, 13), RowSideColors = heatColors, scale = "row",
+         Colv = NA, Rowv = NA, revC = TRUE, balanceColor = FALSE, col = col)
+invisible(dev.off())
+heatmap3(fig4_heatmap2, cexRow = 0.5, cexCol = 1,
+         margins = c(3, 13), RowSideColors = heatColors, scale = "row",
+         Colv = NA, Rowv = NA, revC = TRUE, balanceColor = FALSE, col = col)
+
+
+## ----files_for_network_analysis, eval=FALSE, include = FALSE-------------
+## ###Make a graph
+## #make a df from otu_table
+## da_asvs_df <- as.data.frame(t(otu_table(da_asvs)))
+## #copy rownames as new column
+## setDT(da_asvs_df, keep.rownames = TRUE)
+## #change the name
+## colnames(da_asvs_df) [1] <- "ASV"
+## #melt from wide to long form
+## da_asvs_df2 <- melt(da_asvs_df, value.name = "ASV") # wide to long format?
+## #rename columns
+## colnames(da_asvs_df2) <- c("Source", "Target", "total_reads")
+## # remove rows with total_reads == 0
+## da_asvs_df2 <- da_asvs_df2[!(da_asvs_df2$total_reads == 0)]
+## da_asvs_df2 <- da_asvs_df2[, c(1, 3, 2)]
+## write.csv(da_asvs_df2, "NETWORKS/graph.csv", quote = FALSE, row.names = FALSE)
+##
+## ###Make attribute
+## da_asvs_tax <- tax_table(da_asvs)
+## #retain only the columns with taxa info
+## da_asvs_tax <- da_asvs_tax[, 1:5]
+## da_asvs_tax_df <- data.frame(row.names(da_asvs_tax), da_asvs_tax)
+## colnames(da_asvs_tax_df) [1] <- "Id"
+## da_asvs_tax_df$Label <- da_asvs_tax_df$Id
+## da_asvs_tax_df$type <- "ASV"
+## # Reorder
+## da_asvs_tax_df <- da_asvs_tax_df[c(1, 7, 8, 2, 3, 4, 5, 6)]
+##
+## da_asvs_samp <- sample_data(da_asvs)
+## da_asvs_samp_df <- data.frame(row.names(da_asvs_samp), da_asvs_samp)
+## colnames(da_asvs_samp_df) [1] <- "Id"
+## da_asvs_samp_df$Label <- da_asvs_samp_df$Id
+## da_asvs_samp_df <- da_asvs_samp_df[-c(2:4)]
+## da_asvs_samp_df$type <- "Host"
+## empty_columns <- c("Kingdom", "Phylum", "Class", "Order", "Family")
+## da_asvs_samp_df[empty_columns] <- NA
+## # combine and save
+## graph_attributes <- rbind(da_asvs_tax_df, da_asvs_samp_df)
+## write.csv(graph_attributes, "NETWORKS/attributes.csv", quote = FALSE,
+##           row.names = FALSE)
+
+
+## ----heatmap_alt_print, warning=FALSE, message = FALSE, echo = FALSE, eval = FALSE----
+## fig4_heatmap2_disp <- heatmap3(fig4_heatmap2, trace = "none", density = "none",
+##                                cexRow = 0.5, cexCol = 1, margins = c(3, 15),
+##                                RowSideColors = heatColors, scale = "row",
+##                                Colv = NA, Rowv = NA, revC = TRUE,
+##                                balanceColor = FALSE, col = col)
+
+
+## ----mantel_test_a, warning=FALSE, message = FALSE, fig.align = "center"----
+detach("package:phyloseq", unload=TRUE)
+library(ape)
+library(picante)
+library(ggtree)
+library(tidytree)
+library(treeio)
+# Get phylogenetic data ------------------
+# Read newick tree ------------------
+tree <- read.tree("TABLES/INPUT/MANTEL_TEST/item_orders.txt")
+#ggtree(tree) + geom_tiplab(color = "blue")
+
+host_tree <- knitr::include_graphics("FIGURES/INPUT/collapse_tree.svg",
+                                     dpi = 300)
+host_tree
+
+
+## ----fig.align = "center", warning=FALSE, message = FALSE----------------
+d <- matrix(nrow = 1, ncol = 5)
+colnames(d) <- c("HM379826_Acanthurus_coeruleus",
+               "LIDM544-07_Acanthurus_tractus",
+               "MXIV480-10_Scarus_taeniopterus",
+               "JQ841390_Sparisoma_aurofrenatum",
+               "JQ839595_Sparisoma_viride")
+tree.p <- prune.sample(phylo = tree, samp = d)
+#plot(tree.p)
+# Change the names to species names
+tree.p$tip.label[1] <- "Sparisoma_aurofrenatum"
+tree.p$tip.label[2] <- "Sparisoma_viride"
+tree.p$tip.label[3] <- "Scarus_taeniopterus"
+tree.p$tip.label[4] <- "Acanthurus_tractus"
+tree.p$tip.label[5] <- "Acanthurus_coeruleus"
+plot(tree.p)
+
+
+## ----mantel_test_b, fig.align = "center", warning=FALSE, message = FALSE----
+#Transform tree into a distance matrix
+trx <- cophenetic(tree.p)
+#that works but I need these in alphabetical order by species
+T <- dist(cophenetic(tree.p))
+ordering <- sort(attr(T, "Labels"))
+T.mat <- as.matrix(T)[ordering, ordering]
+T  <- as.dist(T.mat)
+#plot cluster of distance matrix
+cluster_phylo <- hclust(T, method = "ward.D")
+plot(cluster_phylo, main = "Phylogenetic clustering",
+     xlab = "Host species", ylab = "Distance",
+     sub = "hellinger/bray-curtis/ward")
+
+
+## ----mantel_test_c, warning=FALSE, message = FALSE-----------------------
+all_traits <- read.csv(
+  "TABLES/INPUT/MANTEL_TEST/Mean_bite_characteristics.csv",
+  header = TRUE
+  )
+ids <- all_traits[, 1:2]
+
+quant_traits_std <- decostand(all_traits[, 3:4], "range") / 10
+
+Mean_prop_mark_on_substrate_std <- all_traits[, 5] / (10 / 2)
+prop_vertical_std <- all_traits[, 6] / (10 / 2)
+prop_concave_std <- all_traits[, 7] / (10 / 3)
+prop_convex_std <- all_traits[, 8] / (10 / 3)
+
+all_traits_std <- cbind(quant_traits_std,
+                      Mean_prop_mark_on_substrate_std,
+                      prop_vertical_std, prop_concave_std,
+                      prop_convex_std,
+                      all_traits[, 9:18]
+                      )
+
+mean_traits <- aggregate(all_traits[, 3:18],
+                         by = list(all_traits$Species), mean)
+traits <- mean_traits[, 2:17]
+rownames(traits) <- as.vector(mean_traits[, 1])
+Fish_species <- as.vector(mean_traits[, 1])
+
+
+## ----mantel_test_d, fig.align = "center", warning=FALSE, message = FALSE----
+traits_trans <- decostand(traits, method = "hellinger")
+traits_dist <- vegdist(traits_trans, method = "bray")
+cluster_traits <- hclust(traits_dist, method = "ward.D")
+plot(cluster_traits,
+     labels = Fish_species, main = "Ecological traits",
+     xlab = "Host species", ylab = "Distance",
+     sub = "hellinger/bray-curtis/ward")
+
+
+## ----message = FALSE-----------------------------------------------------
+# Is ecological data correlated with phylogeny
+mantel(traits_dist, T, method = "pearson", permutations = 9999)
+
+
+## ----mantel_test_e, warning=FALSE, message=FALSE-------------------------
+asv4 <- read.delim(
+  "TABLES/INPUT/MANTEL_TEST/2_da_asv_merged_fish.txt",
+  header = T
+  )
+asv5 <- read.delim(
+  "TABLES/INPUT/MANTEL_TEST/2_da_asv_merged_animal.txt",
+  header = T
+  )
+asv_host <- rbind(asv4, asv5)
+
+# Merge the fish and animal datasets together
+# Transpose dataframe
+asv_host_t <- data.frame(t(asv_host[-1]))
+colnames(asv_host_t) <- asv_host[, 1]
+
+library(vegan)
+# Create dendrogram based on similarity in asv
+
+Fish_species <- as.vector(colnames(asv_host[2:6]))
+Gut_contents <- sqrt(asv_host_t[])
+#Try hellinger transformation
+Gut_contents <- decostand(asv_host_t, method = "hellinger")
+Gut_dist_host <- vegdist(Gut_contents, method = "bray")
+cluster_gut_host <- hclust(Gut_dist_host, method = "ward.D")
+plot(cluster_gut_host, labels = Fish_species, main = "Host-associated ASVs",
+     xlab = "Host species", ylab = "Distance", sub = "hellinger/bray-curtis/ward")
+
+
+## ----mantel_test_f, warning=FALSE, message=FALSE-------------------------
+mantel(Gut_dist_host, T, method = "pearson", permutations = 9999)
+
+
+## ----mantel_test_g, warning=FALSE, message=FALSE-------------------------
+mantel(Gut_dist_host, traits_dist, method = "pearson", permutations = 9999)
+# Not associated with ecological traits
+
+
+## ----mantel_test_h, warning=FALSE, message=FALSE, fig.align = "center"----
+asv6 <- read.delim(
+  "TABLES/INPUT/MANTEL_TEST/2_da_asv_merged_environmental.txt",
+  header = T)
+# Transpose dataframe
+asv_env_t <- data.frame(t(asv6[-1]))
+colnames(asv_env_t) <- asv6[, 1]
+
+# Create dendrogram based on similarity in asv
+Fish_species <- as.vector(colnames(asv6[2:6]))
+Gut_contents <- sqrt(asv_env_t[])
+#Try hellinger transformation
+Gut_contents <- decostand(asv_env_t, method = "hellinger")
+Gut_dist_env <- vegdist(Gut_contents, method = "bray")
+cluster_gut_env <- hclust(Gut_dist_env, method = "ward.D")
+plot(cluster_gut_env, labels = Fish_species,
+     main = "Environment-associated ASVs",
+     xlab = "Host species", ylab = "Distance",
+     sub = "hellinger/bray-curtis/ward")
+
+
+## ----mantel_test_i, warning=FALSE, message=FALSE-------------------------
+mantel(Gut_dist_env, T,
+       method = "pearson", permutations = 9999
+       )
+# Marginally significant correlation
+
+
+## ----mantel_test_j, warning=FALSE, message=FALSE-------------------------
+mantel(Gut_dist_env, traits_dist,
+       method = "pearson", permutations = 9999
+       )
+
+
+## ----mantel_test_k, warning=FALSE, message=FALSE-------------------------
+mantel.partial(Gut_dist_env, T, traits_dist,
+               method = "pearson", permutations = 9999
+               )
+mantel.partial(Gut_dist_env, traits_dist, T,
+               method = "pearson", permutations = 9999
+               )
+
+
+## ----supp_fig1_calc, results = "hide", message=FALSE---------------------
+library(phyloseq)
+mdata_phy_all <- tax_glom(ps_slv_filt_AVG, taxrank = "Class", NArm = FALSE)
+# You can choose any taxonomic level here
+mdata_phyrel_all <- transform_sample_counts(
+  mdata_phy_all, function(x) x / sum(x)
+  )
+meltd_all <- psmelt(mdata_phyrel_all)
+meltd_all$Class <- as.character(meltd_all$Class)
+
+means <- ddply(meltd_all, ~Class, function(x) c(mean = mean(x$Abundance)))
+# decending order
+taxa_means <- means[order(-means$mean), ]
+# ditch the sci notation
+taxa_means <- format(taxa_means, scientific = FALSE)
+
+# Here we conglomerate at 2%.
+Other <- means[means$mean <= 0.026, ]$Class
+
+meltd_all[meltd_all$Class %in% Other, ]$Class <- "Other"
+samp_names <- aggregate(meltd_all$Abundance,
+                        by = list(meltd_all$Sample), FUN = sum)[, 1]
+.e <- environment()
+meltd_all[, "Class"] <- factor(meltd_all[, "Class"],
+                               sort(unique(meltd_all[, "Class"])))
+meltd_all <- meltd_all[order(meltd_all[, "Class"]), ]
+levels(meltd_all$Class)
+
+# Here we order Classes by the Phylum they belong to.
+meltd_all$Class <- factor(meltd_all$Class,
+                          levels = c(
+                            "Bacteroidia", "Clostridia", "Erysipelotrichia",
+                            "Fusobacteriia", "Alphaproteobacteria",
+                            "Deltaproteobacteria", "Gammaproteobacteria",
+                            "Planctomycetacia", "Oxyphotobacteria", "Other"))
+
+sup_fig1 <- qplot(data = meltd_all, x = Sp, y = Abundance, fill = Class,
+                  geom = "boxplot", ylab = "Relative Abundance") +
+  theme(legend.position = "bottom") +
+  facet_grid(Class ~ ., scales = "free_y", space = "free_y") +
+  geom_jitter(width = 0.05) +
+  geom_point(colour = "black", fill = "white")
+#+ guides(guide_legend(reverse = FALSE) )
+
+sup_fig1 <- sup_fig1 +
+  scale_fill_manual(values = friend_pal) +
+  labs(x = "Host species", y = "Relative abundance (% total reads)")
+
+pdf("FIGURES/OUTPUT/box_and_whisker.pdf")
+sup_fig1
+invisible(dev.off())
+
+
+## ----separate_bars_stacked, fig.align = "center", fig.cap = "Supplementary Figure 1. Relative abundance of major Classes by sample", out.width = "90%"----
+sup_fig2 <- ggplot(meltd_all, aes_string(x = "Sample", y = "Abundance",
+    fill = "Class"), environment = .e, Ordered = TRUE)
+sup_fig2 <- sup_fig2 + geom_bar(stat = "identity", position = "stack") +
+    facet_grid(Class ~ Sp, scales = "free", space = "free")
+sup_fig2 <- sup_fig2 + scale_fill_manual(values = friend_pal)
+
+# sup_fig2 <- sup_fig2 + theme(axis.text.x = element_text(angle = -90,
+# hjust = 0))
+sup_fig2 <- sup_fig2 + theme(axis.text.x = element_blank())
+
+sup_fig2 <- sup_fig2 +
+  guides(fill = guide_legend(override.aes = list(colour = NULL),
+                             reverse = FALSE)) +
+  theme(legend.key = element_rect(colour = "black"),
+        legend.position = "bottom") +
+  labs(x = "Individual samples", y = "Relative abundance (% total reads)")
+
+pdf("FIGURES/OUTPUT/Figure_S1.pdf")
+sup_fig2
+invisible(dev.off())
+
+
+## ----grid.arrange_plots, fig.align = "center", fig.cap = "Figure S1. Relative abundance of major Classes by sample", out.width = "90%"----
+grid.arrange(sup_fig1, sup_fig2, ncol = 2)
+
+
+## ----plot_da_asv_heatmap_full, warning=FALSE, fig.cap = "Figure 4", message = FALSE, eval = FALSE, echo = FALSE----
+## #Old heat map using phyloseq.
+## fig4_heat <- plot_heatmap(da_asvs, "PCoA", "jsd", "Sp",
+##                           low = "#000033", high = "#66CCFF",
+##                           trans = log_trans(10), sample.order = "Sp",
+##                           max.label = 250, taxa.order = asv_order)
+## fig4_heat <- fig4_heat + coord_fixed(ratio = 1 / 12) +
+##   scale_x_discrete(labels = c("AcCoe", "AcTra", "ScTae", "SpAur", "SpVir"))
+##
+## fig4_heat
+## pdf("FIGURES/OUTPUT/fig4_da_asvs_heat.pdf")
+## fig4_heat
+## invisible(dev.off())
+
+
+## ----picrust, eval = FALSE, echo = FALSE, include = FALSE----------------
+## #make shared fike
+## tabble <- as(otu_table(ps_slv_work_filt), "matrix")
+## tabbledf <- as.data.frame(tabble)
+## numOtus <- "10565"
+## df1 <- cbind(numOtus, tabbledf)
+## df1 <- df1 %>% rownames_to_column("Group")
+## label <- 0.03
+## df2 <- cbind(label, df1)
+## write.table(df2, "TABLES/OUTPUT/OTHER/ps_slv_work_filt.shared",
+##             sep = "\t", quote = FALSE, row.names = FALSE)
+## fasta <- tax_table(ps_slv_work_filt)
+## write.table(fasta2format_trim,
+##             "TABLES/OUTPUT/OTHER/ps_slv_work_filt.fasta",
+##             sep = "\t", quote = FALSE, col.names = NA)
+## # fix the file
+## # mothur
+## classify.seqs(fasta=ps_slv_work_filt.fasta, template=gg_13_5_99.fasta,
+##               taxonomy=gg_13_5_99.gg.tax, processors=8)
+## make.biom(shared=ps_slv_work_filt.shared, label=0.03,
+##           constaxonomy=ps_slv_work_filt.gg.wang.cons.taxonomy,
+##           picrust=97_otu_map.txt, reftaxonomy=gg_13_5_99.gg.tax)
+##
+## taxsums <- as.data.frame(taxa_sums(ps_slv_work_filt))
+## write.table(taxsums, "TABLES/OUTPUT/OTHER/taxsums.txt",
+##             sep="\t", quote = FALSE)
+
+
+## ----sessionInfo, include=TRUE-------------------------------------------
+proc.time() - ptm
+sessionInfo()
+devtools::session_info()
+end_time <- Sys.time()
+end_time - start_time
+
+
+#############################
+# END PHYLOSEQ WORKFLOW     #
+#############################

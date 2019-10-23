@@ -448,6 +448,18 @@ div.tocify {
      
   </a>
 </li>
+<li>
+  <a href="https://github.com/projectdigest/web/">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="raw_code.txt">
+    <span class="fa fa-code"></span>
+     
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -502,8 +514,9 @@ div.tocify {
 <h3>Putting the pieces together</h3>
 <p>We took all of these data and used <a href="https://itol.embl.de/" target="_blank">iTOL</a> to visualize the tree. For each top hit, we added the isolation source/natural host information, taxonomic affiliation, and Sullam <em>lifestyle category</em>. We also overlaid the number of hits to the IMNGS database for each ASV.</p>
 <p>To view a full, interactive version of the tree go this <a href="https://itol.embl.de/tree/18614898186392201535496541" target="_blank">iTOL page</a>.</p>
-<div id="figure-3" class="section level4">
-<h4><font color="red">Figure 3</font></h4>
+<div class="paper">
+Figure 3
+</div>
 <div class="warning">
 <p>You can pan around and zoom in on this tree. Double-clicking will zoom in on an area.</p>
 </div>
@@ -516,7 +529,6 @@ div.tocify {
 <p><img src="SVG_INPUT/Figure_3_Legend_A.svg" style="display: block; margin: auto auto auto 0;" /></p>
 <p>
 </p>
-</div>
 </div>
 </div>
 <div id="inferring-lifestyle-category" class="section level2">
@@ -533,8 +545,9 @@ div.tocify {
 <div id="assessing-habitat-specificity." class="section level3">
 <h3>Assessing habitat specificity.</h3>
 <p>We combined these habitat predictions with the results of the BLASTn analysis, scan of the IMNGS database, Sullam lifestyle categories, etc. and put it all in one <strong>editable</strong> table. So if you disagree with a habitat prediction, you can feel free to change it.</p>
-<div id="table-s6" class="section level4">
-<h4><font color="red">Table S6</font></h4>
+<div class="paper">
+Table S6
+</div>
 <pre class="r"><code>habi_tab &lt;- read.table(&quot;DATA/PHYLOSEQ/TABLES/INPUT/habitat_specificity.txt&quot;, 
                        header = TRUE, sep = &quot;\t&quot;, check.names = FALSE)
 # order by habitat and host enriched
@@ -610,10 +623,12 @@ datatable(summ_table, rownames = FALSE,
 </ul>
 <hr />
 </div>
-</div>
 <div id="summary-of-habitat-preference" class="section level3">
 <h3>Summary of habitat preference</h3>
 <p>Now we can summarize the data for each lifestyle category. This table was constructed in a text file and read into R.</p>
+<div class="paper">
+Table 1
+</div>
 <pre class="r"><code>habi_summary &lt;- read.table(&quot;DATA/PHYLOSEQ/TABLES/INPUT/Table_1.txt&quot;, 
                            header = TRUE, sep = &quot;\t&quot;, check.names = FALSE)
 
@@ -814,6 +829,9 @@ ASV_bar</code></pre>
 </div>
 <div id="heatmap" class="section level3">
 <h3>Heatmap</h3>
+<div class="paper">
+Figure 4 (mostly)
+</div>
 <pre class="r"><code># Heatmap
 library(ComplexHeatmap)
 library(circlize)

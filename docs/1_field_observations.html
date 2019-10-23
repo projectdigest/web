@@ -452,6 +452,18 @@ div.tocify {
      
   </a>
 </li>
+<li>
+  <a href="https://github.com/projectdigest/web/">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="raw_code.txt">
+    <span class="fa fa-code"></span>
+     
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -498,8 +510,9 @@ Florida Keys &amp; Pickles Reef
 <div id="observational-data" class="section level2">
 <h2>Observational data</h2>
 <p>First, we read in and display the table describing the foraging ecology of these fish.</p>
-<div id="table-s1" class="section level4">
-<h4><font color="red">Table S1</font></h4>
+<div class="paper">
+Table S1
+</div>
 <pre class="r"><code>library(ggthemes)
 all_traits &lt;- read.csv(&quot;DATA/PHYLOSEQ/TABLES/INPUT/Mean_bite_characteristics.txt&quot;,
   header = TRUE, sep = &quot;\t&quot;)
@@ -535,7 +548,6 @@ datatable(all_traits, rownames = FALSE, width = &quot;100%&quot;,
 <script type="application/json" data-for="htmlwidget-32e1ea2669427cdee0e8">{"x":{"filter":"none","extensions":["Buttons"],"caption":"<caption style=\"caption-side: bottom; text-align: left;\">\n  Supplementary Table 1: \n  <em>INSERT DESCRIPTION.<\/em>\n<\/caption>","data":[["Acanthurus coeruleus","Acanthurus coeruleus","Acanthurus coeruleus","Acanthurus tractus","Acanthurus tractus","Acanthurus tractus","Scarus taeniopterus","Scarus taeniopterus","Scarus taeniopterus","Sparisoma aurofrenatum","Sparisoma aurofrenatum","Sparisoma aurofrenatum","Sparisoma viride","Sparisoma viride","Sparisoma viride"],["Conch","French","Molasses","Conch","French","Molasses","Conch","French","Molasses","Conch","French","Molasses","Conch","French","Molasses"],[4.867924528,0.64516129,1.476470588,5.68,1.208333333,0.817307692,0.818181818,1.689655172,1.118421053,2.822916667,1.659090909,1.434210526,0.942307692,0.533333333,0.463636364],[5.923076923,2.333333333,2.851190476,6.375,2.7,2.740384615,1.25,3.568965517,2.769230769,5.010416667,4.692307692,4.666666667,3.45890411,2.255555556,1.857142857],[0,0,0,0,0,0,0.25,0.294117647,0.365853659,0.039215686,0.084745763,0.219178082,0.722891566,0.802816901,0.753846154],[0.195121951,0.564102564,0.323809524,0.302631579,0.357142857,0.300884956,0.2,0.5,0.414634146,0.294117647,0.456140351,0.611940299,0.5625,0.549295775,0.603174603],[0.117647059,0.289473684,0.133333333,0.084507042,0.261904762,0.132743363,0.266666667,0.060606061,0.048780488,0.118811881,0.224137931,0.181818182,0.192771084,0.154929577,0.047619048],[0.047058824,0,0.047619048,0,0.023809524,0.044247788,0.133333333,0.090909091,0.146341463,0.059405941,0.034482759,0.272727273,0.421686747,0.352112676,0.507936508],[0.017094017,0,0.009009009,0.008264463,0,0,0,0,0.024390244,0.14,0.084745763,0.075757576,0.024096386,0,0.015625],[0,0.340425532,0.198198198,0,0.130434783,0.049180328,0.0625,0.117647059,0.243902439,0,0.016949153,0.03030303,0.614457831,0.411764706,0.375],[0.230769231,0.191489362,0.162162162,0.404958678,0.369565217,0.508196721,0.125,0.147058824,0.024390244,0.34,0.457627119,0.287878788,0.024096386,0.088235294,0.09375],[0.222222222,0.127659574,0.054054054,0.32231405,0.086956522,0.06557377,0,0,0,0,0,0,0,0,0],[0.008547009,0.021276596,0.009009009,0,0,0,0,0,0,0,0,0.015151515,0,0,0],[0,0,0,0,0.02173913,0,0,0,0,0,0.084745763,0.015151515,0,0.029411765,0],[0.068376068,0,0,0.049586777,0,0,0,0,0,0.02,0,0,0,0,0],[0,0,0,0,0,0,0.0625,0,0,0,0,0.03030303,0,0,0.015625],[0,0,0,0.008264463,0,0,0.125,0,0,0.02,0,0,0,0,0],[0.452991453,0.319148936,0.567567568,0.20661157,0.391304348,0.37704918,0.625,0.735294118,0.707317073,0.48,0.355932203,0.545454545,0.337349398,0.470588235,0.5]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Host species<\/th>\n      <th>Site<\/th>\n      <th>Sediment depth (mm)<\/th>\n      <th>Turf height(mm)<\/th>\n      <th>Prop. mark on substrate<\/th>\n      <th>Prop. vertical<\/th>\n      <th>Prop. concave<\/th>\n      <th>Prop. convex<\/th>\n      <th>Articulated red coralline<\/th>\n      <th>CCA/Turf on CCA<\/th>\n      <th>Dictyota<\/th>\n      <th>Epiphytes<\/th>\n      <th>Gorgonian<\/th>\n      <th>Halimeda<\/th>\n      <th>Laurencia<\/th>\n      <th>Sponge<\/th>\n      <th>Stypopodium<\/th>\n      <th>turf<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-left","targets":0},{"className":"dt-right","targets":[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]}],"dom":"Blrtip","pageLength":5,"lengthMenu":[5,10,15],"buttons":["csv","copy"],"scrollX":true,"scrollCollapse":true,"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="warning">
 <p>This table also scrolls horizontally.</p>
-</div>
 </div>
 </div>
 <div id="data-scaling" class="section level2">
@@ -594,8 +606,9 @@ spp_scrs_substrate &lt;- subset(spp_scrs_sub,
                              spp_scrs_sub$variable_type == &quot;substrate&quot;)
 spp_scrs_algae &lt;- subset(spp_scrs_sub,
                          spp_scrs_sub$variable_type == &quot;algae&quot;)</code></pre>
-<div id="figure-1" class="section level4">
-<h4><font color="red">Figure 1</font></h4>
+<div class="paper">
+Figure 1
+</div>
 <pre class="r"><code>fig_1 &lt;- ggplot(NMDS) +
   geom_point(mapping = aes(x = NMDS1, y = NMDS2, shape = Site,
                            colour = Species), size = 4) +
@@ -625,7 +638,6 @@ Figure 1: Bray curtis distance on all traits; stress = 0.04
 <pre class="r"><code>pdf(&quot;DATA/PHYLOSEQ/FIGURES/OUTPUT/Figure_1.pdf&quot;)
 fig_1
 invisible(dev.off())</code></pre>
-</div>
 <div id="go-to-part-2-dada2-workflow" class="section level4">
 <h4><a href="2_dada2.html">Go to Part 2, DADA2 Workflow</a></h4>
 </div>

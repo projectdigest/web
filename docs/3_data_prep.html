@@ -446,6 +446,18 @@ div.tocify {
      
   </a>
 </li>
+<li>
+  <a href="https://github.com/projectdigest/web/">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="raw_code.txt">
+    <span class="fa fa-code"></span>
+     
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -661,7 +673,9 @@ smax_raw &lt;- as.integer(max(sample_sums(ps_slv_work)))</code></pre>
 <div id="remove-contaminants" class="section level2">
 <h2>Remove contaminants</h2>
 <p>These samples are intestinal communities and we assume that Chloroplast are not contributing to metabolism. These data could be useful later but for now lets create a phyloseq object without Chloroplast.</p>
-<p><font size="3" color="red">WARNING</font>: the <code>subset_taxa</code> command removes anything that is <code>NA</code> for the specified taxonomic level or above. <strong>For example</strong>, lets say you run the <code>subset_taxa</code> command using <code>Order != &quot;Chloroplast&quot;</code>. Seems like you should get a phyloseq object with everything except Chloroplast. But actually the command not only gets rid Chloroplast but everything else that has <code>NA</code> for Order and above. In our experience this is not well documented and we had to dig through the files to figure out what was happening.</p>
+<div class="warning">
+<p>Caution: the <code>subset_taxa</code> command removes anything that is <code>NA</code> for the specified taxonomic level or above. <strong>For example</strong>, lets say you run the <code>subset_taxa</code> command using <code>Order != &quot;Chloroplast&quot;</code>. Seems like you should get a phyloseq object with everything except Chloroplast. But actually the command not only gets rid Chloroplast but everything else that has <code>NA</code> for Order and above. In our experience this is not well documented and we had to dig through the files to figure out what was happening.</p>
+</div>
 <p>Our dataset has 590 Chloroplast ASVs and running the command as is removed an additional 1244 ASVs. So lets see if we can get rid of just Chloroplast ASVs without removing everything that is unclassified at Order and above. To do this, we subset the taxa to generate a ps object of just Chloroplast, selected the ASV column only, turned it into a factor, and used this to remove Chloroplast from the ps object.</p>
 <pre class="r"><code># generate a file with Chloroplast ASVs
 chloro_p_ps &lt;- subset_taxa(ps_slv_work, Order == &quot;Chloroplast&quot;)

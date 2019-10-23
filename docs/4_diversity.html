@@ -445,6 +445,18 @@ div.tocify {
      
   </a>
 </li>
+<li>
+  <a href="https://github.com/projectdigest/web/">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="raw_code.txt">
+    <span class="fa fa-code"></span>
+     
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -528,8 +540,9 @@ taxa_read_asv_tab2$prop_of_reads &lt;- round(taxa_read_asv_tab2$prop_of_reads,
 taxa_read_asv_tab2$prop_of_ASVs &lt;- round(taxa_read_asv_tab2$prop_of_ASVs, 
                                          digits = 6)</code></pre>
 <p>For your information, the dataset has a total of <strong>2934996</strong> reads across <strong>11144</strong> ASVs.</p>
-<div id="table-s4" class="section level4">
-<h4><font color="red">Table S4</font></h4>
+<div class="paper">
+Table S4
+</div>
 <pre class="r"><code>#kills sci notation     
 options(scipen = 999) 
 write.table(taxa_read_asv_tab2, &quot;DATA/PHYLOSEQ/TABLES/OUTPUT/SUPP/Table_S4.txt&quot;, 
@@ -581,7 +594,6 @@ taxa_means$Class &lt;- gsub(&quot;NA&quot;, &quot;Unclassified&quot;, taxa_means
 <p>Since our goal is to generate a figure and we only have 9 colors, some taxa will need to be put into an <strong>Other</strong> category. We can define ‘Other’ however we like so lets take a look at the overall relative abundance of each Class.</p>
 <hr />
 </div>
-</div>
 <div id="relative-abundance" class="section level3">
 <h3>Relative abundance</h3>
 <p><a id="relative abundance phyloseq object"></a></p>
@@ -622,8 +634,9 @@ meltd$Class &lt;- factor(meltd$Class,
 </div>
 <div id="abundance-by-host-species" class="section level3">
 <h3>Abundance by host species</h3>
-<div id="figure-2a" class="section level4">
-<h4><font color="red">Figure 2A</font></h4>
+<div class="paper">
+Figure 2A
+</div>
 <pre class="r"><code>fig2A &lt;- ggplot(meltd, 
                 aes_string(x = &quot;Sample&quot;, y = &quot;Abundance&quot;, fill = &quot;Class&quot;), 
                 environment = .e, 
@@ -672,7 +685,6 @@ invisible(dev.off())</code></pre>
 <p>Armed with a picture of taxonomic composition we can move on to diversity estimates.</p>
 </div>
 </div>
-</div>
 <div id="alpha-diversity" class="section level2">
 <h2>alpha-diversity</h2>
 <div id="statistical-tests" class="section level3">
@@ -680,8 +692,9 @@ invisible(dev.off())</code></pre>
 <p>Alpha diversity describes the diversity in a sample or site. There are several alpha diversity metrics available in phyloseq: <code>Observed</code>, <code>Chao1</code>, <code>ACE</code>, <code>Shannon</code>, <code>Simpson</code>, <code>InvSimpson</code>, <code>Fisher</code>. Play around to see how different metrics change or confirm these results.</p>
 <p>Here we want to know if diversity is significantly different across host species. In order to do that we need to know if we should run a parametric or non-parametric test, and for that we need to know if our data is normally distributed. Most of the ideas/code for alpha (and subsequent beta) diversity statistics come from this <a href="https://rpubs.com/maddieSC/R_SOP_UCR_Jan_2018" target="_blank">workshop tutorial</a> by Kim Dill-McFarland and Madison Cox.</p>
 <p>First we run the diversity estimates, add these data to our summary table, and save a copy of this table.</p>
-<div id="table-s3" class="section level4">
-<h4><font color="red">Table S3</font></h4>
+<div class="paper">
+Table S3
+</div>
 <pre class="r"><code>diversity &lt;- estimate_richness(ps_slv_work_filt, 
                                measures = c(&quot;Observed&quot;, &quot;Chao1&quot;, &quot;ACE&quot;, 
                                           &quot;Shannon&quot;, &quot;Simpson&quot;, &quot;InvSimpson&quot;, 
@@ -770,7 +783,6 @@ shapiro_test_Observed &lt;- shapiro.test(sample_data(ps_slv_work_filt_div)$Obser
 ## data:  sample_data(ps_slv_work_filt_div)$Observed
 ## W = 0.89591, p-value = 0.0003531</code></pre>
 <p>Ok, since the p-values are significant for the inverse Simpson, Chao richness, and Observed ASV richness we reject the null hypothesis that these data are normally distributed. However, the Shannon estimates appear normally distributed. So lets see if diversity is significantly different between host species based on the Shannon index.</p>
-</div>
 <div id="normally-distributed" class="section level4">
 <h4>Normally distributed</h4>
 <p>Since the Shannon data is normally distributed we can test for significance using ANOVA (a parametric test).</p>
@@ -888,8 +900,9 @@ kruskal.test(Observed ~ Sp, data = sampledataDF)</code></pre>
 <div id="diversity-plots" class="section level3">
 <h3>Diversity plots</h3>
 <p>Here we plot the results of Shannon diversity index. We will save a copy of the figure for later tweaking. We use the color palette described above to delineate host species.</p>
-<div id="figure-2b" class="section level4">
-<h4><font color="red">Figure 2B</font></h4>
+<div class="paper">
+Figure 2B
+</div>
 <pre class="r"><code>fig2B &lt;- plot_richness(ps_slv_work_filt, x = &quot;Sp&quot;, 
                        measures = c(&quot;Observed&quot;,
                                     &quot;Shannon&quot;, 
@@ -915,7 +928,6 @@ Figure 2B
 fig2B
 invisible(invisible(dev.off()))</code></pre>
 <hr />
-</div>
 </div>
 <div id="correlations-with-diversity" class="section level3">
 <h3>Correlations with diversity</h3>
@@ -1017,8 +1029,9 @@ stressplot(ord.nmds.jsd_slv)</code></pre>
 <p>We see that a convergent solution was reached around 20 iterations and our stress is below 0.20, meaning that 2-axes are sufficient to view the data. Generally, we are looking for stress values below 0.2. If the stress values are high, you may need to add more axes to the ordination. Lets visualize the plot.</p>
 <div id="diversity-plots-1" class="section level3">
 <h3>Diversity plots</h3>
-<div id="figure-2c" class="section level4">
-<h4><font color="red">Figure 2C</font></h4>
+<div class="paper">
+Figure 2C
+</div>
 <pre class="r"><code>fig2C &lt;- plot_ordination(ps_slv_work_filt, ord.nmds.jsd_slv, 
                          color = &quot;Sp&quot;, label = &quot;SamName&quot;, 
                          title = &quot;Jensen-Shannon divergence&quot;)
@@ -1050,7 +1063,6 @@ Figure 2C
 fig2C
 invisible(dev.off())</code></pre>
 <p>So we can see some clustering within groups and spread between groups, but this is not a test for statistical differences. Do microbial communities differ significantly by host taxa?</p>
-</div>
 </div>
 <div id="permanova" class="section level3">
 <h3>PERMANOVA</h3>

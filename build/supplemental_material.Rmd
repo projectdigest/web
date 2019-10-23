@@ -1,5 +1,8 @@
 ---
 title: "Supplemental Material for Paper"
+output:
+  html_document:
+    code_folding: none
 ---
 
 ```{r setup, include=FALSE}

@@ -88,7 +88,7 @@ code, kbd, pre, samp, .sourceLine, .sourceCode {
   width:100%;
 }
 
-/* for boxes */
+/* for boxes and call out*/
 
 .warning{
   background-color:#F1AFAE;
@@ -109,9 +109,15 @@ code, kbd, pre, samp, .sourceLine, .sourceCode {
 .steel{
   background-color:#C8CFD6;
   border-radius: 5px;
-  padding: 10px;
-  margin: 18px 0;
+  padding: 5px;
+  margin: 4px 0;
   font-size: 4
+}
+
+.paper {
+  color: #fc6464;
+  font-size: 1.5em;
+  font-family: PT Serif, serif;
 }
 
 /* this changes background color of Rcode output box */

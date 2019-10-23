@@ -74,7 +74,8 @@ invisible(dev.off())
 
 #### Code for bar plot
 
-#### <font color="red">Figure S1</font>
+<div class="paper">Figure S1</div>
+
 
 ```{r separate_bars_stacked, fig.align = "center", fig.cap = "Supplementary Figure 1. Relative abundance of major Classes by sample", out.width = "90%", cache=TRUE}
 sup_fig2 <- ggplot(meltd_all, aes_string(x = "Sample", y = "Abundance", 

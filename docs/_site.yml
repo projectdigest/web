@@ -48,6 +48,10 @@ navbar:
       href: contact.html
     - icon: fa-question fa-lg
       href: how_to_build_this_site.html
+    - icon: fa-github
+      href: https://github.com/projectdigest/web/
+    - icon: fa-code
+      href: raw_code.txt
 output:
   html_document:
     code_folding: hide

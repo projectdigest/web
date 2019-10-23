@@ -431,6 +431,18 @@ div.tocify {
      
   </a>
 </li>
+<li>
+  <a href="https://github.com/projectdigest/web/">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="raw_code.txt">
+    <span class="fa fa-code"></span>
+     
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -514,9 +526,9 @@ invisible(dev.off())</code></pre>
 </div>
 <div id="code-for-bar-plot" class="section level4">
 <h4>Code for bar plot</h4>
+<div class="paper">
+Figure S1
 </div>
-<div id="figure-s1" class="section level4">
-<h4><font color="red">Figure S1</font></h4>
 <pre class="r"><code>sup_fig2 &lt;- ggplot(meltd_all, aes_string(x = &quot;Sample&quot;, y = &quot;Abundance&quot;, 
     fill = &quot;Class&quot;), environment = .e, Ordered = TRUE)
 sup_fig2 &lt;- sup_fig2 + geom_bar(stat = &quot;identity&quot;, position = &quot;stack&quot;) + 

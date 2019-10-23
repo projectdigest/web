@@ -24,7 +24,6 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
@@ -252,9 +251,6 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
 
 
 
@@ -431,20 +427,24 @@ div.tocify {
      
   </a>
 </li>
+<li>
+  <a href="https://github.com/projectdigest/web/">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="raw_code.txt">
+    <span class="fa fa-code"></span>
+     
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
 <div class="fluid-row" id="header">
-
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
-</ul>
-</div>
 
 
 
@@ -461,6 +461,7 @@ div.tocify {
 <p>
 </p>
 <p><a href="https://doi.org/10.6084/m9.figshare.7357178" target="_blank">10.6084/m9.figshare.7357178</a>: DOI for this workflow. Includes output from the DADA2 workflow, the phyloseq script, and other necessary input files.</p>
+<p><br></p>
 <div class="steel">
 <p>We also offer several additional data products and processing scripts.</p>
 </div>
@@ -472,6 +473,13 @@ div.tocify {
 <p><a href="https://doi.org/10.6084/m9.figshare.7379930" target="_blank">10.6084/m9.figshare.7379930</a>: Data products from the workflows including sequence tables, taxonomy tables, and ASV fasta files.</p>
 <p><a href="https://doi.org/10.6084/m9.figshare.7379936" target="_blank">10.6084/m9.figshare.7379936</a>: Fasta files for the 59 DA ASVs and top BLAST results, plus the alignment file (including top BLAST hits).</p>
 <p><a href="https://doi.org/10.6084/m9.figshare.7379597" target="_blank">10.6084/m9.figshare.7379597</a>: Supplementary file from the paper.</p>
+<p><br></p>
+<div class="steel">
+<p>Accessing the R Code only.</p>
+</div>
+<p>
+</p>
+<p>The R code is available by clicking on the code button in the menu bar or <a href="raw_code.txt">here</a>. Please note that this R code is pulled from all the <code>.Rmd</code> files. This has not been tested independent of the Rmarkdown workflows so <font color="red">Use at Your Own Risk</font>. In other words, the code works in the Rmarkdown format but the complete pipeline has not been tested using just this code. I used <code>knitr::purl()</code> to pull the code from the Rmarkdown file. I did this for you just in case you wanted the code and not hear me drone on about colors, zoomable figures, or Keanu Reeves. The first part is the DADA2 workflow and the second part is the phyloseq workflow. Commands that are commented out are things I tried that I could never get to work. Any line that starts like this: <code>## ----</code> is the code chuck name and details.</p>
 
 <footer role="contentinfo" id="site-footer">
 
@@ -519,11 +527,6 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
-<script>
-$(document).ready(function () {
-  window.initializeCodeFolding("hide" === "show");
-});
-</script>
 
 <script>
 $(document).ready(function ()  {

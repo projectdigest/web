@@ -35,7 +35,7 @@ To visualize the multivariate patterns of herbivory we used non-metric multidime
 
 First, we read in and display the table describing the foraging ecology of these fish.
 
-#### <font color="red">Table S1</font>
+<div class="paper">Table S1</div>
 
 ```{r mean_bite_analysis, cache=TRUE}
 library(ggthemes)
@@ -147,7 +147,7 @@ spp_scrs_algae <- subset(spp_scrs_sub,
 ```
 
 
-#### <font color="red">Figure 1</font>
+<div class="paper">Figure 1</div>
 
 ```{r mean_bite_figure, fig.align = "center", fig.cap = "Figure 1: Bray curtis distance on all traits; stress = 0.04", out.width = "90%", cache=TRUE}
 fig_1 <- ggplot(NMDS) +

@@ -1,2 +1,1 @@
-# digest.github.io
-website for Project DIGEST
+Most of the files needed to build the website, specifically the `.Rmd` files, some PNGs and SVGs.

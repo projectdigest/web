@@ -93,7 +93,7 @@ Cool, all looks good. Hit `Proceed`. Here are the settings we used for the diffe
 
 We can inspect and save the results of the LEfSe analysis. The table shows the Linear discriminant analysis (LDA) scores, P-values adjusted for multiple testing, and False Discovery Rate (FDR) values from the LEfSe analysis. Normalized read abundance values for each host species are also given.
 
-#### <font color="red">Table S5</font>
+<div class="paper">Table S5</div>
 
 ```{r lefse_table, cache=TRUE}
 lefse_tab <- read.table("DATA/PHYLOSEQ/TABLES/INPUT/lefse_results.txt", 
