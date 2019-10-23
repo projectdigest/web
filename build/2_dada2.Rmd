@@ -617,7 +617,7 @@ st.sum[,colnames(seqtab.1)] <- st.sum[,colnames(seqtab.1)] + seqtab.1
 st.sum[,colnames(seqtab.2)] <- st.sum[,colnames(seqtab.2)] + seqtab.2
 ```
 
-```{r save_combo, cache=TRUE, eval=FALSE}
+```{r save_combo, cache=TRUE}
 saveRDS(st.sum, "DATA/02_MERGED/combo_run1_run2.rds")
 ```
 

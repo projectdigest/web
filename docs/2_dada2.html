@@ -610,17 +610,17 @@ div.tocify {
 <h4>Set the working directory &amp; prep files</h4>
 <pre class="r"><code>path_X1 &lt;- &quot;DATA/02_MERGED/RUN01/INPUT_FILES/&quot;
 head(list.files(path_X1))</code></pre>
-<pre><code>## [1] &quot;#filtered&quot;                 &quot;AcCoe01_1_R1.merged.fastq&quot;
-## [3] &quot;AcCoe01_1_R2.merged.fastq&quot; &quot;AcCoe02_1_R1.merged.fastq&quot;
-## [5] &quot;AcCoe02_1_R2.merged.fastq&quot; &quot;AcCoe03_1_R1.merged.fastq&quot;</code></pre>
+<pre><code>## [1] &quot;AcCoe01_1_R1.merged.fastq&quot; &quot;AcCoe01_1_R2.merged.fastq&quot;
+## [3] &quot;AcCoe02_1_R1.merged.fastq&quot; &quot;AcCoe02_1_R2.merged.fastq&quot;
+## [5] &quot;AcCoe03_1_R1.merged.fastq&quot; &quot;AcCoe03_1_R2.merged.fastq&quot;</code></pre>
 <pre class="r"><code>path_Y2 &lt;- &quot;DATA/02_MERGED/RUN02/INPUT_FILES/&quot;
 head(list.files(path_Y2))</code></pre>
-<pre><code>## [1] &quot;#filtered&quot;                 &quot;AcCoe01_2_R1.merged.fastq&quot;
-## [3] &quot;AcCoe01_2_R2.merged.fastq&quot; &quot;AcCoe02_2_R1.merged.fastq&quot;
-## [5] &quot;AcCoe02_2_R2.merged.fastq&quot; &quot;AcCoe03_2_R1.merged.fastq&quot;</code></pre>
+<pre><code>## [1] &quot;AcCoe01_2_R1.merged.fastq&quot; &quot;AcCoe01_2_R2.merged.fastq&quot;
+## [3] &quot;AcCoe02_2_R1.merged.fastq&quot; &quot;AcCoe02_2_R2.merged.fastq&quot;
+## [5] &quot;AcCoe03_2_R1.merged.fastq&quot; &quot;AcCoe03_2_R2.merged.fastq&quot;</code></pre>
 <pre class="r"><code>path_Z3 &lt;- &quot;DATA/02_MERGED/RUN03/INPUT_FILES/&quot;
 head(list.files(path_Z3))</code></pre>
-<pre><code>## [1] &quot;#filtered&quot;                 &quot;SpAur05_3_R1.merged.fastq&quot;
+<pre><code>## [1] &quot;filtered&quot;                  &quot;SpAur05_3_R1.merged.fastq&quot;
 ## [3] &quot;SpAur05_3_R2.merged.fastq&quot; &quot;SpAur06_3_R1.merged.fastq&quot;
 ## [5] &quot;SpAur06_3_R2.merged.fastq&quot; &quot;SpAur07_3_R1.merged.fastq&quot;</code></pre>
 <p>Here we see a list of files in the directory. All looks good.</p>
@@ -699,9 +699,8 @@ filtRs_Z3 &lt;- file.path(filt_path_Z3, paste0(sample.names_Z3, &quot;_R_filt.fa
 <pre class="r"><code>out_X1 &lt;- filterAndTrim(fnFs_X1, filtFs_X1, fnRs_X1, filtRs_X1, 
                         truncLen=c(260,160), maxN=0, maxEE=c(2,5), 
                         truncQ=2, rm.phix=TRUE, compress=TRUE, 
-                        multithread=TRUE)</code></pre>
-<pre><code>## Creating output directory: DATA/02_MERGED/RUN01/INPUT_FILES//filtered</code></pre>
-<pre class="r"><code>head(out_X1)</code></pre>
+                        multithread=TRUE)
+head(out_X1)</code></pre>
 <pre><code>##                           reads.in reads.out
 ## AcCoe01_1_R1.merged.fastq    97888     79323
 ## AcCoe02_1_R1.merged.fastq   148939    124257
@@ -712,9 +711,8 @@ filtRs_Z3 &lt;- file.path(filt_path_Z3, paste0(sample.names_Z3, &quot;_R_filt.fa
 <pre class="r"><code>out_Y2 &lt;- filterAndTrim(fnFs_Y2, filtFs_Y2, fnRs_Y2, filtRs_Y2, 
                         truncLen=c(260,160), maxN=0, maxEE=c(2,5), 
                         truncQ=2, rm.phix=TRUE, compress=TRUE, 
-                        multithread=TRUE)</code></pre>
-<pre><code>## Creating output directory: DATA/02_MERGED/RUN02/INPUT_FILES//filtered</code></pre>
-<pre class="r"><code>head(out_Y2)</code></pre>
+                        multithread=TRUE)
+head(out_Y2)</code></pre>
 <pre><code>##                           reads.in reads.out
 ## AcCoe01_2_R1.merged.fastq    91574     85501
 ## AcCoe02_2_R1.merged.fastq   126168    118326
@@ -725,9 +723,8 @@ filtRs_Z3 &lt;- file.path(filt_path_Z3, paste0(sample.names_Z3, &quot;_R_filt.fa
 <pre class="r"><code>out_Z3 &lt;- filterAndTrim(fnFs_Z3, filtFs_Z3, fnRs_Z3, filtRs_Z3, 
                         truncLen=c(260,140), maxN=0, maxEE=c(2,5), 
                         truncQ=2, rm.phix=TRUE, compress=TRUE, 
-                        multithread=TRUE)</code></pre>
-<pre><code>## Creating output directory: DATA/02_MERGED/RUN03/INPUT_FILES//filtered</code></pre>
-<pre class="r"><code>head(out_Z3)</code></pre>
+                        multithread=TRUE)
+head(out_Z3)</code></pre>
 <pre><code>##                           reads.in reads.out
 ## SpAur05_3_R1.merged.fastq    79781     65844
 ## SpAur06_3_R1.merged.fastq    94888     68615
@@ -1127,7 +1124,7 @@ saveRDS(seqtab_Z3.2, &quot;DATA/02_MERGED/RUN03/seqtab_Z3.2.rds&quot;)</code></p
 <p>Processing time…</p>
 <pre class="r"><code>proc.time() - ptm</code></pre>
 <pre><code>##     user   system  elapsed 
-##   67.442  181.565 2281.755</code></pre>
+## 11606.78  -122.75  9824.20</code></pre>
 <blockquote>
 <p>This part of the workflow is finished</p>
 </blockquote>
@@ -1318,8 +1315,8 @@ saveRDS(seqtab_Z3.2.nochim, &quot;DATA/02_MERGED/RUN03/seqtab_Z3.2.nochim.rds&qu
 <pre class="r"><code>save.image(&quot;DATA/02_MERGED/pre_combo_pipeline.rdata&quot;)</code></pre>
 <p>Processing time…</p>
 <pre class="r"><code>proc.time() - ptm</code></pre>
-<pre><code>##    user  system elapsed 
-## 212.020   4.990 677.708</code></pre>
+<pre><code>##     user   system  elapsed 
+## 9609.068 -195.673  643.369</code></pre>
 <p><a id="Part F: Merge Results & Complete Workflow"></a></p>
 </div>
 </div>
@@ -1374,8 +1371,8 @@ tax_silva &lt;- assignTaxonomy(seqtab, &quot;silva_nr_v132_train_set.fa.gz&quot;
 <p>The DADA2 analysis is now complete. Next we used <a href="https://joey711.github.io/phyloseq/">phyloseq</a> and the <code>combo_pipeline.rdata</code> output file for the subsequent community analysis. See the <em>Phyloseq_workflow.Rmd</em> markdown file for the workflow.</p>
 <p>Processing time…</p>
 <pre class="r"><code>proc.time() - ptm</code></pre>
-<pre><code>##      user    system   elapsed 
-## -6437.268  -152.070 -4161.474</code></pre>
+<pre><code>##     user   system  elapsed 
+## 1943.987    4.452  639.569</code></pre>
 <p><br></p>
 </div>
 <div id="go-to-part-3-data-preparation" class="section level4">
@@ -1405,63 +1402,74 @@ tax_silva &lt;- assignTaxonomy(seqtab, &quot;silva_nr_v132_train_set.fa.gz&quot;
 ##  [8] datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] ggthemes_4.2.0              seqinr_3.6-1               
-##  [3] ips_0.0.11                  ape_5.3                    
-##  [5] TeachingDemos_2.10          pairwiseAdonis_0.0.1       
-##  [7] cluster_2.1.0               plotly_4.9.0               
-##  [9] RCurl_1.95-4.12             bitops_1.0-6               
-## [11] svgPanZoom_0.3.3            gridExtra_2.3              
-## [13] forcats_0.4.0               stringr_1.4.0              
-## [15] dplyr_0.8.3                 purrr_0.3.2                
-## [17] readr_1.3.1                 tidyr_0.8.3                
-## [19] tibble_2.1.3                tidyverse_1.2.1            
-## [21] formatR_1.7                 pander_0.6.3               
-## [23] rmarkdown_1.16              DT_0.8                     
-## [25] data.table_1.12.2           kableExtra_1.1.0           
-## [27] knitr_1.25                  rstudioapi_0.10            
-## [29] reshape2_1.4.3              scales_1.0.0               
-## [31] vegan_2.5-6                 lattice_0.20-38            
-## [33] permute_0.9-5               plyr_1.8.4                 
-## [35] ggplot2_3.2.1               phyloseq_1.28.0            
-## [37] ShortRead_1.42.0            GenomicAlignments_1.20.1   
-## [39] SummarizedExperiment_1.14.1 DelayedArray_0.10.0        
-## [41] matrixStats_0.55.0          Biobase_2.44.0             
-## [43] Rsamtools_2.0.0             GenomicRanges_1.36.1       
-## [45] GenomeInfoDb_1.20.0         Biostrings_2.52.0          
-## [47] XVector_0.24.0              IRanges_2.18.2             
-## [49] S4Vectors_0.22.1            BiocParallel_1.18.1        
-## [51] BiocGenerics_0.30.0         dada2_1.12.1               
-## [53] Rcpp_1.0.2                 
+##  [1] gapminder_0.3.0             treeio_1.8.2               
+##  [3] tidytree_0.2.7              ggtree_1.16.6              
+##  [5] picante_1.8                 nlme_3.1-141               
+##  [7] gdata_2.18.0                heatmap3_1.1.6             
+##  [9] circlize_0.4.8              ComplexHeatmap_2.1.0       
+## [11] ggpubr_0.2.3                magrittr_1.5               
+## [13] ggthemes_4.2.0              seqinr_3.6-1               
+## [15] ips_0.0.11                  ape_5.3                    
+## [17] TeachingDemos_2.10          leaflet_2.0.2              
+## [19] pairwiseAdonis_0.0.1        cluster_2.1.0              
+## [21] plotly_4.9.0                RCurl_1.95-4.12            
+## [23] bitops_1.0-6                svgPanZoom_0.3.3           
+## [25] gridExtra_2.3               forcats_0.4.0              
+## [27] stringr_1.4.0               dplyr_0.8.3                
+## [29] purrr_0.3.2                 readr_1.3.1                
+## [31] tidyr_0.8.3                 tibble_2.1.3               
+## [33] tidyverse_1.2.1             formatR_1.7                
+## [35] pander_0.6.3                rmarkdown_1.16             
+## [37] DT_0.8                      data.table_1.12.2          
+## [39] kableExtra_1.1.0            knitr_1.25                 
+## [41] rstudioapi_0.10             reshape2_1.4.3             
+## [43] scales_1.0.0                vegan_2.5-6                
+## [45] lattice_0.20-38             permute_0.9-5              
+## [47] plyr_1.8.4                  ggplot2_3.2.1              
+## [49] phyloseq_1.28.0             ShortRead_1.42.0           
+## [51] GenomicAlignments_1.20.1    SummarizedExperiment_1.14.1
+## [53] DelayedArray_0.10.0         matrixStats_0.55.0         
+## [55] Biobase_2.44.0              Rsamtools_2.0.0            
+## [57] GenomicRanges_1.36.1        GenomeInfoDb_1.20.0        
+## [59] Biostrings_2.52.0           XVector_0.24.0             
+## [61] IRanges_2.18.2              S4Vectors_0.22.1           
+## [63] BiocParallel_1.18.1         BiocGenerics_0.30.0        
+## [65] dada2_1.12.1                Rcpp_1.0.2                 
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] colorspace_1.4-1       hwriter_1.3.2          ellipsis_0.3.0        
-##  [4] rprojroot_1.3-2        fs_1.3.1               remotes_2.1.0         
-##  [7] lubridate_1.7.4        xml2_1.2.2             codetools_0.2-16      
-## [10] splines_3.6.0          pkgload_1.0.2          zeallot_0.1.0         
-## [13] ade4_1.7-13            jsonlite_1.6           broom_0.5.2           
-## [16] compiler_3.6.0         httr_1.4.1             backports_1.1.5       
-## [19] assertthat_0.2.1       Matrix_1.2-17          lazyeval_0.2.2        
-## [22] cli_1.1.0              htmltools_0.4.0        prettyunits_1.0.2     
-## [25] tools_3.6.0            igraph_1.2.4.1         gtable_0.3.0          
-## [28] glue_1.3.1             GenomeInfoDbData_1.2.1 fastmatch_1.1-0       
-## [31] cellranger_1.1.0       vctrs_0.2.0            multtest_2.40.0       
-## [34] nlme_3.1-141           iterators_1.0.12       xfun_0.10             
-## [37] ps_1.3.0               testthat_2.2.1         rvest_0.3.4           
-## [40] phangorn_2.5.5         devtools_2.2.0         XML_3.98-1.20         
-## [43] zlibbioc_1.30.0        MASS_7.3-51.4          hms_0.5.1             
-## [46] biomformat_1.12.0      rhdf5_2.28.0           RColorBrewer_1.1-2    
-## [49] yaml_2.2.0             memoise_1.1.0          latticeExtra_0.6-28   
-## [52] stringi_1.4.3          desc_1.2.0             foreach_1.4.7         
-## [55] pkgbuild_1.0.5         rlang_0.4.0            pkgconfig_2.0.3       
-## [58] evaluate_0.14          Rhdf5lib_1.6.1         htmlwidgets_1.3       
-## [61] processx_3.4.1         tidyselect_0.2.5       magrittr_1.5          
-## [64] R6_2.4.0               generics_0.0.2         haven_2.1.1           
-## [67] pillar_1.4.2           withr_2.1.2            mgcv_1.8-28           
-## [70] survival_2.44-1.1      modelr_0.1.5           crayon_1.3.4          
-## [73] usethis_1.5.1          readxl_1.3.1           callr_3.3.1           
-## [76] digest_0.6.21          webshot_0.5.1          RcppParallel_4.4.3    
-## [79] munsell_0.5.0          viridisLite_0.3.0      quadprog_1.5-7        
-## [82] sessioninfo_1.1.1</code></pre>
+##  [1] readxl_1.3.1           backports_1.1.5        fastmatch_1.1-0       
+##  [4] igraph_1.2.4.1         lazyeval_0.2.2         splines_3.6.0         
+##  [7] crosstalk_1.0.0        usethis_1.5.1          digest_0.6.21         
+## [10] foreach_1.4.7          htmltools_0.4.0        memoise_1.1.0         
+## [13] remotes_2.1.0          fastcluster_1.1.25     modelr_0.1.5          
+## [16] RcppParallel_4.4.3     prettyunits_1.0.2      colorspace_1.4-1      
+## [19] rvest_0.3.4            haven_2.1.1            xfun_0.10             
+## [22] callr_3.3.1            crayon_1.3.4           jsonlite_1.6          
+## [25] zeallot_0.1.0          survival_2.44-1.1      phangorn_2.5.5        
+## [28] iterators_1.0.12       glue_1.3.1             gtable_0.3.0          
+## [31] zlibbioc_1.30.0        webshot_0.5.1          GetoptLong_0.1.7      
+## [34] pkgbuild_1.0.5         Rhdf5lib_1.6.1         shape_1.4.4           
+## [37] viridisLite_0.3.0      xtable_1.8-4           clue_0.3-57           
+## [40] htmlwidgets_1.3        httr_1.4.1             RColorBrewer_1.1-2    
+## [43] ellipsis_0.3.0         pkgconfig_2.0.3        XML_3.98-1.20         
+## [46] labeling_0.3           tidyselect_0.2.5       rlang_0.4.0           
+## [49] later_1.0.0            munsell_0.5.0          cellranger_1.1.0      
+## [52] tools_3.6.0            cli_1.1.0              generics_0.0.2        
+## [55] ade4_1.7-13            devtools_2.2.0         broom_0.5.2           
+## [58] evaluate_0.14          biomformat_1.12.0      yaml_2.2.0            
+## [61] fs_1.3.1               processx_3.4.1         mime_0.7              
+## [64] xml2_1.2.2             compiler_3.6.0         png_0.1-7             
+## [67] testthat_2.2.1         ggsignif_0.6.0         stringi_1.4.3         
+## [70] ps_1.3.0               desc_1.2.0             Matrix_1.2-17         
+## [73] multtest_2.40.0        vctrs_0.2.0            pillar_1.4.2          
+## [76] GlobalOptions_0.1.0    httpuv_1.5.2           R6_2.4.0              
+## [79] latticeExtra_0.6-28    hwriter_1.3.2          promises_1.1.0        
+## [82] sessioninfo_1.1.1      codetools_0.2-16       pkgload_1.0.2         
+## [85] gtools_3.8.1           MASS_7.3-51.4          assertthat_0.2.1      
+## [88] rhdf5_2.28.0           rprojroot_1.3-2        rjson_0.2.20          
+## [91] withr_2.1.2            GenomeInfoDbData_1.2.1 mgcv_1.8-28           
+## [94] hms_0.5.1              quadprog_1.5-7         rvcheck_0.1.3         
+## [97] shiny_1.3.2            lubridate_1.7.4</code></pre>
 <pre class="r"><code>devtools::session_info()</code></pre>
 <pre><code>## ─ Session info ──────────────────────────────────────────────────────────
 ##  setting  value                       
@@ -1473,7 +1481,7 @@ tax_silva &lt;- assignTaxonomy(seqtab, &quot;silva_nr_v132_train_set.fa.gz&quot;
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       America/Panama              
-##  date     2019-10-17                  
+##  date     2019-10-23                  
 ## 
 ## ─ Packages ──────────────────────────────────────────────────────────────
 ##  package              * version   date       lib
@@ -1490,11 +1498,15 @@ tax_silva &lt;- assignTaxonomy(seqtab, &quot;silva_nr_v132_train_set.fa.gz&quot;
 ##  broom                  0.5.2     2019-04-07 [1]
 ##  callr                  3.3.1     2019-07-18 [1]
 ##  cellranger             1.1.0     2016-07-27 [1]
+##  circlize             * 0.4.8     2019-09-08 [1]
 ##  cli                    1.1.0     2019-03-19 [1]
+##  clue                   0.3-57    2019-02-25 [1]
 ##  cluster              * 2.1.0     2019-06-19 [1]
 ##  codetools              0.2-16    2018-12-24 [1]
 ##  colorspace             1.4-1     2019-03-18 [1]
+##  ComplexHeatmap       * 2.1.0     2019-09-10 [1]
 ##  crayon                 1.3.4     2017-09-16 [1]
+##  crosstalk              1.0.0     2016-12-21 [1]
 ##  dada2                * 1.12.1    2019-05-14 [1]
 ##  data.table           * 1.12.2    2019-04-07 [1]
 ##  DelayedArray         * 0.10.0    2019-05-02 [1]
@@ -1505,25 +1517,36 @@ tax_silva &lt;- assignTaxonomy(seqtab, &quot;silva_nr_v132_train_set.fa.gz&quot;
 ##  DT                   * 0.8       2019-08-07 [1]
 ##  ellipsis               0.3.0     2019-09-20 [1]
 ##  evaluate               0.14      2019-05-28 [1]
+##  fastcluster            1.1.25    2018-06-07 [1]
 ##  fastmatch              1.1-0     2017-01-28 [1]
 ##  forcats              * 0.4.0     2019-02-17 [1]
 ##  foreach                1.4.7     2019-07-27 [1]
 ##  formatR              * 1.7       2019-06-11 [1]
 ##  fs                     1.3.1     2019-05-06 [1]
+##  gapminder            * 0.3.0     2017-10-31 [1]
+##  gdata                * 2.18.0    2017-06-06 [1]
 ##  generics               0.0.2     2018-11-29 [1]
 ##  GenomeInfoDb         * 1.20.0    2019-05-02 [1]
 ##  GenomeInfoDbData       1.2.1     2019-09-10 [1]
 ##  GenomicAlignments    * 1.20.1    2019-06-18 [1]
 ##  GenomicRanges        * 1.36.1    2019-09-06 [1]
+##  GetoptLong             0.1.7     2018-06-10 [1]
 ##  ggplot2              * 3.2.1     2019-08-10 [1]
+##  ggpubr               * 0.2.3     2019-09-03 [1]
+##  ggsignif               0.6.0     2019-08-08 [1]
 ##  ggthemes             * 4.2.0     2019-05-13 [1]
+##  ggtree               * 1.16.6    2019-08-26 [1]
+##  GlobalOptions          0.1.0     2018-06-09 [1]
 ##  glue                   1.3.1     2019-03-12 [1]
 ##  gridExtra            * 2.3       2017-09-09 [1]
 ##  gtable                 0.3.0     2019-03-25 [1]
+##  gtools                 3.8.1     2018-06-26 [1]
 ##  haven                  2.1.1     2019-07-04 [1]
+##  heatmap3             * 1.1.6     2019-03-22 [1]
 ##  hms                    0.5.1     2019-08-23 [1]
 ##  htmltools              0.4.0     2019-10-04 [1]
 ##  htmlwidgets            1.3       2018-09-30 [1]
+##  httpuv                 1.5.2     2019-09-11 [1]
 ##  httr                   1.4.1     2019-08-05 [1]
 ##  hwriter                1.3.2     2014-09-10 [1]
 ##  igraph                 1.2.4.1   2019-04-22 [1]
@@ -1533,33 +1556,40 @@ tax_silva &lt;- assignTaxonomy(seqtab, &quot;silva_nr_v132_train_set.fa.gz&quot;
 ##  jsonlite               1.6       2018-12-07 [1]
 ##  kableExtra           * 1.1.0     2019-03-16 [1]
 ##  knitr                * 1.25      2019-09-18 [1]
+##  labeling               0.3       2014-08-23 [1]
+##  later                  1.0.0     2019-10-04 [1]
 ##  lattice              * 0.20-38   2018-11-04 [1]
 ##  latticeExtra           0.6-28    2016-02-09 [1]
 ##  lazyeval               0.2.2     2019-03-15 [1]
+##  leaflet              * 2.0.2     2018-08-27 [1]
 ##  lubridate              1.7.4     2018-04-11 [1]
-##  magrittr               1.5       2014-11-22 [1]
+##  magrittr             * 1.5       2014-11-22 [1]
 ##  MASS                   7.3-51.4  2019-03-31 [1]
 ##  Matrix                 1.2-17    2019-03-22 [1]
 ##  matrixStats          * 0.55.0    2019-09-07 [1]
 ##  memoise                1.1.0     2017-04-21 [1]
 ##  mgcv                   1.8-28    2019-03-21 [1]
+##  mime                   0.7       2019-06-11 [1]
 ##  modelr                 0.1.5     2019-08-08 [1]
 ##  multtest               2.40.0    2019-05-02 [1]
 ##  munsell                0.5.0     2018-06-12 [1]
-##  nlme                   3.1-141   2019-08-01 [1]
+##  nlme                 * 3.1-141   2019-08-01 [1]
 ##  pairwiseAdonis       * 0.0.1     2019-09-10 [1]
 ##  pander               * 0.6.3     2018-11-06 [1]
 ##  permute              * 0.9-5     2019-03-12 [1]
 ##  phangorn               2.5.5     2019-06-19 [1]
 ##  phyloseq             * 1.28.0    2019-05-02 [1]
+##  picante              * 1.8       2019-03-21 [1]
 ##  pillar                 1.4.2     2019-06-29 [1]
 ##  pkgbuild               1.0.5     2019-08-26 [1]
 ##  pkgconfig              2.0.3     2019-09-22 [1]
 ##  pkgload                1.0.2     2018-10-29 [1]
 ##  plotly               * 4.9.0     2019-04-10 [1]
 ##  plyr                 * 1.8.4     2016-06-08 [1]
+##  png                    0.1-7     2013-12-03 [1]
 ##  prettyunits            1.0.2     2015-07-13 [1]
 ##  processx               3.4.1     2019-07-18 [1]
+##  promises               1.1.0     2019-10-04 [1]
 ##  ps                     1.3.0     2018-12-21 [1]
 ##  purrr                * 0.3.2     2019-03-15 [1]
 ##  quadprog               1.5-7     2019-05-06 [1]
@@ -1574,16 +1604,20 @@ tax_silva &lt;- assignTaxonomy(seqtab, &quot;silva_nr_v132_train_set.fa.gz&quot;
 ##  reshape2             * 1.4.3     2017-12-11 [1]
 ##  rhdf5                  2.28.0    2019-05-02 [1]
 ##  Rhdf5lib               1.6.1     2019-09-09 [1]
+##  rjson                  0.2.20    2018-06-08 [1]
 ##  rlang                  0.4.0     2019-06-25 [1]
 ##  rmarkdown            * 1.16      2019-10-01 [1]
 ##  rprojroot              1.3-2     2018-01-03 [1]
 ##  Rsamtools            * 2.0.0     2019-05-02 [1]
 ##  rstudioapi           * 0.10      2019-03-19 [1]
+##  rvcheck                0.1.3     2018-12-06 [1]
 ##  rvest                  0.3.4     2019-05-15 [1]
 ##  S4Vectors            * 0.22.1    2019-09-09 [1]
 ##  scales               * 1.0.0     2018-08-09 [1]
 ##  seqinr               * 3.6-1     2019-09-07 [1]
 ##  sessioninfo            1.1.1     2018-11-05 [1]
+##  shape                  1.4.4     2018-02-07 [1]
+##  shiny                  1.3.2     2019-04-22 [1]
 ##  ShortRead            * 1.42.0    2019-05-02 [1]
 ##  stringi                1.4.3     2019-03-12 [1]
 ##  stringr              * 1.4.0     2019-02-10 [1]
@@ -1595,7 +1629,9 @@ tax_silva &lt;- assignTaxonomy(seqtab, &quot;silva_nr_v132_train_set.fa.gz&quot;
 ##  tibble               * 2.1.3     2019-06-06 [1]
 ##  tidyr                * 0.8.3     2019-03-01 [1]
 ##  tidyselect             0.2.5     2018-10-11 [1]
+##  tidytree             * 0.2.7     2019-09-12 [1]
 ##  tidyverse            * 1.2.1     2017-11-14 [1]
+##  treeio               * 1.8.2     2019-08-21 [1]
 ##  usethis                1.5.1     2019-07-04 [1]
 ##  vctrs                  0.2.0     2019-07-05 [1]
 ##  vegan                * 2.5-6     2019-09-01 [1]
@@ -1605,6 +1641,7 @@ tax_silva &lt;- assignTaxonomy(seqtab, &quot;silva_nr_v132_train_set.fa.gz&quot;
 ##  xfun                   0.10      2019-10-01 [1]
 ##  XML                    3.98-1.20 2019-06-06 [1]
 ##  xml2                   1.2.2     2019-08-09 [1]
+##  xtable                 1.8-4     2019-04-21 [1]
 ##  XVector              * 0.24.0    2019-05-02 [1]
 ##  yaml                   2.2.0     2018-07-25 [1]
 ##  zeallot                0.1.0     2018-01-28 [1]
@@ -1628,25 +1665,12 @@ tax_silva &lt;- assignTaxonomy(seqtab, &quot;silva_nr_v132_train_set.fa.gz&quot;
 ##  CRAN (R 3.6.0)                                 
 ##  CRAN (R 3.6.0)                                 
 ##  CRAN (R 3.6.0)                                 
-##  Bioconductor                                   
 ##  CRAN (R 3.6.0)                                 
-##  Bioconductor                                   
-##  CRAN (R 3.6.0)                                 
-##  CRAN (R 3.6.0)                                 
-##  CRAN (R 3.6.0)                                 
-##  CRAN (R 3.6.0)                                 
-##  CRAN (R 3.6.0)                                 
-##  CRAN (R 3.6.0)                                 
-##  CRAN (R 3.6.0)                                 
-##  CRAN (R 3.6.0)                                 
-##  CRAN (R 3.6.0)                                 
-##  CRAN (R 3.6.0)                                 
-##  CRAN (R 3.6.0)                                 
+##  Github (jokergoo/ComplexHeatmap@35d1d20)       
 ##  CRAN (R 3.6.0)                                 
 ##  CRAN (R 3.6.0)                                 
 ##  Bioconductor                                   
-##  Bioconductor                                   
-##  Bioconductor                                   
+##  CRAN (R 3.6.0)                                 
 ##  Bioconductor                                   
 ##  CRAN (R 3.6.0)                                 
 ##  CRAN (R 3.6.0)                                 
@@ -1661,7 +1685,39 @@ tax_silva &lt;- assignTaxonomy(seqtab, &quot;silva_nr_v132_train_set.fa.gz&quot;
 ##  CRAN (R 3.6.0)                                 
 ##  CRAN (R 3.6.0)                                 
 ##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
 ##  Bioconductor                                   
+##  Bioconductor                                   
+##  Bioconductor                                   
+##  Bioconductor                                   
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  Bioconductor                                   
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  Bioconductor                                   
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
 ##  CRAN (R 3.6.0)                                 
 ##  CRAN (R 3.6.0)                                 
 ##  CRAN (R 3.6.0)                                 
@@ -1705,19 +1761,17 @@ tax_silva &lt;- assignTaxonomy(seqtab, &quot;silva_nr_v132_train_set.fa.gz&quot;
 ##  CRAN (R 3.6.0)                                 
 ##  CRAN (R 3.6.0)                                 
 ##  CRAN (R 3.6.0)                                 
-##  Bioconductor                                   
-##  Bioconductor                                   
 ##  CRAN (R 3.6.0)                                 
 ##  CRAN (R 3.6.0)                                 
 ##  CRAN (R 3.6.0)                                 
 ##  Bioconductor                                   
-##  CRAN (R 3.6.0)                                 
-##  CRAN (R 3.6.0)                                 
 ##  Bioconductor                                   
 ##  CRAN (R 3.6.0)                                 
 ##  CRAN (R 3.6.0)                                 
 ##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
 ##  Bioconductor                                   
+##  CRAN (R 3.6.0)                                 
 ##  CRAN (R 3.6.0)                                 
 ##  CRAN (R 3.6.0)                                 
 ##  Bioconductor                                   
@@ -1726,8 +1780,20 @@ tax_silva &lt;- assignTaxonomy(seqtab, &quot;silva_nr_v132_train_set.fa.gz&quot;
 ##  CRAN (R 3.6.0)                                 
 ##  CRAN (R 3.6.0)                                 
 ##  CRAN (R 3.6.0)                                 
+##  Bioconductor                                   
 ##  CRAN (R 3.6.0)                                 
 ##  CRAN (R 3.6.0)                                 
+##  Bioconductor                                   
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  CRAN (R 3.6.0)                                 
+##  Bioconductor                                   
 ##  CRAN (R 3.6.0)                                 
 ##  CRAN (R 3.6.0)                                 
 ##  CRAN (R 3.6.0)                                 
