@@ -137,7 +137,7 @@ cols <- function(a) image(1:10, 1, as.matrix(1:10),
 cols(friend_pal)
 ```
 
-```{r save_1, include = FALSE, cache=TRUE}
+```{r save_1, include = FALSE, cache=TRUE, eval=FALSE}
 save.image(file = "DATA/RDS/pw_intro_0.rds")
 ```
 

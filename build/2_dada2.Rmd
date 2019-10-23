@@ -558,7 +558,7 @@ saveRDS(seqtab_Z3.2.nochim, "DATA/02_MERGED/RUN03/seqtab_Z3.2.nochim.rds")
 
 Save the whole thing in case you need to rerun...
 
-```{r save_progress, cache=TRUE}
+```{r save_progress, cache=TRUE, eval=FALSE}
 save.image("DATA/02_MERGED/pre_combo_pipeline.rdata")
 ```
 
@@ -617,7 +617,7 @@ st.sum[,colnames(seqtab.1)] <- st.sum[,colnames(seqtab.1)] + seqtab.1
 st.sum[,colnames(seqtab.2)] <- st.sum[,colnames(seqtab.2)] + seqtab.2
 ```
 
-```{r save_combo, cache=TRUE}
+```{r save_combo, cache=TRUE, eval=FALSE}
 saveRDS(st.sum, "DATA/02_MERGED/combo_run1_run2.rds")
 ```
 
@@ -649,7 +649,7 @@ tax_silva <- assignTaxonomy(seqtab, "silva_nr_v132_train_set.fa.gz",
                             multithread = TRUE)
 ```
 
-```{r save_image_combo, cache=TRUE}
+```{r save_image_combo, cache=TRUE, eval=FALSE}
 save.image("DATA/02_MERGED/combo_pipeline.rdata")
 ```
 
@@ -662,6 +662,7 @@ proc.time() - ptm
 ```
 
 <br>
+
 #### <a href="3_data_prep.html">Go to Part 3, Data Preparation</a>
 
 ***

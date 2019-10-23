@@ -25,7 +25,7 @@
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
@@ -454,46 +454,128 @@ div.tocify {
 
 
 <hr />
-<p>I am a novice (this is my first site) but I will nonetheless describe how I made this website. I used <a href="https://www.r-project.org">R</a> to run the code, <a href="https://rmarkdown.rstudio.com/">Rmarkdown from RStudio</a> to construct the site, <a href="https://github.com/">GitHub</a> for version control, and <a href="https://pages.github.com/">GitHub Pages</a> for hosting. I also scoured the internet for solutions and inspiration. I will try to reference valuable resources below. My design is based on <a href="http://merenlab.org/">A. Murat Eren’s (Meren)</a> website, itself a derivation of <a href="http://mademistakes.com/minimal-mistakes/">MM</a>. I like the use of whitespace (large margins), clean font (PT Sans &amp; PT Serif), ample spacing between lines and words, and the use of colored boxes to call out important stuff. Meren also puts the floating Table of Contents on the right. A little touch I appreciate but didn’t feel right copying :)</p>
-<p><a href="https://github.com/merenlab/web#how-to-run-a-copy-of-this-website-locally" class="uri">https://github.com/merenlab/web#how-to-run-a-copy-of-this-website-locally</a></p>
-<div id="simple-site-in-rstudio" class="section level3">
-<h3>Simple site in RStudio</h3>
-<p>After searching for the “perfect” template, I decided to take a simpler approach by using the default website builder package in RStudio. It is bare bones—which is nice because it allowed me to understand things as they developed rather than trying to back engineer my understanding from a pre-built site. It helped me appreciate just how little fanciness you need to make a site as well as how to jazz it up a bit. Built from the ground up…</p>
+<p>I am a novice (this is my first site) but I will nonetheless describe how I made this website just in case you are a novice too. Is this the best way to learn how to do something? I do not know.</p>
+<p>I built the site in RStudio using <a href="https://www.r-project.org">R</a> to run the code, <a href="https://rmarkdown.rstudio.com/">Rmarkdown</a> and <a href="https://yihui.name/knitr/">kitr</a> to construct the site, <a href="https://github.com/">GitHub</a> for version control, and <a href="https://pages.github.com/">GitHub Pages</a> for hosting. I also scoured the internet for solutions and for inspiration. My design is based on <a href="http://merenlab.org/">the Meren Lab</a> website, itself a derivation of <a href="http://mademistakes.com/minimal-mistakes/">MM</a>. I like the use of white space (large margins), clean font (PT Sans &amp; PT Serif), ample spacing between lines and words, and the use of colored boxes to call out important stuff. There are also many little touches on the site that I appreciate, some of which I shamelessly copied here. The developers also provide instructions on how to <a href="https://github.com/merenlab/web#how-to-run-a-copy-of-this-website-locally">run their site locally</a>. Nice job gals and guys.</p>
+<div id="simple-site-in-rstudio" class="section level4">
+<h4>Simple site in RStudio</h4>
+<p>After searching for the “perfect” template, I decided to take a simpler approach and start with the default website builder package in RStudio. It is bare bones—which is nice because it allowed me to learn as I went along rather than trying to back engineer my understanding from a tricked out site. It helped me appreciate both how little you actually need to make a website AND how to add a little jazz. Built from the ground up…</p>
 </div>
-<div id="setup" class="section level3">
-<h3>Setup</h3>
-<p>Fire up RStudio and go to <code>File &gt; New Project</code>. A popup window will appear and give you three options (at least on my setup) for Creating a New Project; New Directory, Existing Directory, or Version Control. The New and Existing Directory choices are pretty much the same—use the later if you already have some <code>.Rmd</code> files. The Version Control choice is recommended by a lot of tutorials because it facilitates Git integration. But since I am a beginner I thought it would be best to learn Git through the CLI. So all version control here is done through the CLI rather than RStudio.</p>
+<div id="setup" class="section level2">
+<h2>Setup</h2>
+<p>Fire up RStudio and go to <code>File &gt; New Project</code>. A popup window appears and gives you three options (at least on my setup) for Creating a New Project; New Directory, Existing Directory, or Version Control. The New and Existing Directory choices are pretty much the same—use the later if you already have some <code>.Rmd</code> files. The Version Control choice is recommended by a lot of tutorials because it facilitates Git integration. But since I am a beginner I thought it would be nice to learn Git through the CLI. So all version control here is done through the CLI rather than RStudio. Version control is discussed below.</p>
 <p>Anyway, now do <code>New Directory &gt; Simple R Markdown Website</code>, give it a name and figure out where you want it to live. Let’s call it <code>mock_site</code>. Then hit <code>Create Project</code>.</p>
-<p>Now we have a new directory called <code>mock_site/</code> with the following files:<br />
-<code>_site.yml</code><br />
-<code>about.Rmd</code><br />
-<code>index.Rmd</code><br />
-<code>mock_site.Rproj</code></p>
-<p>And thats it. At this point you can render the site by running:</p>
+<p>Now you have a new directory called <code>mock_site/</code> with the following files:</p>
+<pre><code>## [1] &quot;_site.yml&quot;       &quot;about.Rmd&quot;       &quot;index.Rmd&quot;       &quot;mock_site.Rproj&quot;</code></pre>
+<p>And that’s it. At this point you can render the site by running:</p>
 <pre><code>rmarkdown::render_site()</code></pre>
-<p>The site generator makes a new directory called <code>_site/</code>, which is the actual website. The directory contains <code>.html</code> versions of all the <code>.Rmd</code> files (in this case two) as well as a directory called <code>site_libs/</code>. This directory has a bunch of <code>.js</code> and <code>.css</code> files that dictate the look and action of the site. Later we will change the name of the <code>_site/</code> directory, but suffice it to say, every time you render the site this directory and its contents are rebuilt. As far as I know there is no reason you should ever need to mess with this directory.</p>
-<p>If you go into the <code>_site/</code> and open <code>index.html</code> you can see the site in a browser. Super simple—a couple of tabs, a header, a few links, nada mas.</p>
+<p>The site generator makes a new directory called <code>_site/</code>, which contains all the info needed for the actual website.</p>
+<pre><code>## [1] &quot;about.html&quot; &quot;index.html&quot; &quot;site_libs&quot;</code></pre>
+<p>As you can see the directory has <code>.html</code> versions of the <code>.Rmd</code> files (in this case just two) as well as a directory called <code>site_libs/</code>. This directory has a bunch of <code>.js</code> and <code>.css</code> files that dictate the look and action of the site.</p>
+<p>Every time you render the site, the entire <code>_site/</code> directory and its contents are rebuilt. As far as I know there is no reason you should ever need to mess with this directory. If you go into the <code>_site/</code> and open <code>index.html</code> you can see the site in a browser. Super simple—a couple of tabs, a header, a few links, nada mas. But a website nonetheless (albeit a bit boring).</p>
+<div class="notice">
+<p>Decision time: Are you happy with these super default settings? If so, move on to the Content section and then Publish your Site. If not, I recommend skipping the content at first and instead focusing on Adding Style &amp; Structure to your site. I say this because tweaking a minimal site like this is much easier than messing with a full blown workflow (speaking from experience).</p>
 </div>
-<div id="content" class="section level3">
-<h3>Content</h3>
-<p>The minimum content you need for an R Markdown website are the <code>_site.yaml</code> and <code>index.Rmd</code> files. We will get to the <code>.yaml</code> file in a minute. First we will write all our code and text in rmarkdown files (<code>.Rmd</code>)—basically markdown (an easy-to-write plain text format) with R code functionality added in. When we render the site, RStudio will run all the R code and spit out a <code>.html</code> file with tables, graphs, code, whatever you put in the <code>.Rmd</code> file. Later we will <code>cache</code> all the commands so we don’t need to runn all the code everytime we render the site.</p>
-<div class="warning">
-<p>The main drawback to making a website using the Simple R Markdown Website approach is that the site generator assumes all the <code>.Rmd</code> documents are under a flat directory (i.e., no pages under subdirectories). This means it is difficult to organize websites with a lot of content. There are additional shortcomings that are worth investigating.</p>
 </div>
-<p>The basic structure of the <code>.Rmd</code> file is super simple. Have a look at the <code>about.Rmd</code> file.</p>
+<div id="content" class="section level2">
+<h2>Content</h2>
+<p>The minimum you need for an R Markdown website are the <code>_site.yml</code> and <code>index.Rmd</code> files. The index file and any other Rmd files contain the content and the YAML file has the configuration instructions. The engine uses these files in conjunction with the site library to build the site.</p>
+<p>So the first thing you do is write all the code and text in R Markdown files (<code>.Rmd</code>)—basically <a href="https://en.wikipedia.org/wiki/Markdown">markdown</a> (an easy-to-write plain text format) with R code functionality added in. When you render the site, RStudio and knitr will run all the code and R Markdown text and spit out an <code>.html</code> file with tables, graphs, code, whatever you put in the <code>.Rmd</code> file. Later you can <code>cache</code> all the code chunks so you don’t need to run all the code every time the site is rendered. A tutorial on R and R Markdown is beyond the scope of this humble page but there are a lot of resources to help you on your way.</p>
+<p>The basic structure of the <code>.Rmd</code> file is super simple. Lets have a look at the <code>about.Rmd</code> file.</p>
 <pre><code>---
 title: &quot;About This Website&quot;
 ---
 
-More about this website.</code></pre>
-<p>While this file is open add some of the content, change the title, whatever. Then save the file, rerun <code>rmarkdown::render_site()</code>, and open the <code>_site/index.html</code> file. Boom. Updated website. Pretty slick.</p>
-<p>So the base of your website will be different pages written in rmarkdown and saved as <code>.Rmd</code> files. The <code>.Rmd</code> files will likely be a mixture of text and R code but yu can also make a site without R code at all. Anyway, I will leave the rest of this part up to you…</p>
+Lots of beautiful code, creative analyses, poetic prose...</code></pre>
+<p>While this file is open feel free to add some content, change the title, whatever. Then save the file, rerun <code>rmarkdown::render_site()</code>, and open the <code>_site/index.html</code> file. Boom. Updated website. Pretty slick. If fact every time you add or change something, save the file and run the render command again. You can even just render a single page if the rest are done, so you don’t have to re-render the whole dang thing. Like so…<code>rmarkdown::render_site(&quot;about.Rmd&quot;)</code></p>
+<p>So the base of your website will be different pages written in R Markdown and saved as <code>.Rmd</code> files. The <code>.Rmd</code> files will likely be a mixture of text and R code but you can also make a site without any R code at all. Anyway, I will leave the rest of this part up to you…</p>
+<p>For now, lets say you want a website with four pages.<br />
+* <code>index.Rmd</code> This will be the landing or home page of the site.<br />
+* <code>about.Rmd</code> A page about you or the project.<br />
+* <code>processing.Rmd</code> A page that has the processing workflow (e.g., using <a href="https://benjjneb.github.io/dada2/index.html">DADA2</a>).<br />
+* <code>analytical.Rmd</code> A page that has the analytical workflow (e.g., <a href="https://joey711.github.io/phyloseq/">phyloseq</a>).</p>
+<p>OK, you have all your content and are ready to build the website. But before you do that you need to tell knitr about the new pages. The engine will automatically render all <code>.Rmd</code> files to <code>.html</code> but unless you instruct knitr what to do with these files, you will not have any links on the site. Lets open up the <code>_site.yml</code> file (located in the main directory) and have a look.</p>
+<pre><code>name: &quot;my-website&quot;
+navbar:
+  title: &quot;My Website&quot;
+  left:
+    - text: &quot;Home&quot;
+      href: index.html
+    - text: &quot;About&quot;
+      href: about.html</code></pre>
+<p>You can see that the YAML file contains this thing called <code>navbar</code>—this is the navigation bar on the top of each page that links to all the pages on the site. You need to add the two new pages. The basic info you should provide is the name of the new page and the name of the file. The page name can be anything while the file name needs to be the actual file name, and with the <code>.html</code> extension, <strong>not</strong> the <code>.Rmd</code> extension.</p>
+<p>Now it should look something like this:</p>
+<pre><code>name: &quot;my-website&quot;
+navbar:
+  title: &quot;My Website&quot;
+  left:
+    - text: &quot;Home&quot;
+      href: index.html
+    - text: &quot;About&quot;
+      href: about.html
+    - text: &quot;Rad Processing Workflow&quot;
+      href: processing.html
+    - text: &quot;Goose Gossage&quot;
+      href: analytical.html</code></pre>
+<p>Whatever. That’s it. Assuming your code ran successfully and you got a message after rendering like this…<br />
+<code>Output created: _site/index.html</code><br />
+…your website done. Now you can publish it, tweet about it, and tell your sweet Grandpa to check it out. Below I discuss how I published this site using GitHub and GitPages. I will leave the tweeting and telling Grandpa up to you.</p>
+<div class="warning">
+<p>There are drawbacks to making a website using the Simple R Markdown Website approach. The main one is that the site generator assumes all the <code>.Rmd</code> documents are under a flat directory (i.e., no pages under sub directories). This means it is difficult to organize websites with a lot of content. There are additional shortcomings with this platform that are worth investigating.</p>
 </div>
-<div id="adding-style-structure" class="section level3">
-<h3>Adding style &amp; structure</h3>
 </div>
+<div id="adding-style-structure" class="section level2">
+<h2>Adding Style &amp; Structure</h2>
+<p>But maybe you want something more than the super default site. Awesome. The method you choose will depend a lot on what you want and how much time you are willing to invest. As I see it, there are a two different ways you can tweak the pre-packaged themes within the Simple R Markdown Website framework.</p>
+<div id="the-yaml-file" class="section level3">
+<h3>The YAML file</h3>
+<p>The easiest thing to do is trick out the <code>_site.yml</code> file. There are several ways to configure a website using the YAML file. We will go through a couple here.</p>
+<p>The first is to simply use one of the other pre-packaged themes. In addition to the default theme, the other valid themes are cerulean, journal, flatly, darkly, readable, spacelab, united, cosmo, lumen, paper, sandstone, simplex, and yeti. Each has their own font style, coloring, layout, etc. You can see examples of each theme <a href="http://www.datadreaming.org/post/r-markdown-theme-gallery/">here</a> but I suggest playing around with these yourself. To do this you need to again open the <code>_site.yml</code> file and add a few more lines of code (minding the indention levels). Say you want to check out the <strong>flatly</strong> theme. Add this…</p>
+<pre><code>output:
+  html_document:
+    theme: flatly</code></pre>
+<p>Now when you render the site it will have the <em>flatly</em> theme. You can see what the different themes look like by swaping out that value and re-rendering the site (this is where a simple site comes in handy).</p>
+<p>Another tweak using YAML is to change the way syntax is highlighted—that is the way R code chunks, inline code, code outputs, etc., appear in your final document. The current pre-packaged highlight themes are default, tango, pygments, kate, monochrome, espresso, zenburn, haddock, breezedark, and textmate. Its worth noting that you can also use <code>null</code> to prevent syntax highlighting. To specify highlighting add the following:</p>
+<pre><code>output:
+  html_document:
+    theme: flatly
+    highlight: zenburn</code></pre>
+<p>There are other ways you can use the YAML file to modify the look of your site, but if you dig deep enough, you can reach the limits of this approach pretty quickly. For an intro to the topic of modifying the YAML file, see the awesome book <a href="https://bookdown.org/yihui/rmarkdown/html-document.html#appearance_and_style">R Markdown: The Definitive Guide</a> by <em>Yihui Xie, J. J. Allaire, Garrett Grolemund</em>.</p>
+</div>
+<div id="custom-css-file" class="section level3">
+<h3>Custom CSS file</h3>
+<p>If you want more control over the design of your site, the other option is to create your own CSS (Cascading Style Sheets) file. As I understand it, CSS is used to modify the characteristics (height and width, color, font size, etc.) of HTML elements. You can use your own file to override the CSS properties in the pre-packaged themes. To be honest, I found this part to be pretty challenging but I also learned a lot in the process. That said, I am in no position to provide a CSS tutorial, not in the slightest. But from one novice to another, I can give you a little advice if you’re interested in going down this road. The best way to go is to take an online course to properly learn CSS (preferred) or you can do what I did and slog your way through it.</p>
+<p>My general idea was to figure out what elements I wanted to change (or create) and then to figure out how to do it. My less than sophisticated approach was to change something and render the site, then see what the change did (if it did anything at all). So yeah, that was my plan.</p>
+<p>In order to change an element you need to know what its called and what modifications you can make to it. For example, lets say you want to change the font size of Header #3 to 50px and its color to pink. What you need to do is write a little CSS code that calls up Header #3 and specifies these values.</p>
+<p>For me the best way to figure out the pieces you need for making your own CSS code is to open the website in Chrome then click <code>View &gt; Developer &gt; Inspect Elements</code>(I assume other browsers have this capability). When you hover the mouse over the part you are interested in modifying, a little box of details pops up on the left and the HTML code on the right moves to that code block.</p>
+<p><img src="INLINE_FIGURES/inspect_elements.png" /></p>
+<p>Here we see that the name of the element is <code>h3</code>. We can also see several additional properties including color and size. To modify this tag we write a little code like this:</p>
+<pre><code>h3 {
+font-size: 50px;
+font-color: #ffc0cb
+}</code></pre>
+<p>Another thing you can do is add an element. I wanted some colored boxes to call out important details like notices and warnings. So I made an element called <code>warning</code> and coded it up like so:</p>
+<pre><code>.warning{
+  background-color:#F1AFAE;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 18px 0;
+  font-size: 4
+}</code></pre>
+<p>All of this needs to be saved in a single file, for example <code>styles.css</code>, in the main directory. And the last thing to do is add this file name to the YAML file so the engine knows to read CSS code from this file as well.</p>
+<pre><code>output:
+  html_document:
+    theme: flatly
+    highlight: zenburn
+    css: styles.css</code></pre>
+<p>CSS is an entire language and you certainly can’t expect to master it overnight. But I think it can be used effectively to make some nice modifications to your site.</p>
+</div>
+</div>
+<div id="publish-your-site" class="section level2">
+<h2>Publish your Site</h2>
+<p>IN PROGRESS</p>
 <div id="git" class="section level3">
 <h3>Git</h3>
+<p>THESE ARE NOTES</p>
 <p>create <code>.gitignore</code> file if you type <code>git status</code> and its a mess do this first</p>
 <p>clone the repo <code>git clone https://github.com/istmobiome/istmobiome.github.io</code>. check the status <code>git status</code> and make sure it is clear. build site</p>
 <p>make a gitignore file (see below) to avoid uploading all the useless crap <code>nano .gitignore</code></p>
@@ -536,7 +618,7 @@ More about this website.</code></pre>
 # Output files from R CMD check
 /*.Rcheck/
 
-# Temporary files created by R markdown
+# Temporary files created by R Markdown
 *.utf8.md
 *.knit.md
 
@@ -547,13 +629,16 @@ DATA/
 # DIGEST web files
 web.Rproj
 
-# knitr and R markdown default cache directories
+# knitr and R Markdown default cache directories
 *_cache/
 /cache/
 *_files/
 
 # Files from Website rendering in _site/
 site_libs/</code></pre>
+<p><a href="https://www.canva.com/colors/color-wheel/" class="uri">https://www.canva.com/colors/color-wheel/</a> <a href="http://scratchpad.io/thoughtless-coil-6294" class="uri">http://scratchpad.io/thoughtless-coil-6294</a> <a href="https://atom.io">Atom</a>.</p>
+<p><a href="https://stackoverflow.com/" class="uri">https://stackoverflow.com/</a> <a href="https://www.w3schools.com/" class="uri">https://www.w3schools.com/</a></p>
+</div>
 </div>
 
 <footer role="contentinfo" id="site-footer">

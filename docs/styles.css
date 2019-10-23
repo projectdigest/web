@@ -1,12 +1,13 @@
 /* Whole document: */
 @import url('https://fonts.googleapis.com/css?family=PT+Sans|PT+Sans+Narrow|PT+Serif');
-
-body{
+/* controls general properties of site*/
+body {
   font-family: PT Serif, serif;
   color: #333332;
   line-height: 1.7;
   font-size: 1.7em;
 }
+
 /* Headers */
 h1,h2,h3,h4,h5,h6{
   margin-top: 64px;
@@ -14,15 +15,15 @@ h1,h2,h3,h4,h5,h6{
 }
 
 h1 {
-font-size: 30pt;
+font-size: 32pt;
 }
 
 h2 {
-font-size: 28pt;
+font-size: 30pt;
 }
 
 h3 {
-font-size: 24pt;
+font-size: 26pt;
 }
 
 h4 {
@@ -39,7 +40,13 @@ font-size: 16pt;
 
 code, kbd, pre, samp, .sourceLine, .sourceCode {
   font-family: 'Monaco', 'PT Mono', monospace;
-  font-size: 0.8em;
+}
+/* changs look of toc */
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+  color: #ffffff;
+  font: 17px, PT Sans;
+  background-color: #333332;
+  padding; 5px;
 }
 
 .tocify {
@@ -49,6 +56,7 @@ code, kbd, pre, samp, .sourceLine, .sourceCode {
     margin-left: 2%;
     position: fixed;
     border: 1px solid #ccc;
+    background-color: #000000;
     border-radius: 6px;
     font-family: PT Sans;
 }
@@ -105,3 +113,35 @@ code, kbd, pre, samp, .sourceLine, .sourceCode {
   margin: 18px 0;
   font-size: 4
 }
+
+/* this changes background color of Rcode output box */
+/* also seems to control ``` code chunks */
+pre:not([class]) {
+   color: #333333;
+   background-color: #fafafa;
+   font-size: 0.8em
+ }
+/* this changes background color of Rcode  box */
+.r {
+    background-color: #e8e8e8;
+    font-size: 0.8em
+  }
+/*set theme for single backtick code`*/
+code:not([class]) {
+   margin: 1px 1px 1px 1px; /*spacing around external words, top right bottom left*/
+   color: #fc6464;
+   font-size: 0.75em;
+   -webkit-border-radius: 2px; /*round corners*/
+   border-radius: 3px; /*round corners*/
+   font-family: 'Monaco', "Source Code Pro", Consolas, Monaco, Menlo, Consolas, monospace;
+   background-color: #e8e8e8;
+   border-style: solid;
+   border-width: thin;
+   border-color: #545454;
+   padding: 2px 3px;
+ }
+ /* navbar
+.navbar {
+     background-color: #fc6464;
+     border-color: #E7E7E7;
+ } */

@@ -1114,8 +1114,8 @@ saveRDS(seqtab_Y2.2, &quot;DATA/02_MERGED/RUN02/seqtab_Y2.2.rds&quot;)
 saveRDS(seqtab_Z3.2, &quot;DATA/02_MERGED/RUN03/seqtab_Z3.2.rds&quot;)</code></pre>
 <p>Processing time…</p>
 <pre class="r"><code>proc.time() - ptm</code></pre>
-<pre><code>##    user  system elapsed 
-##  84.063 123.932 487.558</code></pre>
+<pre><code>##     user   system  elapsed 
+##  165.756  214.094 5149.906</code></pre>
 <blockquote>
 <p>This part of the workflow is finished</p>
 </blockquote>
@@ -1306,8 +1306,8 @@ saveRDS(seqtab_Z3.2.nochim, &quot;DATA/02_MERGED/RUN03/seqtab_Z3.2.nochim.rds&qu
 <pre class="r"><code>save.image(&quot;DATA/02_MERGED/pre_combo_pipeline.rdata&quot;)</code></pre>
 <p>Processing time…</p>
 <pre class="r"><code>proc.time() - ptm</code></pre>
-<pre><code>##     user   system  elapsed 
-## 8649.863  182.424 4826.497</code></pre>
+<pre><code>##    user  system elapsed 
+## 212.020   4.990 677.708</code></pre>
 <p><a id="Part F: Merge Results & Complete Workflow"></a></p>
 </div>
 </div>
@@ -1364,7 +1364,10 @@ tax_silva &lt;- assignTaxonomy(seqtab, &quot;silva_nr_v132_train_set.fa.gz&quot;
 <pre class="r"><code>proc.time() - ptm</code></pre>
 <pre><code>##      user    system   elapsed 
 ## -6437.268  -152.070 -4161.474</code></pre>
-<p><br> #### <a href="3_data_prep.html">Go to Part 3, Data Preparation</a></p>
+<p><br></p>
+</div>
+<div id="go-to-part-3-data-preparation" class="section level4">
+<h4><a href="3_data_prep.html">Go to Part 3, Data Preparation</a></h4>
 <hr />
 </div>
 </div>

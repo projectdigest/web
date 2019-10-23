@@ -54,8 +54,9 @@ output:
     toc: true
     toc_depth: 3
     toc_float: true
+    collapsed: false
     theme: default
-    highlight: default
+    css: styles.css
+    highlight: textmate
     include:
       after_body: footer.html
-    css: styles.css

@@ -298,7 +298,7 @@ mothur "#classify.seqs(fasta=sequence_tree.filter.fasta, template=silva.nr_v132.
 raxmlHPC-PTHREADS-SSE3 -T 24 -f a -p 2345 -x 3456 -m GTRGAMMA  -N 1000 -s sequence_tree.filter.fasta -n fish_arb_align_1000BS_B.tre
 ```
 
-```{r save_2, include = FALSE, cache=TRUE, eval=FALSE}
+```{r save_2, include = FALSE, cache=TRUE}
 # This is for initial processing only. After caching eval not needed}
 save.image(file = "DATA/RDS/pw_da_asv_4.rds")
 ```

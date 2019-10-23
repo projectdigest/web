@@ -2,15 +2,6 @@
 title: "Data Availability"
 ---
 
-```{r set_wd, include=FALSE}
-knitr::opts_knit$set(root.dir = getwd())
-# This will setwd to wherever the .Rmd file is opened.
-ptm <- proc.time()
-start_time <- Sys.time()
-#opts_chunk$set(cache=TRUE)
-#formatR::tidy_app() run this in R to tidy code. How to do it here?
-```
-
 <a href="0_pw_intro.html">Back to Introduction</a>
 
 ***
