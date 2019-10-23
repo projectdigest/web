@@ -3,6 +3,8 @@ title: "How I made this site"
 output:
   html_document:
     code_folding: none
+    toc_float: 
+       collapsed: false
 ---
 
 ***

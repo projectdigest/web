@@ -1,5 +1,9 @@
 ---
 title: "Part 4: Community Composition & Diversity"
+output:
+  html_document:
+    toc_float: 
+       collapsed: false
 ---
  
 ```{r load_2, include=FALSE, cache=TRUE, eval=FALSE}

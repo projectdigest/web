@@ -5,7 +5,8 @@ output:
     code_folding: show
     toc: true
     toc_depth: 3
-    toc_float: true
+    toc_float: 
+       collapsed: false
     theme: default
     highlight: textmate
     include:
@@ -638,7 +639,7 @@ There are several database options for taxonomic assignment, including Silva, RD
 seqtab <- removeBimeraDenovo(st.all, method="consensus", multithread=TRUE)
 ```
 
-`assignTaxonomy` implements the naive Bayesian classifier, so for reproducible results you need to set a random number seed (see issue [#538](https://github.com/benjjneb/dada2/issues/538)){target="_blank"}. 
+`assignTaxonomy` implements the naive Bayesian classifier, so for reproducible results you need to set a random number seed (see issue [#538](https://github.com/benjjneb/dada2/issues/538){target="_blank"}). 
 
 ```{r assign_tax, cache=TRUE, eval = FALSE}
 set.seed(119)#for reproducability
@@ -653,7 +654,7 @@ tax_silva <- assignTaxonomy(seqtab, "silva_nr_v132_train_set.fa.gz",
 save.image("DATA/02_MERGED/combo_pipeline.rdata")
 ```
 
-The DADA2 analysis is now complete. Next we used [phyloseq](https://joey711.github.io/phyloseq/) and the `combo_pipeline.rdata` output file for the subsequent community analysis. See the *Phyloseq_workflow.Rmd* markdown file for the workflow.
+The DADA2 analysis is now complete. Next we used [phyloseq](https://joey711.github.io/phyloseq/) and the `combo_pipeline.rdata` output file for the subsequent community analysis. 
 
 Processing time...
 

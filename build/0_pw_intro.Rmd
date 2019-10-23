@@ -2,7 +2,7 @@
 title: "Introduction"
 ---
  
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, cache=TRUE}
 remove(list = ls())
 library(dada2); packageVersion("dada2")
 library(ShortRead); packageVersion("ShortRead")

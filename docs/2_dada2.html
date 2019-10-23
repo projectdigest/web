@@ -311,6 +311,12 @@ div.tocify {
   border-radius: 0px;
 }
 
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
 
 </style>
 
@@ -1123,8 +1129,8 @@ saveRDS(seqtab_Y2.2, &quot;DATA/02_MERGED/RUN02/seqtab_Y2.2.rds&quot;)
 saveRDS(seqtab_Z3.2, &quot;DATA/02_MERGED/RUN03/seqtab_Z3.2.rds&quot;)</code></pre>
 <p>Processing time…</p>
 <pre class="r"><code>proc.time() - ptm</code></pre>
-<pre><code>##     user   system  elapsed 
-## 11606.78  -122.75  9824.20</code></pre>
+<pre><code>##      user    system   elapsed 
+##   -36.683  -335.129 -3636.834</code></pre>
 <blockquote>
 <p>This part of the workflow is finished</p>
 </blockquote>
@@ -1360,7 +1366,7 @@ st.all &lt;- mergeSequenceTables(combo, seqtab.3)</code></pre>
 <h4>Run chimera removal &amp; assign taxonomy</h4>
 <p>There are several database options for taxonomic assignment, including Silva, RDP TrainSet, Greengenes, etc… You will need to download a <a href="https://benjjneb.github.io/dada2/training.html" target="_blank">DADA2-formatted reference database</a>. We used both Silva version 132 and GreenGenes version 13.8.</p>
 <pre class="r"><code>seqtab &lt;- removeBimeraDenovo(st.all, method=&quot;consensus&quot;, multithread=TRUE)</code></pre>
-<p><code>assignTaxonomy</code> implements the naive Bayesian classifier, so for reproducible results you need to set a random number seed (see issue <a href="https://github.com/benjjneb/dada2/issues/538">#538</a>){target=&quot;_blank&quot;}.</p>
+<p><code>assignTaxonomy</code> implements the naive Bayesian classifier, so for reproducible results you need to set a random number seed (see issue <a href="https://github.com/benjjneb/dada2/issues/538" target="_blank">#538</a>).</p>
 <pre class="r"><code>set.seed(119)#for reproducability
 tax_gg &lt;- assignTaxonomy(seqtab, &quot;gg_13_8_train_set_97.fa.gz&quot;, 
                          multithread=TRUE)
@@ -1368,7 +1374,7 @@ set.seed(911)#for reproducability
 tax_silva &lt;- assignTaxonomy(seqtab, &quot;silva_nr_v132_train_set.fa.gz&quot;, 
                             multithread = TRUE)</code></pre>
 <pre class="r"><code>save.image(&quot;DATA/02_MERGED/combo_pipeline.rdata&quot;)</code></pre>
-<p>The DADA2 analysis is now complete. Next we used <a href="https://joey711.github.io/phyloseq/">phyloseq</a> and the <code>combo_pipeline.rdata</code> output file for the subsequent community analysis. See the <em>Phyloseq_workflow.Rmd</em> markdown file for the workflow.</p>
+<p>The DADA2 analysis is now complete. Next we used <a href="https://joey711.github.io/phyloseq/">phyloseq</a> and the <code>combo_pipeline.rdata</code> output file for the subsequent community analysis.</p>
 <p>Processing time…</p>
 <pre class="r"><code>proc.time() - ptm</code></pre>
 <pre><code>##     user   system  elapsed 
@@ -1884,7 +1890,7 @@ $(document).ready(function ()  {
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
     };
-    options.showAndHide = true;
+    options.showAndHide = false;
     options.smoothScroll = true;
 
     // tocify
