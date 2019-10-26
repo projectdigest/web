@@ -1,5 +1,6 @@
 name: "DIGEST"
 output_dir: "../docs/"
+repository_url: http://projectdigest.github.io/ffm
 include: [_site.yml]
 navbar:
   title: "DIGEST"
