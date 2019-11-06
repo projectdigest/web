@@ -479,12 +479,15 @@ div.tocify {
 <pre><code>rmarkdown::render_site()</code></pre>
 <p>The site generator makes a new directory called <code>_site/</code>, which contains all the info needed for the actual website.</p>
 <pre><code>## [1] &quot;about.html&quot; &quot;index.html&quot; &quot;site_libs&quot;</code></pre>
-<p>As you can see the directory has <code>.html</code> versions of the <code>.Rmd</code> files (in this case just two) as well as a directory called <code>site_libs/</code>. This directory has a bunch of <code>.js</code> and <code>.css</code> files that dictate the look and action of the site. Every time you render the site, the entire <code>_site/</code> directory and its contents are rebuilt. As far as I know there is no reason you should ever need to mess with this directory or its contents. If you go into the <code>_site/</code> and open <code>index.html</code> you can see the site in a browser. Super simple—a couple of tabs, a header, a few links, nada mas. But a website nonetheless (albeit a bit boring).</p>
+<p>As you can see the directory has <code>.html</code> versions of the <code>.Rmd</code> files (in this case just two), a <code>_site.yml</code> file (discussed below), and a directory called <code>site_libs/</code>—a directory that has a bunch of <code>.js</code> and <code>.css</code> files. These files dictate the look and action of the site. Every time you render the site, the entire <code>_site/</code> directory and its contents are rebuilt. As far as I know there is no reason you should ever need to mess with this directory or its contents. If you go into the <code>_site/</code> and open <code>index.html</code> you can see the site in a browser. Super simple—a couple of tabs, a header, a few links, nada mas. But a website nonetheless (albeit a bit boring).</p>
 <p><br></p>
-<p><img src="INLINE_FIGURES/simple_site.png" /></p>
+<div class="figure">
+<img src="INLINE_FIGURES/simple_site.png" alt="The minimal website" />
+<p class="caption">The minimal website</p>
+</div>
 <p><br></p>
 <div class="notice">
-<p>Decision time: Are you happy with the super default settings? If so, move on to the Content section and then Publish your Site. If not, I recommend skipping the content at first and instead focusing on Adding Style &amp; Structure to your site. I say this because tweaking a site with minimal content is easier than messing with a full blown workflow (speaking from experience). This is primarily because render times of minimal sites are quick and it may be simpler to identify the effects of modifications.</p>
+<p>So are you happy with the super default settings? If so, move on to the Content section and then Publish your Site. If not, I recommend skipping the content at first and instead focusing on Adding Style &amp; Structure to your site. I say this because tweaking a site with minimal content is easier than messing with a full blown workflow (speaking from experience). This is primarily because render times of minimal sites are quick and it may be simpler to identify the effects of modifications.</p>
 </div>
 </div>
 <div id="content" class="section level2">
@@ -504,7 +507,7 @@ Content: Lots of beautiful code, creative analyses, poetic prose...written in R,
 * <code>about.Rmd</code> A page about you or the project.<br />
 * <code>processing.Rmd</code> A page that has the processing workflow (e.g., <a href="https://benjjneb.github.io/dada2/index.html">DADA2</a>).<br />
 * <code>analytical.Rmd</code> A page that has the analytical workflow (e.g., <a href="https://joey711.github.io/phyloseq/">phyloseq</a>).</p>
-<p>OK, you have all your content and are ready to build the website. But before you do that you need to tell knitr about the new pages. The engine will automatically render all <code>.Rmd</code> files to <code>.html</code> but unless you instruct knitr what to do with these files, you will not have any links on the site. Lets open up the <code>_site.yml</code> file (located in the main directory) and have a look.</p>
+<p>OK, you have all your content and are ready to build the website. But before you do that you need to tell knitr about the new pages. The engine will automatically render all <code>.Rmd</code> files to <code>.html</code> but unless you instruct knitr what to do with the additional files, you will not have any links on the site. Lets open up the <code>_site.yml</code> file (located in the main directory) and have a look.</p>
 <pre><code>name: &quot;my-website&quot;
 navbar:
   title: &quot;My Website&quot;
