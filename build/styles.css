@@ -41,6 +41,7 @@ font-size: 16pt;
 code, kbd, pre, samp, .sourceLine, .sourceCode {
   font-family: 'Monaco', 'PT Mono', monospace;
 }
+
 /* changs look of toc */
 .list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
   color: #ffffff;
@@ -70,26 +71,27 @@ code, kbd, pre, samp, .sourceLine, .sourceCode {
    padding-top: 30px;
    padding-bottom: 30px;
    text-align: center;
-
 /* for two column text + the escape */
  }
+
 .column-left{
    float: left;
    padding: 2px;
    text-align: left;
 }
+
 .column-right{
    float: right;
    padding: 2px;
    text-align: left;
 }
+
 .clear-fix{
   clear:both;
   width:100%;
 }
 
 /* for boxes and call out*/
-
 .warning{
   background-color:#F1AFAE;
   border-radius: 5px;
@@ -119,7 +121,6 @@ code, kbd, pre, samp, .sourceLine, .sourceCode {
   font-size: 1.5em;
   font-family: PT Serif, serif;
 }
-
 /* this changes background color of Rcode output box */
 /* also seems to control ``` code chunks */
 pre:not([class]) {
@@ -151,3 +152,50 @@ code:not([class]) {
      background-color: #fc6464;
      border-color: #E7E7E7;
  } */
+
+ .thumbnail {
+   max-width: 100%;
+   position: relative;
+ }
+
+ /** LIGHTBOX MARKUP **/
+
+ .lightbox {
+ 	/** Default lightbox to hidden */
+ 	display: none;
+
+ 	/** Position and style */
+ 	position: fixed;
+ 	z-index: 999;
+ 	width: 100%;
+ 	height: 100%;
+ 	text-align: center;
+ 	top: 0;
+ 	left: 0;
+ 	background: rgba(0,0,0,0.8);
+ }
+
+ .lightbox img {
+ 	/** Pad the lightbox image */
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+ 	max-width: 0%;
+ 	max-height: 0%;
+ 	margin: auto;
+   box-sizing: border-box;
+ }
+ .lightbox:target {
+ 	/** Remove default browser outline */
+ 	outline: none;
+
+ 	/** Unhide lightbox **/
+ 	display: block;
+ }
+
+ .lightbox:target img {
+   max-height: 100%;
+   max-width: 100%;
+ }

@@ -3,13 +3,13 @@ title: "How I made this site"
 output:
   html_document:
     code_folding: none
-    toc_float: 
+    toc_float:
        collapsed: false
 ---
 
 ***
 
-I am a novice  but I will nonetheless describe how I made this website just in case you are a novice too. Is this the best way to learn how to do something? I do not know. 
+I am a novice  but I will nonetheless describe how I made this website just in case you are a novice too. Is this the best way to learn how to do something? I do not know.
 
 You may know there are many (many) ways to construct a website. I chose to build this site in RStudio using  [R](https://www.r-project.org) to run the code, [Rmarkdown](https://rmarkdown.rstudio.com/) and [kitr](https://yihui.name/knitr/) to render the site, [GitHub](https://github.com/) for version control, and [GitHub Pages](https://pages.github.com/) for hosting. I  scoured the internet for solutions and for inspiration. My simple design  is based partly on [the Meren Lab](http://merenlab.org/) website, itself a derivation of [MM](http://mademistakes.com/minimal-mistakes/). I like the use of white space (large margins), clean font (PT Sans & PT Serif), ample spacing between lines and words, and the use of colored boxes to call out important stuff. There are also many little touches on the site that I appreciate, some of which I shamelessly copied here. The developers also provide instructions on how to [run their site locally](https://github.com/merenlab/web#how-to-run-a-copy-of-this-website-locally). Nice job folks.
 
@@ -50,19 +50,25 @@ As you can see the directory has `.html` versions of  the `.Rmd` files (in this 
 
 <br>
 
-![The minimal website](INLINE_FIGURES/simple_site.png)
+<a href="#minimal">
+  <img src="images/simple_site.png" class="thumbnail">
+</a>
+
+<a href="#_" class="lightbox" id="minimal">
+  <img src="images/simple_site.png">
+</a>
 
 <br>
 
 <div class = "notice">
-So are you happy with the super default settings? If so, move on to the Content section and then Publish your Site. If not, I recommend skipping the content at first and instead focusing on Adding Style & Structure to your site. I say this because tweaking a  site with minimal content is  easier than messing with a full blown workflow (speaking from experience). This is primarily because render times of minimal sites are quick and it may be simpler to identify the effects of modifications. 
+So are you happy with the super default settings? If so, move on to the Content section and then Publish your Site. If not, I recommend skipping the content at first and instead focusing on Adding Style & Structure to your site. I say this because tweaking a  site with minimal content is  easier than messing with a full blown workflow (speaking from experience). This is primarily because render times of minimal sites are quick and it may be simpler to identify the effects of modifications.
 </div>
 
 ## Content
 
-The minimum you need for an R Markdown website are the `_site.yml` and `index.Rmd` files. The index file and any other R Markdown files contain the content and the YAML file has the site parametersd. The engine uses these files in conjunction with the library to build the site. 
+The minimum you need for an R Markdown website are the `_site.yml` and `index.Rmd` files. The index file and any other R Markdown files contain the content and the YAML file has the site parametersd. The engine uses these files in conjunction with the library to build the site.
 
-So the first thing you do is write all the code and text in R Markdown files (`.Rmd`)---basically [markdown](https://en.wikipedia.org/wiki/Markdown) (an easy-to-write plain text format) with R code functionality added in. When you render the site, RStudio and knitr will run all the code and R Markdown text and spit out an `.html` file with tables, graphs, code, whatever you put in the `.Rmd` file. Later you can `cache` all the code chunks so you don't need to run all the code every time the site is rendered. A tutorial on R and R Markdown is beyond the scope of this humble page but there are a lot of resources to help you on your way. 
+So the first thing you do is write all the code and text in R Markdown files (`.Rmd`)---basically [markdown](https://en.wikipedia.org/wiki/Markdown) (an easy-to-write plain text format) with R code functionality added in. When you render the site, RStudio and knitr will run all the code and R Markdown text and spit out an `.html` file with tables, graphs, code, whatever you put in the `.Rmd` file. Later you can `cache` all the code chunks so you don't need to run all the code every time the site is rendered. A tutorial on R and R Markdown is beyond the scope of this humble page but there are a lot of resources to help you on your way.
 
 The basic structure of the `.Rmd` file is super simple. The title of the page between to rows of three consecutive dashes followed by you content.  Lets open the `about.Rmd` file and have look.
 
@@ -84,7 +90,7 @@ For now, lets say you want a website with four pages.
 * `processing.Rmd` A page that has the processing workflow (e.g.,  [DADA2](https://benjjneb.github.io/dada2/index.html)).  
 * `analytical.Rmd` A page that has the analytical workflow (e.g., [phyloseq](https://joey711.github.io/phyloseq/)).  
 
-OK, you have all your content and are ready to build the website. But before you do that you need to tell knitr about the new pages. The engine will automatically render all `.Rmd` files to `.html` but unless you instruct knitr what to do with the additional files, you will not have any links on the site. Lets open up the `_site.yml` file (located in the main directory) and have a look. 
+OK, you have all your content and are ready to build the website. But before you do that you need to tell knitr about the new pages. The engine will automatically render all `.Rmd` files to `.html` but unless you instruct knitr what to do with the additional files, you will not have any links on the site. Lets open up the `_site.yml` file (located in the main directory) and have a look.
 
 ```
 name: "my-website"
@@ -97,7 +103,7 @@ navbar:
       href: about.html
 ```
 
-You can see that the YAML file contains this thing called `navbar`---this is the navigation bar on the top of each page that links to all the pages on the site. You need to add the two new pages. The basic info you should provide is the name of the new page and the name of the file. The page name can be anything while the file name needs to be the actual file name, and with the `.html` extension, **not** the `.Rmd` extension. 
+You can see that the YAML file contains this thing called `navbar`---this is the navigation bar on the top of each page that links to all the pages on the site. You need to add the two new pages. The basic info you should provide is the name of the new page and the name of the file. The page name can be anything while the file name needs to be the actual file name, and with the `.html` extension, **not** the `.Rmd` extension.
 
 Now it should look something like this:
 
@@ -122,11 +128,11 @@ Whatever. That's it. Assuming your code ran successfully and you got a message a
 
 ## Adding Style & Structure
 
-But maybe  you want something more than the super default site.  Awesome. The method you choose will depend a lot on what you want and how much time you are willing to invest. As I understand it, you can customize the pre-packaged, Simple R Markdown Website  using the YAML file . 
+But maybe  you want something more than the super default site.  Awesome. The method you choose will depend a lot on what you want and how much time you are willing to invest. As I understand it, you can customize the pre-packaged, Simple R Markdown Website  using the YAML file .
 
 ### The YAML file
 
-Perhaps the most straightforward approach to configuring your site is to trick out the `_site.yml` file. In fact, the YAML file offers a high degree of customiztion and there are several ways to configure a website using just the  YAML file. We will go through a couple here. 
+Perhaps the most straightforward approach to configuring your site is to trick out the `_site.yml` file. In fact, the YAML file offers a high degree of customiztion and there are several ways to configure a website using just the  YAML file. We will go through a couple here.
 
 The first is to simply use one of the other pre-packaged themes. In addition to the default theme, the other valid themes are cerulean, journal, flatly, darkly, readable, spacelab, united, cosmo, lumen, paper, sandstone, simplex, and yeti. Each has their own font style, coloring, layout, etc. You can see examples of each theme [here](http://www.datadreaming.org/post/r-markdown-theme-gallery/) but I suggest playing around with these yourself. To do this you need to again open the `_site.yml` file and add a few more lines of code (minding the indention levels). Say you want to check out the  **flatly** theme. Add this...
 
@@ -136,7 +142,7 @@ output:
     theme: flatly
 ```
 
-Now when you render the site it will have the *flatly* theme. You can see what the different themes look like by swaping out that value and re-rendering the site (this is where a simple site comes in handy). 
+Now when you render the site it will have the *flatly* theme. You can see what the different themes look like by swaping out that value and re-rendering the site (this is where a simple site comes in handy).
 
 Another tweak using YAML is to change the way syntax is highlighted---that is the way R code chunks, inline code, code outputs, etc., appear in your final document. The current pre-packaged highlight themes are default, tango, pygments, kate, monochrome, espresso, zenburn, haddock, breezedark, and textmate. Its worth noting that you can also use `null` to prevent syntax highlighting. To specify  highlighting add the following:
 
@@ -158,15 +164,23 @@ For an intro to the topic of modifying the YAML file, see the awesome book [R Ma
 
 ### Custom CSS file
 
-If you want more control over the design of your site, the other option is to create your own CSS (Cascading Style Sheets) file. As I understand it, CSS is used to modify the characteristics (height and width, color, font size, etc.) of HTML elements. You can use your own file to override the CSS properties in the pre-packaged themes. To be honest, I found this part to be pretty challenging but I also learned a lot in the process. That said, I am in no position to provide a CSS tutorial, not in the slightest. But from one novice to another, I can give you a little advice if you're interested in going down this road. The best way to go is to take an online course to properly learn CSS (preferred) or you can do what I did and slog your way through it. 
+If you want more control over the design of your site, the other option is to create your own CSS (Cascading Style Sheets) file. As I understand it, CSS is used to modify the characteristics (height and width, color, font size, etc.) of HTML elements. You can use your own file to override the CSS properties in the pre-packaged themes. To be honest, I found this part to be pretty challenging but I also learned a lot in the process. That said, I am in no position to provide a CSS tutorial, not in the slightest. But from one novice to another, I can give you a little advice if you're interested in going down this road. The best way to go is to take an online course to properly learn CSS (preferred) or you can do what I did and slog your way through it.
 
 My general idea was to  figure out what elements I wanted to change (or create) and then to figure out how to do it. My not so sophisticated approach was to change something and render the site, then see what the change did (if it did anything at all). So yeah, that was my plan.
 
-In order to change an element you need to know what its called and what modifications you can make to it. For example, lets say you want to change the font size of Header #3 to 50px and its color to pink. What you need to do is write a little CSS code that calls up Header #3 and specifies these values. 
+In order to change an element you need to know what its called and what modifications you can make to it. For example, lets say you want to change the font size of Header #3 to 50px and its color to pink. What you need to do is write a little CSS code that calls up Header #3 and specifies these values.
 
 For me the best way to figure out the pieces you need for making your own CSS code is to open the  website in Chrome then click `View > Developer > Inspect Elements` (I assume other browsers have this capability). When you hover the mouse over the part you are interested in modifying, a little box of details pops up on the left and the HTML code on the right moves to that code block.
 
-![](INLINE_FIGURES/inspect_elements.png)
+
+<a href="#inspect">
+  <img src="images/inspect_elements.png" class="thumbnail">
+</a>
+
+<a href="#_" class="lightbox" id="inspect">
+  <img src="images/inspect_elements.png">
+</a>
+
 
 Here we see that the name of the element is `h3`. We can also see several additional properties including color and size. To modify this tag we write a little code like this:
 
@@ -189,7 +203,7 @@ Another thing you can do is add an element. I wanted some colored boxes to call 
 }
 ```
 
-All of this needs to be saved in a single file, for example `styles.css`, in the main directory. And the last thing to do is add this file name to the YAML file so the engine knows to read CSS code from this file as well. 
+All of this needs to be saved in a single file, for example `styles.css`, in the main directory. And the last thing to do is add this file name to the YAML file so the engine knows to read CSS code from this file as well.
 
 ```
 output:
@@ -199,7 +213,7 @@ output:
     css: styles.css
 ```
 
-CSS is an entire language and you certainly can't expect to master it overnight. But I think it can be used effectively to make some nice modifications to your site. 
+CSS is an entire language and you certainly can't expect to master it overnight. But I think it can be used effectively to make some nice modifications to your site.
 
 ## Publish your Site
 
@@ -301,8 +315,6 @@ site_libs/
 https://www.canva.com/colors/color-wheel/
  http://scratchpad.io/thoughtless-coil-6294
  [Atom](https://atom.io).
- 
+
  https://stackoverflow.com/
  https://www.w3schools.com/
- 
- 
