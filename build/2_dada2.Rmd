@@ -662,9 +662,19 @@ Processing time...
 proc.time() - ptm
 ```
 
-<br>
 
-#### <a href="3_data_prep.html">Go to Part 3, Data Preparation</a>
+</br>
+
+<div style="text-align:center">
+  <h4>
+    <button class="favorite styled" type="button">
+      <a href="3_data_prep.html">Go to Part 3, Data Preparation</a>
+    </button>
+  </h4>
+</div>
+
+
+<br>
 
 ***
 
@@ -685,3 +695,15 @@ devtools::session_info()
 ***
 
 
+</br>
+
+<div style="text-align:center">
+  <h4>
+    <button class="favorite styled" type="button">
+      <a href="3_data_prep.html">Go to Part 3, Data Preparation</a>
+    </button>
+  </h4>
+</div>
+
+
+<br>

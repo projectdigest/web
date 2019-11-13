@@ -8,19 +8,42 @@ output:
 ---
 
 ***
+## Motivation
 
-I am a novice  but I will nonetheless describe how I made this website just in case you are a novice too. Is this the best way to learn how to do something? I do not know.
+I am a novice---this is my first website---so I thought it would be cool to document the process of making this website. You may know there are many (many) ways to construct a website, and while this is  not a tutorial, it should be useful for people already working in R and/or RStudio (or planning to) but who have little/no experience in making a website.
 
-You may know there are many (many) ways to construct a website. I chose to build this site in RStudio using  [R](https://www.r-project.org) to run the code, [Rmarkdown](https://rmarkdown.rstudio.com/) and [kitr](https://yihui.name/knitr/) to render the site, [GitHub](https://github.com/) for version control, and [GitHub Pages](https://pages.github.com/) for hosting. I  scoured the internet for solutions and for inspiration. My simple design  is based partly on [the Meren Lab](http://merenlab.org/) website, itself a derivation of [MM](http://mademistakes.com/minimal-mistakes/). I like the use of white space (large margins), clean font (PT Sans & PT Serif), ample spacing between lines and words, and the use of colored boxes to call out important stuff. There are also many little touches on the site that I appreciate, some of which I shamelessly copied here. The developers also provide instructions on how to [run their site locally](https://github.com/merenlab/web#how-to-run-a-copy-of-this-website-locally). Nice job folks.
+My goal with this project was simple: I had all of this data that I was analyzing in R and I wanted to create workflows, reports, etc., that could be shared with other people. This lead me to RStudio and to R Markdown documents; here I could generate reproducible workflows and interactive documents, save the workflows as HTML files, and share the HTML files. Since anyone with a web browser can open an HTML document, I didn't need to worry if someone understood R or had RStudio. Once I had several HTML workflows I figured it would be a good idea to make a website so that I had a place to keep everything organized and accessible. 
 
-#### Simple R Markdown site
+## A Simple R Markdown site
 
-After searching for the "perfect" template, I decided to take a simpler approach and start with the default website builder package in RStudio. It is bare bones---which is nice because it allowed me to learn as I went along rather than trying to back engineer my understanding from a tricked out site. The process helped me appreciate both how little you need  to make a website AND how to you can add a little jazz to a website. So I started with the default configuration and then played around with the YAML file and  my own custom CSS file to customize the site.
+So basically I used:
+
+* [R](https://www.r-project.org) code to process and analyze data,  
+* [Rmarkdown](https://rmarkdown.rstudio.com/) framework to save/execute code and generate high quality HTML reports,  
+* [RStudio](https://rstudio.com/) and [kitr](https://yihui.name/knitr/) to render the site,  
+* [GitHub](https://github.com/) for version control, and  
+* [GitHub Pages](https://pages.github.com/) for hosting site.  
+
+I  scoured the internet for solutions and for inspiration. My design is based partly on [the Meren Lab](http://merenlab.org/) website, itself a derivation of [MM](http://mademistakes.com/minimal-mistakes/). I liked the use of white space (large margins), clean font (PT Sans & PT Serif), ample spacing between lines and words, and the use of colored boxes to call out important stuff. There are also many little touches on the site that I appreciate, some of which I shamelessly copied  The developers also provide instructions on how to [run their site locally](https://github.com/merenlab/web#how-to-run-a-copy-of-this-website-locally). Nice job Meren Lab.
+
+After searching for the "perfect" template, I decided to take a simpler approach and start with the default website builder package in RStudio. It is bare bones---which is nice because it allowed me to learn as I went along rather than trying to back engineer my understanding from an already tricked out site. The process helped me appreciate both how little I needed  to make a website AND how I could add a little jazz. So I started with the default configuration, then played around with the YAML file, and finally made my own custom CSS file to customize the site.
 
 <div class="warning">
 There are drawbacks to using the Simple R Markdown Website approach. The main one is that  the site generator assumes all the `.Rmd` documents are under a flat directory (i.e., no pages under sub directories). This means it is difficult to organize websites with a lot of content. There are additional shortcomings with this platform that are worth investigating.  
 </div>
 
+## Resources
+
+Before proceeding I wanted to share some of the resources I returned to over and over again.
+
+* [Interneting is Hard](https://internetingishard.com/): Badass, free HTML and CSS course. If you plan on doing any website coding at all, I suggest you start here (or with something similar).  
+* [Stack Overflow](https://stackoverflow.com/): Indispensable community forum where pretty much any question you have has probably been asked and answered.
+* [Atom](https://atom.io): My go-to text editor for writing HTML, CSS, etc.
+* [scratchpad.io](http://scratchpad.io/): A realtime HTML + CSS editor. Pretty sweet.  
+* [w3schools](https://www.w3schools.com/): Great resource for learning language elements.  
+* [MDN web docs](https://developer.mozilla.org/en-US/): Another great resource for learning language elements.
+* [Canva color wheel](https://www.canva.com/colors/color-wheel/): Cool app for choosing colors and color combinations.
+* [HTML Entities](https://dev.w3.org/html5/html-author/charref): List of HTML entities and their codes.
 
 ## Setup
 
@@ -48,7 +71,7 @@ list.files("/Users/rad/github/PROJECT_DIGEST/web/build/mock_site/_site")
 
 As you can see the directory has `.html` versions of  the `.Rmd` files (in this case just two), a `_site.yml` file (discussed below), and a directory called `site_libs/`---a directory that has a bunch of `.js` and `.css` files. These files dictate the look and action of the site.  Every time you render the site, the entire `_site/` directory and its contents are rebuilt. As far as I know there is no reason you should ever need to mess with this directory or its contents. If you go into the `_site/` and open `index.html` you can see the site in a browser. Super simple---a couple of tabs, a header, a few links, nada mas. But a website nonetheless (albeit a bit boring).
 
-<br>
+<br/>
 
 <a href="#minimal">
   <img src="images/simple_site.png" class="thumbnail">
@@ -58,7 +81,9 @@ As you can see the directory has `.html` versions of  the `.Rmd` files (in this 
   <img src="images/simple_site.png">
 </a>
 
-<br>
+<br/>
+
+FYI, this image is expandable. Click the image to expand to the full screen and click again to return to the main page. This is called a lightbox and I modifed the [Pure CSS Lightbox](https://codepen.io/gschier/pen/HCoqh) code and added it to the `style.css` file. The only thing I do not like is how you can still scroll when the image is enlarged. I need to figure out how to fix that.
 
 <div class = "notice">
 So are you happy with the super default settings? If so, move on to the Content section and then Publish your Site. If not, I recommend skipping the content at first and instead focusing on Adding Style & Structure to your site. I say this because tweaking a  site with minimal content is  easier than messing with a full blown workflow (speaking from experience). This is primarily because render times of minimal sites are quick and it may be simpler to identify the effects of modifications.
@@ -310,11 +335,3 @@ web.Rproj
 # Files from Website rendering in _site/
 site_libs/
 ```
-
-
-https://www.canva.com/colors/color-wheel/
- http://scratchpad.io/thoughtless-coil-6294
- [Atom](https://atom.io).
-
- https://stackoverflow.com/
- https://www.w3schools.com/

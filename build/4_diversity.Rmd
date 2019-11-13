@@ -659,5 +659,15 @@ save.image(file = "DATA/RDS/pw_div_3.rds")
 ```
 
 
-#### <a href="5_da_asv.html">Go to Part 5, Differentially Abundant ASVs</a>
+
+
+</br>
+
+<div style="text-align:center">
+  <h4>
+    <button class="favorite styled" type="button">
+      <a href="5_da_asv.html">Go to Part 5, Differentially Abundant ASV</a>
+    </button>
+  </h4>
+</div>
 

@@ -181,5 +181,13 @@ save.image(file = "DATA/RDS/pw_bite_1.rds")
 ```
 
 
-#### <a href="2_dada2.html">Go to Part 2, DADA2 Workflow</a>
 
+</br>
+
+<div style="text-align:center">
+  <h4>
+    <button class="favorite styled" type="button">
+      <a href="2_dada2.html">Go to Part 2, DADA2 Workflow</a>
+    </button>
+  </h4>
+</div>

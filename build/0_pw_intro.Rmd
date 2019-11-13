@@ -1,5 +1,17 @@
 ---
 title: "Introduction"
+output:
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_depth: 3
+    toc_float: 
+       collapsed: false
+    theme: default
+    highlight: textmate
+    include:
+      after_body: footer.html
+    css: styles.css
 ---
  
 ```{r setup, include=FALSE, cache=TRUE}
@@ -56,12 +68,8 @@ dir.create("DATA/RDS/", recursive = TRUE)
 
 ***
 
-<div class = "notice">
-This website provides a **reproducible workflow** of our [study](there_is_nothing_here.html){target="_blank"}. With this workflow plus the raw data (available [here](data_availability.html), anyone should be able to reproduce our results. The workflow goes through all the steps of processing raw 16S rRNA marker data and  analyzing  processed data with phyloseq and other tools. You can generate the figures and tables from the paper as well as many additional data products. The workflow contains both methods and results in plain text and R code. 
+In this study, we looked at intestinal microbial communities from five herbivorous fish species across two families---*Sparisoma viride*, *Sparisoma aurofrenatum* and *Scarus taeniopterus* from the Labridae  and *Acanthurus tractus* and *Acanthurus coeruleus* from the  Acanthuridae. 
 
-This document has  **interactive** components. You can **sort and scroll** through most of the tables and there is a **zoomable phylogenetic tree**. You can choose to show or hide the code using the `Code` button in the upper right hand corner of each page (default is mostly hide). Data products from the final publication are highlighted in <font size="3" color="red">Red</font>. Please see the <a href="data_availability.html">Data Availability section</a> for details about obtaining all data and data products from this study.
-</div>
-<p></p>
 
 ## Definitions & Abbreviations  
 
@@ -150,7 +158,7 @@ There is a great article on [Coloring for Colorblindness](https://davidmathlogic
 Use the links below if you want to jump directly to the code used to produce the **figures and tables** from the original publication. You can also find the full Supplementary files for the paper  [here](supplemental_material.html){target="blank"} but there is no R code on this page. If you want to see the code that produced the supplemental material, the direct links are also below. There is no code for Tables S2 and S7.
 
 
-#### Main Paper  
+### Main Paper  
 [Figure 1](1_field_observations.html#nmds_analysis){target="blank"}: NMDS analysis of host feeding behavior.  
 [Figure 2A](4_diversity.html#abundance_by_host_species){target="blank"}: Taxa abundance by host species.  
 [Figure 2B](4_diversity.html#diversity_plots){target="blank"}: Alpha diversity.  
@@ -160,7 +168,7 @@ Use the links below if you want to jump directly to the code used to produce the
 [Table 1](6_synthesis.html#summary_of_habitat_preference){target="blank"}: Summary of habitat preference.    
 
 
-#### Supplemental Material  
+### Supplemental Material  
 [Table S1](1_field_observations.html#observational_data){target="blank"}: Summary of field-based feeding observations.  
 [Table S2](supplemental_material.html#table_s2){target="blank"}: Number of bites observed for each herbivore species at each site.   
 [Table S3](4_diversity.html#statistical_tests){target="blank"}: Metadata and microbiome diversity estimates for each sample.  
@@ -170,7 +178,14 @@ Use the links below if you want to jump directly to the code used to produce the
 [Table S7](supplemental_material.html#table_s7){target="blank"}: Accession numbers and unique codes for sequence data in Figure 3.  
 [Figure S1](7_appendices.html#appendix_a:_other_analyses__visualizations){target="blank"}: Class-level relative abundance of microbial communities from each sample.    
 
+</br>
 
-#### <a href="1_field_observations.html">Continue to Part 1, Field Observations</a>
+<div style="text-align:center">
+  <h4>
+    <button class="favorite styled" type="button">
+      <a href="1_field_observations.html">Continue to Part 1, Field Observations</a>
+    </button>
+  </h4>
+</div>
 
 

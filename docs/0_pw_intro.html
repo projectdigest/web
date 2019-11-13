@@ -311,6 +311,12 @@ div.tocify {
   border-radius: 0px;
 }
 
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
 
 </style>
 
@@ -466,12 +472,7 @@ div.tocify {
 
 
 <hr />
-<div class="notice">
-<p>This website provides a <strong>reproducible workflow</strong> of our <a href="there_is_nothing_here.html" target="_blank">study</a>. With this workflow plus the raw data (available <a href="data_availability.html">here</a>, anyone should be able to reproduce our results. The workflow goes through all the steps of processing raw 16S rRNA marker data and analyzing processed data with phyloseq and other tools. You can generate the figures and tables from the paper as well as many additional data products. The workflow contains both methods and results in plain text and R code.</p>
-<p>This document has <strong>interactive</strong> components. You can <strong>sort and scroll</strong> through most of the tables and there is a <strong>zoomable phylogenetic tree</strong>. You can choose to show or hide the code using the <code>Code</code> button in the upper right hand corner of each page (default is mostly hide). Data products from the final publication are highlighted in <font size="3" color="red">Red</font>. Please see the <a href="data_availability.html">Data Availability section</a> for details about obtaining all data and data products from this study.</p>
-</div>
-<p>
-</p>
+<p>In this study, we looked at intestinal microbial communities from five herbivorous fish species across two families—<em>Sparisoma viride</em>, <em>Sparisoma aurofrenatum</em> and <em>Scarus taeniopterus</em> from the Labridae and <em>Acanthurus tractus</em> and <em>Acanthurus coeruleus</em> from the Acanthuridae.</p>
 <div id="definitions-abbreviations" class="section level2">
 <h2>Definitions &amp; Abbreviations</h2>
 <ul>
@@ -554,8 +555,8 @@ cols(friend_pal)</code></pre>
 <div id="figures-tables" class="section level2">
 <h2>Figures &amp; Tables</h2>
 <p>Use the links below if you want to jump directly to the code used to produce the <strong>figures and tables</strong> from the original publication. You can also find the full Supplementary files for the paper <a href="supplemental_material.html" target="blank">here</a> but there is no R code on this page. If you want to see the code that produced the supplemental material, the direct links are also below. There is no code for Tables S2 and S7.</p>
-<div id="main-paper" class="section level4">
-<h4>Main Paper</h4>
+<div id="main-paper" class="section level3">
+<h3>Main Paper</h3>
 <p><a href="1_field_observations.html#nmds_analysis" target="blank">Figure 1</a>: NMDS analysis of host feeding behavior.<br />
 <a href="4_diversity.html#abundance_by_host_species" target="blank">Figure 2A</a>: Taxa abundance by host species.<br />
 <a href="4_diversity.html#diversity_plots" target="blank">Figure 2B</a>: Alpha diversity.<br />
@@ -564,8 +565,8 @@ cols(friend_pal)</code></pre>
 <a href="6_synthesis.html#heatmap" target="blank">Figure 4</a>: DA ASV heatmap.<br />
 <a href="6_synthesis.html#summary_of_habitat_preference" target="blank">Table 1</a>: Summary of habitat preference.</p>
 </div>
-<div id="supplemental-material" class="section level4">
-<h4>Supplemental Material</h4>
+<div id="supplemental-material" class="section level3">
+<h3>Supplemental Material</h3>
 <p><a href="1_field_observations.html#observational_data" target="blank">Table S1</a>: Summary of field-based feeding observations.<br />
 <a href="supplemental_material.html#table_s2" target="blank">Table S2</a>: Number of bites observed for each herbivore species at each site.<br />
 <a href="4_diversity.html#statistical_tests" target="blank">Table S3</a>: Metadata and microbiome diversity estimates for each sample.<br />
@@ -574,9 +575,14 @@ cols(friend_pal)</code></pre>
 <a href="6_synthesis.html#assessing_habitat_specificity" target="blank">Table S6</a>: Results of BLAST analysis for DA ASVs.<br />
 <a href="supplemental_material.html#table_s7" target="blank">Table S7</a>: Accession numbers and unique codes for sequence data in Figure 3.<br />
 <a href="7_appendices.html#appendix_a:_other_analyses__visualizations" target="blank">Figure S1</a>: Class-level relative abundance of microbial communities from each sample.</p>
+<p></br></p>
+<div style="text-align:center">
+<h4>
+<button class="favorite styled" type="button">
+<a href="1_field_observations.html">Continue to Part 1, Field Observations</a>
+</button>
+</h4>
 </div>
-<div id="continue-to-part-1-field-observations" class="section level4">
-<h4><a href="1_field_observations.html">Continue to Part 1, Field Observations</a></h4>
 </div>
 </div>
 
@@ -651,7 +657,7 @@ $(document).ready(function ()  {
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
     };
-    options.showAndHide = true;
+    options.showAndHide = false;
     options.smoothScroll = true;
 
     // tocify

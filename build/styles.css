@@ -9,33 +9,37 @@ body {
 }
 
 /* Headers */
-h1,h2,h3,h4,h5,h6{
+h1,h2,h3,h4,h5,h6 {
   margin-top: 64px;
   font-family: PT Sans Narrow, PT Sans, sans-serif;
 }
 
+h1.title {
+font-size: 34px;
+}
+
 h1 {
-font-size: 32pt;
+font-size: 34px;
 }
 
 h2 {
-font-size: 30pt;
+font-size: 30px;
 }
 
 h3 {
-font-size: 26pt;
+font-size: 26px;
 }
 
 h4 {
-font-size: 20pt;
+font-size: 24px;
 }
 
 h5 {
-font-size: 18pt;
+font-size: 21px;
 }
 
 h6 {
-font-size: 16pt;
+font-size: 18px;
 }
 
 code, kbd, pre, samp, .sourceLine, .sourceCode {
@@ -74,25 +78,25 @@ code, kbd, pre, samp, .sourceLine, .sourceCode {
 /* for two column text + the escape */
  }
 
-.column-left{
+.column-left {
    float: left;
    padding: 2px;
    text-align: left;
 }
 
-.column-right{
+.column-right {
    float: right;
    padding: 2px;
    text-align: left;
 }
 
-.clear-fix{
+.clear-fix {
   clear:both;
   width:100%;
 }
 
-/* for boxes and call out*/
-.warning{
+/* for boxes and call outs*/
+.warning {
   background-color:#F1AFAE;
   border-radius: 5px;
   padding: 10px;
@@ -100,7 +104,7 @@ code, kbd, pre, samp, .sourceLine, .sourceCode {
   font-size: 4
 }
 
-.notice{
+.notice {
   background-color:#FBDFB4;
   border-radius: 5px;
   padding: 10px;
@@ -108,7 +112,7 @@ code, kbd, pre, samp, .sourceLine, .sourceCode {
   font-size: 4
 }
 
-.steel{
+.steel {
   background-color:#C8CFD6;
   border-radius: 5px;
   padding: 5px;
@@ -131,7 +135,8 @@ pre:not([class]) {
 /* this changes background color of Rcode  box */
 .r {
     background-color: #e8e8e8;
-    font-size: 0.8em
+    font-size: 0.8em;
+    border-left: 5px solid #FC6464;
   }
 /*set theme for single backtick code`*/
 code:not([class]) {
@@ -147,55 +152,61 @@ code:not([class]) {
    border-color: #545454;
    padding: 2px 3px;
  }
+
  /* navbar
 .navbar {
      background-color: #fc6464;
      border-color: #E7E7E7;
  } */
 
- .thumbnail {
-   max-width: 100%;
-   position: relative;
- }
+.thumbnail {
+  max-width: 100%;
+  position: relative;
+}
 
- /** LIGHTBOX MARKUP **/
+/** LIGHTBOX MARKUP **/
 
- .lightbox {
- 	/** Default lightbox to hidden */
- 	display: none;
+.lightbox {
+	/** Default lightbox to hidden */
+	display: none;
 
- 	/** Position and style */
- 	position: fixed;
- 	z-index: 999;
- 	width: 100%;
- 	height: 100%;
- 	text-align: center;
- 	top: 0;
- 	left: 0;
- 	background: rgba(0,0,0,0.8);
- }
+	/** Position and style */
+	position: fixed;
+	z-index: 999;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	top: 0;
+	left: 0;
+	background: rgba(0,0,0,0.8);
+}
 
- .lightbox img {
- 	/** Pad the lightbox image */
-   position: fixed;
-   top: 0;
-   left: 0;
-   right: 0;
-   bottom: 0;
- 	max-width: 0%;
- 	max-height: 0%;
- 	margin: auto;
-   box-sizing: border-box;
- }
- .lightbox:target {
- 	/** Remove default browser outline */
- 	outline: none;
+.lightbox img {
+	/** Pad the lightbox image */
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	max-width: 0%;
+	max-height: 0%;
+	margin: auto;
+	box-sizing: border-box;
+}
 
- 	/** Unhide lightbox **/
- 	display: block;
- }
+.lightbox:target {
+	/** Remove default browser outline */
+	outline: none;
 
- .lightbox:target img {
-   max-height: 100%;
-   max-width: 100%;
- }
+	/** Unhide lightbox **/
+	display: block;
+}
+
+.lightbox:target img {
+	max-height: 100%;
+	max-width: 100%;
+}
+
+.callout {
+	font-size: 125%;
+}

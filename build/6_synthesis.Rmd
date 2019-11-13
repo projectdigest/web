@@ -660,7 +660,7 @@ plot(cluster_traits,
 
 So, is ecological data correlated with phylogeny? 
 
-```{r eco_corr_phylo, message = FALSE}
+```{r eco_corr_phylo, message = FALSE, cache=TRUE}
 # Is ecological data correlated with phylogeny
 mantel(traits_dist, T, method = "pearson", permutations = 9999)
 ```
