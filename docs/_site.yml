@@ -3,7 +3,7 @@ name: "DIGEST"
 output_dir: "../docs/"
 include: [_site.yml]
 url: "https://projectdigest.github.io/"
-baseurl: "/"
+baseurl: ""
 navbar:
   title: "DIGEST"
   type: inverse
