@@ -151,7 +151,7 @@ cols(friend_pal)
 save.image(file = "DATA/RDS/pw_intro_0.rds")
 ```
 
-There is a great article on [Coloring for Colorblindness](https://davidmathlogic.com/colorblind/#%23000000-%23E69F00-%2356B4E9-%23009E73-%23F0E442-%230072B2-%23D55E00-%23CC79A7){target="blank"} by David Nichols that has an interactive color picker and recommendations for accessible palettes. This is also a [really cool site](https://www.canva.com/colors/color-wheel/){target="blank"} for looking at  color combinations. Both highly recommended...
+There is a great article on [Coloring for Colorblindness](https://davidmathlogic.com/colorblind/#%23000000-%23E69F00-%2356B4E9-%23009E73-%23F0E442-%230072B2-%23D55E00-%23CC79A7){target="blank"} by David Nichols that has an interactive color picker and recommendations for accessible palettes. This is also a [really cool site](https://www.canva.com/colors/color-wheel/){target="blank"} for looking at  color combinations. Both resources are highly recommended.
 
 ## Figures & Tables
 
@@ -167,8 +167,7 @@ Use the links below if you want to jump directly to the code used to produce the
 [Figure 4](6_synthesis.html#heatmap){target="blank"}: DA ASV heatmap.  
 [Table 1](6_synthesis.html#summary_of_habitat_preference){target="blank"}: Summary of habitat preference.    
 
-
-### Supplemental Material  
+### [Supplemental Material](supplemental_material.html){target="blank"}  
 [Table S1](1_field_observations.html#observational_data){target="blank"}: Summary of field-based feeding observations.  
 [Table S2](supplemental_material.html#table_s2){target="blank"}: Number of bites observed for each herbivore species at each site.   
 [Table S3](4_diversity.html#statistical_tests){target="blank"}: Metadata and microbiome diversity estimates for each sample.  
