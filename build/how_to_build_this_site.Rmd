@@ -12,35 +12,35 @@ output:
 
 I am a novice---this is my first website---so I thought it would be cool to document the process of making this website. You may know there are many (many) ways to construct a website, and while this is  not a tutorial, it should be useful for people already working in R and/or RStudio (or planning to) but who have little/no experience in making a website.
 
-My goal with this project was simple: I had all of this data that I was analyzing in R and I wanted to create workflows, reports, etc., that could be shared with other people. This lead me to RStudio and to R Markdown documents; here I could generate reproducible workflows and interactive documents, save the workflows as HTML files, and share the HTML files. Since anyone with a web browser can open an HTML document, I didn't need to worry if someone understood R or had RStudio. Once I had several HTML workflows I figured it would be a good idea to make a website so that I had a place to keep everything organized and accessible. 
+My goal with this project was simple: I had all of this data that I was analyzing in R and I wanted to create workflows, reports, etc., that could be shared with other people. This lead me to RStudio and to R Markdown documents; here I could generate reproducible workflows and interactive documents, save the workflows as HTML files, and share the HTML files. Since anyone with a web browser can open an HTML document, I didn't need to worry if someone understood R or had RStudio. Once I had several HTML workflows I figured it would be a good idea to make a website so that I had a place to keep everything organized and accessible.
 
 ## A Simple R Markdown site
 
 So basically I used:
 
-* [R](https://www.r-project.org) code to process and analyze data,  
-* [Rmarkdown](https://rmarkdown.rstudio.com/) framework to save/execute code and generate high quality HTML reports,  
-* [RStudio](https://rstudio.com/) and [kitr](https://yihui.name/knitr/) to render the site,  
-* [GitHub](https://github.com/) for version control, and  
-* [GitHub Pages](https://pages.github.com/) for hosting site.  
+* [R](https://www.r-project.org) code to process and analyze data,
+* [Rmarkdown](https://rmarkdown.rstudio.com/) framework to save/execute code and generate high quality HTML reports,
+* [RStudio](https://rstudio.com/) and [kitr](https://yihui.name/knitr/) to render the site,
+* [GitHub](https://github.com/) for version control, and
+* [GitHub Pages](https://pages.github.com/) for hosting site.
 
 I  scoured the internet for solutions and for inspiration. My design is based partly on [the Meren Lab](http://merenlab.org/) website, itself a derivation of [MM](http://mademistakes.com/minimal-mistakes/). I liked the use of white space (large margins), clean font (PT Sans & PT Serif), ample spacing between lines and words, and the use of colored boxes to call out important stuff. There are also many little touches on the site that I appreciate, some of which I shamelessly copied  The developers also provide instructions on how to [run their site locally](https://github.com/merenlab/web#how-to-run-a-copy-of-this-website-locally). Nice job Meren Lab.
 
 After searching for the "perfect" template, I decided to take a simpler approach and start with the default website builder package in RStudio. It is bare bones---which is nice because it allowed me to learn as I went along rather than trying to back engineer my understanding from an already tricked out site. The process helped me appreciate both how little I needed  to make a website AND how I could add a little jazz. So I started with the default configuration, then played around with the YAML file, and finally made my own custom CSS file to customize the site.
 
 <div class="warning">
-There are drawbacks to using the Simple R Markdown Website approach. The main one is that  the site generator assumes all the `.Rmd` documents are under a flat directory (i.e., no pages under sub directories). This means it is difficult to organize websites with a lot of content. There are additional shortcomings with this platform that are worth investigating.  
+There are drawbacks to using the Simple R Markdown Website approach. The main one is that  the site generator assumes all the `.Rmd` documents are under a flat directory (i.e., no pages under sub directories). This means it is difficult to organize websites with a lot of content. There are additional shortcomings with this platform that are worth investigating.
 </div>
 
 ## Resources
 
 Before proceeding I wanted to share some of the resources I returned to over and over again.
 
-* [Interneting is Hard](https://internetingishard.com/): Badass, free HTML and CSS course. If you plan on doing any website coding at all, I suggest you start here (or with something similar).  
+* [Interneting is Hard](https://internetingishard.com/): Badass, free HTML and CSS course. If you plan on doing any website coding at all, I suggest you start here (or with something similar).
 * [Stack Overflow](https://stackoverflow.com/): Indispensable community forum where pretty much any question you have has probably been asked and answered.
 * [Atom](https://atom.io): My go-to text editor for writing HTML, CSS, etc.
-* [scratchpad.io](http://scratchpad.io/): A realtime HTML + CSS editor. Pretty sweet.  
-* [w3schools](https://www.w3schools.com/): Great resource for learning language elements.  
+* [scratchpad.io](http://scratchpad.io/): A realtime HTML + CSS editor. Pretty sweet.
+* [w3schools](https://www.w3schools.com/): Great resource for learning language elements.
 * [MDN web docs](https://developer.mozilla.org/en-US/): Another great resource for learning language elements.
 * [Canva color wheel](https://www.canva.com/colors/color-wheel/): Cool app for choosing colors and color combinations.
 * [HTML Entities](https://dev.w3.org/html5/html-author/charref): List of HTML entities and their codes.
@@ -51,7 +51,7 @@ The first thing you want to do is fire up RStudio and go to `File > New Project`
 
 Anyway, chose `New Directory > Simple R Markdown Website`, give it a name and figure out where you want it to live. Let's call it `mock_site`. Then hit `Create Project`.
 
-Now you have a new directory called `mock_site/` with the following files:  
+Now you have a new directory called `mock_site/` with the following files:
 
 ```{r list, echo=FALSE, cache=TRUE}
 list.files("/Users/rad/github/PROJECT_DIGEST/web/build/mock_site")
@@ -63,7 +63,7 @@ And that's it. At this point you can render the site by running:
 rmarkdown::render_site()
 ```
 
-The site generator makes a new directory called `_site/`, which  contains all the info needed for the actual website.  
+The site generator makes a new directory called `_site/`, which  contains all the info needed for the actual website.
 
 ```{r list_2,  echo=FALSE, cache=TRUE}
 list.files("/Users/rad/github/PROJECT_DIGEST/web/build/mock_site/_site")
@@ -109,11 +109,11 @@ While this file is open feel free to add some content, change the title, whateve
 
 So the base of your website will be different pages written like this and saved as `.Rmd` files. The `.Rmd` files will likely be a mix of text and R code but you can also make a site without any R code at all. Anyway, I will leave the rest of this part up to you...
 
-For now, lets say you want a website with four pages.  
-* `index.Rmd` This will be the landing or home page of the site.  
-* `about.Rmd` A page about you or the project.  
-* `processing.Rmd` A page that has the processing workflow (e.g.,  [DADA2](https://benjjneb.github.io/dada2/index.html)).  
-* `analytical.Rmd` A page that has the analytical workflow (e.g., [phyloseq](https://joey711.github.io/phyloseq/)).  
+For now, lets say you want a website with four pages.
+* `index.Rmd` This will be the landing or home page of the site.
+* `about.Rmd` A page about you or the project.
+* `processing.Rmd` A page that has the processing workflow (e.g.,  [DADA2](https://benjjneb.github.io/dada2/index.html)).
+* `analytical.Rmd` A page that has the analytical workflow (e.g., [phyloseq](https://joey711.github.io/phyloseq/)).
 
 OK, you have all your content and are ready to build the website. But before you do that you need to tell knitr about the new pages. The engine will automatically render all `.Rmd` files to `.html` but unless you instruct knitr what to do with the additional files, you will not have any links on the site. Lets open up the `_site.yml` file (located in the main directory) and have a look.
 
@@ -147,13 +147,13 @@ navbar:
       href: analytical.html
 ```
 
-Whatever. That's it. Assuming your code ran successfully and you got a message after rendering like this...  
-`Output created: _site/index.html`   
+Whatever. That's it. Assuming your code ran successfully and you got a message after rendering like this...
+`Output created: _site/index.html`
 ...your website done. Now you can publish it, tweet about it, and tell your sweet Grandpa to check it out. Below I discuss how I published this site using GitHub and GitPages. I will leave the tweeting and telling Grandpa up to you.
 
 ## Adding Style & Structure
 
-But maybe  you want something more than the super default site.  Awesome. The method you choose will depend a lot on what you want and how much time you are willing to invest. As I understand it, you can customize the pre-packaged, Simple R Markdown Website  using the YAML file .
+But maybe  you want something more than the super default site.  Awesome. The method you choose will depend a lot on what you want and how much time you are willing to invest. As I understand it, you can customize the pre-packaged, Simple R Markdown Website  using the YAML file.
 
 ### The YAML file
 
@@ -187,7 +187,7 @@ There are other ways you can use the YAML file to modify the look of your site. 
 For an intro to the topic of modifying the YAML file, see the awesome book [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/html-document.html#appearance_and_style) by *Yihui Xie, J. J. Allaire, Garrett Grolemund*. If you dig deep enough however, you may soon reach the limits of using the YAML file to modify your site.
 
 
-### Custom CSS file
+### A Custom CSS file
 
 If you want more control over the design of your site, the other option is to create your own CSS (Cascading Style Sheets) file. As I understand it, CSS is used to modify the characteristics (height and width, color, font size, etc.) of HTML elements. You can use your own file to override the CSS properties in the pre-packaged themes. To be honest, I found this part to be pretty challenging but I also learned a lot in the process. That said, I am in no position to provide a CSS tutorial, not in the slightest. But from one novice to another, I can give you a little advice if you're interested in going down this road. The best way to go is to take an online course to properly learn CSS (preferred) or you can do what I did and slog your way through it.
 
@@ -242,13 +242,21 @@ CSS is an entire language and you certainly can't expect to master it overnight.
 
 ## Publish your Site
 
-IN PROGRESS
+I chose to host this site on [GitHub Pages](https://pages.github.com/){target="_blank"} because it is pretty straightforward. The only thing you really need is a GitHub account (which is free) and away you go. There is a complete walkthrough on set up on the GitHub Pages website. Of course there are many other hosting options out there and you may find something more suited to your needs.
+
+
+https://projectdigest.github.io/web/
+
 
 ### Git
 
-THESE ARE NOTES
+So lets say you have successfully setup a GitHub account and a website repository. Sweet. The next thing to do is find a place for the site to live *locally*. The general idea is you download the repo from GitHub to your machine, do stuff to the repo (i.e., make a website), and then send  your changes back.
 
-create `.gitignore` file
+After I cloned the directory one of the first things I did was to create `.gitignore` file. This file tells git what to ignore when pushing changes.
+
+
+
+
 if you type `git status` and its a mess do this first
 
 
@@ -265,7 +273,7 @@ then run `git add . --dry-run` to see what will be added. DO NOT EVER run `git a
 
 `git add --all` to stage
 `git commit -a  -m "initial DIGEST website commit"`
-`git push`
+`git push origin master`
 
 
 to remove remotely but keep locally
@@ -279,59 +287,3 @@ to remove remotely but keep locally
 in Rstudio
 
 `rmarkdown::render_site()`
-
-
-
-### .gitignore
-
-```
-## General files to ignore ##
-#############################
-# History files
-.Rhistory
-.Rapp.history
-.DS_Store
-
-# Session Data files
-.RData
-
-# User-specific files
-.Ruserdata
-.Rproj.user
-
-# Example code in package build process
-*-Ex.R
-
-# Output files from R CMD build or archives
-*.tar.gz
-*.7z
-*.dmg
-*.gz
-*.iso
-*.jar
-*.rar
-*.tar
-*.zip
-
-# Output files from R CMD check
-/*.Rcheck/
-
-# Temporary files created by R Markdown
-*.utf8.md
-*.knit.md
-
-# Data from processing scripts
-*_read_changes.txt
-DATA/
-
-# DIGEST web files
-web.Rproj
-
-# knitr and R Markdown default cache directories
-*_cache/
-/cache/
-*_files/
-
-# Files from Website rendering in _site/
-site_libs/
-```

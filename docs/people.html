@@ -12,7 +12,7 @@
 
 
 
-<title>Project Digest</title>
+<title>People</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -20,23 +20,14 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <a href="images/fish_tree.svg" target="_blank">
-      <img src="images/fish_tree_clip_title.png" alt="">
-    </a>
-  </body>
-</html>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -263,6 +254,63 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -270,6 +318,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -391,42 +449,13 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Project Digest</h1>
+<h1 class="title toc-ignore">People</h1>
 
 </div>
 
 
-<p><br/></p>
-<div class="notice">
-<p>Here we provide a <font size="5">completely reproducible workflow</font> of our <a href="there_is_nothing_here.html" target="_blank">study</a> on the intestinal microbial communities from five species of herbivorous coral reef fishes. The workflow goes through the steps we used to process the raw 16S rRNA marker data and the various tools we used to analyze and interpret the data. With this workflow you can generate the figures and tables from the paper as well as many additional data products. The workflow is written in R Markdown and contains a mixture plain text and R code. Anyone should be able to reproduce our results with just this workflow and the raw data.</p>
-</div>
-<p><br/></p>
-<div id="about-this-site" class="section level2">
-<h2>About this Site</h2>
-<p>This website contains our workflows, details on where to find <a href="data_availability.html" target="_blank">data/data products</a>, and a variety of other useful information. The site has many <span class="callout">dynamic</span> components. For example, you can <span class="callout">sort and scroll</span> through most of the tables, several figures expand when clicked, and one figure is <span class="callout">zoomable</span>. All figures and tables from the final publication are highlighted in <font size="4" color="red">red font</font> to make them easy to identify. The full Supplementary Online material from the paper is also available <a href="supplemental_material.html" target="_blank">here</a>. You can choose to <span class="callout">show or hide</span> the R code using the <code>Code</code> button in the upper right hand corner of each page (default is mostly hide). An unannotated version of the R code is also available for download. <span class="callout">Hit the link below</span> to check out the workflow.</p>
-<p><br/></p>
-<div style="text-align:center">
-<h1>
-<button class="favorite styled" type="button">
-<a href="0_pw_intro.html">Click Here to Proceed to the Workflow</a>
-</button>
-</h1>
-</div>
-<p><br/></p>
-</div>
-<div id="about-this-tree" class="section level2">
-<h2>About this Tree</h2>
-<p>One of our <a href="https://projectdigest.github.io/web/6_synthesis.html#are_asvs__host_traits_correlated" target="_blank">analyses</a> required us to create a phylogenetic tree of the five host species. To construct the tree we first needed an appropriate out group. Our search for an out group lead to <a href="https://sites.google.com/site/guilleorti/" target="_blank">DeepFin</a> and the amazing paper by <a href="https://link.springer.com/article/10.1186/s12862-017-0958-3" target="_blank">Betancur-R et. al., (2017)</a> on the phylogenetic classification of bony fishes. The tree in this paper is the 4th version (the original dates back to 2013) and is based on the phylogeny of a whopping <span class="callout">1990 species</span> encompassing <span class="callout">72 orders and 410 families</span>. Wow. In our study, we looked at intestinal microbes from five fish species across two families.</p>
-<p>Anyway, we used the original tree from the paper to choose an out group for our analysis (Gerreidae) and for the fun of it decided to make our own representation of the Betancur-R et. al., tree. To construct the tree above we first downloaded the newick file from the paper’s supplementary material (<a href="https://static-content.springer.com/esm/art%3A10.1186%2Fs12862-017-0958-3/MediaObjects/12862_2017_958_MOESM2_ESM.tre" target="_blank">download link</a>), parsed out the Family data from the tree file (included in the name of each leaf), and finally visualized the tree in <a href="http://merenlab.org/software/anvio/" target="_blank">anvi’o</a>. Within the anvi’o interface we visualized the tree as a circular phylogram and collapsed any Family represented by two or more species. The size of each triangle is proportional to the number of species in that family while the colors are somewhat arbitrary. Originally we thought it would be cool to color leaves by the taxa but that was too complicated. So the colors are really just for looks. The families we studied in this project are in the lower left, marked by asterisks. In the future we would like to identify which fish families have been the subject of microbial investigations and use the phylogenetic framework to identify gaps in knowledge and patterns of associations.</p>
-<blockquote>
-<p>The image above is actually just half the Betancur-R tree. You can download a full SVG version by clicking on the tree. Or you can download the files we used to make the tree in anvi’o from this <a href="https://github.com/projectdigest/betancur_r-fish-tree" target="_blank">GitHub repo</a>.</p>
-</blockquote>
-<!--
-<a href="images/fish_tree.svg" download>
-  <img src="images/fish_tree.svg" alt="full tree" width="404" height="442">
-</a>
--->
-</div>
+<hr />
+<p>Coming soon…maybe</p>
 
 <footer role="contentinfo" id="site-footer">
 
@@ -441,6 +470,8 @@ $(document).ready(function () {
 <div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;"></div>
 
 
+</div>
+</div>
 
 </div>
 
@@ -473,6 +504,32 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

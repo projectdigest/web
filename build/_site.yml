@@ -18,7 +18,7 @@ navbar:
           href: 1_field_observations.html
         - text: "---------"
         - text: "16S rRNA Processing"
-        - text: "2. DADA2 Workflow"
+        - text: "2. DADA2"
           href: 2_dada2.html
         - text: "3. Data Prep"
           href: 3_data_prep.html
@@ -37,21 +37,22 @@ navbar:
     - text: "Data"
       icon: fa-database
       href: data_availability.html
-    - text: "People"
-      icon: fa-user-friends
-      href: about.html
     - text: "SOM"
       icon:
       href: supplemental_material.html
     - text: "Contact"
       icon: fa-phone
       href: contact.html
-    - icon: fa-question fa-lg
+    - text: "About"
+      icon: fa-question fa-lg
       href: how_to_build_this_site.html
-    - icon: fa-github
+    - icon: fa-github fa-lg
       href: https://github.com/projectdigest/web/
-    - icon: fa-code
+    - icon: fa-code fa-lg
       href: raw_code.txt
+    - text: "People"
+      icon: fa-user-friends
+      href: people.html
 output:
   html_document:
     code_folding: hide

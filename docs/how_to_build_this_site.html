@@ -379,7 +379,7 @@ div.tocify {
     <li class="divider"></li>
     <li class="dropdown-header">16S rRNA Processing</li>
     <li>
-      <a href="2_dada2.html">2. DADA2 Workflow</a>
+      <a href="2_dada2.html">2. DADA2</a>
     </li>
     <li>
       <a href="3_data_prep.html">3. Data Prep</a>
@@ -411,13 +411,6 @@ div.tocify {
   </a>
 </li>
 <li>
-  <a href="about.html">
-    <span class="fa fa-user-friends"></span>
-     
-    People
-  </a>
-</li>
-<li>
   <a href="supplemental_material.html">SOM</a>
 </li>
 <li>
@@ -431,18 +424,26 @@ div.tocify {
   <a href="how_to_build_this_site.html">
     <span class="fa fa-question fa-lg"></span>
      
+    About
   </a>
 </li>
 <li>
   <a href="https://github.com/projectdigest/web/">
-    <span class="fa fa-github"></span>
+    <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="raw_code.txt">
-    <span class="fa fa-code"></span>
+    <span class="fa fa-code fa-lg"></span>
      
+  </a>
+</li>
+<li>
+  <a href="people.html">
+    <span class="fa fa-user-friends"></span>
+     
+    People
   </a>
 </li>
       </ul>
@@ -469,14 +470,10 @@ div.tocify {
 <h2>A Simple R Markdown site</h2>
 <p>So basically I used:</p>
 <ul>
-<li><a href="https://www.r-project.org">R</a> code to process and analyze data,<br />
-</li>
-<li><a href="https://rmarkdown.rstudio.com/">Rmarkdown</a> framework to save/execute code and generate high quality HTML reports,<br />
-</li>
-<li><a href="https://rstudio.com/">RStudio</a> and <a href="https://yihui.name/knitr/">kitr</a> to render the site,<br />
-</li>
-<li><a href="https://github.com/">GitHub</a> for version control, and<br />
-</li>
+<li><a href="https://www.r-project.org">R</a> code to process and analyze data,</li>
+<li><a href="https://rmarkdown.rstudio.com/">Rmarkdown</a> framework to save/execute code and generate high quality HTML reports,</li>
+<li><a href="https://rstudio.com/">RStudio</a> and <a href="https://yihui.name/knitr/">kitr</a> to render the site,</li>
+<li><a href="https://github.com/">GitHub</a> for version control, and</li>
 <li><a href="https://pages.github.com/">GitHub Pages</a> for hosting site.</li>
 </ul>
 <p>I scoured the internet for solutions and for inspiration. My design is based partly on <a href="http://merenlab.org/">the Meren Lab</a> website, itself a derivation of <a href="http://mademistakes.com/minimal-mistakes/">MM</a>. I liked the use of white space (large margins), clean font (PT Sans &amp; PT Serif), ample spacing between lines and words, and the use of colored boxes to call out important stuff. There are also many little touches on the site that I appreciate, some of which I shamelessly copied The developers also provide instructions on how to <a href="https://github.com/merenlab/web#how-to-run-a-copy-of-this-website-locally">run their site locally</a>. Nice job Meren Lab.</p>
@@ -489,14 +486,11 @@ div.tocify {
 <h2>Resources</h2>
 <p>Before proceeding I wanted to share some of the resources I returned to over and over again.</p>
 <ul>
-<li><a href="https://internetingishard.com/">Interneting is Hard</a>: Badass, free HTML and CSS course. If you plan on doing any website coding at all, I suggest you start here (or with something similar).<br />
-</li>
+<li><a href="https://internetingishard.com/">Interneting is Hard</a>: Badass, free HTML and CSS course. If you plan on doing any website coding at all, I suggest you start here (or with something similar).</li>
 <li><a href="https://stackoverflow.com/">Stack Overflow</a>: Indispensable community forum where pretty much any question you have has probably been asked and answered.</li>
 <li><a href="https://atom.io">Atom</a>: My go-to text editor for writing HTML, CSS, etc.</li>
-<li><a href="http://scratchpad.io/">scratchpad.io</a>: A realtime HTML + CSS editor. Pretty sweet.<br />
-</li>
-<li><a href="https://www.w3schools.com/">w3schools</a>: Great resource for learning language elements.<br />
-</li>
+<li><a href="http://scratchpad.io/">scratchpad.io</a>: A realtime HTML + CSS editor. Pretty sweet.</li>
+<li><a href="https://www.w3schools.com/">w3schools</a>: Great resource for learning language elements.</li>
 <li><a href="https://developer.mozilla.org/en-US/">MDN web docs</a>: Another great resource for learning language elements.</li>
 <li><a href="https://www.canva.com/colors/color-wheel/">Canva color wheel</a>: Cool app for choosing colors and color combinations.</li>
 <li><a href="https://dev.w3.org/html5/html-author/charref">HTML Entities</a>: List of HTML entities and their codes.</li>
@@ -534,11 +528,7 @@ title: &quot;About This Website&quot;
 Content: Lots of beautiful code, creative analyses, poetic prose...written in R, R Markdown, html, etc.</code></pre>
 <p>While this file is open feel free to add some content, change the title, whatever. Then save the file, rerun <code>rmarkdown::render_site()</code>, and open the <code>_site/index.html</code> file. Boom. Updated website. Pretty slick. If fact every time you add or change something, save the file and run the render command again. You can even just render a single page if the rest are done, so you don’t have to re-render the whole dang thing. Like so…<code>rmarkdown::render_site(&quot;about.Rmd&quot;)</code></p>
 <p>So the base of your website will be different pages written like this and saved as <code>.Rmd</code> files. The <code>.Rmd</code> files will likely be a mix of text and R code but you can also make a site without any R code at all. Anyway, I will leave the rest of this part up to you…</p>
-<p>For now, lets say you want a website with four pages.<br />
-* <code>index.Rmd</code> This will be the landing or home page of the site.<br />
-* <code>about.Rmd</code> A page about you or the project.<br />
-* <code>processing.Rmd</code> A page that has the processing workflow (e.g., <a href="https://benjjneb.github.io/dada2/index.html">DADA2</a>).<br />
-* <code>analytical.Rmd</code> A page that has the analytical workflow (e.g., <a href="https://joey711.github.io/phyloseq/">phyloseq</a>).</p>
+<p>For now, lets say you want a website with four pages. * <code>index.Rmd</code> This will be the landing or home page of the site. * <code>about.Rmd</code> A page about you or the project. * <code>processing.Rmd</code> A page that has the processing workflow (e.g., <a href="https://benjjneb.github.io/dada2/index.html">DADA2</a>). * <code>analytical.Rmd</code> A page that has the analytical workflow (e.g., <a href="https://joey711.github.io/phyloseq/">phyloseq</a>).</p>
 <p>OK, you have all your content and are ready to build the website. But before you do that you need to tell knitr about the new pages. The engine will automatically render all <code>.Rmd</code> files to <code>.html</code> but unless you instruct knitr what to do with the additional files, you will not have any links on the site. Lets open up the <code>_site.yml</code> file (located in the main directory) and have a look.</p>
 <pre><code>name: &quot;my-website&quot;
 navbar:
@@ -562,13 +552,11 @@ navbar:
       href: processing.html
     - text: &quot;Goose Gossage&quot;
       href: analytical.html</code></pre>
-<p>Whatever. That’s it. Assuming your code ran successfully and you got a message after rendering like this…<br />
-<code>Output created: _site/index.html</code><br />
-…your website done. Now you can publish it, tweet about it, and tell your sweet Grandpa to check it out. Below I discuss how I published this site using GitHub and GitPages. I will leave the tweeting and telling Grandpa up to you.</p>
+<p>Whatever. That’s it. Assuming your code ran successfully and you got a message after rendering like this… <code>Output created: _site/index.html</code> …your website done. Now you can publish it, tweet about it, and tell your sweet Grandpa to check it out. Below I discuss how I published this site using GitHub and GitPages. I will leave the tweeting and telling Grandpa up to you.</p>
 </div>
 <div id="adding-style-structure" class="section level2">
 <h2>Adding Style &amp; Structure</h2>
-<p>But maybe you want something more than the super default site. Awesome. The method you choose will depend a lot on what you want and how much time you are willing to invest. As I understand it, you can customize the pre-packaged, Simple R Markdown Website using the YAML file .</p>
+<p>But maybe you want something more than the super default site. Awesome. The method you choose will depend a lot on what you want and how much time you are willing to invest. As I understand it, you can customize the pre-packaged, Simple R Markdown Website using the YAML file.</p>
 <div id="the-yaml-file" class="section level3">
 <h3>The YAML file</h3>
 <p>Perhaps the most straightforward approach to configuring your site is to trick out the <code>_site.yml</code> file. In fact, the YAML file offers a high degree of customiztion and there are several ways to configure a website using just the YAML file. We will go through a couple here.</p>
@@ -586,8 +574,8 @@ navbar:
 <pre><code>?rmarkdown::html_document</code></pre>
 <p>For an intro to the topic of modifying the YAML file, see the awesome book <a href="https://bookdown.org/yihui/rmarkdown/html-document.html#appearance_and_style">R Markdown: The Definitive Guide</a> by <em>Yihui Xie, J. J. Allaire, Garrett Grolemund</em>. If you dig deep enough however, you may soon reach the limits of using the YAML file to modify your site.</p>
 </div>
-<div id="custom-css-file" class="section level3">
-<h3>Custom CSS file</h3>
+<div id="a-custom-css-file" class="section level3">
+<h3>A Custom CSS file</h3>
 <p>If you want more control over the design of your site, the other option is to create your own CSS (Cascading Style Sheets) file. As I understand it, CSS is used to modify the characteristics (height and width, color, font size, etc.) of HTML elements. You can use your own file to override the CSS properties in the pre-packaged themes. To be honest, I found this part to be pretty challenging but I also learned a lot in the process. That said, I am in no position to provide a CSS tutorial, not in the slightest. But from one novice to another, I can give you a little advice if you’re interested in going down this road. The best way to go is to take an online course to properly learn CSS (preferred) or you can do what I did and slog your way through it.</p>
 <p>My general idea was to figure out what elements I wanted to change (or create) and then to figure out how to do it. My not so sophisticated approach was to change something and render the site, then see what the change did (if it did anything at all). So yeah, that was my plan.</p>
 <p>In order to change an element you need to know what its called and what modifications you can make to it. For example, lets say you want to change the font size of Header #3 to 50px and its color to pink. What you need to do is write a little CSS code that calls up Header #3 and specifies these values.</p>
@@ -618,70 +606,20 @@ font-color: #ffc0cb
 </div>
 <div id="publish-your-site" class="section level2">
 <h2>Publish your Site</h2>
-<p>IN PROGRESS</p>
+<p>I chose to host this site on <a href="https://pages.github.com/" target="_blank">GitHub Pages</a> because it is pretty straightforward. The only thing you really need is a GitHub account (which is free) and away you go. There is a complete walkthrough on set up on the GitHub Pages website. Of course there are many other hosting options out there and you may find something more suited to your needs.</p>
+<p><a href="https://projectdigest.github.io/web/" class="uri">https://projectdigest.github.io/web/</a></p>
 <div id="git" class="section level3">
 <h3>Git</h3>
-<p>THESE ARE NOTES</p>
-<p>create <code>.gitignore</code> file if you type <code>git status</code> and its a mess do this first</p>
+<p>So lets say you have successfully setup a GitHub account and a website repository. Sweet. The next thing to do is find a place for the site to live <em>locally</em>. The general idea is you download the repo from GitHub to your machine, do stuff to the repo (i.e., make a website), and then send your changes back.</p>
+<p>After I cloned the directory one of the first things I did was to create <code>.gitignore</code> file. This file tells git what to ignore when pushing changes.</p>
+<p>if you type <code>git status</code> and its a mess do this first</p>
 <p>clone the repo <code>git clone https://github.com/istmobiome/istmobiome.github.io</code>. check the status <code>git status</code> and make sure it is clear. build site</p>
 <p>make a gitignore file (see below) to avoid uploading all the useless crap <code>nano .gitignore</code></p>
 <p>run <code>git status</code> to see whats what. run <code>git pull</code> to make sure everything is up-to-date. then run <code>git add . --dry-run</code> to see what will be added. DO NOT EVER run <code>git add --all</code> before checking that you are happy with this…</p>
-<p><code>git add --all</code> to stage <code>git commit -a  -m &quot;initial DIGEST website commit&quot;</code> <code>git push</code></p>
+<p><code>git add --all</code> to stage <code>git commit -a  -m &quot;initial DIGEST website commit&quot;</code> <code>git push origin master</code></p>
 <p>to remove remotely but keep locally <code>git rm --cache DIGEST/web/*.Rmd</code> <code>git commit -a  -m &quot;remove .Rmd files&quot;</code> <code>git push</code></p>
 <p>in Rstudio</p>
 <p><code>rmarkdown::render_site()</code></p>
-</div>
-<div id="gitignore" class="section level3">
-<h3>.gitignore</h3>
-<pre><code>## General files to ignore ##
-#############################
-# History files
-.Rhistory
-.Rapp.history
-.DS_Store
-
-# Session Data files
-.RData
-
-# User-specific files
-.Ruserdata
-.Rproj.user
-
-# Example code in package build process
-*-Ex.R
-
-# Output files from R CMD build or archives
-*.tar.gz
-*.7z
-*.dmg
-*.gz
-*.iso
-*.jar
-*.rar
-*.tar
-*.zip
-
-# Output files from R CMD check
-/*.Rcheck/
-
-# Temporary files created by R Markdown
-*.utf8.md
-*.knit.md
-
-# Data from processing scripts
-*_read_changes.txt
-DATA/
-
-# DIGEST web files
-web.Rproj
-
-# knitr and R Markdown default cache directories
-*_cache/
-/cache/
-*_files/
-
-# Files from Website rendering in _site/
-site_libs/</code></pre>
 </div>
 </div>
 
