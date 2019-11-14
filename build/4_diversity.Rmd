@@ -22,7 +22,7 @@ What are the dominant taxa in this system? How diverse are these communities? Ho
 
 ***
 
-## Taxonomic composition 
+## Taxonomic Composition 
 
 ### Total reads & ASVs
 
@@ -246,7 +246,7 @@ invisible(dev.off())
 
 Armed with a picture of taxonomic composition we can move on to diversity estimates.
 
-## alpha-diversity
+## Alpha-Diversity
 
 ### Statistical tests
 
@@ -535,7 +535,7 @@ grid.arrange(shan_by_length, shan_by_weight, ncol = 2)
 
 <!--TODO: change boxes and lines to black--add point boarders-->
 
-## beta-diversity
+## Beta-Diversity
 
 Beta diversity basically tells us how similar or dissimilar samples are to one another. Phyloseq offers several ordination `methods` and `distance` metrics. Here we use non metric multidimensional scaling (NMDS) coupled with Jensen–Shannon divergence. We also save a copy of the figure for later tweaking. 
 

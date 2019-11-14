@@ -606,21 +606,8 @@ font-color: #ffc0cb
 </div>
 <div id="publish-your-site" class="section level2">
 <h2>Publish your Site</h2>
-<p>I chose to host this site on <a href="https://pages.github.com/" target="_blank">GitHub Pages</a> because it is pretty straightforward. The only thing you really need is a GitHub account (which is free) and away you go. There is a complete walkthrough on set up on the GitHub Pages website. Of course there are many other hosting options out there and you may find something more suited to your needs.</p>
-<p><a href="https://projectdigest.github.io/web/" class="uri">https://projectdigest.github.io/web/</a></p>
-<div id="git" class="section level3">
-<h3>Git</h3>
-<p>So lets say you have successfully setup a GitHub account and a website repository. Sweet. The next thing to do is find a place for the site to live <em>locally</em>. The general idea is you download the repo from GitHub to your machine, do stuff to the repo (i.e., make a website), and then send your changes back.</p>
-<p>After I cloned the directory one of the first things I did was to create <code>.gitignore</code> file. This file tells git what to ignore when pushing changes.</p>
-<p>if you type <code>git status</code> and its a mess do this first</p>
-<p>clone the repo <code>git clone https://github.com/istmobiome/istmobiome.github.io</code>. check the status <code>git status</code> and make sure it is clear. build site</p>
-<p>make a gitignore file (see below) to avoid uploading all the useless crap <code>nano .gitignore</code></p>
-<p>run <code>git status</code> to see whats what. run <code>git pull</code> to make sure everything is up-to-date. then run <code>git add . --dry-run</code> to see what will be added. DO NOT EVER run <code>git add --all</code> before checking that you are happy with this…</p>
-<p><code>git add --all</code> to stage <code>git commit -a  -m &quot;initial DIGEST website commit&quot;</code> <code>git push origin master</code></p>
-<p>to remove remotely but keep locally <code>git rm --cache DIGEST/web/*.Rmd</code> <code>git commit -a  -m &quot;remove .Rmd files&quot;</code> <code>git push</code></p>
-<p>in Rstudio</p>
-<p><code>rmarkdown::render_site()</code></p>
-</div>
+<p>I chose to host this site on <a href="https://pages.github.com/" target="_blank">GitHub Pages</a> because I thought it would be pretty straightforward. The only thing you really need is a GitHub account (which is free) and away you go. There is a complete walkthrough on set up on the GitHub Pages website. Of course there are many other hosting options out there and you may find something more suited to your needs.</p>
+<p>At some point I may make this a more complete tutorial with step-by-step instructions that include setup on GitHub. But at this moment (1621 hours on a Thursday) I can’t do battle with GitHub anymore. That creepy cat silhouette beat me for now…</p>
 </div>
 
 <footer role="contentinfo" id="site-footer">

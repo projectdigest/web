@@ -24,7 +24,7 @@ Now we want to determine which ASVs are driving these patterns and assess their 
 > C) perform phylogenetic reconstruction on DA ASVs and top hits.
 
 
-## Differential abundance (DA)
+## Differential Abundance (DA)
 
 We used [LDA Effect Size (LEfSe)](https://dx.doi.org/10.1038%2Fnmeth.2658){target="_blank"} to identify differentially abundant (DA) ASVs across host species and the [MicrobiomeAnalyst webserver](http://www.microbiomeanalyst.ca/){target="_blank"} to run the analysis. There are also many other great tools on the MicrobiomeAnalyst webserver by the way. We needed three files for the input---an 'OTU' table, a metadata file containing sample information, and a taxonomy table. We generate these tables with the code below.
 
@@ -89,7 +89,7 @@ Cool, all looks good. Hit `Proceed`. Here are the settings we used for the diffe
 
 ***
 
-## Results of LEfSe analysis
+## Results of LEfSe Analysis
 
 We can inspect and save the results of the LEfSe analysis. The table shows the Linear discriminant analysis (LDA) scores, P-values adjusted for multiple testing, and False Discovery Rate (FDR) values from the LEfSe analysis. Normalized read abundance values for each host species are also given.
 
@@ -118,7 +118,7 @@ datatable(lefse_tab, rownames = FALSE, width = "100%",
 
 ***
 
-## Core microbiome
+## Core Microbiome
 
 Before getting knee deep in the DA ASV analysis lets see if we can't identify some core elements, or ASVs, to these fish. First we need a mothur-formatted `.shared` file. This is the code ...
 
@@ -180,9 +180,9 @@ write.table(cm_Merge_2_df, "DATA/PHYLOSEQ/TABLES/OUTPUT/OTHER/ps_slv_work_filt_c
 Next we use the output to run `get.coremicrobiome` in mothur.
 
 
-## Searching public databases
+## Searching Public Databases
 
-Next we wanted to know where else these ASVs had been detected in nature. There is a huge wealth of publicly available sequence information from many studies and habitats. We can use this information to get a better idea of the distribution and habitat specificity of the DA ASVs. To accomplish this we performed the following steps:
+Next we wanted to know where else these sequences had been detected in nature. There is a huge wealth of publicly available sequence information from many studies and habitats. We can use this information to get a better idea of the distribution and habitat specificity of the DA ASVs. To accomplish this we performed the following steps:
 
 1. First we needed a phyloseq object that only contained the DA ASVs. To do this, we passed an object consisting of just these 59 ASVs (from the LEfSe analysis) to the phyloseq function `prune_taxa`.  We needed two different `ps` objects, one from the unmerged object (`ps_slv_work_filt`) and the other from the merged-by-genus object (`mergedGP`). 
 
@@ -272,7 +272,7 @@ This table also scrolls horizontally.
 
 Several ASVs returned more than one match at 100%. For some ASVs, the 100% matches were from the same study/study organism, so we just selected one as the representative. ASVs 6, 12, 224, and 398 returned numerous 100% matches (out of 50 total). These data were impractical  to summarize and not very informative anyway. So we elected to leave these data out. If you want to see what these hits are, just grab the ASV sequence and BLAST away. 
 
-Also, some ASVs shared the same to hit. Since the table is 'by ASV' we retained all duplicate hits.
+Also, some ASVs shared the same top hit. Since the table is 'by ASV' we retained all duplicate hits.
 
 4. For phylogenetic inference we used the [Silva Alignment, Classification and Tree Service](https://www.arb-silva.de/aligner/){target="_blank"} to obtain neighbors of DA ASVs. We used these settings: 
     + Search and classify: min identity = 0.95; Number of neighbors = 5. 
@@ -281,7 +281,7 @@ Also, some ASVs shared the same to hit. Since the table is 'by ASV' we retained 
 5. We then combined the results of the BLASTn and Silva ACT analyses and omitted duplicate hits, resulting in **297** top hit sequences for phylogenetic analysis.
 
 
-## Phylogenetic inference
+## Phylogenetic Inference
 
 Short read sequences are not ideal for phylogenetic analysis, but given the data we have, we felt this was a good place to start. This analysis required several steps.
 

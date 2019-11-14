@@ -11,7 +11,7 @@ load("DATA/RDS/pw_bite_1.rds")
 
 ***
 
-## Define groups
+## Define Groups
 
 <div class = "notice">
 Now then, on to the microbial data. First, we load the data packet produced by the final step of the DADA2 workflow (Combine_Runs.Rmd), format sample names, and define groupings. We will use the sample names to define the different groups.
@@ -60,7 +60,7 @@ kable(samdf[c(1, 13, 20, 30, 44), 1:3], row.names = FALSE) %>%
 * ScVet = *Scarus vetula*
 * SpChr = *Sparisoma chrysopterum*
 
-## Phyloseq objects
+## Phyloseq Objects
 
 Next we create a phyloseq (ps) object with the Silva (slv) taxonomy. There is also a Greengenes (gg) annotation in the output file from DADA2 which can be used instead of  the Silva annotation. Just change `tax_silva` to `tax_gg`. At this point we rename the amplicon sequence variants (ASVs) so the designations are a bit more user friendly. By default, DADA2 names each ASV by its unique sequence so that data can be directly compared across studies (which is great). But this convention can  get cumbersome downstream, so we rename the ASVs using a simpler convention---ASV1, ASV2, ASV3, and so on, while retaining the exact sequences. 
 
@@ -145,7 +145,7 @@ smax_raw <- as.integer(max(sample_sums(ps_slv_work)))
 
 Looks like the total number of reads in the dataset (after removing unwanted samples) is **`r total_reads_raw`**; range of `r smin_raw` to `r smax_raw` reads per sample and an average of `r smean_raw` reads per sample.
 
-## Remove contaminants
+## Remove Contaminants
 
 These samples are intestinal communities and we assume that Chloroplast are not contributing to metabolism. These data could be useful later but for now lets create a phyloseq object without Chloroplast.
 
@@ -226,7 +226,7 @@ After removing contaminants here is what the final dataset looks like:
 * Range of **`r smin`** to **`r smax`** reads per sample.
 * Average of **`r smean`** reads per sample.
 
-## Merged phyloseq object
+## Merged Phyloseq Object
 
 One last thing to do is to create a merged phyloseq object where samples are grouped by host species. This will come in handy later for some analyses.  
 

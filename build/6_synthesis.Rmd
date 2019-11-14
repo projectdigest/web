@@ -16,14 +16,13 @@ load("DATA/RDS/pw_da_asv_4.rds")
 ***
 
 <div class = "notice">
-Now it was time to put the pieces together and determine...What do these patterns tell us about host specificity? 
+Now it is time to put all of these pieces together and see what picture emerges. What do these patterns tell us about host specificity? 
 </div>
 <p></p>
 
-##  Phylogenetic inference
+##  Phylogenetic Visualization
 
-One of the first things we wanted to know was *where else have these microbes been found*, or more specifically, where else have these *sequences* been found? To get at this question we searched the publically available databases for similar sequences and then used phylogenetic inference to assess similarity. 
-
+<br/>
 
 ### IMNGS analysis
 
@@ -94,7 +93,7 @@ itol_tree_legend
 
 <p></p>
 
-## Inferring lifestyle category
+## Inferring Lifestyle Category
 
 We used the tree to infer the *lifestyle category* of each ASVs based on the  closest relatives in their clade. This was not a quantitative, but rather a user guided determination. Aside from MetaMetaDb (discussed above) we are not aware of any tool currently available to quantitatively assess habitat preference of a 16S rRNA sequence.
 
@@ -214,7 +213,7 @@ datatable(habi_summary,
 
 ***
 
-## Taxa by host
+## Taxa by Host
 
 So we know that Host X is enriched for some ASV from taxa Y. Is this part of a larger pattern or an isolated case? For a given taxonomic group and rank, what proportion of total reads (from all ASVs) were found in a particular host species?  At some point it would be nice if this were an interactive step, but for now we must modify the code below to look at different taxa. This example will look at the family **Desulfovibrionaceae** (Deltaproteopbacteria)
 
@@ -269,7 +268,7 @@ There were a total of **484** Cyanobacteria ASVs across **`r total_taxa_reads_Cy
 
 ***
 
-## DA ASV by host
+## DA ASV by Host
 
 At this point we know which ASVs are enriched in which host species, the lineage of those ASVs, and something about where else these sequences have been detected in nature. Next we would like to know the proportion of total reads for each ASV that is found in each host species. We start with a summary table of these data. 
 
@@ -551,7 +550,7 @@ fig4_heatmap2_disp <- heatmap3(fig4_heatmap2, trace = "none", density = "none",
 
 ***
 
-## Are ASVs & host traits correlated?
+## ASVs & Host Trait Correlation?
 
 To test whether intestinal microbes were associated with **a**) phylogenetic history and/or **b**) foraging ecology of each herbivore, we used a series of simple and partial Mantel tests. Because we expected the relationships to potentially differ for putative resident symbionts vs. ingested environmental generalist microbes, we constructed separate dissimilarity matrices for host- and environment-associated ASVs. These matrices were constructed using the vegan package in R and were based on Bray-Curtis dissimilarity of Hellinger transformed data. The ecological dissimilarity matrix was based on the behavioural data collected to quantify herbivore trophic niche space. 
 

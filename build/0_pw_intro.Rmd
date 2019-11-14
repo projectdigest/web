@@ -85,7 +85,7 @@ In this study, we looked at intestinal microbial communities from five herbivoro
 
 ***
 
-## Workflow overview
+## Workflow Overview
 
 #### <a href="1_field_observations.html">Part 1: Field Observations</a>
 
@@ -121,7 +121,7 @@ Here we provide information on <b>a</b>) other analyses & visualizations, <b>b</
 
 ***
 
-## Color & graphics
+## Color & Graphics
 
 Throughout this workflow we are going to rely on color to help us tell a story. We will use color to delineate host fish species and to delineate microbial taxa. Microbial diversity is pretty vast and it can be difficult to display all of this diversity in a single, static figure. 
 

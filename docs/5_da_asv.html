@@ -492,7 +492,7 @@ div.tocify {
 </ol>
 </blockquote>
 <div id="differential-abundance-da" class="section level2">
-<h2>Differential abundance (DA)</h2>
+<h2>Differential Abundance (DA)</h2>
 <p>We used <a href="https://dx.doi.org/10.1038%2Fnmeth.2658" target="_blank">LDA Effect Size (LEfSe)</a> to identify differentially abundant (DA) ASVs across host species and the <a href="http://www.microbiomeanalyst.ca/" target="_blank">MicrobiomeAnalyst webserver</a> to run the analysis. There are also many other great tools on the MicrobiomeAnalyst webserver by the way. We needed three files for the input—an ‘OTU’ table, a metadata file containing sample information, and a taxonomy table. We generate these tables with the code below.</p>
 <pre class="r"><code>########## OTU table
 OTU1 &lt;-  as(otu_table(ps_slv_work_filt), &quot;matrix&quot;)
@@ -553,7 +553,7 @@ Check the data summary after uploading the files:</p>
 <hr />
 </div>
 <div id="results-of-lefse-analysis" class="section level2">
-<h2>Results of LEfSe analysis</h2>
+<h2>Results of LEfSe Analysis</h2>
 <p>We can inspect and save the results of the LEfSe analysis. The table shows the Linear discriminant analysis (LDA) scores, P-values adjusted for multiple testing, and False Discovery Rate (FDR) values from the LEfSe analysis. Normalized read abundance values for each host species are also given.</p>
 <div class="paper">
 Table S5
@@ -581,7 +581,7 @@ datatable(lefse_tab, rownames = FALSE, width = &quot;100%&quot;,
 <hr />
 </div>
 <div id="core-microbiome" class="section level2">
-<h2>Core microbiome</h2>
+<h2>Core Microbiome</h2>
 <p>Before getting knee deep in the DA ASV analysis lets see if we can’t identify some core elements, or ASVs, to these fish. First we need a mothur-formatted <code>.shared</code> file. This is the code …</p>
 <pre class="r"><code>cm &lt;- read.table(&quot;DATA/PHYLOSEQ/TABLES/OUTPUT/OTHER/seq_tab_for_core.txt&quot;, 
                  sep = &quot;\t&quot;, header = TRUE, row.names = 1)
@@ -638,8 +638,8 @@ write.table(cm_Merge_2_df, &quot;DATA/PHYLOSEQ/TABLES/OUTPUT/OTHER/ps_slv_work_f
 <p>Next we use the output to run <code>get.coremicrobiome</code> in mothur.</p>
 </div>
 <div id="searching-public-databases" class="section level2">
-<h2>Searching public databases</h2>
-<p>Next we wanted to know where else these ASVs had been detected in nature. There is a huge wealth of publicly available sequence information from many studies and habitats. We can use this information to get a better idea of the distribution and habitat specificity of the DA ASVs. To accomplish this we performed the following steps:</p>
+<h2>Searching Public Databases</h2>
+<p>Next we wanted to know where else these sequences had been detected in nature. There is a huge wealth of publicly available sequence information from many studies and habitats. We can use this information to get a better idea of the distribution and habitat specificity of the DA ASVs. To accomplish this we performed the following steps:</p>
 <ol style="list-style-type: decimal">
 <li><p>First we needed a phyloseq object that only contained the DA ASVs. To do this, we passed an object consisting of just these 59 ASVs (from the LEfSe analysis) to the phyloseq function <code>prune_taxa</code>. We needed two different <code>ps</code> objects, one from the unmerged object (<code>ps_slv_work_filt</code>) and the other from the merged-by-genus object (<code>mergedGP</code>).</p></li>
 <li><p>Next we needed a fasta file of our DA ASVs. We could not find an easy way to export a fasta file from the new <code>ps</code> objects. So we tried this using the <code>tax_table</code>. This approach works but, well, it is not very elegant. If you want a fasta file from any other <code>ps</code> objects just swipe out the name of the <code>ps</code> object in the code below. Anyway, we will generate and save a fasta file.</p></li>
@@ -719,7 +719,7 @@ datatable(blast_tab, rownames = FALSE,
 </div>
 <hr />
 <p>Several ASVs returned more than one match at 100%. For some ASVs, the 100% matches were from the same study/study organism, so we just selected one as the representative. ASVs 6, 12, 224, and 398 returned numerous 100% matches (out of 50 total). These data were impractical to summarize and not very informative anyway. So we elected to leave these data out. If you want to see what these hits are, just grab the ASV sequence and BLAST away.</p>
-<p>Also, some ASVs shared the same to hit. Since the table is ‘by ASV’ we retained all duplicate hits.</p>
+<p>Also, some ASVs shared the same top hit. Since the table is ‘by ASV’ we retained all duplicate hits.</p>
 <ol start="4" style="list-style-type: decimal">
 <li>For phylogenetic inference we used the <a href="https://www.arb-silva.de/aligner/" target="_blank">Silva Alignment, Classification and Tree Service</a> to obtain neighbors of DA ASVs. We used these settings:
 <ul>
@@ -731,7 +731,7 @@ datatable(blast_tab, rownames = FALSE,
 </div>
 </div>
 <div id="phylogenetic-inference" class="section level2">
-<h2>Phylogenetic inference</h2>
+<h2>Phylogenetic Inference</h2>
 <p>Short read sequences are not ideal for phylogenetic analysis, but given the data we have, we felt this was a good place to start. This analysis required several steps.</p>
 <ol style="list-style-type: decimal">
 <li>We used <a href="https://www.mothur.org/wiki/" target="_blank">mothur</a> (v.1.42.1, Last updated: 5/13/19) and the <a href="https://www.mothur.org/wiki/Silva_reference_files" target="_blank">Silva full length sequences and taxonomy references (release 132)</a> to align the DA ASVs and our new reference db, and also classify the sequences. We used a <a href="https://www.mothur.org/wiki/Filter.seqs#hard" target="_blank">hard mask</a> to trim all long reads to the same length (~373bp) and 16S region as the ASVs.</li>

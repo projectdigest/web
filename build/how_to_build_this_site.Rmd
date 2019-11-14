@@ -242,48 +242,8 @@ CSS is an entire language and you certainly can't expect to master it overnight.
 
 ## Publish your Site
 
-I chose to host this site on [GitHub Pages](https://pages.github.com/){target="_blank"} because it is pretty straightforward. The only thing you really need is a GitHub account (which is free) and away you go. There is a complete walkthrough on set up on the GitHub Pages website. Of course there are many other hosting options out there and you may find something more suited to your needs.
+I chose to host this site on [GitHub Pages](https://pages.github.com/){target="_blank"} because I thought it would be pretty straightforward. The only thing you really need is a GitHub account (which is free) and away you go. There is a complete walkthrough on set up on the GitHub Pages website. Of course there are many other hosting options out there and you may find something more suited to your needs. 
 
 
-https://projectdigest.github.io/web/
+At some point I may make this a more complete tutorial with step-by-step instructions that include setup on GitHub. But at this moment (1621 hours on a Thursday) I can't do battle with GitHub anymore. That creepy cat silhouette beat me for now...
 
-
-### Git
-
-So lets say you have successfully setup a GitHub account and a website repository. Sweet. The next thing to do is find a place for the site to live *locally*. The general idea is you download the repo from GitHub to your machine, do stuff to the repo (i.e., make a website), and then send  your changes back.
-
-After I cloned the directory one of the first things I did was to create `.gitignore` file. This file tells git what to ignore when pushing changes.
-
-
-
-
-if you type `git status` and its a mess do this first
-
-
-
-clone the repo `git clone https://github.com/istmobiome/istmobiome.github.io`.
-check the status `git status` and make sure it is clear.
-build site
-
-make a gitignore file (see below) to avoid uploading all the useless crap `nano .gitignore`
-
-run `git status` to see whats what.
-run `git pull` to make sure everything is up-to-date.
-then run `git add . --dry-run` to see what will be added. DO NOT EVER run `git add --all` before checking that you are happy with this...
-
-`git add --all` to stage
-`git commit -a  -m "initial DIGEST website commit"`
-`git push origin master`
-
-
-to remove remotely but keep locally
-`git rm --cache DIGEST/web/*.Rmd`
-`git commit -a  -m "remove .Rmd files"`
-`git push`
-
-
-
-
-in Rstudio
-
-`rmarkdown::render_site()`

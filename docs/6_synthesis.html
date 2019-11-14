@@ -492,13 +492,13 @@ div.tocify {
 <p><a href="0_pw_intro.html#workflow_overview">Back to Introduction</a></p>
 <hr />
 <div class="notice">
-<p>Now it was time to put the pieces together and determine…What do these patterns tell us about host specificity?</p>
+<p>Now it is time to put all of these pieces together and see what picture emerges. What do these patterns tell us about host specificity?</p>
 </div>
 <p>
 </p>
-<div id="phylogenetic-inference" class="section level2">
-<h2>Phylogenetic inference</h2>
-<p>One of the first things we wanted to know was <em>where else have these microbes been found</em>, or more specifically, where else have these <em>sequences</em> been found? To get at this question we searched the publically available databases for similar sequences and then used phylogenetic inference to assess similarity.</p>
+<div id="phylogenetic-visualization" class="section level2">
+<h2>Phylogenetic Visualization</h2>
+<p><br/></p>
 <div id="imngs-analysis" class="section level3">
 <h3>IMNGS analysis</h3>
 <p>To dig just a little deeper, we screened our DA ASVs against the <a href="https://www.imngs.org/" target="_blank">IMNGS database</a>. IMNGS hosts a curated database of short-read sequences scraped from the International Nucleotide Sequence Database Collaboration (GenBank, DDBJ and EMBL). The database is rebuilt monthly and at the time of this analysis, contained 271,237 samples. IMNG is really designed to screen full-length 16S rRNA sequences and is not ideal for shorter reads. This is because the database is built from short reads, and different studies target different regions of the gene. For example, if we get no hits to an ASV it could mean the organisms it came from has really not been detected before or that it is in the database but is represented by a different 16S region. So take these data with a grain of salt.</p>
@@ -539,7 +539,7 @@ Figure 3
 </div>
 </div>
 <div id="inferring-lifestyle-category" class="section level2">
-<h2>Inferring lifestyle category</h2>
+<h2>Inferring Lifestyle Category</h2>
 <p>We used the tree to infer the <em>lifestyle category</em> of each ASVs based on the closest relatives in their clade. This was not a quantitative, but rather a user guided determination. Aside from MetaMetaDb (discussed above) we are not aware of any tool currently available to quantitatively assess habitat preference of a 16S rRNA sequence.</p>
 <p>For simplicity we focused on three <em>lifestyle catagories</em> (though we have seven categories in the tree). Our reasoning—again based on the work of Sullam et. al.—was that fish intestines contain microbes that are generalists and possibly of environmental origin (what they eat, where they live), microbes that are there because fish are animals with guts, and microbes that are there because fish are fish and have a physiology and evolutionary history that select specific organisms. Sullam et.al. were also looking at fish from different habitats (freshwater, estuary, marine) and tropic levels (carnivores, herbivores, omnivores) while our study was more narrow in scope.</p>
 <ul>
@@ -655,7 +655,7 @@ datatable(habi_summary,
 </div>
 </div>
 <div id="taxa-by-host" class="section level2">
-<h2>Taxa by host</h2>
+<h2>Taxa by Host</h2>
 <p>So we know that Host X is enriched for some ASV from taxa Y. Is this part of a larger pattern or an isolated case? For a given taxonomic group and rank, what proportion of total reads (from all ASVs) were found in a particular host species? At some point it would be nice if this were an interactive step, but for now we must modify the code below to look at different taxa. This example will look at the family <strong>Desulfovibrionaceae</strong> (Deltaproteopbacteria)</p>
 <div id="proportion-of-total-reads-for-a-given-taxon-rank" class="section level4">
 <h4>Proportion of total reads for a given taxon &amp; rank</h4>
@@ -721,7 +721,7 @@ sample_sums_by_taxa_Cyan</code></pre>
 </div>
 </div>
 <div id="da-asv-by-host" class="section level2">
-<h2>DA ASV by host</h2>
+<h2>DA ASV by Host</h2>
 <p>At this point we know which ASVs are enriched in which host species, the lineage of those ASVs, and something about where else these sequences have been detected in nature. Next we would like to know the proportion of total reads for each ASV that is found in each host species. We start with a summary table of these data.</p>
 <div id="proportion-of-total-asv-reads-per-host-species" class="section level4">
 <h4>Proportion of total ASV reads per host species</h4>
@@ -931,8 +931,8 @@ heatmap3(fig4_heatmap2, cexRow = 0.5, cexCol = 1,
 <hr />
 </div>
 </div>
-<div id="are-asvs-host-traits-correlated" class="section level2">
-<h2>Are ASVs &amp; host traits correlated?</h2>
+<div id="asvs-host-trait-correlation" class="section level2">
+<h2>ASVs &amp; Host Trait Correlation?</h2>
 <p>To test whether intestinal microbes were associated with <strong>a</strong>) phylogenetic history and/or <strong>b</strong>) foraging ecology of each herbivore, we used a series of simple and partial Mantel tests. Because we expected the relationships to potentially differ for putative resident symbionts vs. ingested environmental generalist microbes, we constructed separate dissimilarity matrices for host- and environment-associated ASVs. These matrices were constructed using the vegan package in R and were based on Bray-Curtis dissimilarity of Hellinger transformed data. The ecological dissimilarity matrix was based on the behavioural data collected to quantify herbivore trophic niche space.</p>
 <p>The phylogenetic dissimilarity matrix was based on a phylogenetic tree of the five fish species used in this study. We constructed the tree using cytochrome oxidase subunit 1 (COI) genes retrieved from NCBI’s Nucleotide Database. Clustal Omega was used to align sequences (default settings for DNA). We then used Jalview to manually curate and trim the final alignment to 593 bp. This alignment contained COI genes from n = 5 <em>Scarus taeniopterus</em>, 22 <em>Sparisoma aurofrenatum</em>, 21 <em>Sparisoma viride</em>, 28 <em>Acanthurus coeruleus</em>, and 23 <em>Acanthurus tractus</em>. We used members of the Gerridae (2 <em>Eucinostomus</em> and 4 <em>Gerres</em>) as the outgroup. We used RAxML and the GTR model for tree computation and the GAMMA rate model for likelihoods. The tree was then transformed into a distance matrix using the cophenetic function in R.</p>
 <pre class="r"><code>detach(&quot;package:phyloseq&quot;, unload=TRUE)

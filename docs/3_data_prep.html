@@ -484,7 +484,7 @@ div.tocify {
 <p><a href="0_pw_intro.html#workflow_overview">Back to Introduction</a></p>
 <hr />
 <div id="define-groups" class="section level2">
-<h2>Define groups</h2>
+<h2>Define Groups</h2>
 <div class="notice">
 <p>Now then, on to the microbial data. First, we load the data packet produced by the final step of the DADA2 workflow (Combine_Runs.Rmd), format sample names, and define groupings. We will use the sample names to define the different groups.</p>
 </div>
@@ -602,7 +602,7 @@ SpVir
 </ul>
 </div>
 <div id="phyloseq-objects" class="section level2">
-<h2>Phyloseq objects</h2>
+<h2>Phyloseq Objects</h2>
 <p>Next we create a phyloseq (ps) object with the Silva (slv) taxonomy. There is also a Greengenes (gg) annotation in the output file from DADA2 which can be used instead of the Silva annotation. Just change <code>tax_silva</code> to <code>tax_gg</code>. At this point we rename the amplicon sequence variants (ASVs) so the designations are a bit more user friendly. By default, DADA2 names each ASV by its unique sequence so that data can be directly compared across studies (which is great). But this convention can get cumbersome downstream, so we rename the ASVs using a simpler convention—ASV1, ASV2, ASV3, and so on, while retaining the exact sequences.</p>
 <p>The phyloseq object looks like this:</p>
 <pre class="r"><code># this create the phyloseq object
@@ -672,7 +672,7 @@ smax_raw &lt;- as.integer(max(sample_sums(ps_slv_work)))</code></pre>
 <p>Looks like the total number of reads in the dataset (after removing unwanted samples) is <strong>3120211</strong>; range of 12178 to 182696 reads per sample and an average of 62404 reads per sample.</p>
 </div>
 <div id="remove-contaminants" class="section level2">
-<h2>Remove contaminants</h2>
+<h2>Remove Contaminants</h2>
 <p>These samples are intestinal communities and we assume that Chloroplast are not contributing to metabolism. These data could be useful later but for now lets create a phyloseq object without Chloroplast.</p>
 <div class="warning">
 <p>Caution: the <code>subset_taxa</code> command removes anything that is <code>NA</code> for the specified taxonomic level or above. <strong>For example</strong>, lets say you run the <code>subset_taxa</code> command using <code>Order != &quot;Chloroplast&quot;</code>. Seems like you should get a phyloseq object with everything except Chloroplast. But actually the command not only gets rid Chloroplast but everything else that has <code>NA</code> for Order and above. In our experience this is not well documented and we had to dig through the files to figure out what was happening.</p>
@@ -746,7 +746,7 @@ smax &lt;- as.integer(max(sample_sums(ps_slv_work_filt)))</code></pre>
 </ul>
 </div>
 <div id="merged-phyloseq-object" class="section level2">
-<h2>Merged phyloseq object</h2>
+<h2>Merged Phyloseq Object</h2>
 <p>One last thing to do is to create a merged phyloseq object where samples are grouped by host species. This will come in handy later for some analyses.</p>
 <pre class="r"><code>mergedGP &lt;- merge_samples(ps_slv_work_filt, &quot;Sp&quot;)
 SD &lt;- merge_samples(sample_data(ps_slv_work_filt), &quot;Sp&quot;)
