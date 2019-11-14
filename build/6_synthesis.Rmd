@@ -22,7 +22,8 @@ Now it was time to put the pieces together and determine...What do these pattern
 
 ##  Phylogenetic inference
 
-INSERT TEXT
+One of the first things we wanted to know was *where else have these microbes been found*, or more specifically, where else have these *sequences* been found? To get at this question we searched the publically available databases for similar sequences and then used phylogenetic inference to assess similarity. 
+
 
 ### IMNGS analysis
 
