@@ -1,5 +1,5 @@
 name: "DIGEST"
-output_dir: "../docs/"
+output_dir: "../../projectdigest.github.io/"
 include: [_site.yml]
 navbar:
   title: "DIGEST"
