@@ -245,5 +245,5 @@ CSS is an entire language and you certainly can't expect to master it overnight.
 I chose to host this site on [GitHub Pages](https://pages.github.com/){target="_blank"} because I thought it would be pretty straightforward. The only thing you really need is a GitHub account (which is free) and away you go. There is a complete walkthrough on set up on the GitHub Pages website. Of course there are many other hosting options out there and you may find something more suited to your needs. 
 
 
-At some point I may make this a more complete tutorial with step-by-step instructions that include setup on GitHub. But at this moment (1621 hours on a Thursday) I can't do battle with GitHub anymore. That creepy cat silhouette beat me for now...
+At some point I may make this a more complete tutorial with step-by-step instructions that include setup on GitHub. But at this moment (1621 hours on a Thursday) I can't do battle with GitHub anymore. That creepy silhouetted cat beat me for now...
 
