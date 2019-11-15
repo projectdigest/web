@@ -1,6 +1,7 @@
 name: "DIGEST"
 output_dir: "../../projectdigest.github.io/"
 include: [_site.yml]
+exclude: [DATA]
 navbar:
   title: "DIGEST"
   type: inverse

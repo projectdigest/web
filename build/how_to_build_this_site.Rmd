@@ -201,8 +201,19 @@ There are other ways you can use the YAML file to modify the look of your site. 
 ```
 ?rmarkdown::html_document
 ```
+Or see this [site](https://cran.r-project.org/web/packages/ymlthis/vignettes/yaml-fieldguide.html){target="_blank"} for YAML options.
 
 For an intro to the topic of modifying the YAML file, see the awesome book [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/html-document.html#appearance_and_style) by *Yihui Xie, J. J. Allaire, Garrett Grolemund*. If you dig deep enough however, you may soon reach the limits of using the YAML file to modify your site.
+
+<div class="warning">
+YAML file notes:
+<ul>
+  <li>Use `include: [file_name]` or `exclude: [file_name]` to include or exclude files in the render directory. If specifying an entire directory DO NOT use a backslash. Quotes seem options. </li>
+  <li>Not sure but I think the `_site.yml` file needs to be specifically included (`include: [_site.yml]`).</li>
+  <li>I have no idea what `type: inverse` means under the navbar.</li>
+</ul>
+</div>
+
 
 ### A Custom CSS file
 
@@ -281,4 +292,9 @@ At some point I may make this a more complete tutorial with step-by-step instruc
 
 <a target="_blank" href="todo.html">
   <i class="fas fa-tasks fa-xs"></i>
+</a>
+
+
+<a target="_blank" href="data_files_needed_for_pipeline.txt">
+  <i class="fas fa-file fa-xs"></i>
 </a>
