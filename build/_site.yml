@@ -43,8 +43,7 @@ navbar:
     - text: "Contact"
       icon: fa-phone
       href: contact.html
-    - text: "About"
-      icon: fa-question fa-lg
+    - icon: fa-question
       href: how_to_build_this_site.html
     - icon: fa-github fa-lg
       href: https://github.com/projectdigest/web/

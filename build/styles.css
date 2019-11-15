@@ -141,16 +141,16 @@ pre:not([class]) {
 /*set theme for single backtick code`*/
 code:not([class]) {
    margin: 1px 1px 1px 1px; /*spacing around external words, top right bottom left*/
-   color: #fc6464;
+   color: #BF2727;
    font-size: 0.75em;
    -webkit-border-radius: 2px; /*round corners*/
    border-radius: 3px; /*round corners*/
    font-family: 'Monaco', "Source Code Pro", Consolas, Monaco, Menlo, Consolas, monospace;
-   background-color: #e8e8e8;
+   background-color: #f2f2f2;
    border-style: solid;
    border-width: thin;
    border-color: #545454;
-   padding: 2px 3px;
+   padding: 0px 2px 1px;
  }
 
  /* navbar
