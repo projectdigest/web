@@ -3,9 +3,10 @@
 /* controls general properties of site*/
 body {
   font-family: PT Serif, serif;
-  color: #333332;
+  color: #414141;
   line-height: 1.7;
   font-size: 1.7em;
+  background-color: #FAFAFA;
 }
 
 /* Headers */
@@ -48,9 +49,9 @@ code, kbd, pre, samp, .sourceLine, .sourceCode {
 
 /* changs look of toc */
 .list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
-  color: #ffffff;
+  color: #FAFAFA;
   font: 17px, PT Sans;
-  background-color: #333332;
+  background-color: #414141;
   padding; 5px;
 }
 
@@ -61,9 +62,13 @@ code, kbd, pre, samp, .sourceLine, .sourceCode {
     margin-left: 2%;
     position: fixed;
     border: 1px solid #ccc;
-    background-color: #000000;
+    background-color: #414141;
     border-radius: 6px;
     font-family: PT Sans;
+}
+
+.tocify-item {
+  background-color: #FAFAFA;  
 }
 
 .footer {
@@ -153,11 +158,11 @@ code:not([class]) {
    padding: 0px 2px 1px;
  }
 
- /* navbar
-.navbar {
-     background-color: #fc6464;
-     border-color: #E7E7E7;
- } */
+/*
+.navbar.active {
+  background-color: #333332
+}
+*/
 
 .thumbnail {
   max-width: 100%;
