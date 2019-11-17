@@ -1,45 +1,78 @@
 /* Whole document: */
-@import url('https://fonts.googleapis.com/css?family=PT+Sans|PT+Sans+Narrow|PT+Serif');
+@import url('https://fonts.googleapis.com/css?family=PT+Sans|PT+Sans+Narrow|PT+Serif|Roboto+Condensed|Nunito:300');
 /* controls general properties of site*/
 body {
-  font-family: PT Serif, serif;
-  color: #333332;
+  font-family: "PT Serif", serif;
+  color: #414141;
   line-height: 1.7;
-  font-size: 1.7em;
+  font-size: 17px;
+  background-color: #FAFAFA;
 }
 
 /* Headers */
 h1,h2,h3,h4,h5,h6 {
+  font-family: Nunito, "PT Sans Narrow", "PT Sans", sans-serif;
   margin-top: 64px;
-  font-family: PT Sans Narrow, PT Sans, sans-serif;
 }
+/* Headers */
 
 h1.title {
-font-size: 34px;
+  font-size: 2.3em;
+  text-align: center;
+  margin: 80px 0 60px;
 }
 
 h1 {
-font-size: 34px;
+  font-size: 2.1em;
+  text-align: center;
 }
+
+/* h2 formatting */
+/* below: adding horizontal line on header */
+/* code copied from https://puigcerber.com/2013/03/08/centered-heading-overlaying-a-horizontal-line-with-css/*/
 
 h2 {
-font-size: 30px;
+  font-size: 1.9em;
+  text-align: center;
+  overflow: hidden;
 }
 
+h2::before,
+h2::after {
+  background-color: #000;
+  content: "";
+  display: inline-block;
+  height: 1px;
+  position: relative;
+  vertical-align: middle;
+  width: 50%;
+}
+
+h2::before {
+  right: 0.5em;
+  margin-left: -50%;
+}
+
+h2::after {
+  left: 0.5em;
+  margin-right: -50%;
+}
+/* above: adding horizontal line on header */
+
 h3 {
-font-size: 26px;
+  font-size: 1.6em;
 }
 
 h4 {
-font-size: 24px;
+  font-size: 1.4em;
 }
 
 h5 {
-font-size: 21px;
+  font-size: 1.2em;
 }
 
 h6 {
-font-size: 18px;
+  font-size: 1.1em;
 }
 
 code, kbd, pre, samp, .sourceLine, .sourceCode {

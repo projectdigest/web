@@ -1,85 +1,151 @@
 /* Whole document: */
-@import url('https://fonts.googleapis.com/css?family=PT+Sans|PT+Sans+Narrow|PT+Serif');
+@import url('https://fonts.googleapis.com/css?family=PT+Sans|PT+Sans+Narrow|PT+Serif|Roboto+Condensed|Nunito:300');
 /* controls general properties of site*/
 body {
-  font-family: PT Serif, serif;
+  font-family: "PT Serif", serif;
   color: #414141;
   line-height: 1.7;
-  font-size: 1.7em;
+  font-size: 17px;
   background-color: #FAFAFA;
+}
+
+img {
+  border:1px solid #021a40;
+}
+
+img[src="images/fish_tree_clip_title.png"] {
+  border:0;
+  padding:0;
+}
+
+p:last-of-type {
+  margin-bottom: 0.1em;
+}
+
+ul,ol:last-of-type {
+  margin-bottom: 2em;
 }
 
 /* Headers */
 h1,h2,h3,h4,h5,h6 {
-  margin-top: 64px;
-  font-family: PT Sans Narrow, PT Sans, sans-serif;
+  font-family: Nunito, "PT Sans Narrow", "PT Sans", sans-serif;
 }
+/* Headers */
 
 h1.title {
-font-size: 34px;
+  font-size: 2.7em;
+  text-align: center;
+  margin: 80px 0 60px;
 }
 
 h1 {
-font-size: 34px;
+  font-size: 2.1em;
+  text-align: center;
 }
+
+/* h2 formatting */
+/* below: adding horizontal line on header */
+/* code copied from https://puigcerber.com/2013/03/08/centered-heading-overlaying-a-horizontal-line-with-css/*/
 
 h2 {
-font-size: 30px;
+  font-size: 1.9em;
+  text-align: center;
+  overflow: hidden;
+  page-break-before: always;
+  display:block;
+  padding-bottom: 0.5em;
 }
 
+h2::before,
+h2::after {
+  background-color: #000;
+  content: "";
+  display: inline-block;
+  height: 1px;
+  position: relative;
+  vertical-align: middle;
+  width: 50%;
+}
+
+h2::before {
+  right: 0.5em;
+  margin-left: -50%;
+}
+
+h2::after {
+  left: 0.5em;
+  margin-right: -50%;
+}
+/* above: adding horizontal line on header */
+
 h3 {
-font-size: 26px;
+  font-size: 1.6em;
 }
 
 h4 {
-font-size: 24px;
+  font-size: 1.4em;
 }
 
 h5 {
-font-size: 21px;
+  font-size: 1.2em;
 }
 
 h6 {
-font-size: 18px;
+  font-size: 1.1em;
 }
 
 code, kbd, pre, samp, .sourceLine, .sourceCode {
   font-family: 'Monaco', 'PT Mono', monospace;
 }
 
+.linkboxfont-lg {
+  font-size: 2.0em;
+  font-family: "Roboto Condensed", "PT Sans Narrow", sans-serif;
+}
+
+.linkboxfont-sm {
+  font-size: 1.7em;
+  font-family: "Roboto Condensed", "PT Sans Narrow", sans-serif;
+}
+
+.callout {
+	font-size: 1.4em;
+}
+
 /* changs look of toc */
 .list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
-  color: #FAFAFA;
-  font: 17px, PT Sans;
-  background-color: #414141;
-  padding; 5px;
+  color: #ffffff;
+  font-size: 1em;
+  background-color: #333332;
+  padding: 5px;
+  font-family: "PT Sans";
 }
 
 .tocify {
-    width: 20%;
-    max-height: 90%;
-    overflow: auto;
-    margin-left: 2%;
-    position: fixed;
-    border: 1px solid #ccc;
-    background-color: #414141;
-    border-radius: 6px;
-    font-family: PT Sans;
+  width: 20%;
+  max-height: 90%;
+  overflow: auto;
+  margin-left: 2%;
+  position: fixed;
+  border: 1px solid #ccc;
+  background-color: #414141;
+  border-radius: 6px;
+  font-family: "PT Sans";
 }
 
 .tocify-item {
-  background-color: #FAFAFA;  
+  background-color: #FAFAFA;
 }
 
 .footer {
-   width: 100%;
-   overflow: hidden;
-   box-sizing: border-box;
-   z-index: 3;
-   margin-top: 30px;
-   padding-top: 30px;
-   padding-bottom: 30px;
-   text-align: center;
+  width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  z-index: 3;
+  margin-top: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  text-align: center;
 /* for two column text + the escape */
  }
 
@@ -101,34 +167,42 @@ code, kbd, pre, samp, .sourceLine, .sourceCode {
 }
 
 /* for boxes and call outs*/
-.warning {
-  background-color:#F1AFAE;
-  border-radius: 5px;
-  padding: 10px;
-  margin: 18px 0;
-  font-size: 4
-}
-
-.notice {
+p#opennote {
   background-color:#FBDFB4;
   border-radius: 5px;
-  padding: 10px;
-  margin: 18px 0;
-  font-size: 4
+  padding: 1em 1em 1em 1em;
+  margin: 1em 0 1em 0;
+  font-size: 1.05em;
 }
 
-.steel {
+p#warning {
+  background-color:#F1AFAE;
+  border-radius: 5px;
+  padding: 1em 1em 1em 1em;
+  margin: 1em 0 1em 0;
+  font-size: 1em;
+}
+
+p#notice {
+  background-color:#FBDFB4;
+  border-radius: 5px;
+  padding: 1em 1em 1em 1em;
+  margin: 1em 0 1em 0;
+  font-size: 1em;
+}
+
+p#steel {
   background-color:#C8CFD6;
   border-radius: 5px;
-  padding: 5px;
-  margin: 4px 0;
-  font-size: 4
+  padding: 1em 1em 1em 1em;
+  margin: 1em 0 1em 0;
+  font-size: 0.9em;
 }
 
 .paper {
   color: #fc6464;
   font-size: 1.5em;
-  font-family: PT Serif, serif;
+  font-family: "PT Serif", serif;
 }
 /* this changes background color of Rcode output box */
 /* also seems to control ``` code chunks */
@@ -212,6 +286,7 @@ code:not([class]) {
 	max-width: 100%;
 }
 
-.callout {
-	font-size: 125%;
+hr {
+  border-top: 0.5px solid;
+  border-bottom: 0.5px solid;
 }

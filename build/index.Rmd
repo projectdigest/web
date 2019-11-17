@@ -12,9 +12,9 @@ output:
 
 <br/>
 
-<div class = "notice">
+<p id = "notice">
 Here we provide a <font size="5">completely reproducible workflow</font> of our [study](publication.html){target="_blank"} on the intestinal microbial communities from five species of herbivorous coral reef fishes. The workflow goes through the steps we used to process the raw 16S rRNA marker data and the various tools we used to analyze and interpret  the data. With this workflow you can generate the figures and tables from the paper as well as many additional data products. The workflow is written in R Markdown and contains a mixture plain text and R code. Anyone should be able to reproduce our results with just this workflow and the raw data.
-</div>
+</p>
 
 <br/>
 
@@ -22,14 +22,12 @@ Here we provide a <font size="5">completely reproducible workflow</font> of our 
 
 This website contains our workflows, details on where to find [data/data products](data_availability.html){target="_blank"}, and a variety of other useful information. The site has  many <span class="callout">dynamic</span> components. For example, you can <span class="callout">sort and scroll</span> through most of the tables,  several figures expand when clicked, and one figure is <span class="callout">zoomable</span>. All figures and tables from the final publication are highlighted in <font size="4" color="red">red font</font> to make them easy to identify. The full Supplementary Online material from the paper is also available [here](supplemental_material.html){target="_blank"}. You can choose to <span class="callout">show or hide</span> the R code using the `Code` button in the upper right hand corner of each page (default is mostly hide).  An unannotated version of the R code is also available for download. <span class="callout">Hit the link below</span> to check out the workflow.
 
-<br/>
-
 <div style="text-align:center">
-  <h1>
+  <span class="linkboxfont-sm">
     <button class="favorite styled" type="button">
-      <a href="0_pw_intro.html">Click Here to Proceed to the Workflow</a>
+      <a href="0_pw_intro.html">Proceed to Workflow</a>
     </button>
-  </h1>
+  </span>
 </div>
 
 <br/>

@@ -1,11 +1,11 @@
 ---
-title: "Part 2: DADA2 Workflow for multiple runs"
+title: "N<sup><u>o</u></sup> 2. DADA2 Workflow"
 output:
   html_document:
     code_folding: show
     toc: true
     toc_depth: 3
-    toc_float: 
+    toc_float:
        collapsed: false
     theme: default
     highlight: textmate
@@ -33,17 +33,11 @@ knitr::opts_knit$set(root.dir = getwd())
 ptm <- proc.time()
 ```
 
-<a href="0_pw_intro.html#workflow_overview">Back to Introduction</a>
+<p id = "opennote">
+This document is used to <font size="5">process raw pair-end Illumina data</font> from herbivore reef fish with DADA2. The script will process the data from different runs separately and then combine the runs and finish the DADA2 pipeline. We report both methods and results in plain text and R code. This document presents a completely reproducible workflow of our method for sequence processing.
+</p>
 
-***
-
-<div class = "notice">
-This document is used to process raw pair-end Illumina data from herbivore reef fish with DADA2. The script will process the data from different runs separately and then combine the runs and finish the DADA2 pipeline. Here we report both methods and results in plain text and R code. This document presents a **completely reproducible workflow** of our analysis.
-
-</div>
-<p></p>
-
-***
+<br/>
 
 ## Data Availability
 
@@ -53,28 +47,34 @@ We make several data types available from the DADA2 workflow. For a more complet
 
 * Trimmed data (primers removed) are deposited at the European Nucleotide Archive under the study accession number [PRJEB28397 (ERP110594)](https://www.ebi.ac.uk/ena/data/view/PRJEB28397){target="_blank"}.
 
-* [10.6084/m9.figshare.7357178](https://doi.org/10.6084/m9.figshare.7357178){target="_blank"}: Final output file produce in [Part F: Merge Results & Complete Workflow](#Part F: Merge Samples) of this workflow as well as files for phyloseq analytical workflow. The DADA2 output file is loaded file directly into the phyloseq workflow.  
+* [10.6084/m9.figshare.7357178](https://doi.org/10.6084/m9.figshare.7357178){target="_blank"}: Final output file produce in [Part F: Merge Results & Complete Workflow](#Part F: Merge Samples) of this workflow as well as files for phyloseq analytical workflow. The DADA2 output file is loaded file directly into the phyloseq workflow.
 
 * [10.6084/m9.figshare.6997253](https://doi.org/10.6084/m9.figshare.6997253){target="_blank"}: DOI for this workflow.
 
-***
 
-<div class = "notice">
-This pipeline is exactly how we processed our data but this is not meant to be a  tutorial and we  only provide minimal annotation. There are many great tutorials and explanations out there on [DADA2](https://benjjneb.github.io/dada2/){target="_blank"} amplicon processing that you can dive into. For example [here](https://f1000research.com/articles/5-1492/v2){target="_blank"}, [here](https://benjjneb.github.io/dada2/bigdata.html){target="_blank"}, [here](https://astrobiomike.github.io/amplicon/dada2_workflow_ex){target="_blank"}, and [here](https://benjjneb.github.io/dada2/tutorial.html){target="_blank"}.
+<p id = "opennote">
+This pipeline is <font size ="5">exactly how we processed our data</font>. This however is not meant to be a  tutorial and we  only provide minimal annotation.
+</p>
 
-Depending on the DADA2 version, you may get [slightly different results](https://github.com/benjjneb/dada2/issues/532){target="_blank"} due to fundamental changes in the code-base. This is unavoidable at times and the developers do the best they can to maintain fidelity across versions. To replicate our results exactly, please see the [end of this page](#Appendix: R packages & versions) for the R package and versions used in this workflow. Also, we set random number seeds to ensure full reproducibility (see below).
+There are many great tutorials and explanations out there on [DADA2](https://benjjneb.github.io/dada2/){target="_blank"} amplicon processing that you can dive into. For example [here](https://f1000research.com/articles/5-1492/v2){target="_blank"}, [here](https://benjjneb.github.io/dada2/bigdata.html){target="_blank"}, [here](https://astrobiomike.github.io/amplicon/dada2_workflow_ex){target="_blank"}, and [here](https://benjjneb.github.io/dada2/tutorial.html){target="_blank"}.
 
-In the **upper right hand corner** of this page is a `Code` button. Use this to show or hide all the code in the document (default is show). Let's proceed.  
-</div>
-<p></p>
+In the upper right hand corner of this page is a `Code` button. Use this to show or hide all the code in the document (default is show).
+
+<p id = "warning">
+Depending on your DADA2 version, you may get [slightly different results](https://github.com/benjjneb/dada2/issues/532){target="_blank"} due to fundamental changes in the code-base. This is unavoidable at times (with any software) and  developers do their best to maintain fidelity across versions. To replicate our results exactly, please see the [end of this page](#Appendix: R packages & versions) for the R package and versions used in this workflow. Also, we set random number seeds to ensure full reproducibility (see below).
+</p>
+
+Let's proceed.
+
+<br/>
 
 ## Workflow Overview
 
-This is a workflow for processing the raw 16S rRNA Illumina data for the herbivorous reef fish microbiome study. We sequenced the fore, mid, and hind gut from 53 individual fish. The original dataset contained 7 species from 3 genera. *Sparisoma chrysopterum* and *Scarus vetula* were only represented by 1 and 2 individuals, respectively, and were omitted from the final study, however we included those samples in our pipeline and remove them before analysis. 
+This is a workflow for processing the raw 16S rRNA Illumina data for the herbivorous reef fish microbiome study. We sequenced the fore, mid, and hind gut from 53 individual fish. The original dataset contained 7 species from 3 genera. *Sparisoma chrysopterum* and *Scarus vetula* were only represented by 1 and 2 individuals, respectively, and were omitted from the final study, however we included those samples in our pipeline and remove them before analysis.
 
-In addition, many samples were re-sequenced and thus processed separately here before being merged during prior to analysis. There are data for 3 runs--all workflows are identical. We sequenced 144 samples in the first run (Run01) and then the sequencing center re-sequenced those samples because of lower than agreed upon yield (Run02). We then sequenced the remaining 15 samples (5 individuals) on a separate run (Run03). 
+In addition, many samples were re-sequenced and thus processed separately here before being merged during prior to analysis. There are data for 3 runs--all workflows are identical. We sequenced 144 samples in the first run (Run01) and then the sequencing center re-sequenced those samples because of lower than agreed upon yield (Run02). We then sequenced the remaining 15 samples (5 individuals) on a separate run (Run03).
 
-***
+<br/>
 
 ### File naming
 
@@ -82,19 +82,19 @@ In the original raw data, fastq files are named using the following convention f
 
 <left><font size="4" color="red">RunQ_GnSpe000_G</font></left>
 
-Where: 
+Where:
 
-* **Q** is the run number (1, 2, or 3) 
-* **GnSpe** is the host Genus and species 
-    + AcCoe = *Acanthurus coeuleus* 
-    + AcTra = *Acanthurus tractus* 
+* **Q** is the run number (1, 2, or 3)
+* **GnSpe** is the host Genus and species
+    + AcCoe = *Acanthurus coeuleus*
+    + AcTra = *Acanthurus tractus*
     + ScTae = *Scarus taeniopterus*
     + SpAur = *Sparisoma aurofrenatum*
     + SpVir = *Sparisoma viride*
     + ScVet = *Scarus vetula*
     + SpChr = *Sparisoma chrysopterum*
-* **000** is the unique host ID number 
-* **G** is the gut segment 
+* **000** is the unique host ID number
+* **G** is the gut segment
     + F = foregut
     + M = midgut
     + H = hindgut
@@ -105,15 +105,15 @@ So...
 
 ...corresponds to the reverse reads (R2) of the foregut from *Sparisoma viride* individual #8, Run1.
 
-***
-
-<a id="back to top"></a> 
+<br/>
 
 ### Workflow sections
 
+<br/>
+
 #### [Part A: Preprocessing](#Part A: Preprocessing)
 
-* Use [cutadapt](http://cutadapt.readthedocs.io/en/stable/guide.html){target="_blank"} to trim adapters from raw reads.  
+* Use [cutadapt](http://cutadapt.readthedocs.io/en/stable/guide.html){target="_blank"} to trim adapters from raw reads.
 * Merge gut segments per individual per run using [mothur](https://www.mothur.org/){target="_blank"}.
 
 #### [Part B: File Prep](#Part B: File Prep)
@@ -135,28 +135,22 @@ This part of the workflow has several important steps.
 * Construct sequence table
 * Export files
 
-At this point in the workflow we are finished processing the individual runs. To construct our final dataset we will combine the runs, check for chimeras, and assign taxonomy. However, before we do that we are first going to continue processing the individual runs so we can see how each run performed through each step of the workflow, including the removal of chimeras. Run time is displayed after this step.
-
 #### [Part E: Continuation with Individual Samples](#Part E: Continuation with Individual Samples)
+
+At this point in the workflow we are finished processing the individual runs. To construct our final dataset we will combine the runs, check for chimeras, and assign taxonomy. However, before we do that we are first going to continue processing the individual runs so we can see how each run performed through each step of the workflow, including the removal of chimeras. Run time is displayed after this step. Note: Run time is displayed after this step.
 
 * Identify & remove chimeras
 * Track changes through each step
 
-Run time is displayed after this step.
-
 #### [Part F: Merge Results & Complete Workflow](#Part F: Merge Results & Complete Workflow)
 
-Here we combine the replicate runs Run01 and Run02, and then add in Run03. We followed [this recipe](https://benjjneb.github.io/dada2/bigdata_paired.html){target="_blank"} for merging samples.
+Here we combine the replicate runs Run01 and Run02, and then add in Run03. We followed [this recipe](https://benjjneb.github.io/dada2/bigdata_paired.html){target="_blank"} for merging samples. Run time is also displayed after this step.
 
-Run time is displayed after this step.
+<a id="Part A: Preprocessing"></a>
 
-***
-
-<a id="Part A: Preprocessing"></a>  
+<br/>
 
 ## Part A: Preprocessing
-
-[back to top](#back to top)
 
 1. Run `catadapt` on all `fastq` files to trim adapters.
 
@@ -168,30 +162,32 @@ Where:
 
 * `-g` is GTGYCAGCMGCCGCGGTA
 * `-G` is CCGYCAATTYMTTTRAGT
-* and `R1` and `R2` are the forward and reverse reads, respectively. 
+* and `R1` and `R2` are the forward and reverse reads, respectively.
 
 This will yield a ~375 bp amplicon.
 
-2. Next, we used `mothur` to combine the `R1` fore-, mid-, and hind- gut fastq files from each host. If you wish to analyze gut segments individually, skip this step. We repeated the process for the `R2` reads. 
+2. Next, we used `mothur` to combine the `R1` fore-, mid-, and hind- gut fastq files from each host. If you wish to analyze gut segments individually, skip this step. We repeated the process for the `R2` reads.
 
 Lets use sample `AcCoe01` as an example from `Run1`
-where `F = foregut`, `M = midgut`, and `H = hindgut` 
+where `F = foregut`, `M = midgut`, and `H = hindgut`
 
 ```
 mothur"#merge.files(input=Run1_AcCoe01_F_R1_001.trimmed.fastq-Run1_AcCoe01_M_R1_001.trimmed.fastq-Run1_AcCoe01_H_R1_001.trimmed.fastq, output=AcCoe01_1_R1.fastq)"
 ```
 
-mothur` uses the dash(-) to distinguish between files to be merged so make sure your file names do not have dashes.  
+mothur` uses the dash(-) to distinguish between files to be merged so make sure your file names do not have dashes.
 
-For programmatic reasons we chose to drop the `Run` prefix from the output merged file and instead delineate run id with `_1_`. This is probably a little confusing so change as you see fit. 
+For programmatic reasons we chose to drop the `Run` prefix from the output merged file and instead delineate run id with `_1_`. This is probably a little confusing so change as you see fit.
 
-These file will be the input for the `DADA2` workflow and are stored in the `02_MERGED/` directory. To simplify things a little, variables for RUN01 have the suffix `X1`, RUN02 is `Y2`, and RUN03 is `Z3`. 
+These file will be the input for the `DADA2` workflow and are stored in the `02_MERGED/` directory. To simplify things a little, variables for RUN01 have the suffix `X1`, RUN02 is `Y2`, and RUN03 is `Z3`.
+
+<br/>
 
 ## Part B: File Prep
 
-<a id="Part B: File Prep"></a>  
+<a id="Part B: File Prep"></a>
 
-[back to top](#back to top)
+<br/>
 
 #### Set the working directory & prep files
 
@@ -205,7 +201,7 @@ path_Z3 <- "DATA/02_MERGED/RUN03/INPUT_FILES/"
 head(list.files(path_Z3))
 ```
 
-Here we see a list of files in the directory. All looks good. 
+Here we see a list of files in the directory. All looks good.
 
 ```{r sort_files, cache=TRUE}
 fnFs_X1 <- sort(list.files(path_X1, pattern = "_R1.merged.fastq"))
@@ -232,17 +228,19 @@ fnFs_Z3 <-file.path(path_Z3, fnFs_Z3)
 fnRs_Z3 <-file.path(path_Z3, fnRs_Z3)
 ```
 
+<br/>
+
 ## Part C: DADA2 Workflow
 
-<a id="Part C: DADA2 Workflow"></a>  
+<a id="Part C: DADA2 Workflow"></a>
 
-[back to top](#back to top)
+<br/>
 
 ### Quality assessment
 
-<a id="Quality assessment"></a>  
+<a id="Quality assessment"></a>
 
-First let's look at the quality of our reads. The numbers in brackets specify which samples to view. Here we are looking at three samples per run. 
+First let's look at the quality of our reads. The numbers in brackets specify which samples to view. Here we are looking at three samples per run.
 
 **Forward**
 
@@ -262,9 +260,11 @@ plotQualityProfile(fnRs_Z3[2:4])
 
 The reverse reads are so so  but the forward reads look pretty good. We will deal with the low quality of reverse reads in subsequent steps.
 
+<br/>
+
 ### Filtering
 
-<a id="Filtering"></a>  
+<a id="Filtering"></a>
 
 ```{r move_files, cache=TRUE}
 #Place filtered files in filtered/ subdirectory
@@ -283,30 +283,30 @@ filtRs_Z3 <- file.path(filt_path_Z3, paste0(sample.names_Z3, "_R_filt.fastq.gz")
 
 
 ```{r filter, cache=TRUE}
-out_X1 <- filterAndTrim(fnFs_X1, filtFs_X1, fnRs_X1, filtRs_X1, 
-                        truncLen=c(260,160), maxN=0, maxEE=c(2,5), 
-                        truncQ=2, rm.phix=TRUE, compress=TRUE, 
+out_X1 <- filterAndTrim(fnFs_X1, filtFs_X1, fnRs_X1, filtRs_X1,
+                        truncLen=c(260,160), maxN=0, maxEE=c(2,5),
+                        truncQ=2, rm.phix=TRUE, compress=TRUE,
                         multithread=TRUE)
 head(out_X1)
 
-out_Y2 <- filterAndTrim(fnFs_Y2, filtFs_Y2, fnRs_Y2, filtRs_Y2, 
-                        truncLen=c(260,160), maxN=0, maxEE=c(2,5), 
-                        truncQ=2, rm.phix=TRUE, compress=TRUE, 
+out_Y2 <- filterAndTrim(fnFs_Y2, filtFs_Y2, fnRs_Y2, filtRs_Y2,
+                        truncLen=c(260,160), maxN=0, maxEE=c(2,5),
+                        truncQ=2, rm.phix=TRUE, compress=TRUE,
                         multithread=TRUE)
 head(out_Y2)
 
-out_Z3 <- filterAndTrim(fnFs_Z3, filtFs_Z3, fnRs_Z3, filtRs_Z3, 
-                        truncLen=c(260,140), maxN=0, maxEE=c(2,5), 
-                        truncQ=2, rm.phix=TRUE, compress=TRUE, 
+out_Z3 <- filterAndTrim(fnFs_Z3, filtFs_Z3, fnRs_Z3, filtRs_Z3,
+                        truncLen=c(260,140), maxN=0, maxEE=c(2,5),
+                        truncQ=2, rm.phix=TRUE, compress=TRUE,
                         multithread=TRUE)
 head(out_Z3)
 ```
 
+<br/>
+
 ### Learn error rates
 
-<a id="Learn error rate"></a> 
-
-[back to top](#back to top)
+<a id="Learn error rate"></a>
 
 **Forward**
 ```{r learn_errors_forward, cache=TRUE}
@@ -322,6 +322,8 @@ errR_Y2 <- learnErrors(filtRs_Y2, multithread = TRUE)
 errR_Z3 <- learnErrors(filtRs_Z3, multithread = TRUE)
 ```
 
+<br/>
+
 ### Plot error
 
 ```{r plot_error, warning=FALSE, cache=TRUE}
@@ -330,11 +332,11 @@ plotErrors(errR_Y2, nominalQ=TRUE)
 plotErrors(errR_Z3, nominalQ=TRUE)
 ```
 
+<br/>
+
 ### Dereplicate reads
 
-<a id="Dereplicate reads"></a> 
-
-[back to top](#back to top)
+<a id="Dereplicate reads"></a>
 
 To see the results of the `derepFastq` command for forward and reverse reads, add the flag `verbose = TRUE`. We have omitted it here because it takes up a lot of space and the data is summarized at the end anyway.
 
@@ -364,11 +366,11 @@ derepRs_Z3 <- derepFastq(filtRs_Z3)
 names(derepRs_Z3) <- sample.names_Z3
 ```
 
+<br/>
+
 ### Infer sequence variants
 
-<a id="Run DADA2 & Infer Sequence Variants"></a> 
-
-[back to top](#back to top)
+<a id="Run DADA2 & Infer Sequence Variants"></a>
 
 ```{r run_dada2_forward, cache=TRUE}
 #Run01
@@ -394,11 +396,11 @@ dadaRs_Z3 <- dada(derepRs_Z3, err = errR_Z3, multithread = TRUE)
 dadaRs_Z3[[1]]
 ```
 
+<br/>
+
 ## Part D: Merge Paired Reads
 
-<a id="Part D: Merge Paired Reads"></a> 
-
-[back to top](#back to top)
+<a id="Part D: Merge Paired Reads"></a>
 
 To see the results of the `mergePairs` command for each run, add the flag `verbose = TRUE`. We have omitted it here because it takes up a lot of space and the data is summarized at the end anyway.
 
@@ -414,9 +416,11 @@ head(mergers_Y2[[1]])
 head(mergers_Z3[[1]])
 ```
 
+<br/>
+
 ### Sequence table
 
-<a id="Construct sequence table"></a> 
+<a id="Construct sequence table"></a>
 
 ```{r seq_table, cache=TRUE}
 #Run01
@@ -448,9 +452,11 @@ dim(seqtab_Z3.2)
 table(nchar(getSequences(seqtab_Z3.2)))
 ```
 
+<br/>
+
 ### Export files
 
-<a id="Export files"></a> 
+<a id="Export files"></a>
 
 Save the data to use in the next part of the workflow workflow. For our final analysis (Part VI), we will combine these outputs and the screen for chimeras/assign taxonomy.
 
@@ -468,11 +474,11 @@ proc.time() - ptm
 
 > This part of the workflow is finished
 
+<br/>
+
 ## Part E: Individual Samples
 
-<a id="Part E: Continuation with Individual Samples"></a> 
-
-[back to top](#back to top)
+<a id="Part E: Continuation with Individual Samples"></a>
 
 > Optional steps to process individual runs
 
@@ -480,76 +486,79 @@ We were interested in the overall performance of each run and wanted to gauge ho
 
 To see the results of the `removeBimeraDenovo` command in the console output, add the flag `verbose = TRUE` to the code chunk. We have omitted it here because it takes up a lot of space. This data is summarized at the end anyway so you're not missing out.
 
+<br/>
+
 ### Remove chimeras
 
-<a id="Identify & remove chimeras"></a> 
+<a id="Identify & remove chimeras"></a>
 
 ```{r chimera_on_ind_runs, cache=TRUE}
 #Run01
-seqtab_X1.2.nochim <- removeBimeraDenovo(seqtab_X1.2, 
+seqtab_X1.2.nochim <- removeBimeraDenovo(seqtab_X1.2,
                                          method="consensus", multithread=TRUE)
 dim(seqtab_X1.2.nochim)
 sum(seqtab_X1.2.nochim)/sum(seqtab_X1.2)
 #Run02
-seqtab_Y2.2.nochim <- removeBimeraDenovo(seqtab_Y2.2, 
+seqtab_Y2.2.nochim <- removeBimeraDenovo(seqtab_Y2.2,
                                          method="consensus", multithread=TRUE)
 dim(seqtab_Y2.2.nochim)
 sum(seqtab_Y2.2.nochim)/sum(seqtab_Y2.2)
 #Run03
-seqtab_Z3.2.nochim <- removeBimeraDenovo(seqtab_Z3.2, 
+seqtab_Z3.2.nochim <- removeBimeraDenovo(seqtab_Z3.2,
                                          method="consensus", multithread=TRUE)
 dim(seqtab_Z3.2.nochim)
 sum(seqtab_Z3.2.nochim)/sum(seqtab_Z3.2)
 ```
 
-### Track read changes 
+<br/>
 
-<a id="Track changes through each step"></a> 
+### Track read changes
+
+<a id="Track changes through each step"></a>
 
 ```{r build_table_to_track_reads, cache=TRUE}
 #Run01
 getN_X1 <- function(x) sum(getUniques(x))
-track_X1 <- cbind(out_X1, sapply(dadaFs_X1, getN_X1), 
-                  sapply(dadaRs_X1, getN_X1), sapply(mergers_X1, getN_X1), 
+track_X1 <- cbind(out_X1, sapply(dadaFs_X1, getN_X1),
+                  sapply(dadaRs_X1, getN_X1), sapply(mergers_X1, getN_X1),
                   rowSums(seqtab_X1.2.nochim))
-colnames(track_X1) <- c("input", "filtered", "denoisedF", 
+colnames(track_X1) <- c("input", "filtered", "denoisedF",
                         "denoisedR", "merged", "nonchim")
 rownames(track_X1) <- sample.names_X1
 #Run02
 getN_Y2 <- function(x) sum(getUniques(x))
-track_Y2 <- cbind(out_Y2, sapply(dadaFs_Y2, getN_Y2), 
-                  sapply(dadaRs_Y2, getN_Y2), sapply(mergers_Y2, getN_Y2), 
+track_Y2 <- cbind(out_Y2, sapply(dadaFs_Y2, getN_Y2),
+                  sapply(dadaRs_Y2, getN_Y2), sapply(mergers_Y2, getN_Y2),
                   rowSums(seqtab_Y2.2.nochim))
-colnames(track_Y2) <- c("input", "filtered", "denoisedF", 
+colnames(track_Y2) <- c("input", "filtered", "denoisedF",
                         "denoisedR", "merged", "nonchim")
 rownames(track_Y2) <- sample.names_Y2
 #Run03
 getN_Z3 <- function(x) sum(getUniques(x))
-track_Z3 <- cbind(out_Z3, sapply(dadaFs_Z3, getN_Z3), 
-                  sapply(dadaRs_Z3, getN_Z3), sapply(mergers_Z3, getN_Z3), 
+track_Z3 <- cbind(out_Z3, sapply(dadaFs_Z3, getN_Z3),
+                  sapply(dadaRs_Z3, getN_Z3), sapply(mergers_Z3, getN_Z3),
                   rowSums(seqtab_Z3.2.nochim))
-colnames(track_Z3) <- c("input", "filtered", "denoisedF", 
+colnames(track_Z3) <- c("input", "filtered", "denoisedF",
                         "denoisedR", "merged", "nonchim")
 rownames(track_Z3) <- sample.names_Z3
 ```
 
-
 ```{r track_changes, cache=TRUE}
 #Run01
 track_X1
-write.table(track_X1, "RUN01_read_changes.txt", 
+write.table(track_X1, "RUN01_read_changes.txt",
             sep = "\t", quote = FALSE, col.names=NA)
 #Run02
 track_Y2
-write.table(track_Y2, "RUN02_read_changes.txt", 
+write.table(track_Y2, "RUN02_read_changes.txt",
             sep = "\t", quote = FALSE, col.names=NA)
 #Run03
 track_Z3
-write.table(track_Z3, "RUN03_read_changes.txt", 
+write.table(track_Z3, "RUN03_read_changes.txt",
             sep = "\t", quote = FALSE, col.names=NA)
 ```
 
-Next we save the output of for each run. This is optional but nice if you want to analyze each run separately in phyloseq. You would need to add a taxonomy classification step first before exporting. 
+Next we save the output of for each run. This is optional but nice if you want to analyze each run separately in phyloseq. You would need to add a taxonomy classification step first before exporting.
 
 ```{r save_rds2, cache=TRUE}
 saveRDS(seqtab_X1.2.nochim, "DATA/02_MERGED/RUN01/seqtab_X1.2.nochim.rds")
@@ -563,20 +572,19 @@ Save the whole thing in case you need to rerun...
 save.image("DATA/02_MERGED/pre_combo_pipeline.rdata")
 ```
 
-
 Processing time...
 
 ```{r proc_time_2, cache=TRUE}
 proc.time() - ptm
 ```
 
-<a id="Part F: Merge Results & Complete Workflow"></a>  
+<a id="Part F: Merge Results & Complete Workflow"></a>
+
+<br/>
 
 ## Part F: Merge Samples
 
-[back to top](#back to top)
-
-First we need to clear everything up to this point...  
+First we need to clear everything up to this point...
 
 ```{r clear_data, cache=TRUE}
 remove(list = ls())
@@ -595,6 +603,8 @@ seqtab.2 <- readRDS("DATA/02_MERGED/RUN02/seqtab_Y2.2.rds")
 seqtab.3 <- readRDS("DATA/02_MERGED/RUN03/seqtab_Z3.2.rds")
 ```
 
+<br/>
+
 #### Combine Run01 & Run02 (the duplicates)
 
 Put samples in the 2 sequence tables in the same order
@@ -605,6 +615,8 @@ rownames(seqtab.2) <- sapply(strsplit(rownames(seqtab.2), "_"), `[`, 1)
 identical(sort(rownames(seqtab.1)), sort(rownames(seqtab.2))) # Should be TRUE
 seqtab.2 <- seqtab.2[rownames(seqtab.1),]
 ```
+
+<br/>
 
 #### Make matrix summing the sequence tables
 
@@ -622,6 +634,8 @@ st.sum[,colnames(seqtab.2)] <- st.sum[,colnames(seqtab.2)] + seqtab.2
 saveRDS(st.sum, "DATA/02_MERGED/combo_run1_run2.rds")
 ```
 
+<br/>
+
 #### Merge sequence tables from combo_run1_run2 & seqtab.3
 
 ```{r merge_combo, cache=TRUE}
@@ -631,22 +645,25 @@ seqtab.3 <- readRDS("DATA/02_MERGED/RUN03/seqtab_Z3.2.rds")
 st.all <- mergeSequenceTables(combo, seqtab.3)
 ```
 
-#### Run chimera removal & assign taxonomy  
 
-There are several database options for taxonomic assignment, including Silva, RDP TrainSet, Greengenes, etc... You will need to download a [DADA2-formatted reference database](https://benjjneb.github.io/dada2/training.html){target="_blank"}. We used both Silva version 132 and GreenGenes version 13.8. 
+<br/>
+
+#### Run chimera removal & assign taxonomy
+
+There are several database options for taxonomic assignment, including Silva, RDP TrainSet, Greengenes, etc... You will need to download a [DADA2-formatted reference database](https://benjjneb.github.io/dada2/training.html){target="_blank"}. We used both Silva version 132 and GreenGenes version 13.8.
 
 ```{r chimera_on_combined_runs, cache=TRUE}
 seqtab <- removeBimeraDenovo(st.all, method="consensus", multithread=TRUE)
 ```
 
-`assignTaxonomy` implements the naive Bayesian classifier, so for reproducible results you need to set a random number seed (see issue [#538](https://github.com/benjjneb/dada2/issues/538){target="_blank"}). 
+`assignTaxonomy` implements the naive Bayesian classifier, so for reproducible results you need to set a random number seed (see issue [#538](https://github.com/benjjneb/dada2/issues/538){target="_blank"}).
 
 ```{r assign_tax, cache=TRUE, eval = FALSE}
 set.seed(119)#for reproducability
-tax_gg <- assignTaxonomy(seqtab, "gg_13_8_train_set_97.fa.gz", 
+tax_gg <- assignTaxonomy(seqtab, "gg_13_8_train_set_97.fa.gz",
                          multithread=TRUE)
 set.seed(911)#for reproducability
-tax_silva <- assignTaxonomy(seqtab, "silva_nr_v132_train_set.fa.gz", 
+tax_silva <- assignTaxonomy(seqtab, "silva_nr_v132_train_set.fa.gz",
                             multithread = TRUE)
 ```
 
@@ -654,7 +671,7 @@ tax_silva <- assignTaxonomy(seqtab, "silva_nr_v132_train_set.fa.gz",
 save.image("DATA/02_MERGED/combo_pipeline.rdata")
 ```
 
-The DADA2 analysis is now complete. Next we used [phyloseq](https://joey711.github.io/phyloseq/) and the `combo_pipeline.rdata` output file for the subsequent community analysis. 
+The DADA2 analysis is now complete. Next we used [phyloseq](https://joey711.github.io/phyloseq/) and the `combo_pipeline.rdata` output file for the subsequent community analysis.
 
 Processing time...
 
@@ -662,27 +679,22 @@ Processing time...
 proc.time() - ptm
 ```
 
+<br/>
 
-</br>
-
-<div style="text-align:center">
-  <h4>
+<div style="text-align:right">
+  <span class="linkboxfont-sm">
     <button class="favorite styled" type="button">
-      <a href="3_data_prep.html">Go to Part 3, Data Preparation</a>
+      <a href="3_data_prep.html">N<sup><u>o</u></sup> 3. Data Preparation -></a>
     </button>
-  </h4>
+  </span>
 </div>
 
 
-<br>
-
-***
+<br/>
 
 ## R packages & Systems Information
 
-<a id="Appendix: R packages & versions"></a> 
-
-[back to top](#back to top)
+<a id="Appendix: R packages & versions"></a>
 
 This pipeline was run on a 2018 MacBook Pro, OSX 10.13.6 with a 3.5 GHz Intel Core i7 processor and 16 GB of memory. Below are the specific packages and versions used in this workflow using both `sessionInfo()` and `devtools::session_info()`.
 
@@ -691,19 +703,12 @@ sessionInfo()
 devtools::session_info()
 ```
 
+<br/>
 
-***
-
-
-</br>
-
-<div style="text-align:center">
-  <h4>
+<div style="text-align:right">
+  <span class="linkboxfont-sm">
     <button class="favorite styled" type="button">
-      <a href="3_data_prep.html">Go to Part 3, Data Preparation</a>
+      <a href="3_data_prep.html">N<sup><u>o</u></sup> 3. Data Preparation -></a>
     </button>
-  </h4>
+  </span>
 </div>
-
-
-<br>

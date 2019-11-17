@@ -1,5 +1,5 @@
 ---
-title: "Part 6: Synthesis"
+title: "N<sup><u>o</u></sup> 6. Synthesis"
 output:
   html_document:
     toc_float:
@@ -11,14 +11,11 @@ output:
 load("DATA/RDS/pw_da_asv_4.rds")
 ```
 
-<a href="0_pw_intro.html#workflow_overview">Back to Introduction</a>
+<p id = "opennote">
+Now it is time to <font size="5">put the pieces together</font> and see what pictures emerge. What do these patterns tell us about host specificity?
+</p>
 
-***
-
-<div class = "notice">
-Now it is time to put all of these pieces together and see what picture emerges. What do these patterns tell us about host specificity?
-</div>
-<p></p>
+<br/>
 
 ##  Phylogenetic Visualization
 
@@ -44,9 +41,13 @@ IMNGS provides three such reports based on the abundance of your query sequence.
 
 We report data from 97% cutoff identity and 0.1% of total reads in a sample. I think this is a little confusing so let me explain by example. In the tree below, ASV398 is most closely related to an Alphaproteobacteria associated with the toxic benthic marine dinoflagellate, *Ostreopsis ovata*. We retrieved this sequence during the BLASTn analysis discussed above. Anyway, ASV398 was screened against IMNGS and returned 2460 hits. This means that at 97% identity, 2460 samples had an ASV398-like sequence comprising greater than 0.1% of a given samples total number of sequences. If for example we increase the percent identity to 99% the number of sample hits drops to 138. If instead we look at the 0% report (97% identity), the number of sample hits increases to 6323.
 
+<br/>
+
 ### Sullam lifestyle categories
 
 We also compared the final list of top hits to the [Sullam et. al.](https://doi.org/10.1111/j.1365-294X.2012.05552.x){target="_blank"} paper, specifically **Table S1 ** from that paper. Because this paper was published in 2012, there were many sequence hits in our db that did not appear in the original paper. However, for those that did, we added the Sullam *lifestyle category* designations to the tree metadata.
+
+<br/>
 
 ### Putting the pieces together
 
@@ -56,17 +57,15 @@ To view a full, interactive version of the tree go this [iTOL page](https://itol
 
 <div class="paper">Figure 3</div>
 
-<div class="warning">
+<p class="notice">
 You can pan around and zoom in on this tree. Double-clicking will zoom in on an area.
-</div>
+</p>
 
 ```{r insert_itol, out.width = "100%", fig.cap = "Figure 3", eval = FALSE, echo = FALSE, cache=TRUE}
 # This is to include a static image
 itol_tree <- knitr::include_graphics("DATA/PHYLOSEQ/FIGURES/INPUT/Figure_3A.svg")
 itol_tree
 ```
-
-***
 
 ```{r zoom, echo = FALSE, message = FALSE, fig.align = "center", out.width = "100%", cache=TRUE}
 # Note: in order for this to work, especially if the SVG fie
@@ -82,16 +81,14 @@ itol_tree <- svgPanZoom("images/Figure_3_TreeA_2.svg",
 itol_tree
 ```
 
-***
-
-<p></p>
+<br/>
 
 ```{r tree_legend, echo = FALSE, message = FALSE, fig.align = "left", cache=TRUE}
 itol_tree_legend <- knitr::include_graphics("images/Figure_3_Legend_A.svg")
 itol_tree_legend
 ```
 
-<p></p>
+<br/>
 
 ## Inferring Lifestyle Category
 
@@ -103,7 +100,7 @@ For simplicity we focused on three *lifestyle catagories* (though we have seven 
 *   **animal associated**: ASVs most closely related to sequences from other animals, including one freshwater fish, other vertebrates, and a few non-marine invertebrates.
 *   **generalists**: ASVs most closely related to sequences are widespread and possibly from the environment. By and large these are marine or marine-like (e.g., hypersaline mats, saline lakes) in origin including sediments, water, and potential prey (algae, plants, coral, sponge). However there are some leaves in the tree from non-marine environments (e.g., activated sludge) that we grouped in the environmental category.
 
-***
+<br/>
 
 ### Assessing habitat specificity.
 
@@ -166,9 +163,9 @@ write.table(summ_table, "DATA/PHYLOSEQ/TABLES/OUTPUT/SUPP/Table_S6.txt",
             row.names = FALSE, quote = FALSE, fileEncoding = "UTF-8")
 ```
 
-<div class="warning">
+<p id="notice">
 This table also scrolls horizontally.
-</div>
+</p>
 
 **NR** Indicates Not Recorded. Four ASVs had numerous hits at 100% identity. We did not include top hit data for these ASVs.
 
@@ -186,7 +183,7 @@ This table also scrolls horizontally.
 * **Sullam lifestyle**: Lifestyle category as defined by Sullam et. al., 2012. **NLC** indicates no hit to the Sullam db.
 * **num perfect hits** Number of 100% BLAST matches out of 50 top hits.
 
-***
+<br/>
 
 ### Summary of habitat preference
 
@@ -211,11 +208,15 @@ datatable(habi_summary,
                          scrollX = TRUE, scrollCollapse = TRUE))
 ```
 
-***
+<br/>
+
+<br/>
 
 ## Taxa by Host
 
 So we know that Host X is enriched for some ASV from taxa Y. Is this part of a larger pattern or an isolated case? For a given taxonomic group and rank, what proportion of total reads (from all ASVs) were found in a particular host species?  At some point it would be nice if this were an interactive step, but for now we must modify the code below to look at different taxa. This example will look at the family **Desulfovibrionaceae** (Deltaproteopbacteria)
+
+<br/>
 
 #### Proportion of total reads for a given taxon & rank
 
@@ -240,6 +241,8 @@ sample_sums_by_taxa
 ```
 
 Great. Looks like there are 71 Desulfovibrionaceae ASVs and the majority (> 90%) of the reads are from *Acanthurus*. This is interesting. We can do this with any taxa we wish.
+
+<br/>
 
 #### Proportion of total reads for Cyanobacteria
 
@@ -266,11 +269,13 @@ sample_sums_by_taxa_Cyan
 
 There were a total of **484** Cyanobacteria ASVs across **`r total_taxa_reads_Cyan_int`** reads.
 
-***
+<br/>
 
 ## DA ASV by Host
 
 At this point we know which ASVs are enriched in which host species, the lineage of those ASVs, and something about where else these sequences have been detected in nature. Next we would like to know the proportion of total reads for each ASV that is found in each host species. We start with a summary table of these data.
+
+<br/>
 
 #### Proportion of total ASV reads per host species
 
@@ -345,6 +350,8 @@ asv_order_rev <- rev(asv_order)
 
 Lets see if we can overlay all of this information in one "easy" to understand plot. The first thing is to do is plot the proportion of reads for a given ASV from each host species.
 
+<br/>
+
 #### Graph for proportion of total ASV reads per host species
 
 ```{r order_asvs, cache=TRUE}
@@ -354,6 +361,8 @@ daASV_work3$ASV <- factor(daASV_work3$ASV, levels = asv_order)
 ```
 
 Next, we created a bar plot of read proportion by host species for each ASV. And save a copy to the `DATA/PHYLOSEQ/FIGURES/` directory.
+
+<br/>
 
 ### Proportional bar chart
 
@@ -399,6 +408,7 @@ pdf("DATA/PHYLOSEQ/FIGURES/OUTPUT/Figure_4A.pdf")
 ASV_bar
 invisible(dev.off())
 ```
+<br/>
 
 ### Heatmap
 
@@ -548,7 +558,7 @@ fig4_heatmap2_disp <- heatmap3(fig4_heatmap2, trace = "none", density = "none",
                                balanceColor = FALSE, col = col)
 ```
 
-***
+<br/>
 
 ## ASVs & Host Trait Correlation?
 
@@ -593,7 +603,6 @@ tree.p$tip.label[5] <- "Acanthurus_coeruleus"
 plot(tree.p)
 ```
 
-***
 
 We then transformed the tree into a distance matrix and generated a dendrogram.
 
@@ -611,8 +620,6 @@ plot(cluster_phylo, main = "Phylogenetic clustering",
      xlab = "Host species", ylab = "Distance",
      sub = "hellinger/bray-curtis/ward")
 ```
-
-***
 
 Next we grab the ecological data and standardize the variables so that they have similar weights.
 

@@ -1,21 +1,20 @@
 ---
 title: "Appendices"
 ---
- 
+
 ```{r load_2, include=FALSE, cache=TRUE, eval=FALSE}
 # This is for initial processing only. After caching eval not needed
 load("DATA/RDS/pw_synth_5.rds")
 ```
+<br/>
 
-<a href="0_pw_intro.html#workflow_overview">Back to Introduction</a>
-
-***
-
-## Appendix A: Other analyses & visualizations
+## A: Other analyses & visualizations
 
 Here is code for other representation of taxa abundance. These are raw `R` images that have not been gussied up.
 
-We will create two different representations of relative abundance for each sample (arranged by host species) by major Classes---facet grid box-and-whisker plots and bar charts. We will generate each separately (and save) using an earlier  relative abundance phyloseq object and then display the combined output. 
+We will create two different representations of relative abundance for each sample (arranged by host species) by major Classes---facet grid box-and-whisker plots and bar charts. We will generate each separately (and save) using an earlier  relative abundance phyloseq object and then display the combined output.
+
+<br/>
 
 #### Code for box-and-whisker plot
 
@@ -31,46 +30,47 @@ meltd_all$Class <- as.character(meltd_all$Class)
 
 means <- ddply(meltd_all, ~Class, function(x) c(mean = mean(x$Abundance)))
 # decending order
-taxa_means <- means[order(-means$mean), ]  
-# ditch the sci notation 
-taxa_means <- format(taxa_means, scientific = FALSE)  
+taxa_means <- means[order(-means$mean), ]
+# ditch the sci notation
+taxa_means <- format(taxa_means, scientific = FALSE)
 
 # Here we conglomerate at 2%.
-Other <- means[means$mean <= 0.026, ]$Class  
+Other <- means[means$mean <= 0.026, ]$Class
 
 meltd_all[meltd_all$Class %in% Other, ]$Class <- "Other"
-samp_names <- aggregate(meltd_all$Abundance, 
+samp_names <- aggregate(meltd_all$Abundance,
                         by = list(meltd_all$Sample), FUN = sum)[, 1]
 .e <- environment()
-meltd_all[, "Class"] <- factor(meltd_all[, "Class"], 
+meltd_all[, "Class"] <- factor(meltd_all[, "Class"],
                                sort(unique(meltd_all[, "Class"])))
 meltd_all <- meltd_all[order(meltd_all[, "Class"]), ]
 levels(meltd_all$Class)
 
 # Here we order Classes by the Phylum they belong to.
-meltd_all$Class <- factor(meltd_all$Class, 
+meltd_all$Class <- factor(meltd_all$Class,
                           levels = c(
-                            "Bacteroidia", "Clostridia", "Erysipelotrichia", 
-                            "Fusobacteriia", "Alphaproteobacteria", 
-                            "Deltaproteobacteria", "Gammaproteobacteria", 
-                            "Planctomycetacia", "Oxyphotobacteria", "Other"))  
+                            "Bacteroidia", "Clostridia", "Erysipelotrichia",
+                            "Fusobacteriia", "Alphaproteobacteria",
+                            "Deltaproteobacteria", "Gammaproteobacteria",
+                            "Planctomycetacia", "Oxyphotobacteria", "Other"))
 
-sup_fig1 <- qplot(data = meltd_all, x = Sp, y = Abundance, fill = Class, 
+sup_fig1 <- qplot(data = meltd_all, x = Sp, y = Abundance, fill = Class,
                   geom = "boxplot", ylab = "Relative Abundance") +
-  theme(legend.position = "bottom") + 
-  facet_grid(Class ~ ., scales = "free_y", space = "free_y") + 
-  geom_jitter(width = 0.05) + 
-  geom_point(colour = "black", fill = "white")  
+  theme(legend.position = "bottom") +
+  facet_grid(Class ~ ., scales = "free_y", space = "free_y") +
+  geom_jitter(width = 0.05) +
+  geom_point(colour = "black", fill = "white")
 #+ guides(guide_legend(reverse = FALSE) )
 
-sup_fig1 <- sup_fig1 + 
-  scale_fill_manual(values = friend_pal) + 
+sup_fig1 <- sup_fig1 +
+  scale_fill_manual(values = friend_pal) +
   labs(x = "Host species", y = "Relative abundance (% total reads)")
 
 pdf("DATA/PHYLOSEQ/FIGURES/OUTPUT/box_and_whisker.pdf")
 sup_fig1
 invisible(dev.off())
 ```
+<br/>
 
 #### Code for bar plot
 
@@ -78,9 +78,9 @@ invisible(dev.off())
 
 
 ```{r separate_bars_stacked, fig.align = "center", fig.cap = "Supplementary Figure 1. Relative abundance of major Classes by sample", out.width = "90%", cache=TRUE}
-sup_fig2 <- ggplot(meltd_all, aes_string(x = "Sample", y = "Abundance", 
+sup_fig2 <- ggplot(meltd_all, aes_string(x = "Sample", y = "Abundance",
     fill = "Class"), environment = .e, Ordered = TRUE)
-sup_fig2 <- sup_fig2 + geom_bar(stat = "identity", position = "stack") + 
+sup_fig2 <- sup_fig2 + geom_bar(stat = "identity", position = "stack") +
     facet_grid(Class ~ Sp, scales = "free", space = "free")
 sup_fig2 <- sup_fig2 + scale_fill_manual(values = friend_pal)
 
@@ -88,11 +88,11 @@ sup_fig2 <- sup_fig2 + scale_fill_manual(values = friend_pal)
 # hjust = 0))
 sup_fig2 <- sup_fig2 + theme(axis.text.x = element_blank())
 
-sup_fig2 <- sup_fig2 + 
-  guides(fill = guide_legend(override.aes = list(colour = NULL), 
-                             reverse = FALSE)) + 
-  theme(legend.key = element_rect(colour = "black"), 
-        legend.position = "bottom") + 
+sup_fig2 <- sup_fig2 +
+  guides(fill = guide_legend(override.aes = list(colour = NULL),
+                             reverse = FALSE)) +
+  theme(legend.key = element_rect(colour = "black"),
+        legend.position = "bottom") +
   labs(x = "Individual samples", y = "Relative abundance (% total reads)")
 
 pdf("DATA/PHYLOSEQ/FIGURES/OUTPUT/Figure_S1.pdf")
@@ -107,7 +107,7 @@ grid.arrange(sup_fig1, sup_fig2, ncol = 2)
 
 
 ```{r plot_da_asv_heatmap_full, warning=FALSE, fig.cap = "Figure 4", message = FALSE, eval = FALSE, echo = FALSE, cache=TRUE}
-#Old heat map using phyloseq. 
+#Old heat map using phyloseq.
 fig4_heat <- plot_heatmap(da_asvs, "PCoA", "jsd", "Sp",
                           low = "#000033", high = "#66CCFF",
                           trans = log_trans(10), sample.order = "Sp",
@@ -131,49 +131,57 @@ df1 <- cbind(numOtus, tabbledf)
 df1 <- df1 %>% rownames_to_column("Group")
 label <- 0.03
 df2 <- cbind(label, df1)
-write.table(df2, "DATA/PHYLOSEQ/TABLES/OUTPUT/OTHER/ps_slv_work_filt.shared", 
+write.table(df2, "DATA/PHYLOSEQ/TABLES/OUTPUT/OTHER/ps_slv_work_filt.shared",
             sep = "\t", quote = FALSE, row.names = FALSE)
 fasta <- tax_table(ps_slv_work_filt)
-write.table(fasta2format_trim, 
-            "DATA/PHYLOSEQ/TABLES/OUTPUT/OTHER/ps_slv_work_filt.fasta", 
+write.table(fasta2format_trim,
+            "DATA/PHYLOSEQ/TABLES/OUTPUT/OTHER/ps_slv_work_filt.fasta",
             sep = "\t", quote = FALSE, col.names = NA)
 # fix the file
 # mothur
-classify.seqs(fasta=ps_slv_work_filt.fasta, template=gg_13_5_99.fasta, 
+classify.seqs(fasta=ps_slv_work_filt.fasta, template=gg_13_5_99.fasta,
               taxonomy=gg_13_5_99.gg.tax, processors=8)
 make.biom(shared=ps_slv_work_filt.shared, label=0.03,
-          constaxonomy=ps_slv_work_filt.gg.wang.cons.taxonomy, 
+          constaxonomy=ps_slv_work_filt.gg.wang.cons.taxonomy,
           picrust=97_otu_map.txt, reftaxonomy=gg_13_5_99.gg.tax)
 
 taxsums <- as.data.frame(taxa_sums(ps_slv_work_filt))
-write.table(taxsums, "DATA/PHYLOSEQ/TABLES/OUTPUT/OTHER/taxsums.txt", 
+write.table(taxsums, "DATA/PHYLOSEQ/TABLES/OUTPUT/OTHER/taxsums.txt",
             sep="\t", quote = FALSE)
 ```
 
-## Appendix B: Tools & resources used in this workflow 
+<br/>
+
+## B: Tools & resources used in this workflow
 
 #### Specific tools
 
--- [phyloseq](https://joey711.github.io/phyloseq/){target="_blank"} as the primary analytical package.  
--- [LEfSe](https://dx.doi.org/10.1038%2Fnmeth.2658){target="_blank"} to identify differentially abundant (DA) amplicon sequence variants (ASV) across host fish species.  
--- [MicrobiomeAnalyst](http://www.microbiomeanalyst.ca/){target="_blank"}  to conduct LEfSe analysis.  
--- [BLASTn](https://blast.ncbi.nlm.nih.gov/Blast.cgi){target="_blank"} and [Silva ACT](https://www.arb-silva.de/aligner/){target="_blank"} to identify closest hits to DA ASVs.  
--- [RAxML](https://sco.h-its.org/exelixis/web/software/raxml/){target="_blank"} for phylogenetic inference of DA ASVs and closest hits.  
--- [iTOL](https://itol.embl.de/){target="_blank"} for visualization of tree and associated metadata.  
+-- [phyloseq](https://joey711.github.io/phyloseq/){target="_blank"} as the primary analytical package.
+-- [LEfSe](https://dx.doi.org/10.1038%2Fnmeth.2658){target="_blank"} to identify differentially abundant (DA) amplicon sequence variants (ASV) across host fish species.
+-- [MicrobiomeAnalyst](http://www.microbiomeanalyst.ca/){target="_blank"}  to conduct LEfSe analysis.
+-- [BLASTn](https://blast.ncbi.nlm.nih.gov/Blast.cgi){target="_blank"} and [Silva ACT](https://www.arb-silva.de/aligner/){target="_blank"} to identify closest hits to DA ASVs.
+-- [RAxML](https://sco.h-its.org/exelixis/web/software/raxml/){target="_blank"} for phylogenetic inference of DA ASVs and closest hits.
+-- [iTOL](https://itol.embl.de/){target="_blank"} for visualization of tree and associated metadata.
+
+<br/>
 
 #### Other valuable resources
 
--- [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/){target="_blank"}  
--- [knitr](http://yihui.name/knitr/){target="_blank"} tutorials. Fantastic site!  
--- [Microbiota analysis in R, UCR Workshop 2018](https://rpubs.com/maddieSC/R_SOP_UCR_Jan_2018){target="_blank"} nicely documented workflow with examples. 
+-- [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/){target="_blank"}
+-- [knitr](http://yihui.name/knitr/){target="_blank"} tutorials. Fantastic site!
+-- [Microbiota analysis in R, UCR Workshop 2018](https://rpubs.com/maddieSC/R_SOP_UCR_Jan_2018){target="_blank"} nicely documented workflow with examples.
 
-## Appendix C: Submitting sequencing data to public archives  
+<br/>
 
-It is now time to submit the data to your favorite sequence read archive. We submitted out data to the [European Nucleotide Archive (ENA)](https://www.ebi.ac.uk/ena){target="blank"}. The ENA does not like RAW data and prefers to have primers removed. So we submitted the trimmed Fastq files to the ENA. You can find these data under the study accession number [**PRJEB28397**](https://www.ebi.ac.uk/ena/browser/view/PRJEB28397){target="blank"}. The raw, raw files are available on the project's [figshare site](https://doi.org/10.6084/m9.figshare.6875522){target="blank"}.  
+## C: Submitting sequencing data to public archives
 
-To submit to the ENA you need two data tables (plus your sequence data). The first file describes the samples and the second file describes the sequencing data. The original files can be found on the figshare site with the [raw data](https://doi.org/10.6084/m9.figshare.6875522){target="_blank"}. 
+It is now time to submit the data to your favorite sequence read archive. We submitted out data to the [European Nucleotide Archive (ENA)](https://www.ebi.ac.uk/ena){target="blank"}. The ENA does not like RAW data and prefers to have primers removed. So we submitted the trimmed Fastq files to the ENA. You can find these data under the study accession number [**PRJEB28397**](https://www.ebi.ac.uk/ena/browser/view/PRJEB28397){target="blank"}. The raw, raw files are available on the project's [figshare site](https://doi.org/10.6084/m9.figshare.6875522){target="blank"}.
 
-## Appendix D: Specific R package & versions 
+To submit to the ENA you need two data tables (plus your sequence data). The first file describes the samples and the second file describes the sequencing data. The original files can be found on the figshare site with the [raw data](https://doi.org/10.6084/m9.figshare.6875522){target="_blank"}.
+
+<br/>
+
+## D: Specific R package & versions
 
 Below are the specific packages and versions used in this workflow using both `sessionInfo()` and `devtools::session_info()`.
 
@@ -184,5 +192,3 @@ devtools::session_info()
 end_time <- Sys.time()
 end_time - start_time
 ```
-
-

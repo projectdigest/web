@@ -9,10 +9,10 @@ output:
 
 <br/>
 
-***
+*Please use this form to contact us with any questions, suggestions, ideas, whatever.*<br/>
+*We would love really to hear from you.*
 
-Please use this form to contact us with any questions, suggestions, ideas, whatever. We look forward to hearing from you. Seriously.
-
+<br/>
 
 <form action="https://formspree.io/moqqlrvp" method="POST">
       <label for="name">Name:</label> <input type="text" id="name" name="user_name"><br/>

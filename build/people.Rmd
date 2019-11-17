@@ -6,8 +6,4 @@ output:
 
 ---
 
-***
-
 Coming soon....maybe
-
-
