@@ -12,7 +12,7 @@ load("DATA/RDS/pw_da_asv_4.rds")
 ```
 
 <p id = "opennote">
-Now it is time to <font size="5">put the pieces together</font> and see what pictures emerge. What do these patterns tell us about host specificity?
+Now it is time to <span class="callout">put the pieces together</span> and see what pictures emerge. What do these patterns tell us about host specificity?
 </p>
 
 <br/>

@@ -39,7 +39,7 @@ knitr::opts_knit$set(root.dir = getwd())
 
 
 <p id = "opennote">
-This document contains all seven supplementary <font size="5">tables</font>, <font size="5">figures</font>, and <font size="5">methods</font> for the paper. Tables are horizontally scrollable. You can sort tables and download (or copy) the data. Some tables contain external hyperlinks.
+This document contains all seven supplementary <span class="callout">tables</span>, <span class="callout">figures</span>, and <span class="callout">methods</span> for the paper. Tables are horizontally scrollable. You can sort tables and download (or copy) the data. Some tables contain external hyperlinks.
 </p>
 
 <br/>

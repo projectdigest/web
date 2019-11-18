@@ -12,7 +12,7 @@ load("DATA/RDS/pw_prep_2.rds")
 ```
 
 <p id = "opennote">
-<font size="5">Now we look at diversity.</font> What are the dominant taxa in this system? How diverse are these communities? How similar are samples to each other? In this sections we look at **a**) Taxonomic diversity, **b**) alpha-diversity, and **c**) beta-diversity.
+<span class="callout">Now we look at diversity.</span> What are the dominant taxa in this system? How diverse are these communities? How similar are samples to each other? In this sections we look at **a**) Taxonomic diversity, **b**) alpha-diversity, and **c**) beta-diversity.
 </p>
 
 <br/>

@@ -66,7 +66,7 @@ dir.create("DATA/PHYLOSEQ/PS_OBJECTS/", recursive = TRUE)
 dir.create("DATA/RDS/", recursive = TRUE)
 ```
 <p id="opennote">
-<font size="5">In this study</font>, we looked at intestinal microbial communities from five herbivorous fish species across two families---*Sparisoma viride*, *Sparisoma aurofrenatum* and *Scarus taeniopterus* from the Labridae  and *Acanthurus tractus* and *Acanthurus coeruleus* from the  Acanthuridae.
+<span class="callout">In this study</span>, we looked at intestinal microbial communities from five herbivorous fish species across two families---*Sparisoma viride*, *Sparisoma aurofrenatum* and *Scarus taeniopterus* from the Labridae  and *Acanthurus tractus* and *Acanthurus coeruleus* from the  Acanthuridae.
 </p>
 
 <br/>

@@ -34,7 +34,7 @@ ptm <- proc.time()
 ```
 
 <p id = "opennote">
-This document is used to <font size="5">process raw pair-end Illumina data</font> from herbivore reef fish with DADA2. The script will process the data from different runs separately and then combine the runs and finish the DADA2 pipeline. We report both methods and results in plain text and R code. This document presents a completely reproducible workflow of our method for sequence processing.
+This document is used to <span class="callout">process raw pair-end Illumina data</span> from herbivore reef fish with DADA2. The script will process the data from different runs separately and then combine the runs and finish the DADA2 pipeline. We report both methods and results in plain text and R code. This document presents a completely reproducible workflow of our method for sequence processing.
 </p>
 
 <br/>

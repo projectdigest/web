@@ -11,7 +11,7 @@ output:
 
 ## Motivation
 
-This site has two purposes. First, I wanted to provide a comprehensive workflow that will allow anyone to reproduce the work we did for this study. This includes easy access to code and raw data. It also includes stuff that worked and stuff that didn't. Second, I wanted to have a reference source that will help me (and anyone else) generate a similar resource for other projects. Moving forward I want to have all of my projects be web based and the more I document now the easier it will be later. And this page especially is an <span class="callout">evergreen document</span> meaning that I will continue to update it.
+<span class="callout">This site has two purposes</span>. First, I wanted to provide a comprehensive workflow that will allow anyone to reproduce the work we did for this study. This includes easy access to code and raw data. It also includes stuff that worked and stuff that didn't. Second, I wanted to have a reference source that will help me (and anyone else) generate a similar resource for other projects. Moving forward I want to have all of my projects be web based and the more I document now the easier it will be later. And this page especially is an <span class="callout">evergreen document</span> meaning that I will continue to update it.
 
 Since this is my first website I thought it would be a good idea to document the process. I used R/RStudio to build this site since most of my code was already in R. You may know there are many (many) ways to construct a website and while this is  not a tutorial, it should be useful for people working in R and/or RStudio (or planning to) but who have little/no experience in making a website.
 

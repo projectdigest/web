@@ -8,7 +8,7 @@ load("DATA/RDS/pw_div_3.rds")
 ```
 
 <p id = "opennote">
-Next, we determine which <font size="5">ASVs are driving these patterns</font> and assess their <font size="5">distribution in nature</font>. We use statistical tests to identify ASVs that are enriched in a particular host species and then determine where else those sequences have been found.
+Next, we determine which <span class="callout">ASVs are driving these patterns</span> and assess their <span class="callout">distribution in nature</span>. We use statistical tests to identify ASVs that are enriched in a particular host species and then determine where else those sequences have been found.
 </p>
 
 We now have a good handle on the diversity of the intestinal microbiomes of these herbivorous reef fish. We know that communities are dominated by the same broad-level taxonomic groups. The beta diversity analysis demonstrates that communities partition along host species.
