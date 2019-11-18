@@ -9,7 +9,7 @@ load("DATA/RDS/pw_bite_1.rds")
 
 
 <p id = "opennote">
-<span class="callout">First we prep the microbial data</span>. Before we conduct any analyses we need to prep our datasets and working environment. This includes curating sample, removing contaminants, and creating  phyloseq objects.
+Before we conduct any analyses we need to prepare our datasets and working environment by <span class="callout">curating samples</span>, <span class="callout">removing contaminants</span>, and creating  <span class="callout">phyloseq objects</span>.
 </p>
 
 <br/>

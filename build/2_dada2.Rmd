@@ -53,7 +53,7 @@ We make several data types available from the DADA2 workflow. For a more complet
 
 
 <p id = "opennote">
-This pipeline is <font size ="5">exactly how we processed our data</font>. This however is not meant to be a  tutorial and we  only provide minimal annotation.
+This pipeline is <span class="paper">exactly how we processed our data</span>. This however is not meant to be a  tutorial and we  only provide minimal annotation.
 </p>
 
 There are many great tutorials and explanations out there on [DADA2](https://benjjneb.github.io/dada2/){target="_blank"} amplicon processing that you can dive into. For example [here](https://f1000research.com/articles/5-1492/v2){target="_blank"}, [here](https://benjjneb.github.io/dada2/bigdata.html){target="_blank"}, [here](https://astrobiomike.github.io/amplicon/dada2_workflow_ex){target="_blank"}, and [here](https://benjjneb.github.io/dada2/tutorial.html){target="_blank"}.
@@ -80,7 +80,7 @@ In addition, many samples were re-sequenced and thus processed separately here b
 
 In the original raw data, fastq files are named using the following convention for the root name:
 
-<left><font size="4" color="red">RunQ_GnSpe000_G</font></left>
+<left><span class="paper">RunQ_GnSpe000_G</speaking></left>
 
 Where:
 
@@ -101,7 +101,7 @@ Where:
 
 So...
 
-<left><font size="4" color="red">Run1_SpVir08_F_S113_L001_R2_001.fastq</font></left>
+<left><span class="paper">Run1_SpVir08_F_S113_L001_R2_001.fastq</span></left>
 
 ...corresponds to the reverse reads (R2) of the foregut from *Sparisoma viride* individual #8, Run1.
 

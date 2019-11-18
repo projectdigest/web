@@ -7,7 +7,7 @@ title: "N<sup><u>o</u></sup> 1. Field Observations"
 load("DATA/RDS/pw_intro_0.rds")
 ```
 <p id="opennote">
-<span class="callout">We characterized the foraging ecology</span> of the different herbivorous fish species by gathering observational details about individual bites  at three sites in the Florida Keys (Conch, French, Molasses reefs) during the Boreal summers of 2014 and 2016.
+We characterized the <span class="callout">foraging ecology</span> of the different herbivorous fish species by gathering <span class="callout">observational data</span> about individual bites  at three sites in the Florida Keys (Conch, French, Molasses reefs) during the Boreal summers of 2014 and 2016.
 </p>
 
 ```{r pickel_map, cache=TRUE, fig.cap="Florida Keys & Pickles Reef"}

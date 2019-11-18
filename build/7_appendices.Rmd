@@ -74,7 +74,7 @@ invisible(dev.off())
 
 #### Code for bar plot
 
-<div class="paper">Figure S1</div>
+<span class="paper">Figure S1</span>
 
 
 ```{r separate_bars_stacked, fig.align = "center", fig.cap = "Supplementary Figure 1. Relative abundance of major Classes by sample", out.width = "90%", cache=TRUE}

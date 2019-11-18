@@ -101,12 +101,12 @@ code, kbd, pre, samp, .sourceLine, .sourceCode {
 
 .linkboxfont-lg {
   font-size: 2.0em;
-  font-family: "Lato", "PT Sans Narrow", sans-serif;
+  font-family: "Roboto Condensed", "PT Sans Narrow", sans-serif;
 }
 
 .linkboxfont-sm {
   font-size: 1.7em;
-  font-family: "Lato", "PT Sans Narrow", sans-serif;
+  font-family: "Roboto Condensed", "PT Sans Narrow", sans-serif;
 }
 
 .callout {
@@ -115,7 +115,9 @@ code, kbd, pre, samp, .sourceLine, .sourceCode {
 }
 
 /* changs look of toc */
-.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+.list-group-item.active,
+.list-group-item.active:focus,
+.list-group-item.active:hover {
   color: #ffffff;
   font-size: 1em;
   background-color: #333332;
@@ -198,12 +200,12 @@ p#steel {
   border-radius: 5px;
   padding: 1em 1em 1em 1em;
   margin: 1em 0 1em 0;
-  font-size: 0.9em;
+  font-size: 1.3em;
 }
 
 .paper {
   color: #fc6464;
-  font-size: 1.5em;
+  font-size: 1.3em;
   font-family: "PT Serif", serif;
 }
 /* this changes background color of Rcode output box */

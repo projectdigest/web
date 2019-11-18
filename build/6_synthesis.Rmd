@@ -55,7 +55,7 @@ We took all of these data and used [iTOL](https://itol.embl.de/){target="_blank"
 
 To view a full, interactive version of the tree go this [iTOL page](https://itol.embl.de/tree/18614898186392201535496541){target="_blank"}.
 
-<div class="paper">Figure 3</div>
+<span class="paper">Figure 3</span>
 
 <p class="notice">
 You can pan around and zoom in on this tree. Double-clicking will zoom in on an area.
@@ -106,7 +106,7 @@ For simplicity we focused on three *lifestyle catagories* (though we have seven 
 
 We combined these habitat predictions with the results of the BLASTn analysis, scan of the IMNGS database, Sullam lifestyle categories, etc. and put it all in one  **editable** table. So if you disagree with a habitat prediction, you can feel free to change it.
 
-<div class="paper">Table S6</div>
+<span class="paper">Table S6</span>
 
 ```{r habitat_table, cache=TRUE}
 habi_tab <- read.table("DATA/PHYLOSEQ/TABLES/INPUT/habitat_specificity.txt",
@@ -189,7 +189,7 @@ This table also scrolls horizontally.
 
 Now we can summarize the data for each lifestyle category. This table was constructed in a text file and read into R.
 
-<div class="paper">Table 1</div>
+<span class="paper">Table 1</span>
 
 
 ```{r habitat_table_summary, cache=TRUE}
@@ -412,7 +412,7 @@ invisible(dev.off())
 
 ### Heatmap
 
-<div class="paper">Figure 4 (mostly)</div>
+<span class="paper">Figure 4 (mostly)</span>
 
 ```{r heatmap_alt_setup, warning=FALSE,  message = FALSE, cache=TRUE}
 # Heatmap

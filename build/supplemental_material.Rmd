@@ -229,7 +229,7 @@ datatable(table_s3, escape = 4, rownames = FALSE, width = "100%", colnames = c(
 Table is horizontally scrollable.
 </p>
 
-<center><font size="4" color="red">Column descriptions</font></center>
+<center><span class="paper" color="red">Column descriptions</span></center>
 
 <br/>
 
@@ -259,7 +259,7 @@ Table is horizontally scrollable.
 * **Chao1** The Chao1 richness estimator.
 * **Chao1 (se)** Standard error of Chao1 index
 * **ACE** The ACE richness estimator.
-* **ACE (se)** Standard error of ACE index
+* **ACE (se)** Standar< error of ACE index
 * **Shannon** The Shannon diversity index
 * **Simpson** The Simpson diversity index.
 * **InvSimpson** Inverse Simpson's Index
@@ -406,10 +406,13 @@ Table scrolls horizontally.
 ##### Abbreviations
 
 **ND** Indicates *No Data* was provided for given attribute of top BLAST hit.
+<br/>
 **NR** In *Top hit acc* column indicates *Not Recorded*. Four ASVs (ASV6, ASV12, ASV224, ASV398) had numerous hits at 100% identity. We did not include *top hit* data for these ASVs.
+<br/>
 **NLC** No Lifestyle Category from  Sullam classification.
+<br/>
 
-<center><font size="4" color="red">Column descriptions</font></center>
+<center><span class="paper">Column descriptions</span></center>
 
 #### ASV details
 
@@ -486,9 +489,20 @@ datatable(table_s7, escape = 5, rownames = FALSE, width = "100%",
 Table scrolls horizontally.
 </p>
 
-
-* **Accession number** Full accession numbers for each leaf.
-* **Tree code** Parenthetical code used in the tree.
-* **Host, Isolation source, Location** Details about source of sequence.
-* **Link** Hyperlink to sequence page from NCBI Nucleotide database.
-* **Sullam lifestyle** In our analysis, we found the following categories: **1**  *Vertebrate gut generalists*, **2** *Animal and vertebrate gut generalists*, **3** *Fish gut generalists*, **5** *Fish gut specialists*, **6** *Animal generalists*, **9** *Marine environmental microbes*, **12** *Microbes from artificial habitats*, **13** *Undefined, basal clade members*.
+<ul>
+  <li><strong>Accession number </strong>Full accession numbers for each leaf.</li>
+  <li><strong>Tree code </strong>Parenthetical code used in the tree.</li>
+  <li><strong>Host, Isolation source, Location </strong>Details about source of sequence.</li>
+  <li><strong>Link </strong>Hyperlink to sequence page from NCBI Nucleotide database.</li>
+  <li><strong>Sullam lifestyle </strong>In our analysis, we found the following categories:</li>
+    <ul>
+      <li><strong>1 </strong><em>Vertebrate gut generalists</em></li>
+      <li><strong>2 </strong><em>Animal and vertebrate gut generalists</em></li>
+      <li><strong>3 </strong><em>Fish gut generalists</em></li>
+      <li><strong>5 </strong><em>Fish gut specialists</em></li>
+      <li><strong>6 </strong><em>Animal generalists</em></li>
+      <li><strong>9 </strong><em>Marine environmental microbes</em></li>
+      <li><strong>12 </strong><em>Microbes from artificial habitats</em></li>
+      <li><strong>13 </strong><em>Undefined, basal clade members</em></li>
+    </ul>
+</ul>
