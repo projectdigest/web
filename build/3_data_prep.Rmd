@@ -366,9 +366,9 @@ save.image(file = "DATA/RDS/pw_prep_2.rds")
 </br>
 
 <div style="text-align:right">
-  <h4>
+  <span class="linkboxfont-sm">
     <button class="favorite styled" type="button">
       <a href="4_diversity.html">N<sup><u>o</u></sup> 4. Composition & Diversity -></a>
     </button>
-  </h4>
+  </span>
 </div>

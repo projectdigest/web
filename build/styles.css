@@ -1,5 +1,5 @@
 /* Whole document: */
-@import url('https://fonts.googleapis.com/css?family=PT+Sans|PT+Sans+Narrow|PT+Serif|Roboto+Condensed|Nunito:300');
+@import url('https://fonts.googleapis.com/css?family=PT+Sans|PT+Sans+Narrow|PT+Serif|Roboto+Condensed|Nunito:300|Nunito+Sans:300|Lato:300|Roboto:300');
 /* controls general properties of site*/
 body {
   font-family: "PT Serif", serif;
@@ -28,14 +28,15 @@ ul,ol:last-of-type {
 
 /* Headers */
 h1,h2,h3,h4,h5,h6 {
-  font-family: Nunito, "PT Sans Narrow", "PT Sans", sans-serif;
+  font-family: Roboto, "PT Sans Narrow", "PT Sans", sans-serif;
 }
 /* Headers */
 
 h1.title {
-  font-size: 2.7em;
+  font-size: 2.5em;
   text-align: center;
   margin: 80px 0 60px;
+  font-family: Lato, "PT Sans Narrow", "PT Sans", sans-serif;
 }
 
 h1 {
@@ -100,12 +101,12 @@ code, kbd, pre, samp, .sourceLine, .sourceCode {
 
 .linkboxfont-lg {
   font-size: 2.0em;
-  font-family: "Roboto Condensed", "PT Sans Narrow", sans-serif;
+  font-family: "Lato", "PT Sans Narrow", sans-serif;
 }
 
 .linkboxfont-sm {
   font-size: 1.7em;
-  font-family: "Roboto Condensed", "PT Sans Narrow", sans-serif;
+  font-family: "Lato", "PT Sans Narrow", sans-serif;
 }
 
 .callout {
