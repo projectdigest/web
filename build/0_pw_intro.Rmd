@@ -69,16 +69,14 @@ dir.create("DATA/RDS/", recursive = TRUE)
 In this study, we looked at <span class="callout">intestinal microbial</span> communities from five <span class="callout">herbivorous fish</span> species across two families---*Sparisoma viride*, *Sparisoma aurofrenatum* and *Scarus taeniopterus* from the Labridae  and *Acanthurus tractus* and *Acanthurus coeruleus* from the  Acanthuridae.
 </p>
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Definitions & Abbreviations
 <ul>
   <li>[Amplicon Sequence Variant](https://www.nature.com/articles/ismej2017119){target="_blank"} (**ASV**): Exact sequence variant---analogous to an OTU---but with single nucleotide resolution.</li>
   <li>Differentially abundant (**DA**) feature: Taxa, ASV, etc. that is disproportionately abundant in a group of samples and statistically different than other groups.</li>
 </ul>
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Goals of the Study
 <ol>
   <li>Assess the taxonomic composition of intestinal communities from herbivorous reef fish.</li>
@@ -87,34 +85,38 @@ In this study, we looked at <span class="callout">intestinal microbial</span> co
   <li>Predict the specificity of differentially abundant ASVs.</li>
 </ol>
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Workflow Overview
 
 #### <a href="1_field_observations.html">N<sup><u>o</u></sup> 1. Field Observations</a>
 
 In the first section we run some analyses on field-based behavioral assays of the different herbivorous reef fish species.
 
+<div style="padding-top: 0.5em"></div>
 #### <a href="2_dada2.html">N<sup><u>o</u></sup> 2. DADA2 Workflow</a>
 
 In this part we go through the process of processing raw 16S rRNA read data including assessing read quality, filtering reads, correcting errors, and infersing amplicon sequence variants (ASVs).
 
+<div style="padding-top: 0.5em"></div>
 #### <a href="3_data_prep.html">N<sup><u>o</u></sup> 3. Data Preparation</a>
 
 Next we go through the steps of defining sample groups, creating phyloseq objects, removing unwanted samples, and removing contaminant ASVs. Various parts of this section can easily be modified to perform different analyses. For example, if you were only interested in a specific taxa or group of samples, you could change the code here to create new phyloseq objects.
 
+<div style="padding-top: 0.5em"></div>
 #### <a href="4_diversity.html">N<sup><u>o</u></sup> 4. Composition & Diversity</a>
 
 Here we assess taxonomic composition, alpha diversity, and beta diversity. Phyloseq offers many options for assessing diversity, including several alpha diversity metrics, additional ordination  and distance methods, and so on. You can play around with these settings to how it affects the results.
 
+<div style="padding-top: 0.5em"></div>
 #### <a href="5_da_asv.html">N<sup><u>o</u></sup> 5. Differentially Abundant ASVs</a>
 
 We wanted to understand how ASVs partitioned across host species. We also wanted to assess the specificity of each ASV to determine habitat preference. To our knowledge there is no quantitative way to do this. The only attempt we are aware of was [MetaMetaDB](http://mmdb.aori.u-tokyo.ac.jp/){target="_blank"} but it is based on a 454 database and no longer seems to be in active development. So we used an approach based on the work of [Sullam *et. al.*](https://doi.org/10.1111/j.1365-294X.2012.05552.x){target="_blank"}, first identifying differentially abundant ASVs, then searching for closest database hits, and finally using phylogenetic analysis and top hit metadata (isolation source, natural host) to infer habitat preference.
 
+<div style="padding-top: 0.5em"></div>
 #### <a href="6_synthesis.html">N<sup><u>o</u></sup> 6. Synthesis</a>
 
 In this section we pull together the results and try to make sense of the microbiomes from these herbivorous reef fish. How are ASVs partitioning across host? How similar are these ASVs to sequences from other studies? What can these patterns tell us about host specificity?
-
+<div style="padding-top: 0.5em"></div>
 #### <a href="7_appendices.html">Appendices</a>
 
 This section contains information on <b>a</b>) other analyses & visualizations, <b>b</b>) tools & resources used in this workflow, <b>c</b>) submitting sequencing data to public archives, and <b>d</b>) specific R package & versions used in this workflow.
@@ -122,8 +124,7 @@ This section contains information on <b>a</b>) other analyses & visualizations, 
 
 > All tables and figures presented herein are named as they appeared in the original publication. We also include many additional data productes that were not part of the original publication.
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Color & Graphics
 
 Throughout this workflow we are going to rely on color to help us tell a story. We will use color to delineate host fish species and to delineate microbial taxa. Microbial diversity is pretty vast and it can be difficult to display all of this diversity in a single, static figure.
@@ -156,12 +157,12 @@ save.image(file = "DATA/RDS/pw_intro_0.rds")
 
 There is a great article on [Coloring for Colorblindness](https://davidmathlogic.com/colorblind/#%23000000-%23E69F00-%2356B4E9-%23009E73-%23F0E442-%230072B2-%23D55E00-%23CC79A7){target="blank"} by David Nichols that has an interactive color picker and recommendations for accessible palettes. This is also a [really cool site](https://www.canva.com/colors/color-wheel/){target="blank"} for looking at  color combinations. Both resources are highly recommended.
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Figures & Tables
 
 Use the links below if you want to jump directly to the code used to produce the **figures and tables** from the original publication. You can also find the full Supplementary files for the paper  [here](supplemental_material.html){target="blank"} but there is no R code on this page. If you want to see the code that produced the supplemental material, the direct links are also below. There is no code for Tables S2 and S7.
 
+<div style="padding-top: 1em"></div>
 ### Main Paper
 
 <ul>
@@ -174,6 +175,7 @@ Use the links below if you want to jump directly to the code used to produce the
 <li>[Table 1](6_synthesis.html#summary_of_habitat_preference){target="blank"}: Summary of habitat preference.</li>
 </ul>
 
+<div style="padding-top: 1em"></div>
 ### [Supplemental Material](supplemental_material.html){target="blank"}
 
 <ul>

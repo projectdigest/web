@@ -22,8 +22,7 @@ To summarize, our goals here are to:
 
 To accomplish these goals we leave the R environment and employ some additional tools.
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Differential Abundance (DA)
 
 We used [LDA Effect Size (LEfSe)](https://dx.doi.org/10.1038%2Fnmeth.2658){target="_blank"} to identify differentially abundant (DA) ASVs across host species and the [MicrobiomeAnalyst webserver](http://www.microbiomeanalyst.ca/){target="_blank"} to run the analysis. There are also many other great tools on the MicrobiomeAnalyst webserver by the way. We needed three files for the input---an 'OTU' table, a metadata file containing sample information, and a taxonomy table. We generate these tables with the code below.
@@ -87,8 +86,7 @@ Cool, all looks good. Hit `Proceed`. Here are the settings we used for the diffe
 
 > The result was **59** differentially abundant (**DA**) ASVs.
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Results of LEfSe Analysis
 
 We can inspect and save the results of the LEfSe analysis. The table shows the Linear discriminant analysis (LDA) scores, P-values adjusted for multiple testing, and False Discovery Rate (FDR) values from the LEfSe analysis. Normalized read abundance values for each host species are also given.
@@ -117,8 +115,7 @@ datatable(lefse_tab, rownames = FALSE, width = "100%",
 ```
 Something about these tables that break my formatting :/
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Core Microbiome
 
 Before getting knee deep in the DA ASV analysis lets see if we can't identify some core elements, or ASVs, to these fish. First we need a mothur-formatted `.shared` file. This is the code ...
@@ -180,8 +177,7 @@ write.table(cm_Merge_2_df, "DATA/PHYLOSEQ/TABLES/OUTPUT/OTHER/ps_slv_work_filt_c
 
 Next we use the output to run `get.coremicrobiome` in mothur. And the truth is this analysis never went anywhere...
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Searching Public Databases
 
 Next we wanted to know where else these sequences had been detected in nature. There is a huge wealth of publicly available sequence information from many studies and habitats. We can use this information to get a better idea of the distribution and habitat specificity of the DA ASVs. To accomplish this we performed the following steps:
@@ -240,8 +236,7 @@ write.table(table2format_trim_df, "DATA/PHYLOSEQ/TABLES/OUTPUT/ASV_FOR_BLAST.fas
 
 Here are the top BLAST hits for each DA ASV. The table displays a lot of information about each BLAST search (it scrolls along the x-axis by the way). Most importantly are the accession numbers of top BLAST hits (subject acc.var), number of 100% identical matches (num perfect hits), the percent identity, and some info on where/when the hit sequence was originally found. Where applicable, there is also PubMedIDs so you can find the paper that reported the sequence. Looking at this table will give you a preliminary sense of the ecology of these ASVs. For example, most hits come from intestinal communities, many of which are marine herbivorous fish. But the low percent identity of several ASVs indicates that these sequences have been poorly sampled. This is not surprising given the geographic skew of sampling.
 
-<br/>
-
+<div style="padding-top: 0.5em"></div>
 #### Top hits from  BLASTn analysis
 
 
@@ -282,8 +277,7 @@ Several ASVs returned more than one match at 100%. For some ASVs, the 100% match
   <li>We then combined the results of the BLASTn and Silva ACT analyses and omitted duplicate hits, resulting in **297** top hit sequences for phylogenetic analysis.</li>
 <ol>
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Phylogenetic Inference
 
 Short read sequences are not ideal for phylogenetic analysis, but given the data we have, we felt this was a good place to start. This analysis required several steps.

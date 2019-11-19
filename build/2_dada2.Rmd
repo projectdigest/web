@@ -37,8 +37,7 @@ ptm <- proc.time()
 This document is used to <span class="callout">process raw pair-end Illumina data</span> from herbivore reef fish with DADA2. The script will process the data from different runs separately and then combine the runs and finish the DADA2 pipeline. We report both methods and results in plain text and R code. This document presents a completely reproducible workflow of our method for sequence processing.
 </p>
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Data Availability
 
 We make several data types available from the DADA2 workflow. For a more complete list of data and data products, please see the <a href="data_availability.html">Data section</a>.
@@ -66,16 +65,14 @@ Depending on your DADA2 version, you may get [slightly different results](https:
 
 Let's proceed.
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Workflow Overview
 
 This is a workflow for processing the raw 16S rRNA Illumina data for the herbivorous reef fish microbiome study. We sequenced the fore, mid, and hind gut from 53 individual fish. The original dataset contained 7 species from 3 genera. *Sparisoma chrysopterum* and *Scarus vetula* were only represented by 1 and 2 individuals, respectively, and were omitted from the final study, however we included those samples in our pipeline and remove them before analysis.
 
 In addition, many samples were re-sequenced and thus processed separately here before being merged during prior to analysis. There are data for 3 runs--all workflows are identical. We sequenced 144 samples in the first run (Run01) and then the sequencing center re-sequenced those samples because of lower than agreed upon yield (Run02). We then sequenced the remaining 15 samples (5 individuals) on a separate run (Run03).
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### File naming
 
 In the original raw data, fastq files are named using the following convention for the root name:
@@ -105,12 +102,10 @@ So...
 
 ...corresponds to the reverse reads (R2) of the foregut from *Sparisoma viride* individual #8, Run1.
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### Workflow sections
 
-<br/>
-
+<div style="padding-top: 0.5em"></div>
 #### [Part A: Preprocessing](#Part A: Preprocessing)
 
 * Use [cutadapt](http://cutadapt.readthedocs.io/en/stable/guide.html){target="_blank"} to trim adapters from raw reads.
@@ -148,8 +143,7 @@ Here we combine the replicate runs Run01 and Run02, and then add in Run03. We fo
 
 <a id="Part A: Preprocessing"></a>
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Part A: Preprocessing
 
 1. Run `catadapt` on all `fastq` files to trim adapters.
@@ -181,14 +175,12 @@ For programmatic reasons we chose to drop the `Run` prefix from the output merge
 
 These file will be the input for the `DADA2` workflow and are stored in the `02_MERGED/` directory. To simplify things a little, variables for RUN01 have the suffix `X1`, RUN02 is `Y2`, and RUN03 is `Z3`.
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Part B: File Prep
 
 <a id="Part B: File Prep"></a>
 
-<br/>
-
+<div style="padding-top: 0.5em"></div>
 #### Set the working directory & prep files
 
 
@@ -228,14 +220,12 @@ fnFs_Z3 <-file.path(path_Z3, fnFs_Z3)
 fnRs_Z3 <-file.path(path_Z3, fnRs_Z3)
 ```
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Part C: DADA2 Workflow
 
 <a id="Part C: DADA2 Workflow"></a>
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### Quality assessment
 
 <a id="Quality assessment"></a>
@@ -260,8 +250,7 @@ plotQualityProfile(fnRs_Z3[2:4])
 
 The reverse reads are so so  but the forward reads look pretty good. We will deal with the low quality of reverse reads in subsequent steps.
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### Filtering
 
 <a id="Filtering"></a>
@@ -302,8 +291,7 @@ out_Z3 <- filterAndTrim(fnFs_Z3, filtFs_Z3, fnRs_Z3, filtRs_Z3,
 head(out_Z3)
 ```
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### Learn error rates
 
 <a id="Learn error rate"></a>
@@ -322,8 +310,7 @@ errR_Y2 <- learnErrors(filtRs_Y2, multithread = TRUE)
 errR_Z3 <- learnErrors(filtRs_Z3, multithread = TRUE)
 ```
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### Plot error
 
 ```{r plot_error, warning=FALSE, cache=TRUE}
@@ -332,8 +319,7 @@ plotErrors(errR_Y2, nominalQ=TRUE)
 plotErrors(errR_Z3, nominalQ=TRUE)
 ```
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### Dereplicate reads
 
 <a id="Dereplicate reads"></a>
@@ -366,8 +352,7 @@ derepRs_Z3 <- derepFastq(filtRs_Z3)
 names(derepRs_Z3) <- sample.names_Z3
 ```
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### Infer sequence variants
 
 <a id="Run DADA2 & Infer Sequence Variants"></a>
@@ -396,8 +381,7 @@ dadaRs_Z3 <- dada(derepRs_Z3, err = errR_Z3, multithread = TRUE)
 dadaRs_Z3[[1]]
 ```
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Part D: Merge Paired Reads
 
 <a id="Part D: Merge Paired Reads"></a>
@@ -416,8 +400,7 @@ head(mergers_Y2[[1]])
 head(mergers_Z3[[1]])
 ```
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### Sequence table
 
 <a id="Construct sequence table"></a>
@@ -452,8 +435,7 @@ dim(seqtab_Z3.2)
 table(nchar(getSequences(seqtab_Z3.2)))
 ```
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### Export files
 
 <a id="Export files"></a>
@@ -474,8 +456,7 @@ proc.time() - ptm
 
 > This part of the workflow is finished
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Part E: Individual Samples
 
 <a id="Part E: Continuation with Individual Samples"></a>
@@ -486,8 +467,7 @@ We were interested in the overall performance of each run and wanted to gauge ho
 
 To see the results of the `removeBimeraDenovo` command in the console output, add the flag `verbose = TRUE` to the code chunk. We have omitted it here because it takes up a lot of space. This data is summarized at the end anyway so you're not missing out.
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### Remove chimeras
 
 <a id="Identify & remove chimeras"></a>
@@ -510,8 +490,7 @@ dim(seqtab_Z3.2.nochim)
 sum(seqtab_Z3.2.nochim)/sum(seqtab_Z3.2)
 ```
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### Track read changes
 
 <a id="Track changes through each step"></a>
@@ -580,8 +559,7 @@ proc.time() - ptm
 
 <a id="Part F: Merge Results & Complete Workflow"></a>
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Part F: Merge Samples
 
 First we need to clear everything up to this point...
@@ -603,8 +581,7 @@ seqtab.2 <- readRDS("DATA/02_MERGED/RUN02/seqtab_Y2.2.rds")
 seqtab.3 <- readRDS("DATA/02_MERGED/RUN03/seqtab_Z3.2.rds")
 ```
 
-<br/>
-
+<div style="padding-top: 0.5em"></div>
 #### Combine Run01 & Run02 (the duplicates)
 
 Put samples in the 2 sequence tables in the same order
@@ -616,8 +593,7 @@ identical(sort(rownames(seqtab.1)), sort(rownames(seqtab.2))) # Should be TRUE
 seqtab.2 <- seqtab.2[rownames(seqtab.1),]
 ```
 
-<br/>
-
+<div style="padding-top: 0.5em"></div>
 #### Make matrix summing the sequence tables
 
 ```{r matrix_sum_combo, cache=TRUE}
@@ -634,8 +610,7 @@ st.sum[,colnames(seqtab.2)] <- st.sum[,colnames(seqtab.2)] + seqtab.2
 saveRDS(st.sum, "DATA/02_MERGED/combo_run1_run2.rds")
 ```
 
-<br/>
-
+<div style="padding-top: 0.5em"></div>
 #### Merge sequence tables from combo_run1_run2 & seqtab.3
 
 ```{r merge_combo, cache=TRUE}
@@ -646,8 +621,7 @@ st.all <- mergeSequenceTables(combo, seqtab.3)
 ```
 
 
-<br/>
-
+<div style="padding-top: 0.5em"></div>
 #### Run chimera removal & assign taxonomy
 
 There are several database options for taxonomic assignment, including Silva, RDP TrainSet, Greengenes, etc... You will need to download a [DADA2-formatted reference database](https://benjjneb.github.io/dada2/training.html){target="_blank"}. We used both Silva version 132 and GreenGenes version 13.8.
@@ -690,8 +664,7 @@ proc.time() - ptm
 </div>
 
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## R packages & Systems Information
 
 <a id="Appendix: R packages & versions"></a>

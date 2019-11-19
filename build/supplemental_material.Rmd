@@ -42,8 +42,7 @@ knitr::opts_knit$set(root.dir = getwd())
 This document contains all seven supplementary <span class="callout">tables</span>, <span class="callout">figures</span>, and <span class="callout">methods</span> for the paper. Tables are horizontally scrollable. You can sort tables and download (or copy) the data. Some tables contain external hyperlinks.
 </p>
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Contents
 
 [Data Availability](#Data Availability): DOI and accession numbers for study related data.<br/>
@@ -63,8 +62,7 @@ This document contains all seven supplementary <span class="callout">tables</spa
 
 <a id="Data Availability"></a>
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Data Availability
 
 We  made additional data products and processing scripts available through online repositories.
@@ -79,8 +77,7 @@ We  made additional data products and processing scripts available through onlin
 
 <a id="Sample Naming"></a>
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Sample Naming
 
 <p id = "notice">Raw fastq data files were named using the root format RunQ_GnSpe000_G where:</p>
@@ -97,12 +94,10 @@ For example, the file name  *Run1_SpVir11_M_S147_L001_R2_001.fastq* corresponded
 
 <a id="Supplementary Methods"></a>
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Supplementary Methods
 
-<br/>
-
+<div style="padding-top: 0.5em"></div>
 #### DNA extraction, sequencing, & read processing
 
 <p id="warning">
@@ -119,8 +114,7 @@ See the [Data Availability] section above for accession numbers and more details
 
 <a id="Table S1"></a>
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Table S1
 
 <p id = "notice">
@@ -160,8 +154,7 @@ Table scrolls horizontally.
 
 <a id="Table S2"></a>
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Table S2
 
 <p id = "notice">
@@ -191,8 +184,7 @@ Something about tables.
 
 <a id="Table S3"></a>
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Table S3
 
 <p id = "notice">
@@ -231,8 +223,7 @@ Table is horizontally scrollable.
 
 <center><span class="paper" color="red">Column descriptions</span></center>
 
-<br/>
-
+<div style="padding-top: 0.5em"></div>
 #### Host details
 
 * **SampleID**
@@ -268,8 +259,7 @@ Table is horizontally scrollable.
 
 <a id="Table S4"></a>
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Table S4
 
 <p id = "notice">
@@ -303,8 +293,7 @@ Table S4.
 
 <a id="Figure S1"></a>
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Figure S1
 
 <p id = "notice">
@@ -322,8 +311,7 @@ invisible(dev.off())
 
 <a id="Table S5"></a>
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Table S5
 
 <p id = "notice">
@@ -360,8 +348,7 @@ datatable(table_s5, rownames = FALSE, width = "100%",
 
 <a id="Table S6"></a>
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Table S6
 
 <p id = "notice">
@@ -453,8 +440,7 @@ Table scrolls horizontally.
 
 <a id="Table S7"></a>
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Table S7
 
 <p id = "notice">

@@ -15,12 +15,10 @@ load("DATA/RDS/pw_da_asv_4.rds")
 Now it is time to <span class="callout">put the pieces together</span> and see what pictures emerge. What do these patterns tell us about host specificity?
 </p>
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ##  Phylogenetic Visualization
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### IMNGS analysis
 
 To dig just a little deeper, we screened our DA ASVs against the [IMNGS database](https://www.imngs.org/){target="_blank"}. IMNGS hosts a curated database of short-read sequences scraped from the International Nucleotide Sequence Database Collaboration (GenBank, DDBJ and EMBL). The database is rebuilt monthly and at the time of this analysis, contained 271,237 samples. IMNG is really designed to screen full-length 16S rRNA sequences and is not ideal for shorter reads. This is because the database is built from short reads, and different studies target different regions of the gene. For example, if we get no hits to an ASV it could mean the organisms it came from has really not been detected before or that it is in the database but is represented by a different 16S region. So take these data with a grain of salt.
@@ -41,14 +39,12 @@ IMNGS provides three such reports based on the abundance of your query sequence.
 
 We report data from 97% cutoff identity and 0.1% of total reads in a sample. I think this is a little confusing so let me explain by example. In the tree below, ASV398 is most closely related to an Alphaproteobacteria associated with the toxic benthic marine dinoflagellate, *Ostreopsis ovata*. We retrieved this sequence during the BLASTn analysis discussed above. Anyway, ASV398 was screened against IMNGS and returned 2460 hits. This means that at 97% identity, 2460 samples had an ASV398-like sequence comprising greater than 0.1% of a given samples total number of sequences. If for example we increase the percent identity to 99% the number of sample hits drops to 138. If instead we look at the 0% report (97% identity), the number of sample hits increases to 6323.
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### Sullam lifestyle categories
 
 We also compared the final list of top hits to the [Sullam et. al.](https://doi.org/10.1111/j.1365-294X.2012.05552.x){target="_blank"} paper, specifically **Table S1 ** from that paper. Because this paper was published in 2012, there were many sequence hits in our db that did not appear in the original paper. However, for those that did, we added the Sullam *lifestyle category* designations to the tree metadata.
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### Putting the pieces together
 
 We took all of these data and used [iTOL](https://itol.embl.de/){target="_blank"} to visualize the tree. For each top hit, we added the isolation source/natural host information, taxonomic affiliation, and Sullam *lifestyle category*. We also overlaid the number of hits to the IMNGS database for each ASV.
@@ -88,8 +84,7 @@ itol_tree_legend <- knitr::include_graphics("images/Figure_3_Legend_A.svg")
 itol_tree_legend
 ```
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Inferring Lifestyle Category
 
 We used the tree to infer the *lifestyle category* of each ASVs based on the  closest relatives in their clade. This was not a quantitative, but rather a user guided determination. Aside from MetaMetaDb (discussed above) we are not aware of any tool currently available to quantitatively assess habitat preference of a 16S rRNA sequence.
@@ -100,8 +95,7 @@ For simplicity we focused on three *lifestyle catagories* (though we have seven 
 *   **animal associated**: ASVs most closely related to sequences from other animals, including one freshwater fish, other vertebrates, and a few non-marine invertebrates.
 *   **generalists**: ASVs most closely related to sequences are widespread and possibly from the environment. By and large these are marine or marine-like (e.g., hypersaline mats, saline lakes) in origin including sediments, water, and potential prey (algae, plants, coral, sponge). However there are some leaves in the tree from non-marine environments (e.g., activated sludge) that we grouped in the environmental category.
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### Assessing habitat specificity.
 
 We combined these habitat predictions with the results of the BLASTn analysis, scan of the IMNGS database, Sullam lifestyle categories, etc. and put it all in one  **editable** table. So if you disagree with a habitat prediction, you can feel free to change it.
@@ -183,8 +177,7 @@ This table also scrolls horizontally.
 * **Sullam lifestyle**: Lifestyle category as defined by Sullam et. al., 2012. **NLC** indicates no hit to the Sullam db.
 * **num perfect hits** Number of 100% BLAST matches out of 50 top hits.
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### Summary of habitat preference
 
 Now we can summarize the data for each lifestyle category. This table was constructed in a text file and read into R.
@@ -210,14 +203,12 @@ datatable(habi_summary,
 
 <br/>
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Taxa by Host
 
 So we know that Host X is enriched for some ASV from taxa Y. Is this part of a larger pattern or an isolated case? For a given taxonomic group and rank, what proportion of total reads (from all ASVs) were found in a particular host species?  At some point it would be nice if this were an interactive step, but for now we must modify the code below to look at different taxa. This example will look at the family **Desulfovibrionaceae** (Deltaproteopbacteria)
 
-<br/>
-
+<div style="padding-top: 0.5em"></div>
 #### Proportion of total reads for a given taxon & rank
 
 ```{r proportion_of_taxa, cache=TRUE}
@@ -242,8 +233,7 @@ sample_sums_by_taxa
 
 Great. Looks like there are 71 Desulfovibrionaceae ASVs and the majority (> 90%) of the reads are from *Acanthurus*. This is interesting. We can do this with any taxa we wish.
 
-<br/>
-
+<div style="padding-top: 0.5em"></div>
 #### Proportion of total reads for Cyanobacteria
 
 So lets do this to also look at the **proportion of Cyanobacteria** reads by host species.
@@ -269,14 +259,12 @@ sample_sums_by_taxa_Cyan
 
 There were a total of **484** Cyanobacteria ASVs across **`r total_taxa_reads_Cyan_int`** reads.
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## DA ASV by Host
 
 At this point we know which ASVs are enriched in which host species, the lineage of those ASVs, and something about where else these sequences have been detected in nature. Next we would like to know the proportion of total reads for each ASV that is found in each host species. We start with a summary table of these data.
 
-<br/>
-
+<div style="padding-top: 0.5em"></div>
 #### Proportion of total ASV reads per host species
 
 ```{r da_asv_bar_setup, message = FALSE, cache=TRUE}
@@ -350,8 +338,7 @@ asv_order_rev <- rev(asv_order)
 
 Lets see if we can overlay all of this information in one "easy" to understand plot. The first thing is to do is plot the proportion of reads for a given ASV from each host species.
 
-<br/>
-
+<div style="padding-top: 0.5em"></div>
 #### Graph for proportion of total ASV reads per host species
 
 ```{r order_asvs, cache=TRUE}
@@ -362,8 +349,7 @@ daASV_work3$ASV <- factor(daASV_work3$ASV, levels = asv_order)
 
 Next, we created a bar plot of read proportion by host species for each ASV. And save a copy to the `DATA/PHYLOSEQ/FIGURES/` directory.
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### Proportional bar chart
 
 ```{r da_asv_bar_chart, message = FALSE, cache=TRUE}
@@ -408,8 +394,7 @@ pdf("DATA/PHYLOSEQ/FIGURES/OUTPUT/Figure_4A.pdf")
 ASV_bar
 invisible(dev.off())
 ```
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### Heatmap
 
 <span class="paper">Figure 4 (mostly)</span>
@@ -558,8 +543,7 @@ fig4_heatmap2_disp <- heatmap3(fig4_heatmap2, trace = "none", density = "none",
                                balanceColor = FALSE, col = col)
 ```
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## ASVs & Host Trait Correlation?
 
 To test whether intestinal microbes were associated with **a**) phylogenetic history and/or **b**) foraging ecology of each herbivore, we used a series of simple and partial Mantel tests. Because we expected the relationships to potentially differ for putative resident symbionts vs. ingested environmental generalist microbes, we constructed separate dissimilarity matrices for host- and environment-associated ASVs. These matrices were constructed using the vegan package in R and were based on Bray-Curtis dissimilarity of Hellinger transformed data. The ecological dissimilarity matrix was based on the behavioural data collected to quantify herbivore trophic niche space.

@@ -15,14 +15,12 @@ load("DATA/RDS/pw_prep_2.rds")
  What are the <span class="callout">dominant taxa</span> in this system? How diverse are these communities? How similar are samples to each other? In this sections we explore the <span class="callout">taxonomic</span> diversity, <span class="callout">alpha</span> diversity, and <span class="callout">beta</span> diversity.
 </p>
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Taxonomic Composition
 
 Before we can start to understand a system, we need to know something about its parts. So lets start by looking at taxonomic diversity.
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### Total reads & ASVs
 
  We will look at Class level diversity but you can of course change this to any taxonomic rank you wish. Here we created a **sortable** table that has the total number of reads and ASVs for each class
@@ -139,8 +137,7 @@ taxa_means$Class <- gsub("NA", "Unclassified", taxa_means$Class)
 
 Since our goal is to generate a figure and we only have 9 colors, some taxa will need to be put into an **Other** category. We can define 'Other' however we like so lets take a look at the overall relative abundance of each Class.
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### Relative abundance
 
 <a id="relative abundance phyloseq object"></a>
@@ -192,8 +189,7 @@ meltd$Class <- factor(meltd$Class,
                                  "Oxyphotobacteria", "Other"))
 ```
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### Abundance by host species
 
 <div class="paper">Figure 2A from paper</div>
@@ -241,12 +237,10 @@ invisible(dev.off())
 
 Armed with a picture of taxonomic composition we can move on to diversity estimates.
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Alpha-Diversity
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### Statistical tests
 
 
@@ -351,8 +345,7 @@ shapiro_test_Observed
 
 Ok, since the p-values are significant for the inverse Simpson, Chao richness, and Observed ASV richness we reject the null hypothesis that these data are normally distributed. However, the Shannon estimates appear normally distributed. So lets see if diversity is significantly different between host species based on the Shannon index.
 
-<br/>
-
+<div style="padding-top: 0.5em"></div>
 #### Normally distributed
 
 Since the Shannon data is normally distributed we can test for significance using ANOVA (a parametric test).
@@ -371,8 +364,7 @@ TukeyHSD(aov.shannon)
 
 Looks like *Sparisoma aurofrenatum* is significantly different from *Scarus taeniopterus* and *Acanthurus tractus*.
 
-<br/>
-
+<div style="padding-top: 0.5em"></div>
 #### Non-normally distributed
 
 Now we can look at the results on the  inverse Simpson diversity and Chao’s richness. Since host species is categorical, we use Kruskal-Wallis (non-parametric equivalent of ANOVA) to test for significance.
@@ -425,8 +417,7 @@ pairwise.wilcox.test(sampledataDF$Observed, sampledataDF$Sp,
 
 Again we see that only *Sp. aurofrenatum* is significantly different from the other hosts. For the inverse Simpson index, *Sp. aurofrenatum* is  significantly different from three of the four host species and Chao1 richness estimator, *Sp. aurofrenatum* is significantly different from all other host species. Now we can plot the results.
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### Diversity plots
 
 Here we plot results from the Shannon diversity index. We will save a copy of the figure for later tweaking. We use the color palette described above to delineate host species.
@@ -456,8 +447,7 @@ fig2B
 invisible(invisible(dev.off()))
 ```
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### Correlations with diversity
 
 Next we wanted to know if any alpha-diversity metrics were correlated with host physical characteristics. At the time of collection, we recorded host weight, total length, total gut length, as well as the length of individual gut segments (fore, mid, hind).
@@ -534,8 +524,7 @@ grid.arrange(shan_by_length, shan_by_weight, ncol = 2)
 
 TODO: How to present two plots side by side with a common legend?
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Beta-Diversity
 
 Beta diversity basically tells us how similar or dissimilar samples are to one another. Phyloseq offers several ordination `methods` and `distance` metrics. Here we use non metric multidimensional scaling (NMDS) coupled with Jensen–Shannon divergence. We also save a copy of the figure for later tweaking.
@@ -556,8 +545,7 @@ ord.nmds.jsd_slv
 ```
 We see that a convergent solution was reached around 20 iterations and our stress is below 0.20, meaning that 2-axes are sufficient to view the data. Generally, we are looking for stress values below 0.2. If the stress values are high, you may need to add more axes to the ordination. Lets visualize the plot.
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### Diversity plots
 
 Here we plot  results from the Jensen-Shannon divergence. We will save a copy of the figure for later tweaking. We use the color palette described above to delineate host species.
@@ -593,8 +581,7 @@ invisible(dev.off())
 
 So we can see some clustering within groups and spread between groups, but this is not a test for statistical differences. Do microbial communities differ significantly by host taxa?
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### PERMANOVA
 
 To test whether microbial communities differ by host species we can use permutational analysis of variance (PERMANOVA) or analysis of similarity (ANOSIM). PERMANOVA does not assume normality but does assume equal beta dispersion between groups. We will test beta dispersion below.
@@ -638,8 +625,7 @@ These results are significant, meaning that  host species have different dispers
 
 This means we are less confident that the PERMANOVA result is a real result, and that the result is possibly due to differences in group dispersions.
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### ANOSIM
 
 We can also use Analysis of Similarity (ANOSIM)---which does not assume equal group variances---to test whether overall microbial communities differ by host species.
@@ -666,9 +652,6 @@ stuff <- simper.pretty(otu_table(ps_slv_work_filt),
 # This is for initial processing only. After caching eval not needed}
 save.image(file = "DATA/RDS/pw_div_3.rds")
 ```
-
-
-
 
 </br>
 

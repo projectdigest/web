@@ -7,8 +7,7 @@ output:
        collapsed: false
 ---
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Motivation
 
 This <span class="callout">site has two purposes</span>. First, I wanted to provide a comprehensive workflow that allows anyone to reproduce the work we did for this study. This includes easy access to code and raw data. It also includes stuff that worked and stuff that didn't. Second, I wanted to have a reference source that will help me (and anyone else) generate a similar resource for other projects. Moving forward I want to have all of my projects be web based and the more I document now the easier it will be later. And this page especially is an <span class="callout">evergreen document</span> meaning that I will continue to update it.
@@ -17,8 +16,7 @@ Since this is my first website I thought it would be a good idea to document the
 
 My goal with this web project was simple: I had all of this data that I was analyzing in R and I wanted to create workflows, reports, etc., that I could share with other people. This lead me to RStudio and to R Markdown documents; here I could generate reproducible workflows and interactive documents, save the workflows as HTML files, and share the HTML files. Since you  can open an HTML document with a web browser, anyone can access this information without prior understanding of R or  RStudio. Once I had several HTML workflows I figured it would be a good idea to make a website so that I had a place to keep everything organized and accessible.
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## A Simple R Markdown site
 
 So basically I used:
@@ -37,8 +35,7 @@ After searching for the "perfect" template, I decided to take a simpler approach
 There are drawbacks to using the Simple R Markdown Website approach. The main one is that  the site generator assumes all the `.Rmd` documents are under a flat directory (i.e., no pages under sub directories). This means it is difficult to organize websites with a lot of content. If you look at the website's GitHub [repo](https://github.com/projectdigest/projectdigest.github.io){target="_blank"} you will see what I mean. There are additional shortcomings with this approach that are worth investigating.
 </p>
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Resources
 
 Before proceeding I wanted to share some of the resources I returned to over and over again. I will add to this...
@@ -55,8 +52,7 @@ Before proceeding I wanted to share some of the resources I returned to over and
 * [HTML Formatter](https://htmlformatter.com/): Tool to beautify your HTML code.
 * [Dealing with files](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/Dealing_with_files): MDN web docs resource on how to organize the files for your site. Worth reading ahead of time---I wish I had.
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Setup
 
 The first thing you want to do is fire up RStudio and go to `File > New Project`. A popup window appears and gives you three options (at least on my setup) for <span class="callout">Creating a New Project; New Directory, Existing Directory, or Version Control</span>. The New and Existing Directory choices are pretty much the same---use the later if you already have some `.Rmd` files. The Version Control choice is recommended by a lot of tutorials because it facilitates Git integration. But since I am a beginner I thought it would be nice to learn Git through the command line interface (CLI.)  So all version control here is done through the CLI rather than RStudio. Version control is discussed below.
@@ -101,8 +97,7 @@ FYI, this image is expandable. Click the image to expand to the full screen and 
 So are you happy with the super default settings? If so, you can  add content and then publish your site. If not, I recommend skipping the content at first and instead focusing on Adding Style & Structure to your site. I say this because tweaking a  site with minimal content is  easier than messing with a full blown workflow (speaking from experience). This is primarily because render times of minimal sites are quicker and it will be simpler to identify the effects of modifications. This is especially true if you have embedded R code. You can cache the code in the codechunks but it will still take a bit to render.
 </p>
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Content
 
 The minimum you need for an R Markdown website are the `_site.yml` and the `index.Rmd` files. The index file and any other R Markdown files contain the content and the YAML file contains the general site parameters. The engine uses these files in conjunction with the libraries to build the site.
@@ -166,14 +161,12 @@ Whatever. That's it. Assuming your code ran successfully and you got a message a
 `Output created: _site/index.html`
 ...your website done. Now you can publish it, tweet about it, and tell your sweet Grandpa to check it out. Below I discuss how I published this site using GitHub Pages. I will leave the tweeting and telling Grandpa up to you.
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Adding Style & Structure
 
 But maybe  you want something more than the very default default site.  Awesome. The method you choose will depend a lot on what you want and how much time you are willing to invest. As I understand it, you can customize the pre-packaged, Simple R Markdown Website using the YAML file, embeded HTML code, and/or a custom CSS file.
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### The YAML file
 
 Perhaps the most straightforward approach to configuring your site is to trick out the `_site.yml` file. In fact, the YAML file offers a high degree of customiztion and there are several ways to configure a website using just the  YAML file. We will go through a couple here.
@@ -227,8 +220,7 @@ YAML file notes:
 </ul>
 </p>
 
-<br/>
-
+<div style="padding-top: 1em"></div>
 ### A Custom CSS file
 
 If you want more control over the design of your site, the other option is to create your own CSS (Cascading Style Sheets) file. As I understand it, CSS is used to modify the look (height and width, color, font size, etc.) of HTML elements. You can use your own file to override the CSS properties in the pre-packaged themes. To be honest, I found this part to be pretty challenging but I also learned a lot in the process. That said, I am in no position to provide a CSS tutorial, not in the slightest. But from one novice to another, I can give you a little advice if you're interested in going down this road. The best way to go is to take an online course to properly learn CSS (preferred) or you can do what I did and slog your way through it.
@@ -296,8 +288,7 @@ output:
 
 Now your site will render with the different themes and modified CSS parameters. CSS is an entire language and you certainly can't expect to master it overnight. But I think it can be used effectively to make some nice modifications to your site.
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Publish your Site
 
 I chose to host this site on [GitHub Pages](https://pages.github.com/){target="_blank"} because I thought it would be pretty straightforward. The only thing you really need is a GitHub account (which is free) and away you go. There is a complete walkthrough on set up on the GitHub Pages website. Of course there are many other hosting options out there and you may find something more suited to your needs.

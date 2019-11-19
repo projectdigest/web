@@ -18,15 +18,13 @@ leaflet() %>%
 
 ```
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Observational Methods
 
 At each site, we haphazardly selected focal fish over a wide range of sizes and then randomly selected a single bite by each individual to describe (see Supplementary Table 2 for sample sizes). For each bite, we identified the food item(s) targeted as well as characteristics of the substrate (e.g., hard bottom vs. other common substrates such as sponges, gorgonians, etc.) at the precise location of the bite. For hard substrates, we recorded whether a bite was on a convex, concave, or flat surface, and whether that surface was oriented horizontally (< 45 degrees) or vertically (> 45 degrees). In addition, we framed each bite within a 5 x 5 cm micro-quadrat and measured the depth of the sediment and height of the algae at several points to determine the average sediment depth and algal height within the vicinity of the bite. We then manually removed sediments and determined whether the fish left a distinct grazing scar (i.e., where calcium carbonate had been removed from the reef framework in addition to epilithic algae).
 
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Observational Data & Analyses
 
 To visualize the multivariate patterns of herbivory we used non-metric multidimensional scaling (NMDS) as implemented via the metaMDS function in the vegan package. For each species of herbivorous fish at each site we calculated the proportion of bites focused on each prey item (‘prey variables’) as well as the proportion of bites targeting substrates with different characteristics (e.g., convex vs. concave vs. flat). We also calculated the proportion of bites resulting in a grazing scar. For bites on turf assemblages, we calculated the mean turf height and sediment depth directly adjacent to each bite. Prior to analysis, quantitative variables (e.g., sediment depth and turf height) were rescaled to the range of 0 to 1. In addition, quantitative and categorical variables were rescaled such that they would have similar influence to the ‘prey variables’ by dividing each variable by the number of prey categories. Rescaled data were then analysed via NMDS using a Bray-Curtis dissimilarity matrix.
@@ -73,8 +71,7 @@ datatable(all_traits, rownames = FALSE, width = "100%",
 This table scrolls horizontally.
 </p>
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## Data Scaling
 
 Next we conduct the **NMDS analysis** of the feeding data using  **standardize variables** so that they have similar weights. Our process is as follows: **a**) rescale quantitative traits to be in the range 0 to 1 and divide by the number of diet categories to have similar influence as the diet variables; **b**)  rescale all 'non diet' traits to have similar influence to the diet traits by dividing by the number of diet categories divided by the number of categories for each substrate characteristic; **c**)  combine these data into a single data frame for NMDS analysis; **d**) run **NMDS analysis**
@@ -116,8 +113,7 @@ colnames(spp_scrs) <- c("S_MDS1", "S_MDS2", "SMDS3", "species")
 ```
 <br/>
 
-<br/>
-
+<div style="padding-top: 2em"></div>
 ## NMDS Analysis
 
 Now we can  plot the results and generate **Figure 1** from the manuscript. For all figures generated in this workflow, we coded as much formatting as we could with R and then made minor stylistic changes in [Inkscape](https://inkscape.org){target="blank"}. Thus, what you see here and throughout, are the raw figures.

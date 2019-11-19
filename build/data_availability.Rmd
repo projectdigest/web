@@ -12,7 +12,7 @@ To run the workflow, install the appropriate R packages and download this file:
 
 [10.6084/m9.figshare.7357178](https://doi.org/10.6084/m9.figshare.7357178){target="_blank"}: DOI for this workflow. Includes output from the DADA2 workflow, the phyloseq script, and other necessary input files.
 
-<br/>
+<div style="padding-top: 1em"></div>
 
 <p id = "steel">
 We also offer several additional data products and processing scripts.
@@ -20,18 +20,13 @@ We also offer several additional data products and processing scripts.
 
 
 * [10.6084/m9.figshare.6875522](https://doi.org/10.6084/m9.figshare.6875522){target="_blank"}: Raw data for each sample (before removing primers) plus two tables for ENA submission.
-
 * [PRJEB28397](https://www.ebi.ac.uk/ena/browser/view/PRJEB28397){target="_blank"}: Study accession number for trimmed data (primers removed)  deposited at the European Nucleotide Archive.
-
 * [10.6084/m9.figshare.6997253](https://doi.org/10.6084/m9.figshare.6997253){target="_blank"}: DADA2 workflow for processing 16S rRNA reads.
-
 * [10.6084/m9.figshare.7379930](https://doi.org/10.6084/m9.figshare.7379930){target="_blank"}: Data products from the workflows including sequence tables, taxonomy tables, and ASV fasta files.
-
 * [10.6084/m9.figshare.7379936](https://doi.org/10.6084/m9.figshare.7379936){target="_blank"}: Fasta files for the 59 DA ASVs and top BLAST results, plus the alignment file (including top BLAST hits).
-
 * [10.6084/m9.figshare.7379597](https://doi.org/10.6084/m9.figshare.7379597){target="_blank"}: Supplementary file from the paper.
 
-<br/>
+<div style="padding-top: 1em"></div>
 
 <p id = "steel">
 Accessing the R Code only.
