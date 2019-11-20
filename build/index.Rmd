@@ -40,12 +40,16 @@ Anyway, we used the original tree from the paper to choose an out group for our 
 
 > The image above is actually just half the Betancur-R tree. You can download a full SVG version by clicking on the tree. Or you can download the files we used to make the tree from this [GitHub repo](https://github.com/projectdigest/betancur_r-fish-tree){target="_blank"} and then use anvi'o to make an better tree.
 
+
+<!--
+
 <pre>
 for species in `cat list.txt`;
 do
   pysradb search --db /pool/genomics/stri_istmobiome/dbs/pysradb/SRAmetadb.sqlite "$species" --desc --expand |& tee -a results.txt;
 done
 </pre>
+-->
 
 <!--
 <a href="images/fish_tree.svg" download>
