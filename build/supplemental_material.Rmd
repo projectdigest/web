@@ -80,7 +80,9 @@ We  made additional data products and processing scripts available through onlin
 <div style="padding-top: 2em"></div>
 ## Sample Naming
 
-<p id = "notice">Raw fastq data files were named using the root format RunQ_GnSpe000_G where:</p>
+
+<div class="notice-list">
+Raw fastq data files were named using the root format RunQ_GnSpe000_G where:
 
 <ul>
     <li>Q was the run number (1, 2, or 3),</li>
@@ -88,7 +90,7 @@ We  made additional data products and processing scripts available through onlin
     <li>000 was a unique host ID number, and</li>
     <li>G was the gut segment (F = foregut; M = midgut; H = hind).</li>
 </ul>
-
+</div>
 
 For example, the file name  *Run1_SpVir11_M_S147_L001_R2_001.fastq* corresponded to: the reverse read; midgut sample; *Sparisoma viride*; individual 11; Run01. All raw data are publicly available. The 53 individual fish encompassed seven species and three genera. Two species---*Sparisoma chrysopterum* and *Scarus vetula*---were only represented by 1 and 2 individuals, respectively. Though we omitted these samples from the analysis due to low sample size, they were sequenced and processed along with the rest of the samples. The data are publicly available.
 

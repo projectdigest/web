@@ -6,7 +6,7 @@ body {
   color: #414141;
   line-height: 1.7;
   font-size: 17px;
-  background-color: #FAFAFA;
+  background-color: #FCFCFC;
 }
 
 img {
@@ -19,7 +19,12 @@ img[src="images/fish_tree_clip_title.png"] {
 }
 
 /* Headers */
-h1,h2,h3,h4,h5,h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: Roboto, "PT Sans Narrow", "PT Sans", sans-serif;
 }
 /* Headers */
@@ -88,7 +93,12 @@ h6 {
   font-size: 1.1em;
 }
 
-code, kbd, pre, samp, .sourceLine, .sourceCode {
+code,
+kbd,
+pre,
+samp,
+.sourceLine,
+.sourceCode {
   font-family: 'Monaco', 'PT Mono', monospace;
 }
 
@@ -188,6 +198,14 @@ p#notice {
   font-size: 1em;
 }
 
+div.notice-list {
+  background-color:#FBDFB4;
+  border-radius: 5px;
+  padding: 1em 1em 1em 1em;
+  margin: 1em 0 1em 0;
+  font-size: 1em;
+}
+
 p#steel {
   background-color:#C8CFD6;
   border-radius: 5px;
@@ -217,16 +235,16 @@ pre:not([class]) {
 /*set theme for single backtick code`*/
 code:not([class]) {
    margin: 1px 1px 1px 1px; /*spacing around external words, top right bottom left*/
-   color: #BF2727;
+   color: #BF2727; /*BF2727*/
    font-size: 0.75em;
    -webkit-border-radius: 2px; /*round corners*/
    border-radius: 3px; /*round corners*/
    font-family: 'Monaco', "Source Code Pro", Consolas, Monaco, Menlo, Consolas, monospace;
-   background-color: #f2f2f2;
+   background-color: #EFEFEF;
+   border-width: 0; /*OLD="thin"*/
    border-style: solid;
-   border-width: thin;
    border-color: #545454;
-   padding: 0px 2px 1px;
+   padding: 2px 1.5px 2px;
  }
 
 /*

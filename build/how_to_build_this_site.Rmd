@@ -120,10 +120,13 @@ While this file is open feel free to add some content, change the title, whateve
 So the base of your website will be different pages written in like this and saved as `.Rmd` files. The Rmd files will likely be a mix of text and R code but you can also make a site without any R code at all. Anyway, I will leave the rest of this part up to you...
 
 For now, lets say you want a website with four pages.
-* `index.Rmd` This will always be the landing or home page of the site.
-* `about.Rmd` A page about you or the project.
-* `processing.Rmd` A page that has the processing workflow (e.g.,  [DADA2](https://benjjneb.github.io/dada2/index.html)).
-* `analytical.Rmd` A page that has the analytical workflow (e.g., [phyloseq](https://joey711.github.io/phyloseq/)).
+
+<ul>
+  <li>`index.Rmd` This will always be the landing or home page of the site.</li>
+  <li>`about.Rmd` A page about you or the project.</li>
+  <li>`processing.Rmd` A page that has the processing workflow (e.g.,  [DADA2](https://benjjneb.github.io/dada2/index.html)).</li>
+  <li>`analytical.Rmd` A page that has the analytical workflow (e.g., [phyloseq](https://joey711.github.io/phyloseq/)).</li>
+</ul>
 
 OK, you have all your content and are ready to build the website. But before you do that you need to tell knitr about the new pages. The engine will automatically render all `.Rmd` files to `.html` but unless you instruct knitr what to do with the additional files, you will not have any links on the site. Lets open up the `_site.yml` file (located in the main directory) and have a look.
 
@@ -211,14 +214,14 @@ Or see this [site](https://cran.r-project.org/web/packages/ymlthis/vignettes/yam
 
 For an intro to the topic of modifying the YAML file, see the awesome book [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/html-document.html#appearance_and_style) by *Yihui Xie, J. J. Allaire, Garrett Grolemund*. If you dig deep enough however, you may soon reach the limits of using the YAML file to modify your site.
 
-<p id="warning">
+<div class="notice-list">
 YAML file notes:
 <ul>
-  <li>Use `include: [file_name]` or `exclude: [file_name]` to include or exclude files in the render directory. If specifying an entire directory DO NOT use a backslash. Quotes seem options. </li>
+  <li>Use `include: [file_name]` or `exclude: [file_name]` to include or exclude files in the render directory. If specifying an entire directory DO NOT use a backslash. Quotes optional. </li>
   <li>Not sure but I think the `_site.yml` file needs to be specifically included (`include: [_site.yml]`).</li>
-  <li>I have no idea what `type: inverse` means under the navbar. UPDATE: it lets you swap the color of the navbar and the navbar text.</li>
+  <li>The `type: inverse` option lets you swap the color of the navbar and the navbar text.</li>
 </ul>
-</p>
+</div>
 
 <div style="padding-top: 1em"></div>
 ### A Custom CSS file
