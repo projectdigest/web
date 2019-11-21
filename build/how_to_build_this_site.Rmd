@@ -7,6 +7,10 @@ output:
        collapsed: false
 ---
 
+<p id="warning">
+Please note this page is a work in progress. I will be adding more details on site construction, site hosting/deployment, and valuable resources. 
+</p>
+
 <div style="padding-top: 2em"></div>
 ## Motivation
 
@@ -94,13 +98,13 @@ As you can see the directory has `.html` versions of  the `.Rmd` files (in this 
 FYI, this image is expandable. Click the image to expand to the full screen and click again to return to the main page. Below I discuss how I made this feature.
 
 <p id = "notice">
-So are you happy with the super default settings? If so, you can  add content and then publish your site. If not, I recommend skipping the content at first and instead focusing on Adding Style & Structure to your site. I say this because tweaking a  site with minimal content is  easier than messing with a full blown workflow (speaking from experience). This is primarily because render times of minimal sites are quicker and it will be simpler to identify the effects of modifications. This is especially true if you have embedded R code. You can cache the code in the codechunks but it will still take a bit to render.
+So are you happy with the default settings and the default theme? If so, you can  add content and then publish your site. If not, I recommend skipping the content at first and instead focusing on Adding Style & Structure to your site. I say this because tweaking a  site with minimal content is  easier than messing with a full blown workflow (speaking from experience). This is primarily because render times of minimal sites are quicker and it will be simpler to identify the effects of modifications. This is especially true if you have embedded R code. You can cache the code in the codechunks but it will still take a bit to render.
 </p>
 
 <div style="padding-top: 2em"></div>
 ## Content
 
-The minimum you need for an R Markdown website are the `_site.yml` and the `index.Rmd` files. The index file and any other R Markdown files contain the content and the YAML file contains the general site parameters. The engine uses these files in conjunction with the libraries to build the site.
+The minimum you need for an R Markdown website are the `_site.yml` and the `index.Rmd` files. The index file and any other R Markdown files contain the content and the YAML file contains the global site settings. The engine uses these files in conjunction with the libraries to build the site.
 
 So the first thing you do is write all the code and text in R Markdown files (`.Rmd`)---basically [markdown](https://en.wikipedia.org/wiki/Markdown) (an easy-to-write plain text format) with R code functionality added in. When you render the site, RStudio and an a program call [knitr](https://yihui.org/knitr/){target="_blank"} will run all the code and R Markdown text and spit out an html file with tables, graphs, code, whatever you put in the Rmd file. Later you can cache the code chunks so you don't need to run all the code every time the site is rendered. A tutorial on R and R Markdown is beyond the scope of this humble page but there are a lot of resources to help you on your way.
 
@@ -115,7 +119,7 @@ Content: Lots of beautiful code, creative analyses, poetic prose...
 written in R, R Markdown, html, etc.
 ```
 
-While this file is open feel free to add some content, change the title, whatever. Then save the file, rerun  `rmarkdown::render_site()`, and open the `_site/index.html` file. Boom. Updated website. Pretty slick. If fact every time you add or change something, save the file and run the render command again. You can even just render a single page if the rest are done, so you don't have to re-render the whole dang thing. Like so...`rmarkdown::render_site("about.Rmd")`. The only time you need to re-render the whole site is if you change something that will affect the whole site.
+While this file is open feel free to add some content, change the title, whatever. Then save the file, rerun  `rmarkdown::render_site()`, and open the `_site/index.html` file. Boom. Updated website. Pretty slick. If fact every time you add or change something, save the file and run the render command again. You can even just render a single page if the rest are done, so you don't have to re-render the whole dang thing. Like so...`rmarkdown::render_site("about.Rmd")`. The only time you need to re-render the whole site is if you change something that will affect the whole site. Continually rendering the site is a drawback of this approach. For example, the [blogdown package](https://bookdown.org/yihui/blogdown/) has live reload meaning everytime you make a change and save it, the engine renders the site again. Cool.
 
 So the base of your website will be different pages written in like this and saved as `.Rmd` files. The Rmd files will likely be a mix of text and R code but you can also make a site without any R code at all. Anyway, I will leave the rest of this part up to you...
 
@@ -160,7 +164,7 @@ navbar:
       href: analytical.html
 ```
 
-Whatever. That's it. Assuming your code ran successfully and you got a message after rendering like this...
+Whatever. That's it. Run `rmarkdown::render_site()` again. Assuming your code ran successfully and you got a message after rendering like this...
 `Output created: _site/index.html`
 ...your website done. Now you can publish it, tweet about it, and tell your sweet Grandpa to check it out. Below I discuss how I published this site using GitHub Pages. I will leave the tweeting and telling Grandpa up to you.
 
