@@ -1,5 +1,5 @@
 /* Whole document: */
-@import url('https://fonts.googleapis.com/css?family=PT+Sans|PT+Sans+Narrow|PT+Serif|Roboto+Condensed|Nunito:300|Nunito+Sans:300|Lato:300|Roboto:300');
+@import url('https://fonts.googleapis.com/css?family=PT+Sans|PT+Sans+Narrow|PT+Serif|Roboto+Condensed|Nunito:300|Nunito+Sans:300|Lato:300|Roboto:300|Ropa+Sans');
 /* controls general properties of site*/
 body {
   font-family: "PT Serif", serif;
@@ -14,8 +14,8 @@ img {
 }
 
 img[src="images/fish_tree_clip_title.png"] {
-  border:0;
-  padding:0;
+  border: 0;
+  padding: 0;
 }
 
 /* Headers */
@@ -149,9 +149,9 @@ samp,
   overflow: hidden;
   box-sizing: border-box;
   z-index: 3;
-  margin-top: 30px;
-  padding-top: 30px;
-  padding-bottom: 30px;
+  margin-top: 1px;
+  padding-top: 1px;
+  padding-bottom: 1px;
   text-align: center;
 /* for two column text + the escape */
  }
@@ -304,4 +304,40 @@ code:not([class]) {
 hr {
   border-top: 0.5px solid;
   border-bottom: 0.5px solid;
+}
+
+.copyright {
+  font-family: "Lato", "PT Serif", serif;
+  font-size: 0.9em;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+footer#site-footer {
+  width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  z-index: 1;
+  margin-top: 50px;
+  padding-top: 0;
+  padding-bottom: 30px;
+  text-align: center;
+  font-family: "Lato", "PT Serif", serif;
+  font-size: 1em;
+  background-color: #FAFAFA;
+}
+
+footer#site-footer::before {
+  background-color: #000;
+  content: "";
+  display: inline-block;
+  height: 1px;
+  position: relative;
+  vertical-align: middle;
+  width: 100%;
+  margin-bottom: 2em;
+}
+
+.footnotes {
+  font-size: 0.8em;
 }

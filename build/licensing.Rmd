@@ -1,0 +1,29 @@
+---
+title: "Licencing ^[Is it ok that I modified <em>Licencing</em> language from [here](https://internetingishard.com/legal/licensing/)?]"
+output:
+  html_document:
+    code_folding: none
+    toc: false
+---
+
+All rights, including copyright, of all text, images, code, information, and other material contained in the Projectdigest.github.io website are owned by Projectdigest.github.io and are protected by International Copyright Legislation. Content is licensed as follows.
+
+<div style="padding-top: 2em"></div>
+## Code
+
+<p xmlns:dct="http://purl.org/dc/terms/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+  <a rel="license"
+     href="http://creativecommons.org/publicdomain/zero/1.0/">
+    <img src="http://i.creativecommons.org/p/zero/1.0/88x31.png" style="border-style: none;" alt="CC0" />
+  </a>
+</p>
+
+
+All code that appears on Projectdigest.github.io is licensed under the <a href="http://creativecommons.org/publicdomain/zero/1.0/">Creative Commons Zero License</a>, which means you can use, alter, share, or even sell any of the code you find on this site without attribution to Projectdigest.github.io. “Code” refers to anything that is displayed in an inline monospace font or in a monospace code block, like this:
+
+`This is how a code block looks.`
+
+<div style="padding-top: 2em"></div>
+## Text, Images, & “Not Code”
+
+Text, images, and other non-code content that appears on Projectdigest.github.io are not licensed for redistribution in modified or unmodified form without our express written consent. Please attribute copied text and diagrams to Projectdigest.github.io unless otherwise noted.
