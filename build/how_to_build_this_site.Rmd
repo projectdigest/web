@@ -8,7 +8,7 @@ output:
 ---
 
 <p id="warning">
-Please note this page is a work in progress. I will be adding more details on site construction, site hosting/deployment, and valuable resources. 
+Please note this page is a work in progress. I will be adding more details on site construction, site hosting/deployment, and valuable resources.
 </p>
 
 <div style="padding-top: 2em"></div>
@@ -36,7 +36,7 @@ I  scoured the internet for solutions and for inspiration. My design is based pa
 After searching for the "perfect" template, I decided to take a simpler approach and start with the default website builder package in RStudio. It is bare bones---which is nice because it allowed me to learn as I went along rather than trying to back engineer my understanding from an already tricked out site. The process helped me appreciate both how little I needed  to make a website AND how I could add a little jazz with some extra HTML/CSS code. So I started with the default configuration, then played around with the default YAML file and  my own  CSS file to customize the site.
 
 <p id="warning">
-There are drawbacks to using the Simple R Markdown Website approach. The main one is that  the site generator assumes all the `.Rmd` documents are under a flat directory (i.e., no pages under sub directories). This means it is difficult to organize websites with a lot of content. If you look at the website's GitHub [repo](https://github.com/projectdigest/projectdigest.github.io){target="_blank"} you will see what I mean. There are additional shortcomings with this approach that are worth investigating.
+There are drawbacks to using the Simple R Markdown Website approach. The main one is that  the site generator assumes all the `.Rmd` documents are under a flat directory (i.e., no pages under sub directories). This means it is difficult to organize websites with a lot of content. If you look at the website's GitHub [repo](https://github.com/projectdigest/projectdigest.github.io){target="_new"} you will see what I mean. There are additional shortcomings with this approach that are worth investigating.
 </p>
 
 <div style="padding-top: 2em"></div>
@@ -106,7 +106,7 @@ So are you happy with the default settings and the default theme? If so, you can
 
 The minimum you need for an R Markdown website are the `_site.yml` and the `index.Rmd` files. The index file and any other R Markdown files contain the content and the YAML file contains the global site settings. The engine uses these files in conjunction with the libraries to build the site.
 
-So the first thing you do is write all the code and text in R Markdown files (`.Rmd`)---basically [markdown](https://en.wikipedia.org/wiki/Markdown) (an easy-to-write plain text format) with R code functionality added in. When you render the site, RStudio and an a program call [knitr](https://yihui.org/knitr/){target="_blank"} will run all the code and R Markdown text and spit out an html file with tables, graphs, code, whatever you put in the Rmd file. Later you can cache the code chunks so you don't need to run all the code every time the site is rendered. A tutorial on R and R Markdown is beyond the scope of this humble page but there are a lot of resources to help you on your way.
+So the first thing you do is write all the code and text in R Markdown files (`.Rmd`)---basically [markdown](https://en.wikipedia.org/wiki/Markdown) (an easy-to-write plain text format) with R code functionality added in. When you render the site, RStudio and an a program call [knitr](https://yihui.org/knitr/){target="_new"} will run all the code and R Markdown text and spit out an html file with tables, graphs, code, whatever you put in the Rmd file. Later you can cache the code chunks so you don't need to run all the code every time the site is rendered. A tutorial on R and R Markdown is beyond the scope of this humble page but there are a lot of resources to help you on your way.
 
 The basic structure of the Rmd file is super simple. The title of the page sits between two rows of three consecutive dashes followed by your content.  Lets open the `about.Rmd` file and have look.
 
@@ -214,7 +214,7 @@ There are other ways you can use the YAML file to modify the look of your site. 
 ```
 ?rmarkdown::html_document
 ```
-Or see this [site](https://cran.r-project.org/web/packages/ymlthis/vignettes/yaml-fieldguide.html){target="_blank"} for YAML options.
+Or see this [site](https://cran.r-project.org/web/packages/ymlthis/vignettes/yaml-fieldguide.html){target="_new"} for YAML options.
 
 For an intro to the topic of modifying the YAML file, see the awesome book [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/html-document.html#appearance_and_style) by *Yihui Xie, J. J. Allaire, Garrett Grolemund*. If you dig deep enough however, you may soon reach the limits of using the YAML file to modify your site.
 
@@ -298,7 +298,7 @@ Now your site will render with the different themes and modified CSS parameters.
 <div style="padding-top: 2em"></div>
 ## Publish your Site
 
-I chose to host this site on [GitHub Pages](https://pages.github.com/){target="_blank"} because I thought it would be pretty straightforward. The only thing you really need is a GitHub account (which is free) and away you go. There is a complete walkthrough on set up on the GitHub Pages website. Of course there are many other hosting options out there and you may find something more suited to your needs.
+I chose to host this site on [GitHub Pages](https://pages.github.com/){target="_new"} because I thought it would be pretty straightforward. The only thing you really need is a GitHub account (which is free) and away you go. There is a complete walkthrough on set up on the GitHub Pages website. Of course there are many other hosting options out there and you may find something more suited to your needs.
 
 
 At some point I may make this a more complete tutorial with step-by-step instructions that include setup on GitHub. But at this moment (1621 hours on a Thursday) I can't do battle with GitHub anymore. That creepy silhouetted cat beat me for now...

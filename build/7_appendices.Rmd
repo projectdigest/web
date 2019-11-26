@@ -153,26 +153,26 @@ write.table(taxsums, "DATA/PHYLOSEQ/TABLES/OUTPUT/OTHER/taxsums.txt",
 
 #### Specific tools
 
-* [phyloseq](https://joey711.github.io/phyloseq/){target="_blank"} as the primary analytical package.
-* [LEfSe](https://dx.doi.org/10.1038%2Fnmeth.2658){target="_blank"} to identify differentially abundant (DA) amplicon sequence variants (ASV) across host fish species.
-* [MicrobiomeAnalyst](http://www.microbiomeanalyst.ca/){target="_blank"}  to conduct LEfSe analysis.
-* [BLASTn](https://blast.ncbi.nlm.nih.gov/Blast.cgi){target="_blank"} and [Silva ACT](https://www.arb-silva.de/aligner/){target="_blank"} to identify closest hits to DA ASVs.
-* [RAxML](https://sco.h-its.org/exelixis/web/software/raxml/){target="_blank"} for phylogenetic inference of DA ASVs and closest hits.
-* [iTOL](https://itol.embl.de/){target="_blank"} for visualization of tree and associated metadata.
+* [phyloseq](https://joey711.github.io/phyloseq/){target="_new"} as the primary analytical package.
+* [LEfSe](https://dx.doi.org/10.1038%2Fnmeth.2658){target="_new"} to identify differentially abundant (DA) amplicon sequence variants (ASV) across host fish species.
+* [MicrobiomeAnalyst](http://www.microbiomeanalyst.ca/){target="_new"}  to conduct LEfSe analysis.
+* [BLASTn](https://blast.ncbi.nlm.nih.gov/Blast.cgi){target="_new"} and [Silva ACT](https://www.arb-silva.de/aligner/){target="_new"} to identify closest hits to DA ASVs.
+* [RAxML](https://sco.h-its.org/exelixis/web/software/raxml/){target="_new"} for phylogenetic inference of DA ASVs and closest hits.
+* [iTOL](https://itol.embl.de/){target="_new"} for visualization of tree and associated metadata.
 
 <div style="padding-top: 0.5em"></div>
 #### Other valuable resources
 
-* [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/){target="_blank"}
-* [knitr](http://yihui.name/knitr/){target="_blank"} tutorials. Fantastic site!
-* [Microbiota analysis in R, UCR Workshop 2018](https://rpubs.com/maddieSC/R_SOP_UCR_Jan_2018){target="_blank"} nicely documented workflow with examples.
+* [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/){target="_new"}
+* [knitr](http://yihui.name/knitr/){target="_new"} tutorials. Fantastic site!
+* [Microbiota analysis in R, UCR Workshop 2018](https://rpubs.com/maddieSC/R_SOP_UCR_Jan_2018){target="_new"} nicely documented workflow with examples.
 
 <div style="padding-top: 2em"></div>
 ## C: Submitting sequencing data to public archives
 
-It is now time to submit the data to your favorite sequence read archive. We submitted out data to the [European Nucleotide Archive (ENA)](https://www.ebi.ac.uk/ena){target="blank"}. The ENA does not like RAW data and prefers to have primers removed. So we submitted the trimmed Fastq files to the ENA. You can find these data under the study accession number [**PRJEB28397**](https://www.ebi.ac.uk/ena/browser/view/PRJEB28397){target="blank"}. The raw, raw files are available on the project's [figshare site](https://doi.org/10.6084/m9.figshare.6875522){target="blank"}.
+It is now time to submit the data to your favorite sequence read archive. We submitted out data to the [European Nucleotide Archive (ENA)](https://www.ebi.ac.uk/ena){target="_new"}. The ENA does not like RAW data and prefers to have primers removed. So we submitted the trimmed Fastq files to the ENA. You can find these data under the study accession number [**PRJEB28397**](https://www.ebi.ac.uk/ena/browser/view/PRJEB28397){target="_new"}. The raw, raw files are available on the project's [figshare site](https://doi.org/10.6084/m9.figshare.6875522){target="_new"}.
 
-To submit to the ENA you need two data tables (plus your sequence data). The first file describes the samples and the second file describes the sequencing data. The original files can be found on the figshare site with the [raw data](https://doi.org/10.6084/m9.figshare.6875522){target="_blank"}.
+To submit to the ENA you need two data tables (plus your sequence data). The first file describes the samples and the second file describes the sequencing data. The original files can be found on the figshare site with the [raw data](https://doi.org/10.6084/m9.figshare.6875522){target="_new"}.
 
 <div style="padding-top: 2em"></div>
 ## D: Specific R package & versions

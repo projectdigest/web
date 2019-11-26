@@ -6,7 +6,7 @@ output:
        collapsed: false
 ---
 
-```{r load_2, include=FALSE, cache=TRUE, eval=FALSE}
+```{r load_2, include=FALSE, cache=TRUE, eval=TRUE}
 # This is for initial processing only. After caching eval not needed
 load("DATA/RDS/pw_prep_2.rds")
 ```
@@ -246,7 +246,7 @@ Armed with a picture of taxonomic composition we can move on to diversity estima
 
 Alpha diversity describes the diversity in a sample or site.  There are several alpha diversity metrics available in phyloseq: `Observed`, `Chao1`, `ACE`, `Shannon`, `Simpson`, `InvSimpson`, `Fisher`. Play around to see how different metrics change or confirm these results.
 
-Here we want to know if diversity is significantly different across host species. In order to do that we need to know if we should run a parametric or non-parametric test, and for that we need to know if our data is normally distributed. Most of the ideas/code for alpha (and subsequent beta) diversity statistics come from this [workshop tutorial](https://rpubs.com/maddieSC/R_SOP_UCR_Jan_2018){target="_blank"} by Kim Dill-McFarland and Madison Cox.
+Here we want to know if diversity is significantly different across host species. In order to do that we need to know if we should run a parametric or non-parametric test, and for that we need to know if our data is normally distributed. Most of the ideas/code for alpha (and subsequent beta) diversity statistics come from this [workshop tutorial](https://rpubs.com/maddieSC/R_SOP_UCR_Jan_2018){target="_new"} by Kim Dill-McFarland and Madison Cox.
 
 First we run the diversity estimates, add these data to our summary table, and save a copy of this table.
 

@@ -67,13 +67,13 @@ This document contains all seven supplementary <span class="callout">tables</spa
 
 We  made additional data products and processing scripts available through online repositories.
 
-* [10.6084/m9.figshare.6875522](https://doi.org/10.6084/m9.figshare.6875522){target="_blank"}: Raw data for each sample (before removing primers).
-* [PRJEB28397](https://www.ebi.ac.uk/ena/data/view/PRJEB28397){target="_blank"}: Study accession number for trimmed data (primers removed)  deposited at the European Nucleotide Archive.
-* [10.6084/m9.figshare.6997253](https://doi.org/10.6084/m9.figshare.6997253){target="_blank"}: DADA2 workflow for processing 16S rRNA reads.
-* [10.6084/m9.figshare.7357178](https://doi.org/10.6084/m9.figshare.7357178){target="_blank"}: Reproducible phyloseq workflow. This includes the output from the DADA2 workflow, the phyloseq script, and other necessary input files.
-* [10.6084/m9.figshare.7379930](https://doi.org/10.6084/m9.figshare.7379930){target="_blank"}: Data products from the workflows including otu_table, tax_table, sample_data table and ASV fasta files.
-* [10.6084/m9.figshare.7379936](https://doi.org/10.6084/m9.figshare.7379936){target="_blank"}: Fasta file for the 59 DA ASVs, BLAST results, and alignment file including top BLAST hits.
-* [10.6084/m9.figshare.7379597](https://doi.org/10.6084/m9.figshare.7379597){target="_blank"}: This file.
+* [10.6084/m9.figshare.6875522](https://doi.org/10.6084/m9.figshare.6875522){target="_new"}: Raw data for each sample (before removing primers).
+* [PRJEB28397](https://www.ebi.ac.uk/ena/data/view/PRJEB28397){target="_new"}: Study accession number for trimmed data (primers removed)  deposited at the European Nucleotide Archive.
+* [10.6084/m9.figshare.6997253](https://doi.org/10.6084/m9.figshare.6997253){target="_new"}: DADA2 workflow for processing 16S rRNA reads.
+* [10.6084/m9.figshare.7357178](https://doi.org/10.6084/m9.figshare.7357178){target="_new"}: Reproducible phyloseq workflow. This includes the output from the DADA2 workflow, the phyloseq script, and other necessary input files.
+* [10.6084/m9.figshare.7379930](https://doi.org/10.6084/m9.figshare.7379930){target="_new"}: Data products from the workflows including otu_table, tax_table, sample_data table and ASV fasta files.
+* [10.6084/m9.figshare.7379936](https://doi.org/10.6084/m9.figshare.7379936){target="_new"}: Fasta file for the 59 DA ASVs, BLAST results, and alignment file including top BLAST hits.
+* [10.6084/m9.figshare.7379597](https://doi.org/10.6084/m9.figshare.7379597){target="_new"}: This file.
 
 <a id="Sample Naming"></a>
 
@@ -232,7 +232,7 @@ Table is horizontally scrollable.
 * **Host genus**
 * **Host species**
 * **Common name**
-* **NCBI tAxID** [NCBI Taxonomic ID](https://www.ncbi.nlm.nih.gov/taxonomy){target="_blank"} of host species.
+* **NCBI tAxID** [NCBI Taxonomic ID](https://www.ncbi.nlm.nih.gov/taxonomy){target="_new"} of host species.
 * **Collection date**
 
 #### Host physiological characteristics
@@ -410,7 +410,7 @@ Table scrolls horizontally.
 * **Enriched** Host species where ASV was differentially abundant.
 * **Total reads** Total reads for query ASV in full dataset.
 * **Taxon** Class-level taxonomic affiliation of query ASV.
-* **Num IMNGS hits**. Number of hits to the [IMNGS](https://www.imngs.org/){target="_blank"} database. Value indicates the number of samples that scored a hit to an ASV based on 97% cutoff identity and representing greater than or equal to 0.1% of total reads in a sample from the database.
+* **Num IMNGS hits**. Number of hits to the [IMNGS](https://www.imngs.org/){target="_new"} database. Value indicates the number of samples that scored a hit to an ASV based on 97% cutoff identity and representing greater than or equal to 0.1% of total reads in a sample from the database.
 
 
 #### Details for top BLAST hits
@@ -424,7 +424,7 @@ Table scrolls horizontally.
 * **Collection year** Year sample was collected (where provided) containing top BLAST hit.
 * **Country** Country and location origin of sample (where provided) containing top BLAST hit.
 * **PubMed ID** PubMed publication ID (where provided) containing top BLAST hit.
-* **Sullam Lifestyle** Lifestyle classification of BLAST hit (where applicable) from the [Sullam et. al.](https://doi.org/10.1111/j.1365-294X.2012.05552.x){target="_blank"} paper, specifically **Table S1**.
+* **Sullam Lifestyle** Lifestyle classification of BLAST hit (where applicable) from the [Sullam et. al.](https://doi.org/10.1111/j.1365-294X.2012.05552.x){target="_new"} paper, specifically **Table S1**.
 
 
 #### Alignment details between query ASV and top BLAST hit

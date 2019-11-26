@@ -116,7 +116,7 @@ colnames(spp_scrs) <- c("S_MDS1", "S_MDS2", "SMDS3", "species")
 <div style="padding-top: 2em"></div>
 ## NMDS Analysis
 
-Now we can  plot the results and generate **Figure 1** from the manuscript. For all figures generated in this workflow, we coded as much formatting as we could with R and then made minor stylistic changes in [Inkscape](https://inkscape.org){target="blank"}. Thus, what you see here and throughout, are the raw figures.
+Now we can  plot the results and generate **Figure 1** from the manuscript. For all figures generated in this workflow, we coded as much formatting as we could with R and then made minor stylistic changes in [Inkscape](https://inkscape.org){target="_new"}. Thus, what you see here and throughout, are the raw figures.
 
 ```{r mean_bite_initial_plot, cache=TRUE}
 #Plot results using ggplot2

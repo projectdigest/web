@@ -25,7 +25,7 @@ To accomplish these goals we leave the R environment and employ some additional 
 <div style="padding-top: 2em"></div>
 ## Differential Abundance (DA)
 
-We used [LDA Effect Size (LEfSe)](https://dx.doi.org/10.1038%2Fnmeth.2658){target="_blank"} to identify differentially abundant (DA) ASVs across host species and the [MicrobiomeAnalyst webserver](http://www.microbiomeanalyst.ca/){target="_blank"} to run the analysis. There are also many other great tools on the MicrobiomeAnalyst webserver by the way. We needed three files for the input---an 'OTU' table, a metadata file containing sample information, and a taxonomy table. We generate these tables with the code below.
+We used [LDA Effect Size (LEfSe)](https://dx.doi.org/10.1038%2Fnmeth.2658){target="_new"} to identify differentially abundant (DA) ASVs across host species and the [MicrobiomeAnalyst webserver](http://www.microbiomeanalyst.ca/){target="_new"} to run the analysis. There are also many other great tools on the MicrobiomeAnalyst webserver by the way. We needed three files for the input---an 'OTU' table, a metadata file containing sample information, and a taxonomy table. We generate these tables with the code below.
 
 
 ```{r gen_lefse_input_files, results='hide', cache=TRUE}
@@ -62,7 +62,7 @@ write.table(meta_file, "DATA/PHYLOSEQ/TABLES/OUTPUT/LEfSe/LEfSe_INPUT_metadata.t
 ```
 
 
-And once we have the three files, we head over to the [MicrobiomeAnalyst webserver](http://www.microbiomeanalyst.ca/){target="_blank"} and upload the files. Be sure to select `Silva taxonomy` in the drop-down menu.
+And once we have the three files, we head over to the [MicrobiomeAnalyst webserver](http://www.microbiomeanalyst.ca/){target="_new"} and upload the files. Be sure to select `Silva taxonomy` in the drop-down menu.
 Check the data summary after uploading the files:
 
 * OTU annotation:	SILVA
@@ -223,7 +223,7 @@ write.table(table2format_trim_df, "DATA/PHYLOSEQ/TABLES/OUTPUT/ASV_FOR_BLAST.fas
             quote = FALSE, fileEncoding = "UTF-8")
 ```
 
-  <li>With our newly created DA ASV fasta file we can move on to database searching. We used  [BLASTn](https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome){target="_blank"} against the *nr* database to search publicly available sequence data. We used these settings:
+  <li>With our newly created DA ASV fasta file we can move on to database searching. We used  [BLASTn](https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome){target="_new"} against the *nr* database to search publicly available sequence data. We used these settings:
     <ul>
       <li>optimized for highly similar sequences (megablast)</li>
       <li>Expect threshold = 10</li>
@@ -268,7 +268,7 @@ This table also scrolls horizontally.
 
 Several ASVs returned more than one match at 100%. For some ASVs, the 100% matches were from the same study/study organism, so we just selected one as the representative. ASVs 6, 12, 224, and 398 returned numerous 100% matches (out of 50 total). These data were impractical  to summarize and not very informative anyway. So we elected to leave these data out. If you want to see what these hits are, just grab the ASV sequence and BLAST away. Also, some ASVs shared the same top hit. Since the table is 'by ASV' we retained all duplicate hits.</li>
 
-  <li> For phylogenetic inference we used the [Silva Alignment, Classification and Tree Service](https://www.arb-silva.de/aligner/){target="_blank"} to obtain neighbors of DA ASVs. We used these settings:
+  <li> For phylogenetic inference we used the [Silva Alignment, Classification and Tree Service](https://www.arb-silva.de/aligner/){target="_new"} to obtain neighbors of DA ASVs. We used these settings:
     <ul>
       <li>Search and classify: min identity = 0.95; Number of neighbors = 5.</li>
       <li>Default parameters for the remainder of the workflow.</li>
@@ -282,7 +282,7 @@ Several ASVs returned more than one match at 100%. For some ASVs, the 100% match
 
 Short read sequences are not ideal for phylogenetic analysis, but given the data we have, we felt this was a good place to start. This analysis required several steps.
 <ol>
-  <li>We used [mothur](https://www.mothur.org/wiki/){target="_blank"} (v.1.42.1, Last updated: 5/13/19) and the [Silva full length sequences and taxonomy references (release 132)](https://www.mothur.org/wiki/Silva_reference_files){target="_blank"} to align the DA ASVs and our new reference db, and also classify the sequences. We used a [hard mask](https://www.mothur.org/wiki/Filter.seqs#hard){target="_blank"} to trim all long reads to the same length (~373bp) and 16S region as the ASVs.</li>
+  <li>We used [mothur](https://www.mothur.org/wiki/){target="_new"} (v.1.42.1, Last updated: 5/13/19) and the [Silva full length sequences and taxonomy references (release 132)](https://www.mothur.org/wiki/Silva_reference_files){target="_new"} to align the DA ASVs and our new reference db, and also classify the sequences. We used a [hard mask](https://www.mothur.org/wiki/Filter.seqs#hard){target="_new"} to trim all long reads to the same length (~373bp) and 16S region as the ASVs.</li>
 
 <pre>
 mothur "#align.seqs(candidate=sequence_tree.fasta, template=silva.nr_v132.align, processors=20, flip=t)"
@@ -290,7 +290,7 @@ mothur "#filter.seqs(fasta=sequence_tree.fasta, vertical = =F, hard=mask.txt)"
 mothur "#classify.seqs(fasta=sequence_tree.filter.fasta, template=silva.nr_v132.align, taxonomy=silva.nr_v132.tax, processors=10)"
 </pre>
 
-  <li>Now that we had our 59 DA ASVs and the top database hits, its was time for phylogenetic inference. We used [RAxML-HPC](https://sco.h-its.org/exelixis/web/software/raxml/index.html){target="_blank"} to generate a phylogenetic tree (with *Aquifex* as the outgroup)</li>
+  <li>Now that we had our 59 DA ASVs and the top database hits, its was time for phylogenetic inference. We used [RAxML-HPC](https://sco.h-its.org/exelixis/web/software/raxml/index.html){target="_new"} to generate a phylogenetic tree (with *Aquifex* as the outgroup)</li>
 
 <pre>
 raxmlHPC-PTHREADS-SSE3 -T 24 -f a -p 2345 -x 3456 -m GTRGAMMA  -N 1000 -s sequence_tree.filter.fasta -n fish_arb_align_1000BS_B.tre

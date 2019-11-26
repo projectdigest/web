@@ -42,25 +42,25 @@ This document is used to <span class="callout">process raw pair-end Illumina dat
 
 We make several data types available from the DADA2 workflow. For a more complete list of data and data products, please see the <a href="data_availability.html">Data section</a>.
 
-* [10.6084/m9.figshare.6875522](https://doi.org/10.6084/m9.figshare.6875522){target="_blank"}: Raw data for each sample (before removing primers).
+* [10.6084/m9.figshare.6875522](https://doi.org/10.6084/m9.figshare.6875522){target="_new"}: Raw data for each sample (before removing primers).
 
-* Trimmed data (primers removed) are deposited at the European Nucleotide Archive under the study accession number [PRJEB28397 (ERP110594)](https://www.ebi.ac.uk/ena/data/view/PRJEB28397){target="_blank"}.
+* Trimmed data (primers removed) are deposited at the European Nucleotide Archive under the study accession number [PRJEB28397 (ERP110594)](https://www.ebi.ac.uk/ena/data/view/PRJEB28397){target="_new"}.
 
-* [10.6084/m9.figshare.7357178](https://doi.org/10.6084/m9.figshare.7357178){target="_blank"}: Final output file produce in [Part F: Merge Results & Complete Workflow](#Part F: Merge Samples) of this workflow as well as files for phyloseq analytical workflow. The DADA2 output file is loaded file directly into the phyloseq workflow.
+* [10.6084/m9.figshare.7357178](https://doi.org/10.6084/m9.figshare.7357178){target="_new"}: Final output file produce in [Part F: Merge Results & Complete Workflow](#Part F: Merge Samples) of this workflow as well as files for phyloseq analytical workflow. The DADA2 output file is loaded file directly into the phyloseq workflow.
 
-* [10.6084/m9.figshare.6997253](https://doi.org/10.6084/m9.figshare.6997253){target="_blank"}: DOI for this workflow.
+* [10.6084/m9.figshare.6997253](https://doi.org/10.6084/m9.figshare.6997253){target="_new"}: DOI for this workflow.
 
 
 <p id = "opennote">
 This pipeline is <span class="paper">exactly how we processed our data</span>. This however is not meant to be a  tutorial and we  only provide minimal annotation.
 </p>
 
-There are many great tutorials and explanations out there on [DADA2](https://benjjneb.github.io/dada2/){target="_blank"} amplicon processing that you can dive into. For example [here](https://f1000research.com/articles/5-1492/v2){target="_blank"}, [here](https://benjjneb.github.io/dada2/bigdata.html){target="_blank"}, [here](https://astrobiomike.github.io/amplicon/dada2_workflow_ex){target="_blank"}, and [here](https://benjjneb.github.io/dada2/tutorial.html){target="_blank"}.
+There are many great tutorials and explanations out there on [DADA2](https://benjjneb.github.io/dada2/){target="_new"} amplicon processing that you can dive into. For example [here](https://f1000research.com/articles/5-1492/v2){target="_new"}, [here](https://benjjneb.github.io/dada2/bigdata.html){target="_new"}, [here](https://astrobiomike.github.io/amplicon/dada2_workflow_ex){target="_new"}, and [here](https://benjjneb.github.io/dada2/tutorial.html){target="_new"}.
 
 In the upper right hand corner of this page is a `Code` button. Use this to show or hide all the code in the document (default is show).
 
 <p id = "warning">
-Depending on your DADA2 version, you may get [slightly different results](https://github.com/benjjneb/dada2/issues/532){target="_blank"} due to fundamental changes in the code-base. This is unavoidable at times (with any software) and  developers do their best to maintain fidelity across versions. To replicate our results exactly, please see the [end of this page](#Appendix: R packages & versions) for the R package and versions used in this workflow. Also, we set random number seeds to ensure full reproducibility (see below).
+Depending on your DADA2 version, you may get [slightly different results](https://github.com/benjjneb/dada2/issues/532){target="_new"} due to fundamental changes in the code-base. This is unavoidable at times (with any software) and  developers do their best to maintain fidelity across versions. To replicate our results exactly, please see the [end of this page](#Appendix: R packages & versions) for the R package and versions used in this workflow. Also, we set random number seeds to ensure full reproducibility (see below).
 </p>
 
 Let's proceed.
@@ -108,8 +108,8 @@ So...
 <div style="padding-top: 0.5em"></div>
 #### [Part A: Preprocessing](#Part A: Preprocessing)
 
-* Use [cutadapt](http://cutadapt.readthedocs.io/en/stable/guide.html){target="_blank"} to trim adapters from raw reads.
-* Merge gut segments per individual per run using [mothur](https://www.mothur.org/){target="_blank"}.
+* Use [cutadapt](http://cutadapt.readthedocs.io/en/stable/guide.html){target="_new"} to trim adapters from raw reads.
+* Merge gut segments per individual per run using [mothur](https://www.mothur.org/){target="_new"}.
 
 #### [Part B: File Prep](#Part B: File Prep)
 
@@ -139,7 +139,7 @@ At this point in the workflow we are finished processing the individual runs. To
 
 #### [Part F: Merge Results & Complete Workflow](#Part F: Merge Results & Complete Workflow)
 
-Here we combine the replicate runs Run01 and Run02, and then add in Run03. We followed [this recipe](https://benjjneb.github.io/dada2/bigdata_paired.html){target="_blank"} for merging samples. Run time is also displayed after this step.
+Here we combine the replicate runs Run01 and Run02, and then add in Run03. We followed [this recipe](https://benjjneb.github.io/dada2/bigdata_paired.html){target="_new"} for merging samples. Run time is also displayed after this step.
 
 <a id="Part A: Preprocessing"></a>
 
@@ -148,9 +148,9 @@ Here we combine the replicate runs Run01 and Run02, and then add in Run03. We fo
 
 1. Run `catadapt` on all `fastq` files to trim adapters.
 
-```
+<pre>
 cutadapt -g {F-ADAPTER} -G {R-ADAPTER} -o ${R1}.trimmed.fastq -p {R2}.trimmed.fastq ${R1} ${R2} --discard-untrimmed -e 0.12
-```
+</pre>
 
 Where:
 
@@ -165,9 +165,9 @@ This will yield a ~375 bp amplicon.
 Lets use sample `AcCoe01` as an example from `Run1`
 where `F = foregut`, `M = midgut`, and `H = hindgut`
 
-```
+<pre>
 mothur"#merge.files(input=Run1_AcCoe01_F_R1_001.trimmed.fastq-Run1_AcCoe01_M_R1_001.trimmed.fastq-Run1_AcCoe01_H_R1_001.trimmed.fastq, output=AcCoe01_1_R1.fastq)"
-```
+</pre>
 
 mothur` uses the dash(-) to distinguish between files to be merged so make sure your file names do not have dashes.
 
@@ -624,13 +624,13 @@ st.all <- mergeSequenceTables(combo, seqtab.3)
 <div style="padding-top: 0.5em"></div>
 #### Run chimera removal & assign taxonomy
 
-There are several database options for taxonomic assignment, including Silva, RDP TrainSet, Greengenes, etc... You will need to download a [DADA2-formatted reference database](https://benjjneb.github.io/dada2/training.html){target="_blank"}. We used both Silva version 132 and GreenGenes version 13.8.
+There are several database options for taxonomic assignment, including Silva, RDP TrainSet, Greengenes, etc... You will need to download a [DADA2-formatted reference database](https://benjjneb.github.io/dada2/training.html){target="_new"}. We used both Silva version 132 and GreenGenes version 13.8.
 
 ```{r chimera_on_combined_runs, cache=TRUE}
 seqtab <- removeBimeraDenovo(st.all, method="consensus", multithread=TRUE)
 ```
 
-`assignTaxonomy` implements the naive Bayesian classifier, so for reproducible results you need to set a random number seed (see issue [#538](https://github.com/benjjneb/dada2/issues/538){target="_blank"}).
+`assignTaxonomy` implements the naive Bayesian classifier, so for reproducible results you need to set a random number seed (see issue [#538](https://github.com/benjjneb/dada2/issues/538){target="_new"}).
 
 ```{r assign_tax, cache=TRUE, eval = FALSE}
 set.seed(119)#for reproducability

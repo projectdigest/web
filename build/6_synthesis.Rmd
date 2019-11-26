@@ -21,7 +21,7 @@ Now it is time to <span class="callout">put the pieces together</span> and see w
 <div style="padding-top: 1em"></div>
 ### IMNGS analysis
 
-To dig just a little deeper, we screened our DA ASVs against the [IMNGS database](https://www.imngs.org/){target="_blank"}. IMNGS hosts a curated database of short-read sequences scraped from the International Nucleotide Sequence Database Collaboration (GenBank, DDBJ and EMBL). The database is rebuilt monthly and at the time of this analysis, contained 271,237 samples. IMNG is really designed to screen full-length 16S rRNA sequences and is not ideal for shorter reads. This is because the database is built from short reads, and different studies target different regions of the gene. For example, if we get no hits to an ASV it could mean the organisms it came from has really not been detected before or that it is in the database but is represented by a different 16S region. So take these data with a grain of salt.
+To dig just a little deeper, we screened our DA ASVs against the [IMNGS database](https://www.imngs.org/){target="_new"}. IMNGS hosts a curated database of short-read sequences scraped from the International Nucleotide Sequence Database Collaboration (GenBank, DDBJ and EMBL). The database is rebuilt monthly and at the time of this analysis, contained 271,237 samples. IMNG is really designed to screen full-length 16S rRNA sequences and is not ideal for shorter reads. This is because the database is built from short reads, and different studies target different regions of the gene. For example, if we get no hits to an ASV it could mean the organisms it came from has really not been detected before or that it is in the database but is represented by a different 16S region. So take these data with a grain of salt.
 
 **IMNGS is not a high-throughput system**. User may only submit a maximum of 10 sequences per query and this can (and will) take weeks to run. So choose your ASVs carefully.
 
@@ -42,14 +42,14 @@ We report data from 97% cutoff identity and 0.1% of total reads in a sample. I t
 <div style="padding-top: 1em"></div>
 ### Sullam lifestyle categories
 
-We also compared the final list of top hits to the [Sullam et. al.](https://doi.org/10.1111/j.1365-294X.2012.05552.x){target="_blank"} paper, specifically **Table S1 ** from that paper. Because this paper was published in 2012, there were many sequence hits in our db that did not appear in the original paper. However, for those that did, we added the Sullam *lifestyle category* designations to the tree metadata.
+We also compared the final list of top hits to the [Sullam et. al.](https://doi.org/10.1111/j.1365-294X.2012.05552.x){target="_new"} paper, specifically **Table S1 ** from that paper. Because this paper was published in 2012, there were many sequence hits in our db that did not appear in the original paper. However, for those that did, we added the Sullam *lifestyle category* designations to the tree metadata.
 
 <div style="padding-top: 1em"></div>
 ### Putting the pieces together
 
-We took all of these data and used [iTOL](https://itol.embl.de/){target="_blank"} to visualize the tree. For each top hit, we added the isolation source/natural host information, taxonomic affiliation, and Sullam *lifestyle category*. We also overlaid the number of hits to the IMNGS database for each ASV.
+We took all of these data and used [iTOL](https://itol.embl.de/){target="_new"} to visualize the tree. For each top hit, we added the isolation source/natural host information, taxonomic affiliation, and Sullam *lifestyle category*. We also overlaid the number of hits to the IMNGS database for each ASV.
 
-To view a full, interactive version of the tree go this [iTOL page](https://itol.embl.de/tree/18614898186392201535496541){target="_blank"}.
+To view a full, interactive version of the tree go this [iTOL page](https://itol.embl.de/tree/18614898186392201535496541){target="_new"}.
 
 <span class="paper">Figure 3</span>
 

@@ -43,6 +43,7 @@ library(plotly)
 library(pairwiseAdonis)
 library(dplyr)
 library(leaflet)
+library(whoppeR)
 sessionInfo()
 set.seed(0199)
 ```
@@ -72,7 +73,7 @@ In this study, we looked at <span class="callout">intestinal microbial</span> co
 <div style="padding-top: 2em"></div>
 ## Definitions & Abbreviations
 <ul>
-  <li>[Amplicon Sequence Variant](https://www.nature.com/articles/ismej2017119){target="_blank"} (**ASV**): Exact sequence variant---analogous to an OTU---but with single nucleotide resolution.</li>
+  <li>[Amplicon Sequence Variant](https://www.nature.com/articles/ismej2017119){target="_new"} (**ASV**): Exact sequence variant---analogous to an OTU---but with single nucleotide resolution.</li>
   <li>Differentially abundant (**DA**) feature: Taxa, ASV, etc. that is disproportionately abundant in a group of samples and statistically different than other groups.</li>
 </ul>
 
@@ -110,7 +111,7 @@ Here we assess taxonomic composition, alpha diversity, and beta diversity. Phylo
 <div style="padding-top: 0.5em"></div>
 #### <a href="5_da_asv.html">N<sup><u>o</u></sup> 5. Differentially Abundant ASVs</a>
 
-We wanted to understand how ASVs partitioned across host species. We also wanted to assess the specificity of each ASV to determine habitat preference. To our knowledge there is no quantitative way to do this. The only attempt we are aware of was [MetaMetaDB](http://mmdb.aori.u-tokyo.ac.jp/){target="_blank"} but it is based on a 454 database and no longer seems to be in active development. So we used an approach based on the work of [Sullam *et. al.*](https://doi.org/10.1111/j.1365-294X.2012.05552.x){target="_blank"}, first identifying differentially abundant ASVs, then searching for closest database hits, and finally using phylogenetic analysis and top hit metadata (isolation source, natural host) to infer habitat preference.
+We wanted to understand how ASVs partitioned across host species. We also wanted to assess the specificity of each ASV to determine habitat preference. To our knowledge there is no quantitative way to do this. The only attempt we are aware of was [MetaMetaDB](http://mmdb.aori.u-tokyo.ac.jp/){target="_new"} but it is based on a 454 database and no longer seems to be in active development. So we used an approach based on the work of [Sullam *et. al.*](https://doi.org/10.1111/j.1365-294X.2012.05552.x){target="_new"}, first identifying differentially abundant ASVs, then searching for closest database hits, and finally using phylogenetic analysis and top hit metadata (isolation source, natural host) to infer habitat preference.
 
 <div style="padding-top: 0.5em"></div>
 #### <a href="6_synthesis.html">N<sup><u>o</u></sup> 6. Synthesis</a>
@@ -130,10 +131,10 @@ This section contains information on <b>a</b>) other analyses & visualizations, 
 Throughout this workflow we are going to rely on color to help us tell a story. We will use color to delineate host fish species and to delineate microbial taxa. Microbial diversity is pretty vast and it can be difficult to display all of this diversity in a single, static figure.
 
 <div class="warning">
-Many of us perceive color and/or differences in color, well, differently. So when designing figures it is important to use <b>a</b>) a relatively few colors and <b>b</b>) a palette that is friendly to a variety of people. For our figures, we generated a palette based on Bang Wong's scheme described in this [paper](http://dx.doi.org/10.1038/nmeth.1618){target="_blank"}. Wong's  scheme uses contrasting colors that can be distinguished by a range of people. Consider that roughly 8% of people (mostly males) are color blind. So what do you think? Do you want Keanu Reeves to understand your figures or not?
+Many of us perceive color and/or differences in color, well, differently. So when designing figures it is important to use <b>a</b>) a relatively few colors and <b>b</b>) a palette that is friendly to a variety of people. For our figures, we generated a palette based on Bang Wong's scheme described in this [paper](http://dx.doi.org/10.1038/nmeth.1618){target="_new"}. Wong's  scheme uses contrasting colors that can be distinguished by a range of people. Consider that roughly 8% of people (mostly males) are color blind. So what do you think? Do you want Keanu Reeves to understand your figures or not?
 </div>
 
-Wong's scheme is conservative---there are only 7 colors. We added black grey, and a blueish white to give us some wiggle room (we cheated a little). Others have developed [12 and 15 color palette schemes](http://mkweb.bcgsc.ca/colorblind/){target="_blank"} and these are worth looking into, but be careful---figures with too many colors can inhibit our ability to discern patterns. This conservative palette forced us to choose carefully when deciding which taxa to target or how many groups to display. To keep things simple, we  created two palettes---one for microbial taxa (`friend_pal`) with all the colors and another for the five host fish species (`samp_pal`). The fish palette is just a subset of the full palette. Here is the code:
+Wong's scheme is conservative---there are only 7 colors. We added black grey, and a blueish white to give us some wiggle room (we cheated a little). Others have developed [12 and 15 color palette schemes](http://mkweb.bcgsc.ca/colorblind/){target="_new"} and these are worth looking into, but be careful---figures with too many colors can inhibit our ability to discern patterns. This conservative palette forced us to choose carefully when deciding which taxa to target or how many groups to display. To keep things simple, we  created two palettes---one for microbial taxa (`friend_pal`) with all the colors and another for the five host fish species (`samp_pal`). The fish palette is just a subset of the full palette. Here is the code:
 
 ```{r define_color_blind_scheme, cache=TRUE, fig.height=3}
 #Full palette
@@ -155,38 +156,38 @@ cols(friend_pal)
 save.image(file = "DATA/RDS/pw_intro_0.rds")
 ```
 
-There is a great article on [Coloring for Colorblindness](https://davidmathlogic.com/colorblind/#%23000000-%23E69F00-%2356B4E9-%23009E73-%23F0E442-%230072B2-%23D55E00-%23CC79A7){target="blank"} by David Nichols that has an interactive color picker and recommendations for accessible palettes. This is also a [really cool site](https://www.canva.com/colors/color-wheel/){target="blank"} for looking at  color combinations. Both resources are highly recommended.
+There is a great article on [Coloring for Colorblindness](https://davidmathlogic.com/colorblind/#%23000000-%23E69F00-%2356B4E9-%23009E73-%23F0E442-%230072B2-%23D55E00-%23CC79A7){target="_new"} by David Nichols that has an interactive color picker and recommendations for accessible palettes. This is also a [really cool site](https://www.canva.com/colors/color-wheel/){target="_new"} for looking at  color combinations. Both resources are highly recommended.
 
 <div style="padding-top: 2em"></div>
-## Figures & Tables
+## Links to Figures & Tables
 
-Use the links below if you want to jump directly to the code used to produce the **figures and tables** from the original publication. You can also find the full Supplementary files for the paper  [here](supplemental_material.html){target="blank"} but there is no R code on this page. If you want to see the code that produced the supplemental material, the direct links are also below. There is no code for Tables S2 and S7.
+Use the links below if you want to jump directly to the code used to produce the **figures and tables** from the original publication. You can also find the full Supplementary files for the paper  [here](supplemental_material.html){target="_blank"} but there is no R code on this page. If you want to see the code that produced the supplemental material, the direct links are also below. There is no code for Tables S2 and S7.
 
 <div style="padding-top: 1em"></div>
 ### Main Paper
 
 <ul>
-<li>[Figure 1](1_field_observations.html#nmds_analysis){target="blank"}: NMDS analysis of host feeding behavior.</li>
-<li>[Figure 2A](4_diversity.html#abundance_by_host_species){target="blank"}: Taxa abundance by host species.</li>
-<li>[Figure 2B](4_diversity.html#diversity_plots){target="blank"}: Alpha diversity.</li>
-<li>[Figure 2C](4_diversity.html#diversity_plots10){target="blank"}: Beta diversity.</li>
-<li>[Figure 3](6_synthesis.html#putting_the_pieces_together){target="blank"}: DA ASV tree.</li>
-<li>[Figure 4](6_synthesis.html#heatmap){target="blank"}: DA ASV heatmap.</li>
-<li>[Table 1](6_synthesis.html#summary_of_habitat_preference){target="blank"}: Summary of habitat preference.</li>
+<li>[Figure 1](1_field_observations.html#nmds_analysis){target="_blank"}: NMDS analysis of host feeding behavior.</li>
+<li>[Figure 2A](4_diversity.html#abundance_by_host_species){target="_blank"}: Taxa abundance by host species.</li>
+<li>[Figure 2B](4_diversity.html#diversity_plots){target="_blank"}: Alpha diversity.</li>
+<li>[Figure 2C](4_diversity.html#diversity_plots10){target="_blank"}: Beta diversity.</li>
+<li>[Figure 3](6_synthesis.html#putting_the_pieces_together){target="_blank"}: DA ASV tree.</li>
+<li>[Figure 4](6_synthesis.html#heatmap){target="_blank"}: DA ASV heatmap.</li>
+<li>[Table 1](6_synthesis.html#summary_of_habitat_preference){target="_blank"}: Summary of habitat preference.</li>
 </ul>
 
 <div style="padding-top: 1em"></div>
-### [Supplemental Material](supplemental_material.html){target="blank"}
+### [Supplemental Material](supplemental_material.html){target="_blank"}
 
 <ul>
-<li>[Table S1](1_field_observations.html#observational_data){target="blank"}: Summary of field-based feeding observations.</li>
-<li>[Table S2](supplemental_material.html#table_s2){target="blank"}: Number of bites observed for each herbivore species at each site.</li>
-<li>[Table S3](4_diversity.html#statistical_tests){target="blank"}: Metadata and microbiome diversity estimates for each sample.</li>
-<li>[Table S4](4_diversity.html#taxonomic_composition){target="blank"}: Total taxonomic diversity (by Class) of herbivore microbiomes.</li>
-<li>[Table S5](5_da_asv.html#results_of_lefse_analysis){target="blank"}: Results of LEfSe analysis.</li>
-<li>[Table S6](6_synthesis.html#assessing_habitat_specificity){target="blank"}: Results of BLAST analysis for DA ASVs.</li>
-<li>[Table S7](supplemental_material.html#table_s7){target="blank"}: Accession numbers and unique codes for sequence data in Figure 3.</li>
-<li>[Figure S1](7_appendices.html#appendix_a:_other_analyses__visualizations){target="blank"}: Class-level relative abundance of microbial communities from each sample.</li>
+<li>[Table S1](1_field_observations.html#observational_data){target="_blank"}: Summary of field-based feeding observations.</li>
+<li>[Table S2](supplemental_material.html#table_s2){target="_blank"}: Number of bites observed for each herbivore species at each site.</li>
+<li>[Table S3](4_diversity.html#statistical_tests){target="_blank"}: Metadata and microbiome diversity estimates for each sample.</li>
+<li>[Table S4](4_diversity.html#taxonomic_composition){target="_blank"}: Total taxonomic diversity (by Class) of herbivore microbiomes.</li>
+<li>[Table S5](5_da_asv.html#results_of_lefse_analysis){target="_blank"}: Results of LEfSe analysis.</li>
+<li>[Table S6](6_synthesis.html#assessing_habitat_specificity){target="_blank"}: Results of BLAST analysis for DA ASVs.</li>
+<li>[Table S7](supplemental_material.html#table_s7){target="_blank"}: Accession numbers and unique codes for sequence data in Figure 3.</li>
+<li>[Figure S1](7_appendices.html#appendix_a:_other_analyses__visualizations){target="_blank"}: Class-level relative abundance of microbial communities from each sample.</li>
 </ul>
 
 </br>
