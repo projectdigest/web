@@ -11,11 +11,16 @@ We characterized the <span class="callout">foraging ecology</span> of the differ
 </p>
 
 ```{r pickel_map, cache=TRUE, fig.cap="Florida Keys & Pickles Reef"}
-leaflet() %>%
-  setView(lat = 25.2, lng = -81.676177, zoom = 8) %>%
-  addTiles() %>%
-  addMarkers(lat = 25.00138889, lng = -80.41527778, label = "Pickles Reef")
 
+l <- leaflet(width = "100%") %>%
+  setView(lat = 25.0, lng = -81.0, zoom=9) %>%
+  addTiles(group="OSM") %>%
+  addProviderTiles(providers$CartoDB.DarkMatter, group="Dark") %>%
+  addProviderTiles(providers$CartoDB.Positron, group="Light") %>%
+  addLayersControl(baseGroups=c('Light','OSM','Dark')) %>%
+  addMarkers(lat = 25.00138889, lng = -80.41527778, label = "Pickles Reef")  %>%
+  addMiniMap(toggleDisplay = TRUE, zoomLevelOffset = -6.8)
+l
 ```
 
 <div style="padding-top: 2em"></div>

@@ -6,7 +6,7 @@ output:
        collapsed: false
 ---
 
-```{r load_2, include=FALSE, cache=TRUE, eval=TRUE}
+```{r load_2, include=FALSE, cache=TRUE, eval=FALSE}
 # This is for initial processing only. After caching eval not needed
 load("DATA/RDS/pw_prep_2.rds")
 ```

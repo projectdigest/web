@@ -52,7 +52,7 @@ We make several data types available from the DADA2 workflow. For a more complet
 
 
 <p id = "opennote">
-This pipeline is <span class="paper">exactly how we processed our data</span>. This however is not meant to be a  tutorial and we  only provide minimal annotation.
+This pipeline is <span class="callout">exactly how we processed our data</span>. This however is not meant to be a  tutorial and we  only provide minimal annotation.
 </p>
 
 There are many great tutorials and explanations out there on [DADA2](https://benjjneb.github.io/dada2/){target="_new"} amplicon processing that you can dive into. For example [here](https://f1000research.com/articles/5-1492/v2){target="_new"}, [here](https://benjjneb.github.io/dada2/bigdata.html){target="_new"}, [here](https://astrobiomike.github.io/amplicon/dada2_workflow_ex){target="_new"}, and [here](https://benjjneb.github.io/dada2/tutorial.html){target="_new"}.
