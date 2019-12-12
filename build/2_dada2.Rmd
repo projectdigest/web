@@ -28,7 +28,7 @@ library(knitr)
 library(rmarkdown)
 ```
 
-```{r set_wd, include=FALSE, cache=TRUE}
+```{r set_wd, include=FALSE}
 knitr::opts_knit$set(root.dir = getwd())
 ptm <- proc.time()
 ```
@@ -184,7 +184,7 @@ These file will be the input for the `DADA2` workflow and are stored in the `02_
 #### Set the working directory & prep files
 
 
-```{r list_fastq_files, cache=TRUE}
+```{r list_fastq_files}
 path_X1 <- "DATA/02_MERGED/RUN01/INPUT_FILES/"
 head(list.files(path_X1))
 path_Y2 <- "DATA/02_MERGED/RUN02/INPUT_FILES/"
@@ -195,7 +195,7 @@ head(list.files(path_Z3))
 
 Here we see a list of files in the directory. All looks good.
 
-```{r sort_files, cache=TRUE}
+```{r sort_files}
 fnFs_X1 <- sort(list.files(path_X1, pattern = "_R1.merged.fastq"))
 fnRs_X1 <- sort(list.files(path_X1, pattern = "_R2.merged.fastq"))
 
@@ -206,7 +206,7 @@ fnFs_Z3 <- sort(list.files(path_Z3, pattern = "_R1.merged.fastq"))
 fnRs_Z3 <- sort(list.files(path_Z3, pattern = "_R2.merged.fastq"))
 ```
 
-```{r split_name, cache=TRUE}
+```{r split_name}
 sample.names_X1 <- sapply(strsplit(fnFs_X1, "_"), `[`, 1)
 fnFs_X1 <-file.path(path_X1, fnFs_X1)
 fnRs_X1 <-file.path(path_X1, fnRs_X1)
@@ -234,7 +234,7 @@ First let's look at the quality of our reads. The numbers in brackets specify wh
 
 **Forward**
 
-```{r plot_quality_scores_forward, warning=FALSE, cache=TRUE}
+```{r plot_quality_scores_forward, warning=FALSE}
 plotQualityProfile(fnFs_X1[9:11])
 plotQualityProfile(fnFs_Y2[9:11])
 plotQualityProfile(fnFs_Z3[2:4])
@@ -242,7 +242,7 @@ plotQualityProfile(fnFs_Z3[2:4])
 
 **Reverse**
 
-```{r plot_quality_scores_reverse, warning=FALSE, cache=TRUE}
+```{r plot_quality_scores_reverse, warning=FALSE}
 plotQualityProfile(fnRs_X1[9:11])
 plotQualityProfile(fnRs_Y2[9:11])
 plotQualityProfile(fnRs_Z3[2:4])
@@ -255,7 +255,7 @@ The reverse reads are so so  but the forward reads look pretty good. We will dea
 
 <a id="Filtering"></a>
 
-```{r move_files, cache=TRUE}
+```{r move_files}
 #Place filtered files in filtered/ subdirectory
 filt_path_X1 <- file.path(path_X1, "filtered")
 filtFs_X1 <- file.path(filt_path_X1, paste0(sample.names_X1, "_F_filt.fastq.gz"))
@@ -271,7 +271,7 @@ filtRs_Z3 <- file.path(filt_path_Z3, paste0(sample.names_Z3, "_R_filt.fastq.gz")
 ```
 
 
-```{r filter, cache=TRUE}
+```{r filter}
 out_X1 <- filterAndTrim(fnFs_X1, filtFs_X1, fnRs_X1, filtRs_X1,
                         truncLen=c(260,160), maxN=0, maxEE=c(2,5),
                         truncQ=2, rm.phix=TRUE, compress=TRUE,
@@ -297,14 +297,14 @@ head(out_Z3)
 <a id="Learn error rate"></a>
 
 **Forward**
-```{r learn_errors_forward, cache=TRUE}
+```{r learn_errors_forward}
 errF_X1 <- learnErrors(filtFs_X1, multithread = TRUE)
 errF_Y2 <- learnErrors(filtFs_Y2, multithread = TRUE)
 errF_Z3 <- learnErrors(filtFs_Z3, multithread = TRUE)
 ```
 
 **Reverse**
-```{r learn_errors_reverse, cache=TRUE}
+```{r learn_errors_reverse}
 errR_X1 <- learnErrors(filtRs_X1, multithread = TRUE)
 errR_Y2 <- learnErrors(filtRs_Y2, multithread = TRUE)
 errR_Z3 <- learnErrors(filtRs_Z3, multithread = TRUE)
@@ -313,7 +313,7 @@ errR_Z3 <- learnErrors(filtRs_Z3, multithread = TRUE)
 <div style="padding-top: 1em"></div>
 ### Plot error
 
-```{r plot_error, warning=FALSE, cache=TRUE}
+```{r plot_error, warning=FALSE}
 plotErrors(errR_X1, nominalQ=TRUE)
 plotErrors(errR_Y2, nominalQ=TRUE)
 plotErrors(errR_Z3, nominalQ=TRUE)
@@ -327,6 +327,7 @@ plotErrors(errR_Z3, nominalQ=TRUE)
 To see the results of the `derepFastq` command for forward and reverse reads, add the flag `verbose = TRUE`. We have omitted it here because it takes up a lot of space and the data is summarized at the end anyway.
 
 **Forward**
+
 
 ```{r dereplicate_reads_F, cache=TRUE, cache.lazy=FALSE}
 derepFs_X1 <- derepFastq(filtFs_X1)
@@ -357,7 +358,7 @@ names(derepRs_Z3) <- sample.names_Z3
 
 <a id="Run DADA2 & Infer Sequence Variants"></a>
 
-```{r run_dada2_forward, cache=TRUE}
+```{r run_dada2_forward}
 #Run01
 dadaFs_X1 <- dada(derepFs_X1, err = errF_X1, multithread = TRUE)
 dadaFs_X1[[1]]
@@ -369,7 +370,7 @@ dadaFs_Z3 <- dada(derepFs_Z3, err = errF_Z3, multithread = TRUE)
 dadaFs_Z3[[1]]
 ```
 
-```{r run_dada2_reverse, cache=TRUE}
+```{r run_dada2_reverse}
 #Run01
 dadaRs_X1 <- dada(derepRs_X1, err = errR_X1, multithread = TRUE)
 dadaRs_X1[[1]]
@@ -388,13 +389,13 @@ dadaRs_Z3[[1]]
 
 To see the results of the `mergePairs` command for each run, add the flag `verbose = TRUE`. We have omitted it here because it takes up a lot of space and the data is summarized at the end anyway.
 
-```{r  merge_paired_reads, cache=TRUE}
+```{r  merge_paired_reads,}
 mergers_X1 <- mergePairs(dadaFs_X1, derepFs_X1, dadaRs_X1, derepRs_X1)
 mergers_Y2 <- mergePairs(dadaFs_Y2, derepFs_Y2, dadaRs_Y2, derepRs_Y2)
 mergers_Z3 <- mergePairs(dadaFs_Z3, derepFs_Z3, dadaRs_Z3, derepRs_Z3)
 ```
 
-``` {r head_file, eval = FALSE, echo = FALSE, cache=TRUE}
+``` {r head_file, eval = FALSE, echo = FALSE}
 head(mergers_X1[[1]])
 head(mergers_Y2[[1]])
 head(mergers_Z3[[1]])
@@ -405,7 +406,7 @@ head(mergers_Z3[[1]])
 
 <a id="Construct sequence table"></a>
 
-```{r seq_table, cache=TRUE}
+```{r seq_table}
 #Run01
 seqtab_X1 <- makeSequenceTable(mergers_X1)
 dim(seqtab_X1)
@@ -420,7 +421,7 @@ dim(seqtab_Z3)
 table(nchar(getSequences(seqtab_Z3)))
 ```
 
-```{r trim_length_length, cache=TRUE}
+```{r trim_length_length}
 #Run01
 seqtab_X1.2 <- seqtab_X1[,nchar(colnames(seqtab_X1)) %in% seq(368,380)]
 dim(seqtab_X1.2)
@@ -442,7 +443,7 @@ table(nchar(getSequences(seqtab_Z3.2)))
 
 Save the data to use in the next part of the workflow workflow. For our final analysis (Part VI), we will combine these outputs and the screen for chimeras/assign taxonomy.
 
-```{r save_RDS, cache=TRUE}
+```{r save_RDS}
 saveRDS(seqtab_X1.2, "DATA/02_MERGED/RUN01/seqtab_X1.2.rds")
 saveRDS(seqtab_Y2.2, "DATA/02_MERGED/RUN02/seqtab_Y2.2.rds")
 saveRDS(seqtab_Z3.2, "DATA/02_MERGED/RUN03/seqtab_Z3.2.rds")
@@ -472,7 +473,7 @@ To see the results of the `removeBimeraDenovo` command in the console output, ad
 
 <a id="Identify & remove chimeras"></a>
 
-```{r chimera_on_ind_runs, cache=TRUE}
+```{r chimera_on_ind_runs}
 #Run01
 seqtab_X1.2.nochim <- removeBimeraDenovo(seqtab_X1.2,
                                          method="consensus", multithread=TRUE)
@@ -495,7 +496,7 @@ sum(seqtab_Z3.2.nochim)/sum(seqtab_Z3.2)
 
 <a id="Track changes through each step"></a>
 
-```{r build_table_to_track_reads, cache=TRUE}
+```{r build_table_to_track_reads}
 #Run01
 getN_X1 <- function(x) sum(getUniques(x))
 track_X1 <- cbind(out_X1, sapply(dadaFs_X1, getN_X1),
@@ -522,7 +523,7 @@ colnames(track_Z3) <- c("input", "filtered", "denoisedF",
 rownames(track_Z3) <- sample.names_Z3
 ```
 
-```{r track_changes, cache=TRUE}
+```{r track_changes}
 #Run01
 track_X1
 write.table(track_X1, "RUN01_read_changes.txt",
@@ -539,7 +540,7 @@ write.table(track_Z3, "RUN03_read_changes.txt",
 
 Next we save the output of for each run. This is optional but nice if you want to analyze each run separately in phyloseq. You would need to add a taxonomy classification step first before exporting.
 
-```{r save_rds2, cache=TRUE}
+```{r save_rds2}
 saveRDS(seqtab_X1.2.nochim, "DATA/02_MERGED/RUN01/seqtab_X1.2.nochim.rds")
 saveRDS(seqtab_Y2.2.nochim, "DATA/02_MERGED/RUN02/seqtab_Y2.2.nochim.rds")
 saveRDS(seqtab_Z3.2.nochim, "DATA/02_MERGED/RUN03/seqtab_Z3.2.nochim.rds")
@@ -547,13 +548,13 @@ saveRDS(seqtab_Z3.2.nochim, "DATA/02_MERGED/RUN03/seqtab_Z3.2.nochim.rds")
 
 Save the whole thing in case you need to rerun...
 
-```{r save_progress, cache=TRUE, eval=FALSE}
+```{r save_progress, eval=FALSE}
 save.image("DATA/02_MERGED/pre_combo_pipeline.rdata")
 ```
 
 Processing time...
 
-```{r proc_time_2, cache=TRUE}
+```{r proc_time_2}
 proc.time() - ptm
 ```
 
@@ -564,18 +565,18 @@ proc.time() - ptm
 
 First we need to clear everything up to this point...
 
-```{r clear_data, cache=TRUE}
+```{r clear_data}
 remove(list = ls())
 ```
 
-```{r set_wd_2, include=FALSE, cache=TRUE}
+```{r set_wd_2, include=FALSE}
 knitr::opts_knit$set(root.dir = getwd())
 ptm <- proc.time()
 ```
 
 ...and then read in the sequence tables from each run before the chimera checking was performed above. This is because we want to call chimeras on the merged data.
 
-```{r read_RDS_files_combo, cache=TRUE}
+```{r read_RDS_files_combo}
 seqtab.1 <- readRDS("DATA/02_MERGED/RUN01/seqtab_X1.2.rds")
 seqtab.2 <- readRDS("DATA/02_MERGED/RUN02/seqtab_Y2.2.rds")
 seqtab.3 <- readRDS("DATA/02_MERGED/RUN03/seqtab_Z3.2.rds")
@@ -586,7 +587,7 @@ seqtab.3 <- readRDS("DATA/02_MERGED/RUN03/seqtab_Z3.2.rds")
 
 Put samples in the 2 sequence tables in the same order
 
-```{r order_files_combo, cache=TRUE}
+```{r order_files_combo}
 rownames(seqtab.1) <- sapply(strsplit(rownames(seqtab.1), "_"), `[`, 1)
 rownames(seqtab.2) <- sapply(strsplit(rownames(seqtab.2), "_"), `[`, 1)
 identical(sort(rownames(seqtab.1)), sort(rownames(seqtab.2))) # Should be TRUE
@@ -596,7 +597,7 @@ seqtab.2 <- seqtab.2[rownames(seqtab.1),]
 <div style="padding-top: 0.5em"></div>
 #### Make matrix summing the sequence tables
 
-```{r matrix_sum_combo, cache=TRUE}
+```{r matrix_sum_combo}
 samples <- rownames(seqtab.1)
 seqs <- unique(c(colnames(seqtab.1), colnames(seqtab.2)))
 st.sum <- matrix(0L, nrow=length(samples), ncol=length(seqs))
@@ -606,14 +607,14 @@ st.sum[,colnames(seqtab.1)] <- st.sum[,colnames(seqtab.1)] + seqtab.1
 st.sum[,colnames(seqtab.2)] <- st.sum[,colnames(seqtab.2)] + seqtab.2
 ```
 
-```{r save_combo, cache=TRUE}
+```{r save_combo}
 saveRDS(st.sum, "DATA/02_MERGED/combo_run1_run2.rds")
 ```
 
 <div style="padding-top: 0.5em"></div>
 #### Merge sequence tables from combo_run1_run2 & seqtab.3
 
-```{r merge_combo, cache=TRUE}
+```{r merge_combo}
 combo <- readRDS("DATA/02_MERGED/combo_run1_run2.rds")
 seqtab.3 <- readRDS("DATA/02_MERGED/RUN03/seqtab_Z3.2.rds")
 
@@ -626,13 +627,13 @@ st.all <- mergeSequenceTables(combo, seqtab.3)
 
 There are several database options for taxonomic assignment, including Silva, RDP TrainSet, Greengenes, etc... You will need to download a [DADA2-formatted reference database](https://benjjneb.github.io/dada2/training.html){target="_new"}. We used both Silva version 132 and GreenGenes version 13.8.
 
-```{r chimera_on_combined_runs, cache=TRUE}
+```{r chimera_on_combined_runs}
 seqtab <- removeBimeraDenovo(st.all, method="consensus", multithread=TRUE)
 ```
 
 `assignTaxonomy` implements the naive Bayesian classifier, so for reproducible results you need to set a random number seed (see issue [#538](https://github.com/benjjneb/dada2/issues/538){target="_new"}).
 
-```{r assign_tax, cache=TRUE, eval = FALSE}
+```{r assign_tax, eval = FALSE}
 set.seed(119)#for reproducability
 tax_gg <- assignTaxonomy(seqtab, "gg_13_8_train_set_97.fa.gz",
                          multithread=TRUE)
@@ -641,7 +642,7 @@ tax_silva <- assignTaxonomy(seqtab, "silva_nr_v132_train_set.fa.gz",
                             multithread = TRUE)
 ```
 
-```{r save_image_combo, cache=TRUE, eval=FALSE}
+```{r save_image_combo, eval=FALSE}
 save.image("DATA/02_MERGED/combo_pipeline.rdata")
 ```
 
@@ -649,7 +650,7 @@ The DADA2 analysis is now complete. Next we used [phyloseq](https://joey711.gith
 
 Processing time...
 
-```{r proc_time_3, cache=TRUE}
+```{r proc_time_3}
 proc.time() - ptm
 ```
 
@@ -671,7 +672,7 @@ proc.time() - ptm
 
 This pipeline was run on a 2018 MacBook Pro, OSX 10.13.6 with a 3.5 GHz Intel Core i7 processor and 16 GB of memory. Below are the specific packages and versions used in this workflow using both `sessionInfo()` and `devtools::session_info()`.
 
-```{r sessionInfo, include=TRUE, echo=TRUE, results='markup', cache=TRUE}
+```{r sessionInfo, include=TRUE, echo=TRUE, results='markup'}
 sessionInfo()
 devtools::session_info()
 ```

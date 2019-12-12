@@ -55,6 +55,7 @@ navbar:
       href: people.html
 output:
   html_document:
+    mathjax: null
     code_folding: hide
     toc: true
     toc_depth: 3
