@@ -73,7 +73,7 @@ In this study, we looked at <span class="callout">intestinal microbial</span> co
 <div style="padding-top: 2em"></div>
 ## Definitions & Abbreviations
 <ul>
-  <li>[Amplicon Sequence Variant](https://www.nature.com/articles/ismej2017119){target="_new"} (**ASV**): Exact sequence variant---analogous to an OTU---but with single nucleotide resolution.</li>
+  <li>Amplicon Sequence Variant] (**ASV**): Exact sequence variant---analogous to an OTU---but with single nucleotide resolution.</li>
   <li>Differentially abundant (**DA**) feature: Taxa, ASV, etc. that is disproportionately abundant in a group of samples and statistically different than other groups.</li>
 </ul>
 
