@@ -52,7 +52,7 @@ Before proceeding I wanted to share some of the resources I returned to over and
 * [MDN web docs](https://developer.mozilla.org/en-US/): Another great resource for learning language elements.
 * [Canva color wheel](https://www.canva.com/colors/color-wheel/): Cool app for choosing colors and color combinations.
 * [HTML Entities](https://dev.w3.org/html5/html-author/charref): List of HTML entities and their codes.
-* [FontAwesome cheatsheet]https://forkaweso.me/Fork-Awesome/cheatsheet/: List of all Font Awesome icons.
+* [FontAwesome cheatsheet](https://forkaweso.me/Fork-Awesome/cheatsheet/): List of all Font Awesome icons.
 * [HTML Formatter](https://htmlformatter.com/): Tool to beautify your HTML code.
 * [Dealing with files](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/Dealing_with_files): MDN web docs resource on how to organize the files for your site. Worth reading ahead of time---I wish I had.
 
