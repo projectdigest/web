@@ -75,6 +75,8 @@ We  made additional data products and processing scripts available through onlin
 * [10.6084/m9.figshare.7379936](https://doi.org/10.6084/m9.figshare.7379936){target="_new"}: Fasta file for the 59 DA ASVs, BLAST results, and alignment file including top BLAST hits.
 * [10.6084/m9.figshare.7379597](https://doi.org/10.6084/m9.figshare.7379597){target="_new"}: This file.
 
+You can also access the figshare project repository [here](https://figshare.com/projects/Intestinal_microbes_an_axis_of_functional_diversity_among_large_marine_consumers/36512).
+
 <a id="Sample Naming"></a>
 
 <div style="padding-top: 2em"></div>
