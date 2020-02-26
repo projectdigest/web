@@ -523,7 +523,7 @@ Table scrolls horizontally.
 
 <p></p>
 
-### References
+## References
 
 1.	Bruggemann JH, Kuyper MWM, Breeman AM. 1994 Comparative analysis of foraging and habitat use by the sympatric Caribbean parrotfish Scarus vetula and Sparisoma viride (Scaridae). Mar. Ecol. Prog. Ser. 112, 51–66.  
 
