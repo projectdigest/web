@@ -47,9 +47,9 @@ This document contains all seven supplementary <span class="callout">tables</spa
 
 [Data Availability](#Data Availability): DOI and accession numbers for study related data.  <br>
 [Sample Naming](#Sample Naming): Naming scheme for samples.    
-[Supplementary Methods](#Supplementary Methods): Details on DNA extraction, sequencing, and read processing, and functional analysis.
-[Table S1](#Table S1): Summary of field-based feeding observations.  
-[Table S2](#Table S2): Number of bites observed for each herbivore species at each site.  
+[Supplementary Methods](#Supplementary Methods): Details on DNA extraction, sequencing, read processing, and functional analysis.  
+[Table S1](#Table S1): Number of bites observed for each herbivore species at each site.  
+[Table S2](#Table S2): Summary of field-based feeding observations.  
 [Table S3](#Table S3): Metadata and microbiome diversity estimates for each sample.  
 [Table S4](#Table S4): Total taxonomic diversity (by Class) of herbivore microbiomes.  
 [Figure S1](#Figure S1): Class-level relative abundance of microbial communities from each sample.  
@@ -57,8 +57,7 @@ This document contains all seven supplementary <span class="callout">tables</spa
 [Table S6](#Table S6): Results of BLAST analysis for DA ASVs.  
 [Table S7](#Table S7): Accession numbers and unique codes for sequence data in Figure 3.  
 
-<hr/>
-<hr/>
+
 
 <a id="Data Availability"></a>
 
@@ -147,16 +146,45 @@ We used Clustal Omega [12] to align sequences (default settings for DNA) and Jal
 ## Table S1
 
 <p id = "notice">
-Summary data from observations of individual bites by five species of herbivorous fishes in the Florida Keys.  Data include the mean sediment depth and turf height of algal assemblages fed on by each species at each of three sites, as well as the proportion of bites that resulted in a grazing scar on the substrate where reef calcium carbonate had been removed (Prop. grazing scar). The table summarizes the proportion of bites on vertical (> 45 degrees), concave, and convex substrates as well as the relative proportion of bites targeting each of the 10 food types most commonly bitten during the observations.  Most macroalgae were aggregated to genus while other food types are summarized by functional group.
+This table summarizes the number of individual bites observed by each of the five species of herbivorous fishes at each of three sites in the Florida Keys.
 </p>
 
 <br/>
 
 ```{r suppl_table_1, echo=FALSE, cache = TRUE}
-table_s1 <- read.table("DATA/SUPPLEMENTARY_FILE/table_S1.txt",
+table_s1 <- read.table("DATA/SUPPLEMENTARY_FILE/table_S1_links.txt",
                       sep = "\t", header = TRUE)
 
-datatable(table_s1, rownames = FALSE, width = "100%", colnames = c(
+datatable(table_s1, escape = 2, rownames = FALSE, width = "100%", colnames = c(
+        "Host species", "Conch", "French", "Molasses", "Total"),
+    caption = htmltools::tags$caption(
+      style = "caption-side: bottom; text-align: left;",
+            "Supplementary Table 1: ",
+    htmltools::em("Number of bites observed for
+                  each herbivore species at each site.")),
+    extensions = "Buttons",
+    options = list(columnDefs = list(list(className = "dt-left", targets = 0)),
+        dom = "Brti", pageLength = 5, buttons = c("csv",
+            "copy"), scrollX = TRUE, scrollCollapse = TRUE))
+```
+
+
+<a id="Table S2"></a>
+
+<div style="padding-top: 2em"></div>
+## Table S2
+
+<p id = "notice">
+Summary data from observations of individual bites by five species of herbivorous fishes in the Florida Keys.  Data include the mean sediment depth and turf height of algal assemblages fed on by each species at each of three sites, as well as the proportion of bites that resulted in a grazing scar on the substrate where reef calcium carbonate had been removed (Prop. grazing scar). The table summarizes the proportion of bites on vertical (> 45 degrees), concave, and convex substrates as well as the relative proportion of bites targeting each of the 10 food types most commonly bitten during the observations.  Most macroalgae were aggregated to genus while other food types are summarized by functional group.
+</p>
+
+<br/>
+
+```{r suppl_table_2, echo=FALSE, cache = TRUE}
+table_s2 <- read.table("DATA/SUPPLEMENTARY_FILE/table_S2.txt",
+                      sep = "\t", header = TRUE)
+
+datatable(table_s2, rownames = FALSE, width = "100%", colnames = c(
         "Host species", "Site", "Sediment depth (mm)", "Turf height(mm)",
         "Prop. grazing scar", "Prop. vertical", "Prop. concave",
         "Prop. convex", "Articulated red coralline", "CCA/Turf on CCA",
@@ -164,7 +192,7 @@ datatable(table_s1, rownames = FALSE, width = "100%", colnames = c(
         "Sponge", "Stypopodium", "Turf"),
     caption = htmltools::tags$caption(
       style = "caption-side: bottom; text-align: left;",
-            "Supplementary Table 1: ",
+            "Supplementary Table 2: ",
     htmltools::em("Summary of field-based feeding observations.")),
     extensions = "Buttons",
     options = list(columnDefs = list(list(className = "dt-left", targets = 0)),
@@ -179,37 +207,6 @@ datatable(table_s1, rownames = FALSE, width = "100%", colnames = c(
 Table scrolls horizontally.
 </p>
 
-
-
-<a id="Table S2"></a>
-
-<div style="padding-top: 2em"></div>
-## Table S2
-
-<p id = "notice">
-This table summarizes the number of individual bites observed by each of the five species of herbivorous fishes at each of three sites in the Florida Keys.
-</p>
-
-<br/>
-
-```{r suppl_table_2, echo=FALSE, cache = TRUE}
-table_s2 <- read.table("DATA/SUPPLEMENTARY_FILE/table_S2_links.txt",
-                      sep = "\t", header = TRUE)
-
-datatable(table_s2, escape = 2, rownames = FALSE, width = "100%", colnames = c(
-        "Host species", "Conch", "French", "Molasses", "Total"),
-    caption = htmltools::tags$caption(
-      style = "caption-side: bottom; text-align: left;",
-            "Supplementary Table 2: ",
-    htmltools::em("Number of bites observed for
-                  each herbivore species at each site.")),
-    extensions = "Buttons",
-    options = list(columnDefs = list(list(className = "dt-left", targets = 0)),
-        dom = "Brti", pageLength = 5, buttons = c("csv",
-            "copy"), scrollX = TRUE, scrollCollapse = TRUE))
-```
-
-Something about tables.
 
 <a id="Table S3"></a>
 
