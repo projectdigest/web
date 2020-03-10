@@ -1,5 +1,5 @@
 ---
-title: "ProjectDIGEST <br/> <small>Intestinal microbes: an axis of functional diversity among large marine consumers</small>"
+title: "ProjectDIGEST <br/> <small>Intestinal microbes as an axis of functional diversity among large marine consumers</small>"
 output:
   html_document:
     toc: false
@@ -36,7 +36,7 @@ The <span class="callout">navigation bar</span> at the top contains links to wor
 <div style="padding-top: 2em"></div>
 ## About the Banner
 
->The banner contains images of the 5 species examined in this study. From left to right these are: *Acanthurus bahianus/Acanthurus tractus*, *Acanthurus coeruleus*, *Scarus taeniopterus*, and *Sparisoma aurofrenatum* (see below for image credits). It also contains some images of figures from the paper and in the middle, part of a huge bony fish phylogeny. If you click on the banner you can see the full tree. 
+>The banner contains images of the 5 species examined in this study. From left to right these are: *Acanthurus bahianus/Acanthurus tractus*, *Acanthurus coeruleus*, *Scarus taeniopterus*,  *Sparisoma aurofrenatum*, and *Sparisoma viride* (see below for image credits). It also contains some images of figures from the paper and in the middle, part of a huge bony fish phylogeny. If you click on the banner you can see the full tree. 
 
 One  of our [analyses](6_synthesis.html#asvs__host_trait_correlation){target="_new"} required us to create a phylogenetic tree of the five host species. To construct the tree we first needed an appropriate out group. Our search for an  out group  lead to [DeepFin](https://sites.google.com/site/guilleorti/){target="_new"} and the amazing paper by [Betancur-R et. al., (2017)](https://link.springer.com/article/10.1186/s12862-017-0958-3){target="_new"} on the phylogenetic classification of bony fishes. The tree in this paper is the 4th version (the original dates back to 2013) and is based on the phylogeny of a whopping <span class="callout">1990 species</span> encompassing <span class="callout">72 orders</span> and <span class="callout">410 families</span>. Wow. In our study, we looked at intestinal microbes  from five fish species across two families.
 
