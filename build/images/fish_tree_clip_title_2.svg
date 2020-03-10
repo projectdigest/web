@@ -93,6 +93,13 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
+  <rect
+     y="157.64999"
+     x="491.80984"
+     height="465.9368"
+     width="2583.7559"
+     id="rect853"
+     style="fill:#fcfcfc;stroke:none;stroke-width:4.27586;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;paint-order:fill markers stroke;fill-opacity:1;opacity:0" />
   <image
      style="opacity:1;stop-opacity:1"
      id="image4380"
@@ -927,11 +934,4 @@ AElFTkSuQmCC
      inkscape:export-filename="/Users/rad/rect79408.png"
      inkscape:export-xdpi="100"
      inkscape:export-ydpi="100" />
-  <rect
-     y="157.64999"
-     x="491.80984"
-     height="465.9368"
-     width="2583.7559"
-     id="rect853"
-     style="fill:none;stroke:none;stroke-width:4.27586;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0;paint-order:fill markers stroke" />
 </svg>

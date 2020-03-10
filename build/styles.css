@@ -341,3 +341,14 @@ footer#site-footer::before {
 .footnotes {
   font-size: 0.8em;
 }
+
+.article-header {
+  position: relative; /* Required for caption positioning */
+  clear: both;
+}
+
+.article-banner {
+  width: 100%;
+  height: auto;
+  border: 0;
+}
