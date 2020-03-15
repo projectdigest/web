@@ -312,3 +312,9 @@ At some point I may make this a more complete tutorial with step-by-step instruc
 <a target="_blank" href="data_files_needed_for_pipeline.txt">
   <i class="fas fa-file fa-xs"></i>
 </a>
+
+<p class="edit-page">
+  <a href="https://github.com/projectdigest/web/blob/master/build//how_to_build_this_site.Rmd">
+    <i class="fas fa-pen pr-2"></i> Edit this page
+  </a>
+</p>

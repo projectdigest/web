@@ -1,5 +1,5 @@
 /* Whole document: */
-@import url('https://fonts.googleapis.com/css?family=PT+Sans|PT+Sans+Narrow|PT+Serif|Lato:300|Roboto:300|Ropa+Sans');
+@import url('https://fonts.googleapis.com/css?family=PT+Sans|PT+Sans+Narrow|PT+Serif|Lato:300|Roboto:300|Ropa+Sans|Source+Sans+Pro');
 /* controls general properties of site*/
 body {
   font-family: "PT Serif", serif;
@@ -351,4 +351,57 @@ footer#site-footer::before {
   width: 100%;
   height: auto;
   border: 0;
+}
+
+/*************************************************
+ *  FOOTER NAV ITEMS & EDIT.
+ **************************************************/
+
+div.post-nav > div:first-child::before {
+  margin-top: 1rem;
+  font-size: 1rem;
+}
+
+.post-nav-item {
+  hyphens: auto;
+  word-wrap: break-word;
+  padding: 11px 0 12px;
+  width: 100%;
+}
+
+.post-nav-item a {
+  color: #337AB7;
+  line-height: 1.7;
+  text-transform: none;
+  font-family: "source sans pro";
+  font-size: 2rem;
+}
+
+.post-nav-item .meta-nav {
+  color: #767676;
+  font-weight: 900;
+  line-height: 2;
+  text-transform: uppercase;
+  font-family: "source sans pro";
+  font-size: 2rem;
+}
+
+p.edit-page > p:first-child::before {
+  margin-top: 1rem;
+  font-size: 1rem;
+}
+
+.edit-page {
+  hyphens: auto;
+  word-wrap: break-word;
+  padding: 11px 0 12px;
+  width: 100%;
+}
+
+.edit-page a {
+  color: #337AB7;
+  line-height: 1.7;
+  text-transform: none;
+  font-family: "source sans pro";
+  font-size: 1.5rem;
 }

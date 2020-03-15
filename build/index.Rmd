@@ -25,14 +25,6 @@ The <span class="callout">navigation bar</span> at the top contains links to wor
 
 <br/>
 
-<div style="text-align:center">
-  <span class="linkboxfont-sm">
-    <button class="favorite styled" type="button">
-      <a href="0_pw_intro.html">Proceed to Workflow</a>
-    </button>
-  </span>
-</div>
-
 <div style="padding-top: 2em"></div>
 ## About the Banner
 
@@ -44,7 +36,23 @@ Anyway, we used the original tree from the paper to choose an out group for our 
 
 > You can download a full SVG version by clicking on the banner. Or you can download the files we used to make the tree from this [GitHub repo](https://github.com/projectdigest/betancur_r-fish-tree){target="_new"} and then use anvi'o to make an even better tree.
 
+<br/>
 
+<div class="post-nav">
+<div class="post-nav-item">
+<div class="meta-nav">Next</div>
+<a href="intro.html" rel="next">Begin Workflow</a>
+</div>
+</div>
+
+
+<p class="edit-page">
+  <a href="https://github.com/projectdigest/web/blob/master/build/index.Rmd">
+    <i class="fas fa-pen pr-2"></i> Edit this page
+  </a>
+</p>
+
+<hr/>
 
 <p><small>
 <em>All banner photos on this page were retreived from Wikimedia Commons and Licensed under Creative Commons Attributions. Each photo was modified from the originals by removing the background</em>.

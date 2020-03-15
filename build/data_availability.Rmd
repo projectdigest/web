@@ -62,7 +62,6 @@ You can download these data tables here:
 
 [Description of sequence data](ena_submit/ENA_PAIRED_FASTQ_SUBMISSION_DIGEST.txt)
 
-
 Step by step instructions for submitting to the ENA
 
 1) go to https://www.ebi.ac.uk/ena/submit and select **Submit to ENA**.  
@@ -84,3 +83,8 @@ Step by step instructions for submitting to the ENA
 17) Fill in the sheet including md5 checksum values.
 18) Upload and submit the sheet.
 
+<p class="edit-page">
+  <a href="https://github.com/projectdigest/web/blob/master/build//data_availability.Rmd">
+    <i class="fas fa-pen pr-2"></i> Edit this page
+  </a>
+</p>

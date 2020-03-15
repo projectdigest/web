@@ -655,10 +655,22 @@ save.image(file = "DATA/RDS/pw_div_3.rds")
 
 </br>
 
-<div style="text-align:right">
-  <span class="linkboxfont-sm">
-    <button class="favorite styled" type="button">
-      <a href="5_da_asv.html">N<sup><u>o</u></sup> 5. Differentially Abundant ASV -></a>
-    </button>
-  </span>
+<div class="post-nav">
+<div class="post-nav-item">
+<div class="meta-nav">Previous</div>
+<a href="3_data_prep.html" rel="next">N<sup><u>o</u></sup> 3. Data Preparation</a>
 </div>
+</div>
+
+<div class="post-nav">
+<div class="post-nav-item">
+<div class="meta-nav">Next</div>
+<a href="5_da_asv.html" rel="next">N<sup><u>o</u></sup> 5. Differentially Abundant ASVs</a>
+</div>
+</div>
+
+<p class="edit-page">
+  <a href="https://github.com/projectdigest/web/blob/master/build/4_diversity.Rmd">
+    <i class="fas fa-pen pr-2"></i> Edit this page
+  </a>
+</p>

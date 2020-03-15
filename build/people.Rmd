@@ -1,9 +1,0 @@
----
-title: "People"
-output:
-  html_document:
-    code_folding: none
-
----
-
-Coming soon....maybe

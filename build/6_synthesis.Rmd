@@ -759,3 +759,20 @@ But again, no significance detected...
 # This is for initial processing only. After caching eval not needed}
 save.image(file = "DATA/RDS/pw_synth_5.rds")
 ```
+
+
+</br>
+
+<div class="post-nav">
+<div class="post-nav-item">
+<div class="meta-nav">Previous</div>
+<a href="5_da_asv.html" rel="next">N<sup><u>o</u></sup> 5. Differentially Abundant ASVs</a>
+</div>
+</div>
+
+
+<p class="edit-page">
+  <a href="https://github.com/projectdigest/web/blob/master/build//6_synthesis.Rmd">
+    <i class="fas fa-pen pr-2"></i> Edit this page
+  </a>
+</p>
