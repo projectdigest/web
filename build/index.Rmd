@@ -41,7 +41,7 @@ Anyway, we used the original tree from the paper to choose an out group for our 
 <div class="post-nav">
 <div class="post-nav-item">
 <div class="meta-nav">Next</div>
-<a href="intro.html" rel="next">Begin Workflow</a>
+<a href="0_pw_intro.html" rel="next">Begin Workflow</a>
 </div>
 </div>
 
