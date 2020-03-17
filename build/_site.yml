@@ -50,7 +50,7 @@ navbar:
       href: https://github.com/projectdigest/web/
     - icon: fa-code fa-lg
       href: raw_code.txt
-    - text: "People"
+    - text: "Authors"
       icon: fa-user-friends
       href: people.html
 output:

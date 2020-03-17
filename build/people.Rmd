@@ -1,0 +1,66 @@
+---
+title: "Authors<br/><small>In order of appearance</small>"
+output:
+  html_document:
+    toc: false
+    code_folding: none
+    includes:
+      in_header: images/people_title.html
+      after_body: footer.html
+    css: ["styles.css", "academicons-1.8.6/css/academicons.min.css"]
+---
+
+<p id = "opennote" style="background-color:#EFEFEF;font-family:'Lato';padding:5px 5px 5px 15px">
+<font size = 5.7em>Jarrod J Scott | Microbial Ecologist</font><br/>
+<font size = 4.7em>
+<i class="fa fa-fw fa-globe"></i>[web](https://istmobiome.rbind.io/)
+<i class="ai ai-cv ai-big"></i>[CV](https://istmobiome.github.io/jarrod/jarrod-cv.html)
+<i class="ai fa-fw ai-orcid-square ai-big"> </i>[ORCID](https://orcid.org/0000-0001-9863-1318)
+<i class="fa fa-fw fa-github"> </i>[GitHub](https://github.com/jarrodscott)
+</font>
+</font>
+</p>
+
+<p id = "opennote" style="background-color:#EFEFEF;font-family:'Lato';padding:5px 5px 5px 15px">
+<font size = 5.7em>Thomas A Adam |  Marine Community & Behavioral Ecologist</font><br/>
+<font size = 4.7em>
+<i class="fa fa-fw fa-globe"></i>[web](http://msi.ucsb.edu/people/research-scientists/thomas-adam)
+<i class="ai fa-fw ai-orcid-square ai-big"> </i>[ORCID](https://orcid.org/0000-0001-6146-0260)
+<i class="ai fa-fw ai-google-scholar-square ai-big"> </i>[Google Scholar](https://scholar.google.com/citations?hl=en&user=D9trGPkAAAAJ)
+</font>
+</font>
+</p>
+
+<p id = "opennote" style="background-color:#EFEFEF;font-family:'Lato';padding:5px 5px 5px 15px">
+<font size = 5.7em>Alain Duran | Marine Ecologist</font><br/>
+<font size = 4.7em>
+<i class="ai fa-fw ai-orcid-square ai-big"> </i>[ORCID](https://orcid.org/0000-0002-7847-6426)
+<i class="ai fa-fw ai-academia-square ai-big"> </i>[Academia](http://fiu.academia.edu/ADuran/CurriculumVitae)
+<i class="ai fa-fw ai-google-scholar-square ai-big"> </i>[ResearchGate](https://www.researchgate.net/profile/Alain_Duran)
+<i class="ai fa-fw ai-researchgate-square ai-big"> </i>[Google Scholar](https://scholar.google.com/citations?user=0JhuhC8AAAAJ&hl=en)
+</font>
+</font>
+</p>
+
+
+<p id = "opennote" style="background-color:#EFEFEF;font-family:'Lato';padding:5px 5px 5px 15px">
+<font size = 5.7em>Deron E Burkepile   |  XXXXXX</font><br/>
+<font size = 4.7em>
+<i class="ai fa-fw ai-orcid-square ai-big"> </i>[ORCID](https://orcid.org/0000-0002-0427-0484)
+</font>
+</font>
+</p>
+
+<p id = "opennote" style="background-color:#EFEFEF;font-family:'Lato';padding:5px 5px 5px 15px">
+<font size = 5.7em>Douglas B Rasher |  XXXXXX</font><br/>
+<font size = 4.7em>
+<i class="ai fa-fw ai-orcid-square ai-big"> </i>[ORCID](https://orcid.org/0000-0002-0212-8070)
+</font>
+</font>
+</p>
+<br/>
+
+<hr/>
+<p><small>
+<em>Banner photo modified Great hall of polychromes, [Cave of Altamira](https://en.wikipedia.org/wiki/Cave_of_Altamira), published by M. Sanz de Sautuola in 1880 ([original](https://commons.wikimedia.org/wiki/File:Altamira-1880.jpg)) licenced under the [public domain](https://en.wikipedia.org/wiki/Public_domain).</em>
+</small></p>
