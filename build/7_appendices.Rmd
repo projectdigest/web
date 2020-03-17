@@ -179,10 +179,14 @@ To submit to the ENA you need two data tables (plus your sequence data). The fir
 
 Below are the specific packages and versions used in this workflow using both `sessionInfo()` and `devtools::session_info()`.
 
+
+
+<br/>
+<details markdown="1"><summary>Show/hide HYDRA TRIMMOMATIC job script</summary>
+<pre><code>
 ```{r sessionInfo, include=TRUE, cache=TRUE}
-proc.time() - ptm
 sessionInfo()
 devtools::session_info()
-end_time <- Sys.time()
-end_time - start_time
 ```
+</code></pre>
+</details>

@@ -11,8 +11,8 @@ output:
 ---
 
 <p id = "opennote" style="background-color:#EFEFEF;font-family:'Lato';padding:5px 5px 5px 15px">
-<font size = 5.7em>Jarrod J Scott | Microbial Ecologist</font><br/>
-<font size = 4.7em>
+<font size = 5.7em>Jarrod J Scott</font><br/>
+<font size = 4.7em> Microbial Ecologist<br/>
 <i class="fa fa-fw fa-globe"></i>[web](https://istmobiome.rbind.io/)
 <i class="ai ai-cv ai-big"></i>[CV](https://istmobiome.github.io/jarrod/jarrod-cv.html)
 <i class="ai fa-fw ai-orcid-square ai-big"> </i>[ORCID](https://orcid.org/0000-0001-9863-1318)
@@ -22,8 +22,8 @@ output:
 </p>
 
 <p id = "opennote" style="background-color:#EFEFEF;font-family:'Lato';padding:5px 5px 5px 15px">
-<font size = 5.7em>Thomas A Adam |  Marine Community & Behavioral Ecologist</font><br/>
-<font size = 4.7em>
+<font size = 5.7em>Thomas A Adam </font><br/>
+<font size = 4.7em>Marine Community & Behavioral Ecologist<br/>
 <i class="fa fa-fw fa-globe"></i>[web](http://msi.ucsb.edu/people/research-scientists/thomas-adam)
 <i class="ai fa-fw ai-orcid-square ai-big"> </i>[ORCID](https://orcid.org/0000-0001-6146-0260)
 <i class="ai fa-fw ai-google-scholar-square ai-big"> </i>[Google Scholar](https://scholar.google.com/citations?hl=en&user=D9trGPkAAAAJ)
@@ -32,8 +32,8 @@ output:
 </p>
 
 <p id = "opennote" style="background-color:#EFEFEF;font-family:'Lato';padding:5px 5px 5px 15px">
-<font size = 5.7em>Alain Duran | Marine Ecologist</font><br/>
-<font size = 4.7em>
+<font size = 5.7em>Alain Duran </font><br/>
+<font size = 4.7em>Marine Ecologist<br/>
 <i class="ai fa-fw ai-orcid-square ai-big"> </i>[ORCID](https://orcid.org/0000-0002-7847-6426)
 <i class="ai fa-fw ai-academia-square ai-big"> </i>[Academia](http://fiu.academia.edu/ADuran/CurriculumVitae)
 <i class="ai fa-fw ai-google-scholar-square ai-big"> </i>[ResearchGate](https://www.researchgate.net/profile/Alain_Duran)
@@ -44,16 +44,16 @@ output:
 
 
 <p id = "opennote" style="background-color:#EFEFEF;font-family:'Lato';padding:5px 5px 5px 15px">
-<font size = 5.7em>Deron E Burkepile   |  XXXXXX</font><br/>
-<font size = 4.7em>
+<font size = 5.7em>Deron E Burkepile</font><br/>
+<font size = 4.7em>XXXXXX<br/>
 <i class="ai fa-fw ai-orcid-square ai-big"> </i>[ORCID](https://orcid.org/0000-0002-0427-0484)
 </font>
 </font>
 </p>
 
 <p id = "opennote" style="background-color:#EFEFEF;font-family:'Lato';padding:5px 5px 5px 15px">
-<font size = 5.7em>Douglas B Rasher |  XXXXXX</font><br/>
-<font size = 4.7em>
+<font size = 5.7em>Douglas B Rasher</font><br/>
+<font size = 4.7em>XXXXXX<br/>
 <i class="ai fa-fw ai-orcid-square ai-big"> </i>[ORCID](https://orcid.org/0000-0002-0212-8070)
 </font>
 </font>
