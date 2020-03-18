@@ -53,8 +53,11 @@ output:
 
 <p id = "opennote" style="background-color:#EFEFEF;font-family:'Lato';padding:5px 5px 5px 15px">
 <font size = 5.7em>Douglas B Rasher</font><br/>
-<font size = 4.7em>XXXXXX<br/>
+<font size = 4.7em>Marine Ecologist<br/>
+<i class="fa fa-fw fa-globe"></i>[web](https://www.bigelow.org/about/people/drasher.html)
 <i class="ai fa-fw ai-orcid-square ai-big"> </i>[ORCID](https://orcid.org/0000-0002-0212-8070)
+<i class="ai fa-fw ai-google-scholar-square ai-big"> </i>[Google Scholar](https://scholar.google.com/citations?user=pPlPMPcAAAAJ&hl=en&oi=ao)
+<i class="fab fa-twitter"></i>[Twitter](https://twitter.com/DouglasRasher)
 </font>
 </font>
 </p>
