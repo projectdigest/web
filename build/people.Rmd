@@ -14,9 +14,9 @@ output:
 <font size = 5.7em>Jarrod J Scott</font><br/>
 <font size = 4.7em> Microbial Ecologist<br/>
 <i class="fa fa-fw fa-globe"></i>[web](https://istmobiome.rbind.io/)
-<i class="ai ai-cv ai-big"></i>[CV](https://istmobiome.github.io/jarrod/jarrod-cv.html)
 <i class="ai fa-fw ai-orcid-square ai-big"> </i>[ORCID](https://orcid.org/0000-0001-9863-1318)
 <i class="fa fa-fw fa-github"> </i>[GitHub](https://github.com/jarrodscott)
+<i class="ai ai-cv ai-big"></i>[CV](https://istmobiome.github.io/jarrod/jarrod-cv.html)
 </font>
 </font>
 </p>
@@ -45,8 +45,12 @@ output:
 
 <p id = "opennote" style="background-color:#EFEFEF;font-family:'Lato';padding:5px 5px 5px 15px">
 <font size = 5.7em>Deron E Burkepile</font><br/>
-<font size = 4.7em>XXXXXX<br/>
+<font size = 4.7em>Community Ecologist<br/>
+<i class="fa fa-fw fa-globe"></i>[web](https://labs.eemb.ucsb.edu/burkepile/deron/)
 <i class="ai fa-fw ai-orcid-square ai-big"> </i>[ORCID](https://orcid.org/0000-0002-0427-0484)
+<i class="ai fa-fw ai-researchgate-square ai-big"> </i>[Google Scholar](https://scholar.google.com/citations?hl=en&user=lOhiBXAAAAAJ&view_op=list_works&sortby=pubdate)
+<i class="fab fa-twitter"></i>[Twitter](https://twitter.com/burkepilelab?lang=en)
+<i class="fab fa-instagram"></i>[Instagram](https://www.instagram.com/burkepilelab/?hl=en)
 </font>
 </font>
 </p>
