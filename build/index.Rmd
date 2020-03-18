@@ -10,12 +10,10 @@ output:
     css: styles.css
 ---
 
-
-
 <div style="padding-top: 0.1em"></div>
 
 <p id = "notice">
-This website provides a <span class="callout"> reproducible workflow</span> of our [study](publication.html){target="_new"} on the intestinal microbial communities from five species of herbivorous coral reef fishes. The workflow goes through the steps we used to process the raw 16S rRNA marker data and the various tools we used to analyze and interpret  the data. With this workflow you can generate the figures and tables from the paper as well as many additional data products. The workflow is written in R Markdown and contains a mixture plain text and R code. Anyone should be able to reproduce our results with just this workflow and the raw data. Download a BibTex version of the paper references [here](cite.bib).
+This website provides a <span class="callout"> reproducible workflow</span> of our [study](publication.html){target="_new"} on the intestinal microbial communities from five species of herbivorous coral reef fishes ([more on the authors](authors.html/)). The workflow goes through the steps we used to process the raw 16S rRNA gene data and the  tools we used to analyze and interpret the data. With this workflow you can generate the figures and tables from the paper as well as many other data products. The workflow is written in R Markdown and contains a mixture plain text and R code. Anyone should be able to reproduce our results with just this workflow and the raw data. A BibTex version of the paper references is available [here](cite.bib).
 </p>
 
 <div style="padding-top: 0.5em"></div>

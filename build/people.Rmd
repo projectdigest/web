@@ -69,5 +69,5 @@ output:
 
 <hr/>
 <p><small>
-<em>Banner photo modified Great hall of polychromes, [Cave of Altamira](https://en.wikipedia.org/wiki/Cave_of_Altamira), published by M. Sanz de Sautuola in 1880 ([original](https://commons.wikimedia.org/wiki/File:Altamira-1880.jpg)) licenced under the [public domain](https://en.wikipedia.org/wiki/Public_domain).</em>
+<em>Banner photo modified from the Great Hall of Polychromes, [Cave of Altamira](https://en.wikipedia.org/wiki/Cave_of_Altamira), published by M. Sanz de Sautuola in 1880 ([original](https://commons.wikimedia.org/wiki/File:Altamira-1880.jpg)) licenced under the [public domain](https://en.wikipedia.org/wiki/Public_domain).</em>
 </small></p>
