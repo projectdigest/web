@@ -1,5 +1,5 @@
 /* Whole document: */
-@import url('https://fonts.googleapis.com/css?family=PT+Sans|PT+Sans+Narrow|PT+Serif|Lato:300|Roboto:300|Ropa+Sans|Source+Sans+Pro');
+@import url('https://fonts.googleapis.com/css?family=PT+Sans|PT+Sans+Narrow|PT+Serif|Lato:300|Roboto:300|Ropa+Sans|Source+Sans+Pro|Nunito+Sans');
 /* controls general properties of site*/
 body {
   font-family: "PT Serif", serif;
@@ -404,4 +404,32 @@ p.edit-page > p:first-child::before {
   text-transform: none;
   font-family: "source sans pro";
   font-size: 1.5rem;
+}
+div.alert-synopsis > div:first-child::before {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 0;
+  color: #ff3860;
+  content: '';
+}
+
+div.alert-synopsis > div {
+  margin-left: 1rem;
+}
+
+.alert-synopsis {
+	color: #141414;
+	font-family: 'Nunito Sans';
+  font-size: 1.1em;
+	background-color: #DDEEFF59;
+	border-color: #7c7c7cFF;
+	border-radius: 7px;
+	/*border-left-width: 30px;*/
+	margin-bottom: 2rem;
+	padding-top: 1.5rem;
+	padding-bottom: 1.5rem;
+	padding-left: 2rem;
+  padding-right: 2rem;
+  border-width: 1px;
+  border-color: #141414;
+  border-style: solid;
 }

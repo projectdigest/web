@@ -1,5 +1,5 @@
 ---
-title: "ProjectDIGEST <br/> <small>Intestinal microbes as an axis of functional diversity <br/> among large marine consumers</small>"
+title: "ProjectDIGEST <br/><small><font color = #000000; size=6.5em;>D</font>NA <font color = #000000; size=6.5em;>I</font>nvestigation of <font color = #000000; size=6.5em;>G</font>razer <font color = #000000; size=6.5em;>E</font>cology with <font color = #000000; size=6.5em;>S</font>equencing <font color = #000000; size=6.5em;>T</font>echnology</small>"
 output:
   html_document:
     toc: false
@@ -12,9 +12,13 @@ output:
 
 <div style="padding-top: 0.1em"></div>
 
-<p id = "notice">
-This website provides a <span class="callout"> reproducible workflow</span> of our [study](publication.html){target="_new"} on the intestinal microbial communities from five species of herbivorous coral reef fishes ([more on the authors](authors.html/)). The workflow goes through the steps we used to process the raw 16S rRNA gene data and the  tools we used to analyze and interpret the data. With this workflow you can generate the figures and tables from the paper as well as many other data products. The workflow is written in R Markdown and contains a mixture plain text and R code. Anyone should be able to reproduce our results with just this workflow and the raw data. A BibTex version of the paper references is available [here](cite.bib).
-</p>
+<div class="alert-synopsis">
+<p style="text-align:center;">This website provides a reproducible workflow for our study entitled</p>
+
+<p style="text-align:center;font-size:1.3em;">[Intestinal microbes as an axis of functional diversity among large marine consumers](publication.html){target="_new"}.</p>
+
+The workflow goes through the steps we used to process the raw 16S rRNA gene data and the  tools we used to analyze and interpret the data. With this workflow you can generate the figures and tables from the paper as well as many other data products. The workflow is written in R Markdown and contains a mixture plain text and R code. Anyone should be able to reproduce our results with just this workflow and the raw data. A BibTex version of the paper references is available [here](cite.bib) and you can learn more about the authors [here](authors.html/). 
+</div>
 
 <div style="padding-top: 0.5em"></div>
 ## About this Site
