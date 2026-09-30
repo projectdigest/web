@@ -21,7 +21,7 @@ For information on all raw data and data products, please see the [Data Availabi
 
 ## Supplemental Material for Paper
 
-In addition to the Supplemental Material available online we include [a page on the website](https://projectdigest.github.io/supplemental_material.html) that contains all seven supplementary tables, figures, and methods for the paper. Tables are horizontally scrollable. You can sort tables and download (or copy) the data. Some tables contain external hyperlinks. you can download the raw [Rmd file](https://github.com/projectdigest/web/blob/master/build/supplemental_material.Rmd).
+In addition to the Supplemental Material available online we include [a page on the website](https://projectdigest.github.io/supplemental_material.html) that contains all seven supplementary tables, figures, and methods for the paper. Tables are horizontally scrollable. You can sort tables and download (or copy) the data. Some tables contain external hyperlinks. you can download the raw [`.Rmd` file](https://github.com/projectdigest/web/blob/master/build/supplemental_material.Rmd).
 
 ## Workflows
 
